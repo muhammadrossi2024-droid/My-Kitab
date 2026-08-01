@@ -56,35 +56,14 @@ export default function Home() {
 
       <div className="card">
         <div className="form-row-label">Mutoon</div>
-        <p className="form-row-desc" style={{ marginBottom: 12 }}>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
           Classical texts for the student of knowledge (متون طالب العلم).
         </p>
-        <ul className="surah-list mutoon-book-list">
-          {mutoonBooks.map((book) => (
-            <li key={book.id}>
-              {book.available ? (
-                <Link className="surah-list-item mutoon-book-item" to={`/mutoon/${book.id}`}>
-                  <span className="surah-meta">
-                    <div className="surah-name-en">{book.titleTransliteration}</div>
-                    <div className="surah-name-sub">{book.titleEnglish}</div>
-                  </span>
-                  <span className="surah-arabic-name">{book.titleArabic}</span>
-                </Link>
-              ) : (
-                <div
-                  className="surah-list-item mutoon-book-item"
-                  style={{ opacity: 0.55, cursor: "default" }}
-                >
-                  <span className="surah-meta">
-                    <div className="surah-name-en">{book.titleTransliteration}</div>
-                    <div className="surah-name-sub">{book.titleEnglish} · coming soon</div>
-                  </span>
-                  <span className="surah-arabic-name">{book.titleArabic}</span>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+          <Link className="btn btn-primary" to="/mutoon">
+            Browse Mutoon
+          </Link>
+        </div>
 
         {lastMutoonRead && lastMutoonBook && (
           <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
