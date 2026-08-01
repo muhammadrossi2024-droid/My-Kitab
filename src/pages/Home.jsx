@@ -44,6 +44,18 @@ export default function Home() {
       </div>
 
       <div className="card">
+        <div className="form-row-label">Morning &amp; Evening Adhkar</div>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
+          Authentic supplications for the morning and evening, with translation and references.
+        </p>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+          <Link className="btn btn-primary" to="/athkar">
+            Open Adhkar
+          </Link>
+        </div>
+      </div>
+
+      <div className="card">
         <div className="form-row-label">Settings</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
           Adjust reciter, font size, theme, and other reading preferences.

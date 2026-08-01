@@ -572,6 +572,42 @@ a {
   overflow-wrap: break-word;
 }
 
+.athkar-transliteration {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 6px 0 10px;
+}
+
+.athkar-virtue {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: var(--chip-bg);
+  border-radius: 8px;
+}
+
+.athkar-repetition-badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.athkar-credit {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-align: center;
+  margin-top: 20px;
+  padding: 0 12px;
+}
+
+.athkar-credit a {
+  color: var(--accent);
+}
+
 .reader-header {
   text-align: center;
   margin-bottom: 24px;
