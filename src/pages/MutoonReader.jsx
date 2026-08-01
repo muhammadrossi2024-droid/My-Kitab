@@ -240,7 +240,7 @@ export default function MutoonReader() {
         </div>
 
         <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginTop: 18, marginBottom: 8 }}>
-          Read the full text or jump straight to the Qur'an verses it references.
+          Read the full text, or jump straight to the Qur'an verses and hadith it references.
         </p>
         <div className="segmented-control" style={{ margin: "0 auto" }}>
           <button
@@ -255,6 +255,14 @@ export default function MutoonReader() {
           >
             Qur'an Verses Used ({book.quranVerses.length})
           </button>
+          {book.hadiths && book.hadiths.length > 0 && (
+            <button
+              className={"segmented-control-btn" + (mode === "hadith" ? " active" : "")}
+              onClick={() => setMode("hadith")}
+            >
+              Hadith ({book.hadiths.length})
+            </button>
+          )}
         </div>
       </div>
 
@@ -300,6 +308,26 @@ export default function MutoonReader() {
             </button>
           </div>
         </>
+      ) : mode === "hadith" ? (
+        <div className="card" key="hadith">
+          {book.hadiths.map((h, i) => (
+            <div className="ayah-block" key={i}>
+              {h.arabic && (
+                <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+                  {h.arabic}
+                </p>
+              )}
+              <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>
+                {h.translation}
+              </p>
+              {h.source && (
+                <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", marginTop: 6 }}>
+                  {h.source}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="card" key="verses">
           {book.quranVerses.map((v) => (
