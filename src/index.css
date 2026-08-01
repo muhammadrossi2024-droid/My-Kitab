@@ -215,6 +215,28 @@ a {
   font-size: 1.3rem;
 }
 
+.mutoon-book-list {
+  gap: 6px;
+}
+
+.mutoon-book-item {
+  padding: 8px 14px;
+}
+
+.mutoon-book-item .surah-name-en {
+  font-size: 0.9rem;
+  line-height: 1.25;
+}
+
+.mutoon-book-item .surah-name-sub {
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.mutoon-book-item .surah-arabic-name {
+  font-size: 1.05rem;
+}
+
 .search-input {
   width: 100%;
   padding: 12px 14px;

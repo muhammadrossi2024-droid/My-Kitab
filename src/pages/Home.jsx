@@ -59,11 +59,11 @@ export default function Home() {
         <p className="form-row-desc" style={{ marginBottom: 12 }}>
           Classical texts for the student of knowledge (متون طالب العلم).
         </p>
-        <ul className="surah-list">
+        <ul className="surah-list mutoon-book-list">
           {mutoonBooks.map((book) => (
             <li key={book.id}>
               {book.available ? (
-                <Link className="surah-list-item" to={`/mutoon/${book.id}`}>
+                <Link className="surah-list-item mutoon-book-item" to={`/mutoon/${book.id}`}>
                   <span className="surah-meta">
                     <div className="surah-name-en">{book.titleTransliteration}</div>
                     <div className="surah-name-sub">{book.titleEnglish}</div>
@@ -71,7 +71,10 @@ export default function Home() {
                   <span className="surah-arabic-name">{book.titleArabic}</span>
                 </Link>
               ) : (
-                <div className="surah-list-item" style={{ opacity: 0.55, cursor: "default" }}>
+                <div
+                  className="surah-list-item mutoon-book-item"
+                  style={{ opacity: 0.55, cursor: "default" }}
+                >
                   <span className="surah-meta">
                     <div className="surah-name-en">{book.titleTransliteration}</div>
                     <div className="surah-name-sub">{book.titleEnglish} · coming soon</div>
