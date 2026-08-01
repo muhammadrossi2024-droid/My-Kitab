@@ -1,10 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSettings } from "../context/SettingsContext.jsx";
 
 export default function SurahList() {
+  const { lastRead } = useSettings();
   const [surahs, setSurahs] = useState(null);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
+
+  const lastSurahMeta =
+    surahs && lastRead && surahs.find((s) => s.number === lastRead.surah);
 
   useEffect(() => {
     fetch("/data/surahs/index.json")
@@ -42,6 +47,21 @@ export default function SurahList() {
 
   return (
     <div>
+      {lastRead && lastSurahMeta && (
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div className="form-row-label">Continue Reading</div>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
+            Updates automatically when you tap "Mark as last read" on any ayah.
+          </p>
+          <p className="form-row-desc" style={{ marginBottom: 12 }}>
+            You left off at Surah {lastSurahMeta.transliteration}, verse {lastRead.ayah}.
+          </p>
+          <Link className="btn btn-primary" to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}>
+            Resume Reading
+          </Link>
+        </div>
+      )}
+
       <input
         className="search-input"
         placeholder="Search by name or number…"

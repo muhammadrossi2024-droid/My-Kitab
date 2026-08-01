@@ -1,13 +1,37 @@
 import { Link } from "react-router-dom";
 import { mutoonBooks } from "../data/mutoon/index.js";
+import { useSettings } from "../context/SettingsContext.jsx";
 
 export default function Mutoon() {
+  const { lastMutoonRead } = useSettings();
+  const lastMutoonBook =
+    lastMutoonRead && mutoonBooks.find((b) => b.id === lastMutoonRead.bookId);
+
   return (
     <div>
       <h1>Mutoon</h1>
       <p style={{ color: "var(--text-muted)" }}>
         Classical texts for the student of knowledge (متون طالب العلم).
       </p>
+
+      {lastMutoonRead && lastMutoonBook && (
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div className="form-row-label">Continue Reading</div>
+          <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
+            Updates automatically when you tap "Mark as last read" on any point.
+          </p>
+          <p className="form-row-desc" style={{ marginBottom: 12 }}>
+            You left off at {lastMutoonBook.titleTransliteration}, {lastMutoonRead.pageHeading}.
+          </p>
+          <Link
+            className="btn btn-primary"
+            to={`/mutoon/${lastMutoonRead.bookId}#${lastMutoonRead.pageKey}`}
+          >
+            Resume Reading
+          </Link>
+        </div>
+      )}
+
       <ul className="surah-list mutoon-book-list">
         {mutoonBooks.map((book) => (
           <li key={book.id}>
