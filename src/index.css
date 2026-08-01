@@ -208,6 +208,13 @@ a {
   color: var(--text);
   font-size: 1rem;
   margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 400px) {
+  .search-input::placeholder {
+    font-size: 0.85rem;
+  }
 }
 
 .ayah-block {
@@ -429,6 +436,22 @@ a {
   color: var(--text);
   font-size: 0.9rem;
   cursor: pointer;
+  max-width: 100%;
+  min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  .form-row {
+    flex-wrap: wrap;
+  }
+
+  .form-row > .select-input {
+    width: 100%;
+    font-size: 0.85rem;
+  }
 }
 
 .segmented-control {

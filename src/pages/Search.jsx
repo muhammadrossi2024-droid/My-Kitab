@@ -56,7 +56,7 @@ export default function Search() {
       <h1>Search</h1>
       <input
         className="search-input"
-        placeholder="Search in English or Arabic — a word, or a topic like 'patience' or 'الصبر'…"
+        placeholder="Search a word or topic — English or Arabic"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         autoFocus

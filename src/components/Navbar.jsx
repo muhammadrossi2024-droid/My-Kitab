@@ -4,7 +4,7 @@ const links = [
   { to: "/", label: "Home", end: true },
   { to: "/surahs", label: "Surahs" },
   { to: "/search", label: "🔍 Search" },
-  { to: "/settings", label: "Settings" },
+  { to: "/settings", label: "⚙️", ariaLabel: "Settings" },
 ];
 
 export default function Navbar() {
@@ -20,6 +20,8 @@ export default function Navbar() {
             to={link.to}
             end={link.end}
             className={({ isActive }) => "navbar-link" + (isActive ? " active" : "")}
+            aria-label={link.ariaLabel}
+            title={link.ariaLabel}
           >
             {link.label}
           </NavLink>
