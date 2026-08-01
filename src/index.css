@@ -4,6 +4,18 @@
   font-display: swap;
 }
 
+/* Scheherazade New's glyphs for the Quranic annotation-mark block (waqf/pause
+   signs, small high marks, sajdah/hizb markers, etc.) render oversized and
+   overlap neighboring harakat. Amiri Quran is purpose-built for this exact
+   Unicode range, so layer it in under the same font-family via unicode-range
+   — text keeps using Scheherazade New everywhere except these codepoints. */
+@font-face {
+  font-family: "Scheherazade New";
+  src: url("/fonts/AmiriQuran-Regular.woff2") format("woff2");
+  unicode-range: U+06D6-06ED;
+  font-display: swap;
+}
+
 :root[data-theme="light"] {
   --bg: #faf7f2;
   --bg-elevated: #ffffff;
