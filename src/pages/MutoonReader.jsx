@@ -3,20 +3,34 @@ import { useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 
-// Flattens a matn into the sequence of "pages" a reader swipes through: an
-// optional front-matter page (bismillah/intro), one page per section, and
-// an optional closing page.
+// Flattens a matn into the sequence of "pages" a reader swipes through.
+// Each front-matter unit (bismillah / intro / each intro paragraph) and each
+// section paragraph gets its own page — finer-grained than one page per
+// section — plus an optional closing page.
 function buildPages(book) {
   const pages = [];
-  if (book.bismillah || book.intro || book.introParagraphs) {
-    pages.push({ key: "intro", type: "intro" });
+
+  const introUnits = [];
+  if (book.bismillah) introUnits.push({ kind: "bismillah" });
+  if (book.intro) introUnits.push({ kind: "intro" });
+  if (book.introParagraphs) {
+    book.introParagraphs.forEach((para) => introUnits.push({ kind: "para", para }));
   }
+  introUnits.forEach((unit, i) => {
+    pages.push({ key: `intro-${i}`, type: "intro", unit });
+  });
+
   for (const section of book.sections) {
-    pages.push({ key: `section-${section.number}`, type: "section", section });
+    const paragraphs = section.paragraphs || [section.arabic];
+    paragraphs.forEach((para, i) => {
+      pages.push({ key: `section-${section.number}-${i}`, type: "section", section, para });
+    });
   }
+
   if (book.closing) {
     pages.push({ key: "closing", type: "closing" });
   }
+
   return pages;
 }
 
@@ -154,9 +168,10 @@ export default function MutoonReader() {
     );
 
     if (page.type === "intro") {
+      const { unit } = page;
       return (
         <>
-          {book.bismillah && (
+          {unit.kind === "bismillah" && (
             <p
               className="ayah-arabic"
               style={{ textAlign: "center", fontSize: settings.arabicFontSize }}
@@ -164,38 +179,22 @@ export default function MutoonReader() {
               {book.bismillah}
             </p>
           )}
-          {book.intro && (
+          {unit.kind === "intro" && (
             <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
               {book.intro}
             </p>
           )}
-          {book.introParagraphs &&
-            book.introParagraphs.map((para, i) => (
-              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
-            ))}
+          {unit.kind === "para" && <Paragraph p={unit.para} fontSize={settings.arabicFontSize} />}
           {markButton}
         </>
       );
     }
     if (page.type === "section") {
-      const { section } = page;
+      const { section, para } = page;
       return (
         <>
           <span className="ayah-number-badge">{section.heading || section.number}</span>
-          {section.paragraphs ? (
-            section.paragraphs.map((para, i) => (
-              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
-            ))
-          ) : (
-            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-              {section.arabic}
-            </p>
-          )}
-          {section.englishTranslation && (
-            <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>
-              {section.englishTranslation}
-            </p>
-          )}
+          <Paragraph p={para} fontSize={settings.arabicFontSize} />
           {markButton}
         </>
       );
