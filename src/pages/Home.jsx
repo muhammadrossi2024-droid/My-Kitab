@@ -39,6 +39,9 @@ export default function Home() {
         {lastRead && lastSurahMeta && (
           <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
             <div className="form-row-label">Continue Reading</div>
+            <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
+              Updates automatically when you tap "Mark as last read" on any ayah.
+            </p>
             <p className="form-row-desc" style={{ marginBottom: 12 }}>
               You left off at Surah {lastSurahMeta.transliteration}, verse {lastRead.ayah}.
             </p>

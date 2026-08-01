@@ -82,6 +82,8 @@ export default function SurahReader() {
   const [downloaded, setDownloaded] = useState(false);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
   const [ayahPickerOpen, setAyahPickerOpen] = useState(false);
+  const [justMarkedVerse, setJustMarkedVerse] = useState(null);
+  const markedTimeoutRef = useRef(null);
   const hasScrolledRef = useRef(false);
   const audioRef = useRef(null);
   const playingVerseRef = useRef(null);
@@ -177,6 +179,7 @@ export default function SurahReader() {
     return () => {
       discardCurrentAudio();
       discardPreload();
+      if (markedTimeoutRef.current) clearTimeout(markedTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -414,6 +417,13 @@ export default function SurahReader() {
       const el = document.getElementById(`ayah-${verseNumber}`);
       if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+  }
+
+  function handleMarkLastRead(verseNumber) {
+    setLastRead(surah.number, verseNumber);
+    setJustMarkedVerse(verseNumber);
+    if (markedTimeoutRef.current) clearTimeout(markedTimeoutRef.current);
+    markedTimeoutRef.current = setTimeout(() => setJustMarkedVerse(null), 2000);
   }
 
   async function handleDownloadToggle() {
@@ -659,11 +669,14 @@ export default function SurahReader() {
               </div>
 
               <button
-                className="btn"
-                style={{ marginTop: 8, fontSize: "0.8rem", padding: "4px 10px" }}
-                onClick={() => setLastRead(surah.number, verse.number)}
+                className={
+                  "btn mark-last-read-btn" +
+                  (justMarkedVerse === verse.number ? " marked" : "")
+                }
+                style={{ marginTop: 8, fontSize: "0.8rem", padding: "6px 12px" }}
+                onClick={() => handleMarkLastRead(verse.number)}
               >
-                Mark as last read
+                {justMarkedVerse === verse.number ? "✓ Marked" : "🔖 Mark as last read"}
               </button>
             </div>
           );

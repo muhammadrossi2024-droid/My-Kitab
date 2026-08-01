@@ -143,6 +143,20 @@ a {
   filter: brightness(1.05);
 }
 
+.mark-last-read-btn {
+  background: var(--text);
+  color: var(--bg-elevated);
+  border-color: var(--text);
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.mark-last-read-btn.marked {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
 .surah-list {
   list-style: none;
   margin: 0;
