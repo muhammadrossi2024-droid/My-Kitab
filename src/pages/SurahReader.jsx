@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
+import BackToTopButton from "../components/BackToTopButton.jsx";
 import { reciters, isFullSurahReciter, surahAudioUrl, supportsWordTiming, getReciter } from "../data/reciters.js";
 import { verseAudioUrl } from "../utils/audio.js";
 import {
@@ -731,6 +732,8 @@ export default function SurahReader() {
           <span />
         )}
       </div>
+
+      <BackToTopButton />
     </div>
   );
 }

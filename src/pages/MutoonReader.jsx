@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
+import BackToTopButton from "../components/BackToTopButton.jsx";
 
 const bookModules = import.meta.glob("../data/mutoon/*.json");
 
@@ -207,6 +208,8 @@ export default function MutoonReader() {
           ))}
         </div>
       )}
+
+      <BackToTopButton />
     </div>
   );
 }
