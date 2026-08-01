@@ -127,24 +127,28 @@ export default function MutoonReader() {
       </div>
 
       {mode === "text" ? (
-        <div className="card" key="full-text">
-          {book.bismillah && (
-            <p
-              className="ayah-arabic"
-              style={{ textAlign: "center", fontSize: settings.arabicFontSize }}
-            >
-              {book.bismillah}
-            </p>
+        <div className="mutoon-book" key="full-text">
+          {(book.bismillah || book.intro || book.introParagraphs) && (
+            <div className="mutoon-page">
+              {book.bismillah && (
+                <p
+                  className="ayah-arabic"
+                  style={{ textAlign: "center", fontSize: settings.arabicFontSize }}
+                >
+                  {book.bismillah}
+                </p>
+              )}
+              {book.intro && (
+                <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+                  {book.intro}
+                </p>
+              )}
+              {book.introParagraphs &&
+                book.introParagraphs.map((para, i) => (
+                  <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
+                ))}
+            </div>
           )}
-          {book.intro && (
-            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-              {book.intro}
-            </p>
-          )}
-          {book.introParagraphs &&
-            book.introParagraphs.map((para, i) => (
-              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
-            ))}
           {book.sections.map((section) => {
             const justMarked = justMarkedSection === section.number;
             const isLastRead =
@@ -153,7 +157,7 @@ export default function MutoonReader() {
               lastMutoonRead.sectionNumber === section.number;
             return (
               <div
-                className={"ayah-block" + (isLastRead ? " ayah-playing" : "")}
+                className={"mutoon-page" + (isLastRead ? " mutoon-page-last-read" : "")}
                 id={`section-${section.number}`}
                 key={section.number}
               >
@@ -176,8 +180,7 @@ export default function MutoonReader() {
                   </p>
                 )}
                 <button
-                  className={"btn mark-last-read-btn" + (justMarked ? " marked" : "")}
-                  style={{ marginTop: 8, fontSize: "0.8rem", padding: "6px 12px" }}
+                  className={"btn mark-last-read-btn mutoon-page-mark-btn" + (justMarked ? " marked" : "")}
                   onClick={() => handleMarkLastRead(section)}
                 >
                   {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
@@ -186,9 +189,11 @@ export default function MutoonReader() {
             );
           })}
           {book.closing && (
-            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize, marginTop: 20 }}>
-              {book.closing}
-            </p>
+            <div className="mutoon-page">
+              <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+                {book.closing}
+              </p>
+            </div>
           )}
         </div>
       ) : (

@@ -14,6 +14,10 @@
   --accent-contrast: #ffffff;
   --chip-bg: #f0ead9;
   --accent-soft: #e0f0e6;
+  --paper-bg: #f8f1de;
+  --paper-border: #d8c8a0;
+  --paper-text: #2b2116;
+  --paper-shadow: rgba(43, 33, 22, 0.22);
 }
 
 :root[data-theme="dark"] {
@@ -26,6 +30,10 @@
   --accent-contrast: #0f1a15;
   --chip-bg: #26221a;
   --accent-soft: #1a2c23;
+  --paper-bg: #f2e9d2;
+  --paper-border: #c9b98c;
+  --paper-text: #2b2116;
+  --paper-shadow: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -406,6 +414,59 @@ a {
 
 .mutoon-list-trailing {
   margin-top: 6px;
+}
+
+.mutoon-book {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.mutoon-page {
+  background: var(--paper-bg);
+  border: 1px solid var(--paper-border);
+  border-radius: 4px;
+  padding: 36px 32px;
+  color: var(--paper-text);
+  box-shadow:
+    0 10px 26px var(--paper-shadow),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  position: relative;
+}
+
+.mutoon-page-last-read {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.mutoon-page .ayah-number-badge {
+  background: rgba(43, 33, 22, 0.09);
+  color: var(--paper-text);
+}
+
+.mutoon-page .ayah-translation {
+  color: rgba(43, 33, 22, 0.68);
+}
+
+.mutoon-page .mutoon-list-item {
+  border-right-color: rgba(43, 33, 22, 0.22);
+}
+
+.mutoon-page .mutoon-list-badge {
+  background: rgba(43, 33, 22, 0.09);
+  color: var(--paper-text);
+}
+
+.mutoon-page-mark-btn {
+  margin-top: 22px;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+}
+
+@media (max-width: 680px) {
+  .mutoon-page {
+    padding: 24px 18px;
+  }
 }
 
 .ayah-arabic {
