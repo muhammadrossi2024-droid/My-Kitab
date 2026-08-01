@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useSettings } from "../context/SettingsContext.jsx";
 
 const bookModules = import.meta.glob("../data/medinah/*.json");
 
 export default function MedinahLesson() {
   const { bookId, lessonNumber } = useParams();
-  const { settings } = useSettings();
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
 
@@ -44,21 +42,6 @@ export default function MedinahLesson() {
       <div className="reader-header">
         <h1 style={{ margin: "8px 0 4px" }}>{lesson.title}</h1>
         <div style={{ color: "var(--text-muted)" }}>{book.title.english}</div>
-      </div>
-
-      <div className="card">
-        <div className="form-row-label">Lesson</div>
-        {lesson.content && lesson.content.length > 0 ? (
-          lesson.content.map((para, i) => (
-            <p key={i} className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-              {para}
-            </p>
-          ))
-        ) : (
-          <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
-            Lesson content coming soon.
-          </p>
-        )}
       </div>
 
       <div className="card">
