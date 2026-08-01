@@ -72,11 +72,11 @@ export default function Home() {
               Updates automatically when you tap "Mark as last read" on any point.
             </p>
             <p className="form-row-desc" style={{ marginBottom: 12 }}>
-              You left off at {lastMutoonBook.titleTransliteration}, {lastMutoonRead.sectionHeading}.
+              You left off at {lastMutoonBook.titleTransliteration}, {lastMutoonRead.pageHeading}.
             </p>
             <Link
               className="btn btn-primary"
-              to={`/mutoon/${lastMutoonRead.bookId}#section-${lastMutoonRead.sectionNumber}`}
+              to={`/mutoon/${lastMutoonRead.bookId}#${lastMutoonRead.pageKey}`}
             >
               Resume Reading
             </Link>

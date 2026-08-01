@@ -79,8 +79,8 @@ export function SettingsProvider({ children }) {
     localStorage.setItem(LAST_READ_KEY, JSON.stringify(value));
   };
 
-  const setLastMutoonRead = (bookId, sectionNumber, sectionHeading) => {
-    const value = { bookId, sectionNumber, sectionHeading, at: new Date().toISOString() };
+  const setLastMutoonRead = (bookId, pageKey, pageHeading) => {
+    const value = { bookId, pageKey, pageHeading, at: new Date().toISOString() };
     setLastMutoonReadState(value);
     localStorage.setItem(LAST_MUTOON_READ_KEY, JSON.stringify(value));
   };

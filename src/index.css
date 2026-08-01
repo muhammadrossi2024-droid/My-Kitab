@@ -417,11 +417,13 @@ a {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 36px 32px;
+  padding: 22px 20px;
   color: var(--text);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
   position: relative;
   touch-action: pan-y;
+  max-width: 560px;
+  margin: 0 auto;
 }
 
 .mutoon-page-last-read {

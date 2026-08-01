@@ -72,7 +72,7 @@ export default function MutoonReader() {
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
   const [mode, setMode] = useState("text"); // "text" | "verses"
-  const [justMarkedSection, setJustMarkedSection] = useState(null);
+  const [justMarkedPage, setJustMarkedPage] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageAnim, setPageAnim] = useState(null); // "next" | "prev" | null
   const swipeStartRef = useRef(null); // {x, y} | null — only tracked for touch/pen pointers
@@ -95,14 +95,13 @@ export default function MutoonReader() {
       .catch((err) => setError(err.message));
   }, [bookId]);
 
-  // Jump straight to a section's page when arriving via a "Resume" link.
+  // Jump straight to a page when arriving via a "Resume" link.
   useEffect(() => {
     if (!book) return;
-    const hash = window.location.hash;
-    if (hash.startsWith("#section-")) {
-      const idx = pages.findIndex((p) => p.key === hash.slice(1));
-      if (idx !== -1) setPageIndex(idx);
-    }
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    const idx = pages.findIndex((p) => p.key === hash);
+    if (idx !== -1) setPageIndex(idx);
   }, [book, pages]);
 
   function goToPage(nextIndex, direction) {
@@ -130,14 +129,30 @@ export default function MutoonReader() {
     }
   }
 
-  function handleMarkLastRead(section) {
-    setLastMutoonRead(bookId, section.number, section.heading);
-    setJustMarkedSection(section.number);
-    setTimeout(() => setJustMarkedSection(null), 2000);
+  function pageHeadingFor(page) {
+    if (page.type === "intro") return "Introduction";
+    if (page.type === "closing") return "Closing";
+    return page.section.heading || page.section.number;
+  }
+
+  function handleMarkLastRead(page) {
+    setLastMutoonRead(bookId, page.key, pageHeadingFor(page));
+    setJustMarkedPage(page.key);
+    setTimeout(() => setJustMarkedPage(null), 2000);
   }
 
   function renderPageContent(page) {
     if (!page) return null;
+    const justMarked = justMarkedPage === page.key;
+    const markButton = (
+      <button
+        className={"btn mark-last-read-btn mutoon-page-mark-btn" + (justMarked ? " marked" : "")}
+        onClick={() => handleMarkLastRead(page)}
+      >
+        {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
+      </button>
+    );
+
     if (page.type === "intro") {
       return (
         <>
@@ -158,12 +173,12 @@ export default function MutoonReader() {
             book.introParagraphs.map((para, i) => (
               <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
             ))}
+          {markButton}
         </>
       );
     }
     if (page.type === "section") {
       const { section } = page;
-      const justMarked = justMarkedSection === section.number;
       return (
         <>
           <span className="ayah-number-badge">{section.heading || section.number}</span>
@@ -181,20 +196,18 @@ export default function MutoonReader() {
               {section.englishTranslation}
             </p>
           )}
-          <button
-            className={"btn mark-last-read-btn mutoon-page-mark-btn" + (justMarked ? " marked" : "")}
-            onClick={() => handleMarkLastRead(section)}
-          >
-            {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
-          </button>
+          {markButton}
         </>
       );
     }
     if (page.type === "closing") {
       return (
-        <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-          {book.closing}
-        </p>
+        <>
+          <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+            {book.closing}
+          </p>
+          {markButton}
+        </>
       );
     }
     return null;
@@ -210,10 +223,9 @@ export default function MutoonReader() {
   const currentPage = pages[pageIndex];
   const currentIsLastRead =
     currentPage &&
-    currentPage.type === "section" &&
     lastMutoonRead &&
     lastMutoonRead.bookId === bookId &&
-    lastMutoonRead.sectionNumber === currentPage.section.number;
+    lastMutoonRead.pageKey === currentPage.key;
 
   return (
     <div>
@@ -262,7 +274,7 @@ export default function MutoonReader() {
                 (pageAnim === "prev" ? " mutoon-page-anim-prev" : "") +
                 (currentIsLastRead ? " mutoon-page-last-read" : "")
               }
-              id={currentPage?.type === "section" ? `section-${currentPage.section.number}` : undefined}
+              id={currentPage?.key}
             >
               {renderPageContent(currentPage)}
             </div>
