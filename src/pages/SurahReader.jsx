@@ -128,6 +128,15 @@ export default function SurahReader() {
     };
   }, [surah, settings.reciter, effectiveFollowAlong]);
 
+  // Full-surah mode has no per-verse play call to hang a scroll off of (see
+  // playFromVerse below for that), so scroll here instead, whenever the
+  // estimated "currently playing" ayah moves to a new verse.
+  useEffect(() => {
+    if (!fullSurahMode || fullSurahActiveVerse == null) return;
+    const el = document.getElementById(`ayah-${fullSurahActiveVerse}`);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [fullSurahMode, fullSurahActiveVerse]);
+
   useEffect(() => {
     if (!surah || hasScrolledRef.current) return;
     const hash = window.location.hash;
@@ -472,6 +481,21 @@ export default function SurahReader() {
             </span>
           )}
         </div>
+
+        <div className="theme-toggle-group" style={{ justifyContent: "center", marginTop: 10 }}>
+          <button
+            className={"theme-toggle-btn" + (settings.followAlong === "word" ? " active" : "")}
+            onClick={() => updateSettings({ followAlong: "word" })}
+          >
+            Word-by-word
+          </button>
+          <button
+            className={"theme-toggle-btn" + (settings.followAlong === "ayah" ? " active" : "")}
+            onClick={() => updateSettings({ followAlong: "ayah" })}
+          >
+            Ayah-by-ayah
+          </button>
+        </div>
         {fullSurahMode && (
           <p style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginTop: 10 }}>
             This reciter is only available as one continuous recording per surah — no per-verse
@@ -507,7 +531,11 @@ export default function SurahReader() {
             : playingVerse === verse.number;
           return (
             <div
-              className={"ayah-block" + (isThisVersePlaying ? " ayah-playing" : "")}
+              className={
+                "ayah-block" +
+                (isThisVersePlaying ? " ayah-playing" : "") +
+                (isThisVersePlaying && effectiveFollowAlong === "ayah" ? " ayah-follow-ayah" : "")
+              }
               id={`ayah-${verse.number}`}
               data-verse={verse.number}
               key={verse.number}

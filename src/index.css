@@ -13,6 +13,7 @@
   --accent: #2f6a4f;
   --accent-contrast: #ffffff;
   --chip-bg: #f0ead9;
+  --accent-soft: #e0f0e6;
 }
 
 :root[data-theme="dark"] {
@@ -24,6 +25,7 @@
   --accent: #6fbf9a;
   --accent-contrast: #0f1a15;
   --chip-bg: #26221a;
+  --accent-soft: #1a2c23;
 }
 
 * {
@@ -232,6 +234,13 @@ a {
   background: var(--chip-bg);
   padding-left: 12px;
   padding-right: 12px;
+}
+
+/* Ayah-by-ayah follow-along mode: a distinct green tint (instead of the
+   neutral chip-bg above) since there's no finer word-level highlight to
+   also show, so the whole-ayah cue needs to stand out on its own. */
+.ayah-playing.ayah-follow-ayah {
+  background: var(--accent-soft);
 }
 
 .verse-play-btn {
