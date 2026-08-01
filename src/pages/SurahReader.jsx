@@ -82,6 +82,8 @@ export default function SurahReader() {
   const [downloaded, setDownloaded] = useState(false);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
   const [ayahPickerOpen, setAyahPickerOpen] = useState(false);
+  const [ayahPickerScrolled, setAyahPickerScrolled] = useState(false);
+  const ayahPickerScrollRef = useRef(null);
   const [justMarkedVerse, setJustMarkedVerse] = useState(null);
   const markedTimeoutRef = useRef(null);
   const hasScrolledRef = useRef(false);
@@ -479,7 +481,10 @@ export default function SurahReader() {
           <span className="ayah-picker-wrap">
             <button
               className="ayah-picker-trigger"
-              onClick={() => setAyahPickerOpen((v) => !v)}
+              onClick={() => {
+                setAyahPickerScrolled(false);
+                setAyahPickerOpen((v) => !v);
+              }}
               aria-haspopup="true"
               aria-expanded={ayahPickerOpen}
             >
@@ -488,23 +493,50 @@ export default function SurahReader() {
             {ayahPickerOpen && (
               <>
                 <div className="ayah-picker-backdrop" onClick={() => setAyahPickerOpen(false)} />
-                <div className="ayah-picker-popover">
-                  <div className="ayah-picker-grid">
-                    {Array.from({ length: surah.totalVerses }, (_, i) => i + 1).map((n) => (
-                      <button
-                        key={n}
-                        className={
-                          "ayah-picker-item" +
-                          ((fullSurahMode ? fullSurahActiveVerse : playingVerse) === n
-                            ? " active"
-                            : "")
-                        }
-                        onClick={() => handleJumpToAyah(n)}
-                      >
-                        {n}
-                      </button>
-                    ))}
+                <div className="ayah-picker-popover" role="dialog" aria-label="Jump to ayah">
+                  <div className="ayah-picker-header">
+                    <span>Jump to Ayah</span>
+                    <button
+                      className="ayah-picker-close"
+                      onClick={() => setAyahPickerOpen(false)}
+                      aria-label="Close"
+                    >
+                      ×
+                    </button>
                   </div>
+                  <div
+                    className="ayah-picker-scroll"
+                    ref={ayahPickerScrollRef}
+                    onScroll={(e) => setAyahPickerScrolled(e.currentTarget.scrollTop > 160)}
+                  >
+                    <div className="ayah-picker-grid">
+                      {Array.from({ length: surah.totalVerses }, (_, i) => i + 1).map((n) => (
+                        <button
+                          key={n}
+                          className={
+                            "ayah-picker-item" +
+                            ((fullSurahMode ? fullSurahActiveVerse : playingVerse) === n
+                              ? " active"
+                              : "")
+                          }
+                          onClick={() => handleJumpToAyah(n)}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {ayahPickerScrolled && (
+                    <button
+                      className="ayah-picker-top-btn"
+                      onClick={() =>
+                        ayahPickerScrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+                      }
+                      aria-label="Back to top"
+                    >
+                      ↑ Top
+                    </button>
+                  )}
                 </div>
               </>
             )}

@@ -537,41 +537,91 @@ a {
   position: fixed;
   inset: 0;
   z-index: 20;
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .ayah-picker-popover {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  margin-top: 8px;
+  transform: translate(-50%, -50%);
   z-index: 21;
-  width: 280px;
-  max-height: 260px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(70vh, 480px);
+  display: flex;
+  flex-direction: column;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   text-align: left;
+  overflow: hidden;
+}
+
+.ayah-picker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.ayah-picker-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.ayah-picker-close:hover {
+  color: var(--text);
+}
+
+.ayah-picker-scroll {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 14px 16px;
+  position: relative;
 }
 
 .ayah-picker-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .ayah-picker-item {
-  padding: 6px 0;
-  border-radius: 6px;
+  padding: 10px 0;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--bg-elevated);
   color: var(--text);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   cursor: pointer;
+  min-height: 40px;
+}
+
+.ayah-picker-top-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .ayah-picker-item:hover {
