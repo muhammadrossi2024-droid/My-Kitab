@@ -253,7 +253,7 @@ export default function MutoonReader() {
             className={"segmented-control-btn" + (mode === "verses" ? " active" : "")}
             onClick={() => setMode("verses")}
           >
-            Qur'an Verses Used ({book.quranVerses.length})
+            Verses ({book.quranVerses.length})
           </button>
           {book.hadiths && book.hadiths.length > 0 && (
             <button
@@ -312,6 +312,7 @@ export default function MutoonReader() {
         <div className="card" key="hadith">
           {book.hadiths.map((h, i) => (
             <div className="ayah-block" key={i}>
+              <span className="ayah-number-badge">Hadith {i + 1}</span>
               {h.arabic && (
                 <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
                   {h.arabic}
@@ -321,9 +322,7 @@ export default function MutoonReader() {
                 {h.translation}
               </p>
               {h.source && (
-                <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", marginTop: 6 }}>
-                  {h.source}
-                </p>
+                <p className="hadith-source">{h.source}</p>
               )}
             </div>
           ))}

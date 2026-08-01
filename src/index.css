@@ -537,6 +537,15 @@ a {
   margin: 0;
 }
 
+.hadith-source {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-style: italic;
+  line-height: 1.5;
+  margin-top: 8px;
+  overflow-wrap: break-word;
+}
+
 .reader-header {
   text-align: center;
   margin-bottom: 24px;
@@ -767,6 +776,9 @@ a {
 
 .segmented-control {
   display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 3px;
@@ -791,6 +803,13 @@ a {
   color: var(--text);
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 420px) {
+  .segmented-control-btn {
+    padding: 7px 11px;
+    font-size: 0.82rem;
+  }
 }
 
 .theme-toggle-group {
