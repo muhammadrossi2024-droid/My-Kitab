@@ -1,0 +1,131 @@
+{
+  "number": 82,
+  "name": {
+    "arabic": "الإنفطار",
+    "transliteration": "Al-Infitar",
+    "englishMeaning": "The Cleaving"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 19,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:07.715Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِذَا ٱلسَّمَآءُ ٱنفَطَرَتْ",
+      "translation": "When the heaven is cleft asunder.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَإِذَا ٱلْكَوَاكِبُ ٱنتَثَرَتْ",
+      "translation": "And when the stars have fallen and scattered;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَإِذَا ٱلْبِحَارُ فُجِّرَتْ",
+      "translation": "And when the seas are burst forth;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَإِذَا ٱلْقُبُورُ بُعْثِرَتْ",
+      "translation": "And when the graves are turned upside down (and they bring out their contents)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "عَلِمَتْ نَفْسٌ مَّا قَدَّمَتْ وَأَخَّرَتْ",
+      "translation": "(Then) a person will know what he has sent forward and (what he has) left behind (of good or bad deeds).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "يَـٰٓأَيُّهَا ٱلْإِنسَـٰنُ مَا غَرَّكَ بِرَبِّكَ ٱلْكَرِيمِ",
+      "translation": "O man! What has made you careless concerning your Lord, the Most Generous?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "ٱلَّذِى خَلَقَكَ فَسَوَّىٰكَ فَعَدَلَكَ",
+      "translation": "Who created you, fashioned you perfectly, and gave you due proportion;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "فِىٓ أَىِّ صُورَةٍ مَّا شَآءَ رَكَّبَكَ",
+      "translation": "In whatever form He willed, He put you together.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "كَلَّا بَلْ تُكَذِّبُونَ بِٱلدِّينِ",
+      "translation": "Nay! But you deny the Recompense (reward for good deeds and punishment for evil deeds).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَإِنَّ عَلَيْكُمْ لَحَـٰفِظِينَ",
+      "translation": "But verily, over you (are appointed angels in charge of mankind) to watch you,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "كِرَامًا كَـٰتِبِينَ",
+      "translation": "Kiraman (honourable) Katibin writing down (your deeds),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "يَعْلَمُونَ مَا تَفْعَلُونَ",
+      "translation": "They know all that you do.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "إِنَّ ٱلْأَبْرَارَ لَفِى نَعِيمٍ",
+      "translation": "Verily, the Abrar (pious and righteous) will be in delight (Paradise);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "وَإِنَّ ٱلْفُجَّارَ لَفِى جَحِيمٍ",
+      "translation": "And verily, the Fujjar (the wicked, disbelievers, sinners and evil-doers) will be in the blazing Fire (Hell),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "يَصْلَوْنَهَا يَوْمَ ٱلدِّينِ",
+      "translation": "In which they will enter, and taste its burning flame on the Day of Recompense,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "وَمَا هُمْ عَنْهَا بِغَآئِبِينَ",
+      "translation": "And they (Al-Fujjar) will not be absent therefrom (i.e. will not go out from the Hell).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا يَوْمُ ٱلدِّينِ",
+      "translation": "And what will make you know what the Day of Recompense is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "ثُمَّ مَآ أَدْرَىٰكَ مَا يَوْمُ ٱلدِّينِ",
+      "translation": "Again, what will make you know what the Day of Recompense is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "يَوْمَ لَا تَمْلِكُ نَفْسٌ لِّنَفْسٍ شَيْـًٔا ۖ وَٱلْأَمْرُ يَوْمَئِذٍ لِّلَّهِ",
+      "translation": "(It will be) the Day when no person shall have power (to do) anything for another, and the Decision, that Day, will be (wholly) with Allah.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

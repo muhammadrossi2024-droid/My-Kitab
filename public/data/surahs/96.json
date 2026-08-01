@@ -1,0 +1,131 @@
+{
+  "number": 96,
+  "name": {
+    "arabic": "العلق",
+    "transliteration": "Al-Alaq",
+    "englishMeaning": "The Clot"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 19,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:31.354Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ",
+      "translation": "Read! In the Name of your Lord, Who has created (all that exists),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "خَلَقَ ٱلْإِنسَـٰنَ مِنْ عَلَقٍ",
+      "translation": "Has created man from a clot (a piece of thick coagulated blood).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "ٱقْرَأْ وَرَبُّكَ ٱلْأَكْرَمُ",
+      "translation": "Read! And your Lord is the Most Generous,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "ٱلَّذِى عَلَّمَ بِٱلْقَلَمِ",
+      "translation": "Who has taught (the writing) by the pen [the first person to write was Prophet Idrees (Enoch)],",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "عَلَّمَ ٱلْإِنسَـٰنَ مَا لَمْ يَعْلَمْ",
+      "translation": "Has taught man that which he knew not.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "كَلَّآ إِنَّ ٱلْإِنسَـٰنَ لَيَطْغَىٰٓ",
+      "translation": "Nay! Verily, man does transgress all bounds (in disbelief and evil deed, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "أَن رَّءَاهُ ٱسْتَغْنَىٰٓ",
+      "translation": "Because he considers himself self-sufficient.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "إِنَّ إِلَىٰ رَبِّكَ ٱلرُّجْعَىٰٓ",
+      "translation": "Surely! Unto your Lord is the return.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "أَرَءَيْتَ ٱلَّذِى يَنْهَىٰ",
+      "translation": "Have you (O Muhammad ()) seen him (i.e. Abu Jahl) who prevents,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "عَبْدًا إِذَا صَلَّىٰٓ",
+      "translation": "A slave (Muhammad ()) when he prays?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "أَرَءَيْتَ إِن كَانَ عَلَى ٱلْهُدَىٰٓ",
+      "translation": "Tell me, if he (Muhammad ()) is on the guidance (of Allah)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "أَوْ أَمَرَ بِٱلتَّقْوَىٰٓ",
+      "translation": "Or enjoins piety?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "أَرَءَيْتَ إِن كَذَّبَ وَتَوَلَّىٰٓ",
+      "translation": "Tell me if he (the disbeliever, Abu Jahl) denies (the truth, i.e. this Qur’an), and turns away?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "أَلَمْ يَعْلَم بِأَنَّ ٱللَّهَ يَرَىٰ",
+      "translation": "Knows he not that Allah does see (what he does)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "كَلَّا لَئِن لَّمْ يَنتَهِ لَنَسْفَعًۢا بِٱلنَّاصِيَةِ",
+      "translation": "Nay! If he (Abu Jahl) ceases not, We will catch him by the forelock,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "نَاصِيَةٍ كَـٰذِبَةٍ خَاطِئَةٍ",
+      "translation": "A lying, sinful forelock!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "فَلْيَدْعُ نَادِيَهُۥ",
+      "translation": "Then, let him call upon his council (of helpers),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "سَنَدْعُ ٱلزَّبَانِيَةَ",
+      "translation": "We will call the guards of Hell (to deal with him)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "كَلَّا لَا تُطِعْهُ وَٱسْجُدْ وَٱقْتَرِب ۩",
+      "translation": "Nay! (O Muhammad ())! Do not obey him (Abu Jahl). Fall prostrate and draw near to Allah!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "number": 104,
+  "name": {
+    "arabic": "الهمزة",
+    "transliteration": "Al-Humazah",
+    "englishMeaning": "The Traducer"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 9,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:46.331Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ",
+      "translation": "Woe to every slanderer and backbiter.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "ٱلَّذِى جَمَعَ مَالًا وَعَدَّدَهُۥ",
+      "translation": "Who has gathered wealth and counted it,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "يَحْسَبُ أَنَّ مَالَهُۥٓ أَخْلَدَهُۥ",
+      "translation": "He thinks that his wealth will make him last forever!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "كَلَّا ۖ لَيُنۢبَذَنَّ فِى ٱلْحُطَمَةِ",
+      "translation": "Nay! Verily, he will be thrown into the crushing Fire.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا ٱلْحُطَمَةُ",
+      "translation": "And what will make you know what the crushing Fire is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "نَارُ ٱللَّهِ ٱلْمُوقَدَةُ",
+      "translation": "The fire of Allah, kindled,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "ٱلَّتِى تَطَّلِعُ عَلَى ٱلْأَفْـِٔدَةِ",
+      "translation": "Which leaps up over the hearts,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ",
+      "translation": "Verily, it shall be closed in on them,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "فِى عَمَدٍ مُّمَدَّدَةٍۭ",
+      "translation": "In pillars stretched forth (i.e. they will be punished in the Fire with pillars, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

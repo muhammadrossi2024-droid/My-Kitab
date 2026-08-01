@@ -1,0 +1,47 @@
+{
+  "number": 105,
+  "name": {
+    "arabic": "الفيل",
+    "transliteration": "Al-Fil",
+    "englishMeaning": "The Elephant"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 5,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:47.981Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَـٰبِ ٱلْفِيلِ",
+      "translation": "Have you (O Muhammad ()) not seen how your Lord dealt with the Owners of the Elephant? [The elephant army which came from Yemen under the command of Abrahah Al-Ashram intending to destroy the Ka’bah at Makkah].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِى تَضْلِيلٍ",
+      "translation": "Did He not make their plot go astray?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ",
+      "translation": "And sent against them birds, in flocks,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ",
+      "translation": "Striking them with stones of Sijjil.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍۭ",
+      "translation": "And made them like an empty field of stalks (of which the corn has been eaten up by cattle).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

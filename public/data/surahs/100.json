@@ -1,0 +1,83 @@
+{
+  "number": 100,
+  "name": {
+    "arabic": "العاديات",
+    "transliteration": "Al-Adiyat",
+    "englishMeaning": "The Courser"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 11,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:38.970Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلْعَـٰدِيَـٰتِ ضَبْحًا",
+      "translation": "By the (steeds) that run, with panting (breath),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "فَٱلْمُورِيَـٰتِ قَدْحًا",
+      "translation": "Striking sparks of fire (by their hooves),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "فَٱلْمُغِيرَٰتِ صُبْحًا",
+      "translation": "And scouring to the raid at dawn",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "فَأَثَرْنَ بِهِۦ نَقْعًا",
+      "translation": "And raise the dust in clouds the while,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَوَسَطْنَ بِهِۦ جَمْعًا",
+      "translation": "Penetrating forthwith as one into the midst (of the foe);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "إِنَّ ٱلْإِنسَـٰنَ لِرَبِّهِۦ لَكَنُودٌ",
+      "translation": "Verily! Man (disbeliever) is ungrateful to his Lord;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ",
+      "translation": "And to that fact he bears witness (by his deeds);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَإِنَّهُۥ لِحُبِّ ٱلْخَيْرِ لَشَدِيدٌ",
+      "translation": "And verily, he is violent in the love of wealth.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "۞ أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِى ٱلْقُبُورِ",
+      "translation": "Knows he not that when the contents of the graves are brought out and poured forth (all mankind is resurrected).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَحُصِّلَ مَا فِى ٱلصُّدُورِ",
+      "translation": "And that which is in the breasts (of men) shall be made known.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "إِنَّ رَبَّهُم بِهِمْ يَوْمَئِذٍ لَّخَبِيرٌۢ",
+      "translation": "Verily, that Day (i.e. the Day of Resurrection) their Lord will be Well-Acquainted with them (as to their deeds), (and will reward them for their deeds).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "number": 81,
+  "name": {
+    "arabic": "التكوير",
+    "transliteration": "At-Takwir",
+    "englishMeaning": "The Overthrowing"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 29,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:06.059Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِذَا ٱلشَّمْسُ كُوِّرَتْ",
+      "translation": "When the sun Kuwwirat (wound round and lost its light and is overthrown).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَإِذَا ٱلنُّجُومُ ٱنكَدَرَتْ",
+      "translation": "And when the stars shall fall;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَإِذَا ٱلْجِبَالُ سُيِّرَتْ",
+      "translation": "And when the mountains shall made to pass away;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَإِذَا ٱلْعِشَارُ عُطِّلَتْ",
+      "translation": "And when the pregnant she-camels shall be neglected;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَإِذَا ٱلْوُحُوشُ حُشِرَتْ",
+      "translation": "And when the wild beasts shall be gathered together;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "وَإِذَا ٱلْبِحَارُ سُجِّرَتْ",
+      "translation": "And when the seas shall become as blazing Fire or shall overflow;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَإِذَا ٱلنُّفُوسُ زُوِّجَتْ",
+      "translation": "And when the souls shall be joined with their bodies;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَإِذَا ٱلْمَوْءُۥدَةُ سُئِلَتْ",
+      "translation": "And when the female (infant) buried alive (as the pagan Arabs used to do) shall be questioned.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "بِأَىِّ ذَنۢبٍ قُتِلَتْ",
+      "translation": "For what sin she was killed?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَإِذَا ٱلصُّحُفُ نُشِرَتْ",
+      "translation": "And when the written pages of deeds (good and bad) of every person shall be laid open;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَإِذَا ٱلسَّمَآءُ كُشِطَتْ",
+      "translation": "And when the heaven shall be stripped off and taken away from its place;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "وَإِذَا ٱلْجَحِيمُ سُعِّرَتْ",
+      "translation": "And when Hell-fire shall be kindled to fierce ablaze.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "وَإِذَا ٱلْجَنَّةُ أُزْلِفَتْ",
+      "translation": "And when Paradise shall be brought near,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "عَلِمَتْ نَفْسٌ مَّآ أَحْضَرَتْ",
+      "translation": "(Then) every person will know what he has brought (of good and evil).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "فَلَآ أُقْسِمُ بِٱلْخُنَّسِ",
+      "translation": "So verily, I swear by the planets that recede (i.e. disappear during the day and appear during the night).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "ٱلْجَوَارِ ٱلْكُنَّسِ",
+      "translation": "And by the planets that move swiftly and hide themselves,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "وَٱلَّيْلِ إِذَا عَسْعَسَ",
+      "translation": "And by the night as it departs;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "وَٱلصُّبْحِ إِذَا تَنَفَّسَ",
+      "translation": "And by the dawn as it brightens;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "إِنَّهُۥ لَقَوْلُ رَسُولٍ كَرِيمٍ",
+      "translation": "Verily, this is the Word (this Qur’an brought by) a most honourable messenger [Jibrael (Gabriel), from Allah to the Prophet Muhammad ()].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "ذِى قُوَّةٍ عِندَ ذِى ٱلْعَرْشِ مَكِينٍ",
+      "translation": "Owner of power, and high rank with (Allah) the Lord of the Throne,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "مُّطَاعٍ ثَمَّ أَمِينٍ",
+      "translation": "Obeyed (by the angels), trustworthy there (in the heavens).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "وَمَا صَاحِبُكُم بِمَجْنُونٍ",
+      "translation": "And (O people) your companion (Muhammad ()) is not a madman;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "وَلَقَدْ رَءَاهُ بِٱلْأُفُقِ ٱلْمُبِينِ",
+      "translation": "And indeed he (Muhammad ()) saw him [Jibrael (Gabriel)] in the clear horizon (towards the east).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "وَمَا هُوَ عَلَى ٱلْغَيْبِ بِضَنِينٍ",
+      "translation": "And he (Muhammad ()) withholds not a knowledge of the unseen.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "وَمَا هُوَ بِقَوْلِ شَيْطَـٰنٍ رَّجِيمٍ",
+      "translation": "And it (the Qur’an) is not the word of the outcast Shaitan (Satan).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "فَأَيْنَ تَذْهَبُونَ",
+      "translation": "Then where are you going?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 27,
+      "arabic": "إِنْ هُوَ إِلَّا ذِكْرٌ لِّلْعَـٰلَمِينَ",
+      "translation": "Verily, this (the Qur’an) is no less than a Reminder to (all) the ‘Alamin (mankind and jinns).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 28,
+      "arabic": "لِمَن شَآءَ مِنكُمْ أَن يَسْتَقِيمَ",
+      "translation": "To whomsoever among you who wills to walk straight,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 29,
+      "arabic": "وَمَا تَشَآءُونَ إِلَّآ أَن يَشَآءَ ٱللَّهُ رَبُّ ٱلْعَـٰلَمِينَ",
+      "translation": "And you will not, unless (it be) that Allah wills, the Lord of the ‘Alamin (mankind, jinns and all that exists).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

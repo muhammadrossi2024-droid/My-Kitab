@@ -1,0 +1,41 @@
+{
+  "number": 106,
+  "name": {
+    "arabic": "قريش",
+    "transliteration": "Quraysh",
+    "englishMeaning": "Quraysh"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 4,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:49.903Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "لِإِيلَـٰفِ قُرَيْشٍ",
+      "translation": "(It is a great Grace and Protection from Allah), for the taming of the Quraish,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "إِۦلَـٰفِهِمْ رِحْلَةَ ٱلشِّتَآءِ وَٱلصَّيْفِ",
+      "translation": "(And with all those Allah’s Grace and Protections for their taming, We cause) the (Quraish) caravans to set forth safe in winter (to the south), and in summer (to the north without any fear),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "فَلْيَعْبُدُوا۟ رَبَّ هَـٰذَا ٱلْبَيْتِ",
+      "translation": "So let them worship (Allah) the Lord of this House (the Ka’bah in Makkah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "ٱلَّذِىٓ أَطْعَمَهُم مِّن جُوعٍ وَءَامَنَهُم مِّنْ خَوْفٍۭ",
+      "translation": "(He) Who has fed them against hunger, and has made them safe from fear.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

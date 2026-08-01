@@ -1,0 +1,65 @@
+{
+  "number": 98,
+  "name": {
+    "arabic": "البينة",
+    "transliteration": "Al-Bayyinah",
+    "englishMeaning": "The Clear Proof"
+  },
+  "revelationType": "Medinan",
+  "totalVerses": 8,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:35.049Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "لَمْ يَكُنِ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَـٰبِ وَٱلْمُشْرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ ٱلْبَيِّنَةُ",
+      "translation": "Those who disbelieve from among the people of the Scripture (Jews and Christians) and among Al-Mushrikun,were not going to leave (their disbelief) until there came to them clear evidence.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "رَسُولٌ مِّنَ ٱللَّهِ يَتْلُوا۟ صُحُفًا مُّطَهَّرَةً",
+      "translation": "A Messenger (Muhammad ()) from Allah, reciting (the Qur’an) purified pages [purified from Al-Batil (falsehood, etc.)].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "فِيهَا كُتُبٌ قَيِّمَةٌ",
+      "translation": "Containing correct and straight laws from Allah.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَمَا تَفَرَّقَ ٱلَّذِينَ أُوتُوا۟ ٱلْكِتَـٰبَ إِلَّا مِنۢ بَعْدِ مَا جَآءَتْهُمُ ٱلْبَيِّنَةُ",
+      "translation": "And the people of the Scripture (Jews and Christians) differed not until after there came to them clear evidence. (i.e. Prophet Muhammad () and whatever was revealed to him).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَمَآ أُمِرُوٓا۟ إِلَّا لِيَعْبُدُوا۟ ٱللَّهَ مُخْلِصِينَ لَهُ ٱلدِّينَ حُنَفَآءَ وَيُقِيمُوا۟ ٱلصَّلَوٰةَ وَيُؤْتُوا۟ ٱلزَّكَوٰةَ ۚ وَذَٰلِكَ دِينُ ٱلْقَيِّمَةِ",
+      "translation": "And they were commanded not, but that they should worship Allah, and worship none but Him Alone (abstaining from ascribing partners to Him), and perform As-Salat (Iqamat-as-Salat) and give Zakat: and that is the right religion.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "إِنَّ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَـٰبِ وَٱلْمُشْرِكِينَ فِى نَارِ جَهَنَّمَ خَـٰلِدِينَ فِيهَآ ۚ أُو۟لَـٰٓئِكَ هُمْ شَرُّ ٱلْبَرِيَّةِ",
+      "translation": "Verily, those who disbelieve (in the religion of Islam, the Qur’an and Prophet Muhammad ()) from among the people of the Scripture (Jews and Christians) and Al-Mushrikun will abide in the Fire of Hell. They are the worst of creatures.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "إِنَّ ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ أُو۟لَـٰٓئِكَ هُمْ خَيْرُ ٱلْبَرِيَّةِ",
+      "translation": "Verily, those who believe [in the Oneness of Allah, and in His Messenger Muhammad ()) including all obligations ordered by Islam] and do righteous good deeds, they are the best of creatures.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "جَزَآؤُهُمْ عِندَ رَبِّهِمْ جَنَّـٰتُ عَدْنٍ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَـٰرُ خَـٰلِدِينَ فِيهَآ أَبَدًا ۖ رَّضِىَ ٱللَّهُ عَنْهُمْ وَرَضُوا۟ عَنْهُ ۚ ذَٰلِكَ لِمَنْ خَشِىَ رَبَّهُۥ",
+      "translation": "Their reward with their Lord is ‘Adn (Eden) Paradise (Gardens of Eternity), underneath which rivers flow, they will abide therein forever, Allah Well-Pleased with them, and they with Him. That is for him who fears his Lord.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

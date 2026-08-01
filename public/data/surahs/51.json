@@ -1,0 +1,377 @@
+{
+  "number": 51,
+  "name": {
+    "arabic": "الذاريات",
+    "transliteration": "Adh-Dhariyat",
+    "englishMeaning": "The Winnowing Winds"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 60,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:29:17.205Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلذَّٰرِيَـٰتِ ذَرْوًا",
+      "translation": "By (the winds) that scatter dust.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "فَٱلْحَـٰمِلَـٰتِ وِقْرًا",
+      "translation": "And (the clouds) that bear heavy weight of water;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "فَٱلْجَـٰرِيَـٰتِ يُسْرًا",
+      "translation": "And (the ships) that float with ease and gentleness;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "فَٱلْمُقَسِّمَـٰتِ أَمْرًا",
+      "translation": "And those (angels) who distribute (provisions, rain, and other blessings) by (Allah’s) Command;-",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "إِنَّمَا تُوعَدُونَ لَصَادِقٌ",
+      "translation": "Verily, that which you are promised (i.e. Resurrection in the Hereafter and receiving the reward or punishment of good or bad deeds, etc.) is surely true.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "وَإِنَّ ٱلدِّينَ لَوَٰقِعٌ",
+      "translation": "And verily, the Recompense is sure to happen.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَٱلسَّمَآءِ ذَاتِ ٱلْحُبُكِ",
+      "translation": "By the heaven full of paths,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "إِنَّكُمْ لَفِى قَوْلٍ مُّخْتَلِفٍ",
+      "translation": "Certainly, you have different ideas (about Muhammad and the Qur’an).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "يُؤْفَكُ عَنْهُ مَنْ أُفِكَ",
+      "translation": "Turned aside therefrom (i.e. from Muhammad and the Qur’an) is he who is turned aside (by the Decree and Preordainment ÇáÞÖÇ æÇáÞÏÑ of Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "قُتِلَ ٱلْخَرَّٰصُونَ",
+      "translation": "Cursed be the liars,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "ٱلَّذِينَ هُمْ فِى غَمْرَةٍ سَاهُونَ",
+      "translation": "Who are under a cover of heedlessness (think not about the gravity of the Hereafter),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "يَسْـَٔلُونَ أَيَّانَ يَوْمُ ٱلدِّينِ",
+      "translation": "They ask; “When will be the Day of Recompense?”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "يَوْمَ هُمْ عَلَى ٱلنَّارِ يُفْتَنُونَ",
+      "translation": "(It will be) a Day when they will be tried (i.e. burnt) over the Fire!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "ذُوقُوا۟ فِتْنَتَكُمْ هَـٰذَا ٱلَّذِى كُنتُم بِهِۦ تَسْتَعْجِلُونَ",
+      "translation": "“Taste you your trial (burning)! This is what you used to ask to be hastened!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "إِنَّ ٱلْمُتَّقِينَ فِى جَنَّـٰتٍ وَعُيُونٍ",
+      "translation": "Verily, the Muttaqun (pious – see V.2:2) will be in the midst of Gardens and Springs (in the Paradise),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "ءَاخِذِينَ مَآ ءَاتَىٰهُمْ رَبُّهُمْ ۚ إِنَّهُمْ كَانُوا۟ قَبْلَ ذَٰلِكَ مُحْسِنِينَ",
+      "translation": "Taking joy in the things which their Lord has given them. Verily, they were before this Muhsinun (good-doers – see V.2:112).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "كَانُوا۟ قَلِيلًا مِّنَ ٱلَّيْلِ مَا يَهْجَعُونَ",
+      "translation": "They used to sleep but little by night [invoking their Lord (Allah) and praying, with fear and hope].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "وَبِٱلْأَسْحَارِ هُمْ يَسْتَغْفِرُونَ",
+      "translation": "And in the hours before dawn, they were (found) asking (Allah) for forgiveness,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَفِىٓ أَمْوَٰلِهِمْ حَقٌّ لِّلسَّآئِلِ وَٱلْمَحْرُومِ",
+      "translation": "And in their properties there was the right of the beggar, and the Mahrum (the poor who does not ask the others) ,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "وَفِى ٱلْأَرْضِ ءَايَـٰتٌ لِّلْمُوقِنِينَ",
+      "translation": "And on the earth are signs for those who have Faith with certainty,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "وَفِىٓ أَنفُسِكُمْ ۚ أَفَلَا تُبْصِرُونَ",
+      "translation": "And also in your ownselves. Will you not then see?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "وَفِى ٱلسَّمَآءِ رِزْقُكُمْ وَمَا تُوعَدُونَ",
+      "translation": "And in the heaven is your provision, and that which you are promised.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "فَوَرَبِّ ٱلسَّمَآءِ وَٱلْأَرْضِ إِنَّهُۥ لَحَقٌّ مِّثْلَ مَآ أَنَّكُمْ تَنطِقُونَ",
+      "translation": "Then, by the Lord of the heaven and the earth, it is the truth (i.e. what has been promised to you), just as it is the truth that you can speak.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "هَلْ أَتَىٰكَ حَدِيثُ ضَيْفِ إِبْرَٰهِيمَ ٱلْمُكْرَمِينَ",
+      "translation": "Has the story reached you, of the honoured guests [three angels; Jibrael (Gabriel) along with another two] of Ibrahim (Abraham)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "إِذْ دَخَلُوا۟ عَلَيْهِ فَقَالُوا۟ سَلَـٰمًا ۖ قَالَ سَلَـٰمٌ قَوْمٌ مُّنكَرُونَ",
+      "translation": "When they came in to him, and said, “Salam, (peace be upon you)!” He answered; “Salam, (peace be upon you ),” and said: “You are a people unknown to me,”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "فَرَاغَ إِلَىٰٓ أَهْلِهِۦ فَجَآءَ بِعِجْلٍ سَمِينٍ",
+      "translation": "Then he turned to his household, so brought out a roasted calf [as the property of Ibrahim (Abraham) was mainly cows].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 27,
+      "arabic": "فَقَرَّبَهُۥٓ إِلَيْهِمْ قَالَ أَلَا تَأْكُلُونَ",
+      "translation": "And placed it before them, (saying): “Will you not eat?”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 28,
+      "arabic": "فَأَوْجَسَ مِنْهُمْ خِيفَةً ۖ قَالُوا۟ لَا تَخَفْ ۖ وَبَشَّرُوهُ بِغُلَـٰمٍ عَلِيمٍ",
+      "translation": "Then he conceived a fear of them (when they ate not). They said: “Fear not.” And they gave him glad tidings of an intelligent son, having knowledge (about Allah and His religion of True Monotheism).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 29,
+      "arabic": "فَأَقْبَلَتِ ٱمْرَأَتُهُۥ فِى صَرَّةٍ فَصَكَّتْ وَجْهَهَا وَقَالَتْ عَجُوزٌ عَقِيمٌ",
+      "translation": "Then his wife came forward with a loud voice, she smote her face, and said: “A barren old woman!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 30,
+      "arabic": "قَالُوا۟ كَذَٰلِكِ قَالَ رَبُّكِ ۖ إِنَّهُۥ هُوَ ٱلْحَكِيمُ ٱلْعَلِيمُ",
+      "translation": "They said: “Even so says your Lord. Verily, He is the All-Wise, the All-Knower.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 31,
+      "arabic": "۞ قَالَ فَمَا خَطْبُكُمْ أَيُّهَا ٱلْمُرْسَلُونَ",
+      "translation": "[Ibrahim (Abraham)] said: “Then for what purpose you have come, O Messengers?”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 32,
+      "arabic": "قَالُوٓا۟ إِنَّآ أُرْسِلْنَآ إِلَىٰ قَوْمٍ مُّجْرِمِينَ",
+      "translation": "They said: “We have been sent to a people who are Mujrimun (polytheists, sinners, criminals, disbelievers in Allah);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 33,
+      "arabic": "لِنُرْسِلَ عَلَيْهِمْ حِجَارَةً مِّن طِينٍ",
+      "translation": "To send down upon them stones of baked clay.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 34,
+      "arabic": "مُّسَوَّمَةً عِندَ رَبِّكَ لِلْمُسْرِفِينَ",
+      "translation": "Marked by your Lord for the Musrifun (polytheists, criminals, sinners those who trespass Allah’s set limits in evil-doings by committing great sins).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 35,
+      "arabic": "فَأَخْرَجْنَا مَن كَانَ فِيهَا مِنَ ٱلْمُؤْمِنِينَ",
+      "translation": "So We brought out from therein the believers.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 36,
+      "arabic": "فَمَا وَجَدْنَا فِيهَا غَيْرَ بَيْتٍ مِّنَ ٱلْمُسْلِمِينَ",
+      "translation": "But We found not there any household of the Muslims except one [i.e. Lout (Lot) and his two daughters].",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 37,
+      "arabic": "وَتَرَكْنَا فِيهَآ ءَايَةً لِّلَّذِينَ يَخَافُونَ ٱلْعَذَابَ ٱلْأَلِيمَ",
+      "translation": "And We have left there a sign (i.e. the place of the Dead Sea , well-known in Palestine) for those who fear the painful torment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 38,
+      "arabic": "وَفِى مُوسَىٰٓ إِذْ أَرْسَلْنَـٰهُ إِلَىٰ فِرْعَوْنَ بِسُلْطَـٰنٍ مُّبِينٍ",
+      "translation": "And in Musa (Moses) (too, there is a sign). When We sent him to Fir’aun (Pharaoh) with a manifest authority.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 39,
+      "arabic": "فَتَوَلَّىٰ بِرُكْنِهِۦ وَقَالَ سَـٰحِرٌ أَوْ مَجْنُونٌ",
+      "translation": "But [Fir’aun (Pharaoh)] turned away (from Belief in might) along with his hosts, and said: “A sorcerer, or a madman.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 40,
+      "arabic": "فَأَخَذْنَـٰهُ وَجُنُودَهُۥ فَنَبَذْنَـٰهُمْ فِى ٱلْيَمِّ وَهُوَ مُلِيمٌ",
+      "translation": "So We took him and his hosts, and dumped them into the sea, while he was to be blamed.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 41,
+      "arabic": "وَفِى عَادٍ إِذْ أَرْسَلْنَا عَلَيْهِمُ ٱلرِّيحَ ٱلْعَقِيمَ",
+      "translation": "And in ‘Ad (there is also a sign) when We sent against them the barren wind;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 42,
+      "arabic": "مَا تَذَرُ مِن شَىْءٍ أَتَتْ عَلَيْهِ إِلَّا جَعَلَتْهُ كَٱلرَّمِيمِ",
+      "translation": "It spared nothing that it reached, but blew it into broken spreads of rotten ruins.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 43,
+      "arabic": "وَفِى ثَمُودَ إِذْ قِيلَ لَهُمْ تَمَتَّعُوا۟ حَتَّىٰ حِينٍ",
+      "translation": "And in Thamud (there is also a sign), when they were told: “Enjoy yourselves for a while!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 44,
+      "arabic": "فَعَتَوْا۟ عَنْ أَمْرِ رَبِّهِمْ فَأَخَذَتْهُمُ ٱلصَّـٰعِقَةُ وَهُمْ يَنظُرُونَ",
+      "translation": "But they insolently defied the Command of their Lord, so the Sa’iqah overtook them while they were looking.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 45,
+      "arabic": "فَمَا ٱسْتَطَـٰعُوا۟ مِن قِيَامٍ وَمَا كَانُوا۟ مُنتَصِرِينَ",
+      "translation": "Then they were unable to rise up, nor could they help themselves.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 46,
+      "arabic": "وَقَوْمَ نُوحٍ مِّن قَبْلُ ۖ إِنَّهُمْ كَانُوا۟ قَوْمًا فَـٰسِقِينَ",
+      "translation": "(So were) the people of Nuh (Noah) before them. Verily, they were a people who were Fasiqun (rebellious, disobedient to Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 47,
+      "arabic": "وَٱلسَّمَآءَ بَنَيْنَـٰهَا بِأَيْي۟دٍ وَإِنَّا لَمُوسِعُونَ",
+      "translation": "With power did We construct the heaven. Verily, We are Able to extend the vastness of space thereof.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 48,
+      "arabic": "وَٱلْأَرْضَ فَرَشْنَـٰهَا فَنِعْمَ ٱلْمَـٰهِدُونَ",
+      "translation": "And We have spread out the earth, how Excellent Spreader (thereof) are We!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 49,
+      "arabic": "وَمِن كُلِّ شَىْءٍ خَلَقْنَا زَوْجَيْنِ لَعَلَّكُمْ تَذَكَّرُونَ",
+      "translation": "And of everything We have created pairs, that you may remember (the Grace of Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 50,
+      "arabic": "فَفِرُّوٓا۟ إِلَى ٱللَّهِ ۖ إِنِّى لَكُم مِّنْهُ نَذِيرٌ مُّبِينٌ",
+      "translation": "So flee to Allah (from His Torment to His Mercy Islamic Monotheism), verily, I (Muhammad ) am a plain warner to you from Him.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 51,
+      "arabic": "وَلَا تَجْعَلُوا۟ مَعَ ٱللَّهِ إِلَـٰهًا ءَاخَرَ ۖ إِنِّى لَكُم مِّنْهُ نَذِيرٌ مُّبِينٌ",
+      "translation": "And set not up (or worship) any other ilahan (god) along with Allah [Glorified be He (Alone), Exalted above all that they associate as partners with Him]. Verily, I (Muhammad ) am a plain warner to you from Him.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 52,
+      "arabic": "كَذَٰلِكَ مَآ أَتَى ٱلَّذِينَ مِن قَبْلِهِم مِّن رَّسُولٍ إِلَّا قَالُوا۟ سَاحِرٌ أَوْ مَجْنُونٌ",
+      "translation": "Likewise, no Messenger came to those before them, but they said: “A sorcerer or a madman!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 53,
+      "arabic": "أَتَوَاصَوْا۟ بِهِۦ ۚ بَلْ هُمْ قَوْمٌ طَاغُونَ",
+      "translation": "Have they (the people of the past) transmitted this saying to these (Quraish pagans)? Nay, they are themselves a people transgressing beyond bounds (in disbelief)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 54,
+      "arabic": "فَتَوَلَّ عَنْهُمْ فَمَآ أَنتَ بِمَلُومٍ",
+      "translation": "So turn away (O Muhammad ) from them (Quraish pagans) you are not to be blamed (as you have conveyed Allah’s Message).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 55,
+      "arabic": "وَذَكِّرْ فَإِنَّ ٱلذِّكْرَىٰ تَنفَعُ ٱلْمُؤْمِنِينَ",
+      "translation": "And remind (by preaching the Qur’an, O Muhammad ) for verily, the reminding profits the believers.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 56,
+      "arabic": "وَمَا خَلَقْتُ ٱلْجِنَّ وَٱلْإِنسَ إِلَّا لِيَعْبُدُونِ",
+      "translation": "And I (Allah) created not the jinns and humans except they should worship Me (Alone).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 57,
+      "arabic": "مَآ أُرِيدُ مِنْهُم مِّن رِّزْقٍ وَمَآ أُرِيدُ أَن يُطْعِمُونِ",
+      "translation": "I seek not any provision from them (i.e. provision for themselves or for My creatures) nor do I ask that they should feed Me (i.e. feed themselves or My creatures).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 58,
+      "arabic": "إِنَّ ٱللَّهَ هُوَ ٱلرَّزَّاقُ ذُو ٱلْقُوَّةِ ٱلْمَتِينُ",
+      "translation": "Verily, Allah is the All-Provider, Owner of Power, the Most Strong.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 59,
+      "arabic": "فَإِنَّ لِلَّذِينَ ظَلَمُوا۟ ذَنُوبًا مِّثْلَ ذَنُوبِ أَصْحَـٰبِهِمْ فَلَا يَسْتَعْجِلُونِ",
+      "translation": "And verily, for those who do wrong, there is a portion of torment like to the evil portion of torment (which came for) their likes (of old), so let them not ask Me to hasten on!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 60,
+      "arabic": "فَوَيْلٌ لِّلَّذِينَ كَفَرُوا۟ مِن يَوْمِهِمُ ٱلَّذِى يُوعَدُونَ",
+      "translation": "Then, woe to those who disbelieve (in Allah and His Oneness Islamic Monotheism) from (that) their Day which they have been promised (for their punishment).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "number": 95,
+  "name": {
+    "arabic": "التين",
+    "transliteration": "At-Tin",
+    "englishMeaning": "The Fig"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 8,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:29.832Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلتِّينِ وَٱلزَّيْتُونِ",
+      "translation": "By the fig, and the olive,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَطُورِ سِينِينَ",
+      "translation": "By Mount Sinai,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَهَـٰذَا ٱلْبَلَدِ ٱلْأَمِينِ",
+      "translation": "And by this city of security (Makkah) ,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "لَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍ",
+      "translation": "Verily, We created man of the best stature (mould),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "ثُمَّ رَدَدْنَـٰهُ أَسْفَلَ سَـٰفِلِينَ",
+      "translation": "Then We reduced him to the lowest of the low,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ",
+      "translation": "Save those who believe (in Islamic Monotheism) and do righteous deeds, then they shall have a reward without end (Paradise).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "فَمَا يُكَذِّبُكَ بَعْدُ بِٱلدِّينِ",
+      "translation": "Then what (or who) causes you (O disbelievers) to deny the Recompense (i.e. Day of Resurrection)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "أَلَيْسَ ٱللَّهُ بِأَحْكَمِ ٱلْحَـٰكِمِينَ",
+      "translation": "Is not Allah the Best of judges?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

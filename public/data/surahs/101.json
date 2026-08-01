@@ -1,0 +1,83 @@
+{
+  "number": 101,
+  "name": {
+    "arabic": "القارعة",
+    "transliteration": "Al-Qari'ah",
+    "englishMeaning": "The Calamity"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 11,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:41.363Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "ٱلْقَارِعَةُ",
+      "translation": "Al-Qari’ah (the striking Hour i.e. the Day of Resurrection),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "مَا ٱلْقَارِعَةُ",
+      "translation": "What is the striking (Hour)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا ٱلْقَارِعَةُ",
+      "translation": "And what will make you know what the striking (Hour) is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "يَوْمَ يَكُونُ ٱلنَّاسُ كَٱلْفَرَاشِ ٱلْمَبْثُوثِ",
+      "translation": "It is a Day whereon mankind will be like moths scattered about,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَتَكُونُ ٱلْجِبَالُ كَٱلْعِهْنِ ٱلْمَنفُوشِ",
+      "translation": "And the mountains will be like carded wool,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "فَأَمَّا مَن ثَقُلَتْ مَوَٰزِينُهُۥ",
+      "translation": "Then as for him whose balance (of good deeds) will be heavy,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "فَهُوَ فِى عِيشَةٍ رَّاضِيَةٍ",
+      "translation": "He will live a pleasant life (in Paradise).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَأَمَّا مَنْ خَفَّتْ مَوَٰزِينُهُۥ",
+      "translation": "But as for him whose balance (of good deeds) will be light,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "فَأُمُّهُۥ هَاوِيَةٌ",
+      "translation": "He will have his home in Hawiyah (pit, i.e. Hell).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا هِيَهْ",
+      "translation": "And what will make you know what it is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "نَارٌ حَامِيَةٌۢ",
+      "translation": "(It is) a hot blazing Fire!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

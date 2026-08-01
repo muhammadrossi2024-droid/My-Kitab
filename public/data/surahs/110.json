@@ -1,0 +1,35 @@
+{
+  "number": 110,
+  "name": {
+    "arabic": "النصر",
+    "transliteration": "An-Nasr",
+    "englishMeaning": "The Divine Support"
+  },
+  "revelationType": "Medinan",
+  "totalVerses": 3,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:56.282Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ",
+      "translation": "When comes the Help of Allah (to you, O Muhammad () against your enemies) and the conquest (of Makkah),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَرَأَيْتَ ٱلنَّاسَ يَدْخُلُونَ فِى دِينِ ٱللَّهِ أَفْوَاجًا",
+      "translation": "And you see that the people enter Allah’s religion (Islam) in crowds,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَٱسْتَغْفِرْهُ ۚ إِنَّهُۥ كَانَ تَوَّابًۢا",
+      "translation": "So glorify the Praises of your Lord, and ask for His Forgiveness. Verily, He is the One Who accepts the repentance and forgives.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

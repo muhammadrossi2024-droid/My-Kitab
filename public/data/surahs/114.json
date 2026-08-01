@@ -1,0 +1,53 @@
+{
+  "number": 114,
+  "name": {
+    "arabic": "الناس",
+    "transliteration": "An-Nas",
+    "englishMeaning": "Mankind"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 6,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:31:04.834Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ",
+      "translation": "Say: “I seek refuge with (Allah) the Lord of mankind,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "مَلِكِ ٱلنَّاسِ",
+      "translation": "“The King of mankind,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "إِلَـٰهِ ٱلنَّاسِ",
+      "translation": "“The Ilah (God) of mankind,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ",
+      "translation": "“From the evil of the whisperer (devil who whispers evil in the hearts of men) who withdraws (from his whispering in one’s heart after one remembers Allah) ,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ",
+      "translation": "“Who whispers in the breasts of mankind,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ",
+      "translation": "“Of jinns and men.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

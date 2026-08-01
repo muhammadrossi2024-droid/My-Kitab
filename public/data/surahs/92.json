@@ -1,0 +1,143 @@
+{
+  "number": 92,
+  "name": {
+    "arabic": "الليل",
+    "transliteration": "Al-Layl",
+    "englishMeaning": "The Night"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 21,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:25.113Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلَّيْلِ إِذَا يَغْشَىٰ",
+      "translation": "By the night as it envelops;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَٱلنَّهَارِ إِذَا تَجَلَّىٰ",
+      "translation": "And by the day as it appears in brightness;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَمَا خَلَقَ ٱلذَّكَرَ وَٱلْأُنثَىٰٓ",
+      "translation": "And by Him Who created male and female;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "إِنَّ سَعْيَكُمْ لَشَتَّىٰ",
+      "translation": "Certainly, your efforts and deeds are diverse (different in aims and purposes);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَأَمَّا مَنْ أَعْطَىٰ وَٱتَّقَىٰ",
+      "translation": "As for him who gives (in charity) and keeps his duty to Allah and fears Him,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "وَصَدَّقَ بِٱلْحُسْنَىٰ",
+      "translation": "And believes in Al-Husna.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "فَسَنُيَسِّرُهُۥ لِلْيُسْرَىٰ",
+      "translation": "We will make smooth for him the path of ease (goodness).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَأَمَّا مَنۢ بَخِلَ وَٱسْتَغْنَىٰ",
+      "translation": "But he who is greedy miser and thinks himself self-sufficient.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "وَكَذَّبَ بِٱلْحُسْنَىٰ",
+      "translation": "And gives the lie to Al-Husna (see Verse No: 6 footnote);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "فَسَنُيَسِّرُهُۥ لِلْعُسْرَىٰ",
+      "translation": "We will make smooth for him the path for evil;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَمَا يُغْنِى عَنْهُ مَالُهُۥٓ إِذَا تَرَدَّىٰٓ",
+      "translation": "And what will his wealth benefit him when he goes down (in destruction).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "إِنَّ عَلَيْنَا لَلْهُدَىٰ",
+      "translation": "Truly! Ours it is (to give) guidance,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "وَإِنَّ لَنَا لَلْـَٔاخِرَةَ وَٱلْأُولَىٰ",
+      "translation": "And truly, unto Us (belong) the last (Hereafter) and the first (this world).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "فَأَنذَرْتُكُمْ نَارًا تَلَظَّىٰ",
+      "translation": "Therefore I have warned you of a Fire blazing fiercely (Hell);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "لَا يَصْلَىٰهَآ إِلَّا ٱلْأَشْقَى",
+      "translation": "None shall enter it save the most wretched,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "ٱلَّذِى كَذَّبَ وَتَوَلَّىٰ",
+      "translation": "Who denies and turns away.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "وَسَيُجَنَّبُهَا ٱلْأَتْقَى",
+      "translation": "And Al-Muttaqun (the pious and righteous – see V.2:2) will be far removed from it (Hell).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "ٱلَّذِى يُؤْتِى مَالَهُۥ يَتَزَكَّىٰ",
+      "translation": "He who spends his wealth for increase in self-purification,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَمَا لِأَحَدٍ عِندَهُۥ مِن نِّعْمَةٍ تُجْزَىٰٓ",
+      "translation": "And have in his mind no favour from anyone for which a reward is expected in return,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "إِلَّا ٱبْتِغَآءَ وَجْهِ رَبِّهِ ٱلْأَعْلَىٰ",
+      "translation": "Except only the desire to seek the Countenance of his Lord, the Most High;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "وَلَسَوْفَ يَرْضَىٰ",
+      "translation": "He surely will be pleased (when he will enter Paradise).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

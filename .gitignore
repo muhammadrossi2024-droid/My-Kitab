@@ -1,0 +1,5 @@
+node_modules/
+dist/
+scratch_pdf_pages/
+*.log
+.DS_Store

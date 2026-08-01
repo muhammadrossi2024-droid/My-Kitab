@@ -1,0 +1,275 @@
+{
+  "number": 13,
+  "name": {
+    "arabic": "الرعد",
+    "transliteration": "Ar-Ra'd",
+    "englishMeaning": "The Thunder"
+  },
+  "revelationType": "Medinan",
+  "totalVerses": 43,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:28:14.053Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "الٓمٓر ۚ تِلْكَ ءَايَـٰتُ ٱلْكِتَـٰبِ ۗ وَٱلَّذِىٓ أُنزِلَ إِلَيْكَ مِن رَّبِّكَ ٱلْحَقُّ وَلَـٰكِنَّ أَكْثَرَ ٱلنَّاسِ لَا يُؤْمِنُونَ",
+      "translation": "Alif-Lam-Mim-Ra.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "ٱللَّهُ ٱلَّذِى رَفَعَ ٱلسَّمَـٰوَٰتِ بِغَيْرِ عَمَدٍ تَرَوْنَهَا ۖ ثُمَّ ٱسْتَوَىٰ عَلَى ٱلْعَرْشِ ۖ وَسَخَّرَ ٱلشَّمْسَ وَٱلْقَمَرَ ۖ كُلٌّ يَجْرِى لِأَجَلٍ مُّسَمًّى ۚ يُدَبِّرُ ٱلْأَمْرَ يُفَصِّلُ ٱلْـَٔايَـٰتِ لَعَلَّكُم بِلِقَآءِ رَبِّكُمْ تُوقِنُونَ",
+      "translation": "Allah is He Who raised the heavens without any pillars that you can see. Then, He Istawa (rose above) the Throne (really in a manner that suits His Majesty). He has subjected the sun and the moon (to continue going round)! Each running (its course) for a term appointed. He regulates all affairs, explaining the Ayat (proofs, evidences, verses, lessons, signs, revelations, etc.) in detail, that you may believe with certainty in the meeting with your Lord.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَهُوَ ٱلَّذِى مَدَّ ٱلْأَرْضَ وَجَعَلَ فِيهَا رَوَٰسِىَ وَأَنْهَـٰرًا ۖ وَمِن كُلِّ ٱلثَّمَرَٰتِ جَعَلَ فِيهَا زَوْجَيْنِ ٱثْنَيْنِ ۖ يُغْشِى ٱلَّيْلَ ٱلنَّهَارَ ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍ لِّقَوْمٍ يَتَفَكَّرُونَ",
+      "translation": "And it is He Who spread out the earth, and placed therein firm mountains and rivers and of every kind of fruits He made Zawjain Ithnain (two in pairs – may mean two kinds or it may mean: of two sorts, e.g. black and white, sweet and sour, small and big, etc.) He brings the night as a cover over the day. Verily, in these things, there are Ayat (proofs, evidences, lessons, signs, etc.) for people who reflect.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَفِى ٱلْأَرْضِ قِطَعٌ مُّتَجَـٰوِرَٰتٌ وَجَنَّـٰتٌ مِّنْ أَعْنَـٰبٍ وَزَرْعٌ وَنَخِيلٌ صِنْوَانٌ وَغَيْرُ صِنْوَانٍ يُسْقَىٰ بِمَآءٍ وَٰحِدٍ وَنُفَضِّلُ بَعْضَهَا عَلَىٰ بَعْضٍ فِى ٱلْأُكُلِ ۚ إِنَّ فِى ذَٰلِكَ لَـَٔايَـٰتٍ لِّقَوْمٍ يَعْقِلُونَ",
+      "translation": "And in the earth are neighbouring tracts, and gardens of vines, and green crops (fields etc.), and date-palms, growing out two or three from a single stem root, or otherwise (one stem root for every palm ), watered with the same water, yet some of them We make more excellent than others to eat. Verily, in these things, there are Ayat (proofs, evidences, lessons, signs) for the people who understand.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "۞ وَإِن تَعْجَبْ فَعَجَبٌ قَوْلُهُمْ أَءِذَا كُنَّا تُرَٰبًا أَءِنَّا لَفِى خَلْقٍ جَدِيدٍ ۗ أُو۟لَـٰٓئِكَ ٱلَّذِينَ كَفَرُوا۟ بِرَبِّهِمْ ۖ وَأُو۟لَـٰٓئِكَ ٱلْأَغْلَـٰلُ فِىٓ أَعْنَاقِهِمْ ۖ وَأُو۟لَـٰٓئِكَ أَصْحَـٰبُ ٱلنَّارِ ۖ هُمْ فِيهَا خَـٰلِدُونَ",
+      "translation": "And if you (O Muhammad ) wonder (at these polytheists who deny your message of Islamic Monotheism and have taken besides Allah others for worship who can neither harm nor benefit), then wondrous is their saying: “When we are dust, shall we indeed then be (raised) in a new creation?” They are those who disbelieve in their Lord! They are those who will have iron chains tying their hands to their necks. They will be dwellers of the Fire to abide therein.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "وَيَسْتَعْجِلُونَكَ بِٱلسَّيِّئَةِ قَبْلَ ٱلْحَسَنَةِ وَقَدْ خَلَتْ مِن قَبْلِهِمُ ٱلْمَثُلَـٰتُ ۗ وَإِنَّ رَبَّكَ لَذُو مَغْفِرَةٍ لِّلنَّاسِ عَلَىٰ ظُلْمِهِمْ ۖ وَإِنَّ رَبَّكَ لَشَدِيدُ ٱلْعِقَابِ",
+      "translation": "They ask you to hasten the evil before the good, yet (many) exemplary punishments have indeed occurred before them. But verily, your Lord is full of Forgiveness for mankind inspite of their wrong-doing. And verily, your Lord is (also) Severe in punishment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَيَقُولُ ٱلَّذِينَ كَفَرُوا۟ لَوْلَآ أُنزِلَ عَلَيْهِ ءَايَةٌ مِّن رَّبِّهِۦٓ ۗ إِنَّمَآ أَنتَ مُنذِرٌ ۖ وَلِكُلِّ قَوْمٍ هَادٍ",
+      "translation": "And the disbelievers say: “Why is not a sign sent down to him from his Lord?” You are only a warner, and to every people there is a guide.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "ٱللَّهُ يَعْلَمُ مَا تَحْمِلُ كُلُّ أُنثَىٰ وَمَا تَغِيضُ ٱلْأَرْحَامُ وَمَا تَزْدَادُ ۖ وَكُلُّ شَىْءٍ عِندَهُۥ بِمِقْدَارٍ",
+      "translation": "Allah knows what every female bears, and by how much the wombs fall short (of their time or number) or exceed. Everything with Him is in (due) proportion.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "عَـٰلِمُ ٱلْغَيْبِ وَٱلشَّهَـٰدَةِ ٱلْكَبِيرُ ٱلْمُتَعَالِ",
+      "translation": "All-Knower of the unseen and the seen, the Most Great, the Most High.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "سَوَآءٌ مِّنكُم مَّنْ أَسَرَّ ٱلْقَوْلَ وَمَن جَهَرَ بِهِۦ وَمَنْ هُوَ مُسْتَخْفٍۭ بِٱلَّيْلِ وَسَارِبٌۢ بِٱلنَّهَارِ",
+      "translation": "It is the same (to Him) whether any of you conceal his speech or declare it openly, whether he be hid by night or go forth freely by day.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "لَهُۥ مُعَقِّبَـٰتٌ مِّنۢ بَيْنِ يَدَيْهِ وَمِنْ خَلْفِهِۦ يَحْفَظُونَهُۥ مِنْ أَمْرِ ٱللَّهِ ۗ إِنَّ ٱللَّهَ لَا يُغَيِّرُ مَا بِقَوْمٍ حَتَّىٰ يُغَيِّرُوا۟ مَا بِأَنفُسِهِمْ ۗ وَإِذَآ أَرَادَ ٱللَّهُ بِقَوْمٍ سُوٓءًا فَلَا مَرَدَّ لَهُۥ ۚ وَمَا لَهُم مِّن دُونِهِۦ مِن وَالٍ",
+      "translation": "For each (person), there are angels in succession, before and behind him. They guard him by the Command of Allah. Verily! Allah will not change the good condition of a people as long as they do not change their state of goodness themselves (by committing sins and by being ungrateful and disobedient to Allah). But when Allah wills a people’s punishment, there can be no turning back of it, and they will find besides Him no protector.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "هُوَ ٱلَّذِى يُرِيكُمُ ٱلْبَرْقَ خَوْفًا وَطَمَعًا وَيُنشِئُ ٱلسَّحَابَ ٱلثِّقَالَ",
+      "translation": "It is He who shows you the lightning, as a fear (for travellers) and as a hope (for those who wait for rain). And it is He Who brings up (or originates) the clouds, heavy (with water).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "وَيُسَبِّحُ ٱلرَّعْدُ بِحَمْدِهِۦ وَٱلْمَلَـٰٓئِكَةُ مِنْ خِيفَتِهِۦ وَيُرْسِلُ ٱلصَّوَٰعِقَ فَيُصِيبُ بِهَا مَن يَشَآءُ وَهُمْ يُجَـٰدِلُونَ فِى ٱللَّهِ وَهُوَ شَدِيدُ ٱلْمِحَالِ",
+      "translation": "And Ar-Ra’d (thunder) glorifies and praises Him, and so do the angels because of His Awe, He sends the thunderbolts, and therewith He strikes whom He wills, yet they (disbelievers) dispute about Allah. And He is Mighty in strength and Severe in punishment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "لَهُۥ دَعْوَةُ ٱلْحَقِّ ۖ وَٱلَّذِينَ يَدْعُونَ مِن دُونِهِۦ لَا يَسْتَجِيبُونَ لَهُم بِشَىْءٍ إِلَّا كَبَـٰسِطِ كَفَّيْهِ إِلَى ٱلْمَآءِ لِيَبْلُغَ فَاهُ وَمَا هُوَ بِبَـٰلِغِهِۦ ۚ وَمَا دُعَآءُ ٱلْكَـٰفِرِينَ إِلَّا فِى ضَلَـٰلٍ",
+      "translation": "For Him (Alone) is the Word of Truth (i.e. none has the right to be worshipped but He). And those whom they (polytheists and disbelievers) invoke, answer them no more than one who stretches forth his hand (at the edge of a deep well) for water to reach his mouth, but it reaches him not, and the invocation of the disbelievers is nothing but an error (i.e. of no use).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "وَلِلَّهِ يَسْجُدُ مَن فِى ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ طَوْعًا وَكَرْهًا وَظِلَـٰلُهُم بِٱلْغُدُوِّ وَٱلْـَٔاصَالِ ۩",
+      "translation": "And unto Allah (Alone) falls in prostration whoever is in the heavens and the earth, willingly or unwillingly, and so do their shadows in the mornings and in the afternoons.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "قُلْ مَن رَّبُّ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ قُلِ ٱللَّهُ ۚ قُلْ أَفَٱتَّخَذْتُم مِّن دُونِهِۦٓ أَوْلِيَآءَ لَا يَمْلِكُونَ لِأَنفُسِهِمْ نَفْعًا وَلَا ضَرًّا ۚ قُلْ هَلْ يَسْتَوِى ٱلْأَعْمَىٰ وَٱلْبَصِيرُ أَمْ هَلْ تَسْتَوِى ٱلظُّلُمَـٰتُ وَٱلنُّورُ ۗ أَمْ جَعَلُوا۟ لِلَّهِ شُرَكَآءَ خَلَقُوا۟ كَخَلْقِهِۦ فَتَشَـٰبَهَ ٱلْخَلْقُ عَلَيْهِمْ ۚ قُلِ ٱللَّهُ خَـٰلِقُ كُلِّ شَىْءٍ وَهُوَ ٱلْوَٰحِدُ ٱلْقَهَّـٰرُ",
+      "translation": "Say (O Muhammad ): “Who is the Lord of the heavens and the earth?” Say: “(It is) Allah.” Say: “Have you then taken (for worship) Auliya’ (protectors, etc.) other than Him, such as have no power either for benefit or for harm to themselves?” Say: “Is the blind equal to the one who sees? Or darkness equal to light? Or do they assign to Allah partners who created the like of His creation, so that the creation (which they made and His creation) seemed alike to them.” Say: “Allah is the Creator of all things, He is the One, the Irresistible.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "أَنزَلَ مِنَ ٱلسَّمَآءِ مَآءً فَسَالَتْ أَوْدِيَةٌۢ بِقَدَرِهَا فَٱحْتَمَلَ ٱلسَّيْلُ زَبَدًا رَّابِيًا ۚ وَمِمَّا يُوقِدُونَ عَلَيْهِ فِى ٱلنَّارِ ٱبْتِغَآءَ حِلْيَةٍ أَوْ مَتَـٰعٍ زَبَدٌ مِّثْلُهُۥ ۚ كَذَٰلِكَ يَضْرِبُ ٱللَّهُ ٱلْحَقَّ وَٱلْبَـٰطِلَ ۚ فَأَمَّا ٱلزَّبَدُ فَيَذْهَبُ جُفَآءً ۖ وَأَمَّا مَا يَنفَعُ ٱلنَّاسَ فَيَمْكُثُ فِى ٱلْأَرْضِ ۚ كَذَٰلِكَ يَضْرِبُ ٱللَّهُ ٱلْأَمْثَالَ",
+      "translation": "He sends down water (rain) from the sky, and the valleys flow according to their measure, but the flood bears away the foam that mounts up to the surface, and (also) from that (ore) which they heat in the fire in order to make ornaments or utensils, rises a foam like unto it, thus does Allah (by parables) show forth truth and falsehood . Then, as for the foam it passes away as scum upon the banks, while that which is for the good of mankind remains in the earth. Thus Allah sets forth parables (for the truth and falsehood, i.e. Belief and disbelief).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "لِلَّذِينَ ٱسْتَجَابُوا۟ لِرَبِّهِمُ ٱلْحُسْنَىٰ ۚ وَٱلَّذِينَ لَمْ يَسْتَجِيبُوا۟ لَهُۥ لَوْ أَنَّ لَهُم مَّا فِى ٱلْأَرْضِ جَمِيعًا وَمِثْلَهُۥ مَعَهُۥ لَٱفْتَدَوْا۟ بِهِۦٓ ۚ أُو۟لَـٰٓئِكَ لَهُمْ سُوٓءُ ٱلْحِسَابِ وَمَأْوَىٰهُمْ جَهَنَّمُ ۖ وَبِئْسَ ٱلْمِهَادُ",
+      "translation": "For those who answered their Lord’s Call [believed in the Oneness of Allah and followed His Messenger Muhammad i.e. Islamic Monotheism] is Al-Husna (i.e. Paradise). But those who answered not His Call (disbelieved in the Oneness of Allah and followed not His Messenger Muhammad ), if they had all that is in the earth together with its like, they would offer it in order to save themselves (from the torment, it will be in vain). For them there will be the terrible reckoning. Their dwelling place will be Hell; – and worst indeed is that place for rest.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "۞ أَفَمَن يَعْلَمُ أَنَّمَآ أُنزِلَ إِلَيْكَ مِن رَّبِّكَ ٱلْحَقُّ كَمَنْ هُوَ أَعْمَىٰٓ ۚ إِنَّمَا يَتَذَكَّرُ أُو۟لُوا۟ ٱلْأَلْبَـٰبِ",
+      "translation": "Shall he then who knows that what has been revealed unto you (O Muhammad ) from your Lord is the truth be like him who is blind? But it is only the men of understanding that pay heed.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "ٱلَّذِينَ يُوفُونَ بِعَهْدِ ٱللَّهِ وَلَا يَنقُضُونَ ٱلْمِيثَـٰقَ",
+      "translation": "Those who fulfill the Covenant of Allah and break not the Mithaq (bond, treaty, covenant);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "وَٱلَّذِينَ يَصِلُونَ مَآ أَمَرَ ٱللَّهُ بِهِۦٓ أَن يُوصَلَ وَيَخْشَوْنَ رَبَّهُمْ وَيَخَافُونَ سُوٓءَ ٱلْحِسَابِ",
+      "translation": "Those who join that which Allah has commanded to be joined (i.e. they are good to their relatives and do not sever the bond of kinship), fear their Lord, and dread the terrible reckoning (i.e. abstain from all kinds of sins and evil deeds which Allah has forbidden and perform all kinds of good deeds which Allah has ordained).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "وَٱلَّذِينَ صَبَرُوا۟ ٱبْتِغَآءَ وَجْهِ رَبِّهِمْ وَأَقَامُوا۟ ٱلصَّلَوٰةَ وَأَنفَقُوا۟ مِمَّا رَزَقْنَـٰهُمْ سِرًّا وَعَلَانِيَةً وَيَدْرَءُونَ بِٱلْحَسَنَةِ ٱلسَّيِّئَةَ أُو۟لَـٰٓئِكَ لَهُمْ عُقْبَى ٱلدَّارِ",
+      "translation": "And those who remain patient, seeking their Lord’s Countenance, perform As-Salat (Iqamat-as-Salat), and spend out of that which We have bestowed on them, secretly and openly, and defend evil with good, for such there is a good end;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "جَنَّـٰتُ عَدْنٍ يَدْخُلُونَهَا وَمَن صَلَحَ مِنْ ءَابَآئِهِمْ وَأَزْوَٰجِهِمْ وَذُرِّيَّـٰتِهِمْ ۖ وَٱلْمَلَـٰٓئِكَةُ يَدْخُلُونَ عَلَيْهِم مِّن كُلِّ بَابٍ",
+      "translation": "‘Adn (Eden) Paradise (everlasting Gardens), which they shall enter and (also) those who acted righteously from among their fathers, and their wives, and their offspring. And angels shall enter unto them from every gate (saying):",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "سَلَـٰمٌ عَلَيْكُم بِمَا صَبَرْتُمْ ۚ فَنِعْمَ عُقْبَى ٱلدَّارِ",
+      "translation": "“Salamun ‘Alaikum (peace be upon you) for that you persevered in patience! Excellent indeed is the final home!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "وَٱلَّذِينَ يَنقُضُونَ عَهْدَ ٱللَّهِ مِنۢ بَعْدِ مِيثَـٰقِهِۦ وَيَقْطَعُونَ مَآ أَمَرَ ٱللَّهُ بِهِۦٓ أَن يُوصَلَ وَيُفْسِدُونَ فِى ٱلْأَرْضِ ۙ أُو۟لَـٰٓئِكَ لَهُمُ ٱللَّعْنَةُ وَلَهُمْ سُوٓءُ ٱلدَّارِ",
+      "translation": "And those who break the Covenant of Allah, after its ratification, and sever that which Allah has commanded to be joined (i.e. they sever the bond of kinship and are not good to their relatives), and work mischief in the land, on them is the curse (i.e. they will be far away from Allah’s Mercy); And for them is the unhappy (evil) home (i.e. Hell) .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "ٱللَّهُ يَبْسُطُ ٱلرِّزْقَ لِمَن يَشَآءُ وَيَقْدِرُ ۚ وَفَرِحُوا۟ بِٱلْحَيَوٰةِ ٱلدُّنْيَا وَمَا ٱلْحَيَوٰةُ ٱلدُّنْيَا فِى ٱلْـَٔاخِرَةِ إِلَّا مَتَـٰعٌ",
+      "translation": "Allah increases the provision for whom He wills, and straitens (it for whom He wills), and they rejoice in the life of the world, whereas the life of this world as compared with the Hereafter is but a brief passing enjoyment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 27,
+      "arabic": "وَيَقُولُ ٱلَّذِينَ كَفَرُوا۟ لَوْلَآ أُنزِلَ عَلَيْهِ ءَايَةٌ مِّن رَّبِّهِۦ ۗ قُلْ إِنَّ ٱللَّهَ يُضِلُّ مَن يَشَآءُ وَيَهْدِىٓ إِلَيْهِ مَنْ أَنَابَ",
+      "translation": "And those who disbelieve say: “Why is not a sign sent down to him (Muhammad ) from his Lord?” Say: “Verily, Allah sends astray whom He wills and guides unto Himself those who turn to Him in repentance.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 28,
+      "arabic": "ٱلَّذِينَ ءَامَنُوا۟ وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ ٱللَّهِ ۗ أَلَا بِذِكْرِ ٱللَّهِ تَطْمَئِنُّ ٱلْقُلُوبُ",
+      "translation": "Those who believe (in the Oneness of Allah – Islamic Monotheism), and whose hearts find rest in the remembrance of Allah, Verily, in the remembrance of Allah do hearts find rest .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 29,
+      "arabic": "ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ طُوبَىٰ لَهُمْ وَحُسْنُ مَـَٔابٍ",
+      "translation": "Those who believe (in the Oneness of Allah – Islamic Monotheism), and work righteousness, Tuba (it means all kinds of happiness or name of a tree in Paradise) is for them and a beautiful place of (final) return.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 30,
+      "arabic": "كَذَٰلِكَ أَرْسَلْنَـٰكَ فِىٓ أُمَّةٍ قَدْ خَلَتْ مِن قَبْلِهَآ أُمَمٌ لِّتَتْلُوَا۟ عَلَيْهِمُ ٱلَّذِىٓ أَوْحَيْنَآ إِلَيْكَ وَهُمْ يَكْفُرُونَ بِٱلرَّحْمَـٰنِ ۚ قُلْ هُوَ رَبِّى لَآ إِلَـٰهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَإِلَيْهِ مَتَابِ",
+      "translation": "Thus have We sent you (O Muhammad ) to a community before whom other communities have passed away, in order that you might recite unto them what We have inspired to you, while they disbelieve in the Most Beneficient (Allah) Say: “He is my Lord! La ilaha illa Huwa (none has the right to be worshipped but He)! In Him is my trust, and to Him will be my return with repentance.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 31,
+      "arabic": "وَلَوْ أَنَّ قُرْءَانًا سُيِّرَتْ بِهِ ٱلْجِبَالُ أَوْ قُطِّعَتْ بِهِ ٱلْأَرْضُ أَوْ كُلِّمَ بِهِ ٱلْمَوْتَىٰ ۗ بَل لِّلَّهِ ٱلْأَمْرُ جَمِيعًا ۗ أَفَلَمْ يَا۟يْـَٔسِ ٱلَّذِينَ ءَامَنُوٓا۟ أَن لَّوْ يَشَآءُ ٱللَّهُ لَهَدَى ٱلنَّاسَ جَمِيعًا ۗ وَلَا يَزَالُ ٱلَّذِينَ كَفَرُوا۟ تُصِيبُهُم بِمَا صَنَعُوا۟ قَارِعَةٌ أَوْ تَحُلُّ قَرِيبًا مِّن دَارِهِمْ حَتَّىٰ يَأْتِىَ وَعْدُ ٱللَّهِ ۚ إِنَّ ٱللَّهَ لَا يُخْلِفُ ٱلْمِيعَادَ",
+      "translation": "And if there had been a Qur’an with which mountains could be moved (from their places), or the earth could be cloven asunder, or the dead could be made to speak (it would not have been other than this Qur’an). But the decision of all things is certainly with Allah. Have not then those who believe yet known that had Allah willed, He could have guided all mankind? And a disaster will not cease to strike those who disbelieve because of their (evil) deeds or it (i.e. the disaster) settle close to their homes, until the Promise of Allah comes to pass. Certainly, Allah does not fail in His Promise.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 32,
+      "arabic": "وَلَقَدِ ٱسْتُهْزِئَ بِرُسُلٍ مِّن قَبْلِكَ فَأَمْلَيْتُ لِلَّذِينَ كَفَرُوا۟ ثُمَّ أَخَذْتُهُمْ ۖ فَكَيْفَ كَانَ عِقَابِ",
+      "translation": "And indeed (many) Messengers were mocked at before you (O Muhammad ), but I granted respite to those who disbelieved, and finally I punished them. Then how (terrible) was My Punishment!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 33,
+      "arabic": "أَفَمَنْ هُوَ قَآئِمٌ عَلَىٰ كُلِّ نَفْسٍۭ بِمَا كَسَبَتْ ۗ وَجَعَلُوا۟ لِلَّهِ شُرَكَآءَ قُلْ سَمُّوهُمْ ۚ أَمْ تُنَبِّـُٔونَهُۥ بِمَا لَا يَعْلَمُ فِى ٱلْأَرْضِ أَم بِظَـٰهِرٍ مِّنَ ٱلْقَوْلِ ۗ بَلْ زُيِّنَ لِلَّذِينَ كَفَرُوا۟ مَكْرُهُمْ وَصُدُّوا۟ عَنِ ٱلسَّبِيلِ ۗ وَمَن يُضْلِلِ ٱللَّهُ فَمَا لَهُۥ مِنْ هَادٍ",
+      "translation": "Is then He (Allah) Who takes charge (guards, maintains, provides, etc.) of every person and knows all that he has earned (like any other deities who know nothing)? Yet they ascribe partners to Allah. Say: “Name them! Is it that you will inform Him of something He knows not in the earth or is it (just) a show of false words.” Nay! To those who disbelieve, their plotting is made fairseeming, and they have been hindered from the Right Path, and whom Allah sends astray, for him, there is no guide.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 34,
+      "arabic": "لَّهُمْ عَذَابٌ فِى ٱلْحَيَوٰةِ ٱلدُّنْيَا ۖ وَلَعَذَابُ ٱلْـَٔاخِرَةِ أَشَقُّ ۖ وَمَا لَهُم مِّنَ ٱللَّهِ مِن وَاقٍ",
+      "translation": "For them is a torment in the life of this world, and certainly, harder is the torment of the Hereafter. And they have no protector against Allah.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 35,
+      "arabic": "۞ مَّثَلُ ٱلْجَنَّةِ ٱلَّتِى وُعِدَ ٱلْمُتَّقُونَ ۖ تَجْرِى مِن تَحْتِهَا ٱلْأَنْهَـٰرُ ۖ أُكُلُهَا دَآئِمٌ وَظِلُّهَا ۚ تِلْكَ عُقْبَى ٱلَّذِينَ ٱتَّقَوا۟ ۖ وَّعُقْبَى ٱلْكَـٰفِرِينَ ٱلنَّارُ",
+      "translation": "The description of the Paradise which the Muttaqun (pious – see V.2:2): have been promised! -Underneath it rivers flow, its provision is eternal and so is its shade, this is the end (final destination) of the Muttaqun (pious – see V.2:2), and the end (final destination) of the disbelievers is Fire. (See Verse 47:15)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 36,
+      "arabic": "وَٱلَّذِينَ ءَاتَيْنَـٰهُمُ ٱلْكِتَـٰبَ يَفْرَحُونَ بِمَآ أُنزِلَ إِلَيْكَ ۖ وَمِنَ ٱلْأَحْزَابِ مَن يُنكِرُ بَعْضَهُۥ ۚ قُلْ إِنَّمَآ أُمِرْتُ أَنْ أَعْبُدَ ٱللَّهَ وَلَآ أُشْرِكَ بِهِۦٓ ۚ إِلَيْهِ أَدْعُوا۟ وَإِلَيْهِ مَـَٔابِ",
+      "translation": "Those to whom We have given the Book (such as ‘Abdullah bin Salam and other Jews who embraced Islam), rejoice at what has been revealed unto you (i.e. the Qur’an) , but there are among the Confederates (from the Jews and pagans) those who reject a part thereof. Say (O Muhammad ): “I am commanded only to worship Allah (Alone) and not to join partners with Him. To Him (Alone) I call and to Him is my return.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 37,
+      "arabic": "وَكَذَٰلِكَ أَنزَلْنَـٰهُ حُكْمًا عَرَبِيًّا ۚ وَلَئِنِ ٱتَّبَعْتَ أَهْوَآءَهُم بَعْدَ مَا جَآءَكَ مِنَ ٱلْعِلْمِ مَا لَكَ مِنَ ٱللَّهِ مِن وَلِىٍّ وَلَا وَاقٍ",
+      "translation": "And thus have We sent it (the Qur’an) down to be a judgement of authority in Arabic. Were you (O Muhammad ) to follow their (vain) desires after the knowledge which has come to you, then you will not have any Wali (protector) or defender against Allah.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 38,
+      "arabic": "وَلَقَدْ أَرْسَلْنَا رُسُلًا مِّن قَبْلِكَ وَجَعَلْنَا لَهُمْ أَزْوَٰجًا وَذُرِّيَّةً ۚ وَمَا كَانَ لِرَسُولٍ أَن يَأْتِىَ بِـَٔايَةٍ إِلَّا بِإِذْنِ ٱللَّهِ ۗ لِكُلِّ أَجَلٍ كِتَابٌ",
+      "translation": "And indeed We sent Messengers before you (O Muhammad ), and made for them wives and offspring. And it was not for a Messenger to bring a sign except by Allah’s Leave. (For) each and every matter there is a Decree (from Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 39,
+      "arabic": "يَمْحُوا۟ ٱللَّهُ مَا يَشَآءُ وَيُثْبِتُ ۖ وَعِندَهُۥٓ أُمُّ ٱلْكِتَـٰبِ",
+      "translation": "Allah blots out what He wills and confirms (what He wills). And with Him is the Mother of the Book (Al-Lauh Al-Mahfuz)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 40,
+      "arabic": "وَإِن مَّا نُرِيَنَّكَ بَعْضَ ٱلَّذِى نَعِدُهُمْ أَوْ نَتَوَفَّيَنَّكَ فَإِنَّمَا عَلَيْكَ ٱلْبَلَـٰغُ وَعَلَيْنَا ٱلْحِسَابُ",
+      "translation": "Whether We show you (O Muhammad ) part of what We have promised them or cause you to die, your duty is only to convey (the Message) and on Us is the reckoning.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 41,
+      "arabic": "أَوَلَمْ يَرَوْا۟ أَنَّا نَأْتِى ٱلْأَرْضَ نَنقُصُهَا مِنْ أَطْرَافِهَا ۚ وَٱللَّهُ يَحْكُمُ لَا مُعَقِّبَ لِحُكْمِهِۦ ۚ وَهُوَ سَرِيعُ ٱلْحِسَابِ",
+      "translation": "See they not that We gradually reduce the land (of disbelievers, by giving it to the believers, in war victories) from its outlying borders. And Allah judges, there is none to put back His Judgement and He is Swift at reckoning.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 42,
+      "arabic": "وَقَدْ مَكَرَ ٱلَّذِينَ مِن قَبْلِهِمْ فَلِلَّهِ ٱلْمَكْرُ جَمِيعًا ۖ يَعْلَمُ مَا تَكْسِبُ كُلُّ نَفْسٍ ۗ وَسَيَعْلَمُ ٱلْكُفَّـٰرُ لِمَنْ عُقْبَى ٱلدَّارِ",
+      "translation": "And verily, those before them did devise plots, but all planning is Allah’s. He knows what every person earns, and the disbelievers will know who gets the good end (final destination).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 43,
+      "arabic": "وَيَقُولُ ٱلَّذِينَ كَفَرُوا۟ لَسْتَ مُرْسَلًا ۚ قُلْ كَفَىٰ بِٱللَّهِ شَهِيدًۢا بَيْنِى وَبَيْنَكُمْ وَمَنْ عِندَهُۥ عِلْمُ ٱلْكِتَـٰبِ",
+      "translation": "And those who disbelieve, say: “You (O Muhammad ) are not a Messenger.” Say: “Sufficient for a witness between me and you is Allah and those too who have knowledge of the Scripture (such as ‘Abdullah bin Salam and other Jews and Christians who embraced Islam).”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

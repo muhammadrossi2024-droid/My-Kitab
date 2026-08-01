@@ -1,0 +1,65 @@
+{
+  "number": 99,
+  "name": {
+    "arabic": "الزلزلة",
+    "transliteration": "Az-Zalzalah",
+    "englishMeaning": "The Earthquake"
+  },
+  "revelationType": "Medinan",
+  "totalVerses": 8,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:37.177Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِذَا زُلْزِلَتِ ٱلْأَرْضُ زِلْزَالَهَا",
+      "translation": "When the earth is shaken with its (final) earthquake.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَأَخْرَجَتِ ٱلْأَرْضُ أَثْقَالَهَا",
+      "translation": "And when the earth throws out its burdens,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَقَالَ ٱلْإِنسَـٰنُ مَا لَهَا",
+      "translation": "And man will say: “What is the matter with it?”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا",
+      "translation": "That Day it will declare its information (about all what happened over it of good or evil).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا",
+      "translation": "Because your Lord has inspired it.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "يَوْمَئِذٍ يَصْدُرُ ٱلنَّاسُ أَشْتَاتًا لِّيُرَوْا۟ أَعْمَـٰلَهُمْ",
+      "translation": "That Day mankind will proceed in scattered groups that they may be shown their deeds.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُۥ",
+      "translation": "So whosoever does good equal to the weight of an atom (or a small ant), shall see it.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُۥ",
+      "translation": "And whosoever does evil equal to the weight of an atom (or a small ant), shall see it.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

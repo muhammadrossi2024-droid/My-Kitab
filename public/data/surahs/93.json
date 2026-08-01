@@ -1,0 +1,83 @@
+{
+  "number": 93,
+  "name": {
+    "arabic": "الضحى",
+    "transliteration": "Ad-Duhaa",
+    "englishMeaning": "The Morning Hours"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 11,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:26.849Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلضُّحَىٰ",
+      "translation": "By the forenoon (after sun-rise);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَٱلَّيْلِ إِذَا سَجَىٰ",
+      "translation": "And by the night when it is still (or darkens);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",
+      "translation": "Your Lord (O Muhammad ()) has neither forsaken you nor hated you.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَلَلْـَٔاخِرَةُ خَيْرٌ لَّكَ مِنَ ٱلْأُولَىٰ",
+      "translation": "And indeed the Hereafter is better for you than the present (life of this world).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ",
+      "translation": "And verily, your Lord will give you (all i.e. good) so that you shall be well-pleased.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "أَلَمْ يَجِدْكَ يَتِيمًا فَـَٔاوَىٰ",
+      "translation": "Did He not find you (O Muhammad ()) an orphan and gave you a refuge?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَوَجَدَكَ ضَآلًّا فَهَدَىٰ",
+      "translation": "And He found you unaware (of the Qur’an, its legal laws, and Prophethood, etc.) and guided you?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَوَجَدَكَ عَآئِلًا فَأَغْنَىٰ",
+      "translation": "And He found you poor, and made you rich (selfsufficient with selfcontentment, etc.)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "فَأَمَّا ٱلْيَتِيمَ فَلَا تَقْهَرْ",
+      "translation": "Therefore, treat not the orphan with oppression,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَأَمَّا ٱلسَّآئِلَ فَلَا تَنْهَرْ",
+      "translation": "And repulse not the beggar;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ",
+      "translation": "And proclaim the Grace of your Lord (i.e. the Prophethood and all other Graces).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

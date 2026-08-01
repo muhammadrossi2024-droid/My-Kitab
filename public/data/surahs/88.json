@@ -1,0 +1,173 @@
+{
+  "number": 88,
+  "name": {
+    "arabic": "الغاشية",
+    "transliteration": "Al-Ghashiyah",
+    "englishMeaning": "The Overwhelming"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 26,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:18.621Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "هَلْ أَتَىٰكَ حَدِيثُ ٱلْغَـٰشِيَةِ",
+      "translation": "Has there come to you the narration of the overwhelming (i.e. the Day of Resurrection);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وُجُوهٌ يَوْمَئِذٍ خَـٰشِعَةٌ",
+      "translation": "Some faces, that Day, will be humiliated (in the Hell-fire, i.e. the faces of all disbelievers, Jews and Christians, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "عَامِلَةٌ نَّاصِبَةٌ",
+      "translation": "Labouring (hard in the worldly life by worshipping others besides Allah), weary (in the Hereafter with humility and disgrace) .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "تَصْلَىٰ نَارًا حَامِيَةً",
+      "translation": "They will enter in the hot blazing Fire,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "تُسْقَىٰ مِنْ عَيْنٍ ءَانِيَةٍ",
+      "translation": "They will be given to drink from a boiling spring,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "لَّيْسَ لَهُمْ طَعَامٌ إِلَّا مِن ضَرِيعٍ",
+      "translation": "No food will there be for them but a poisonous thorny plant,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "لَّا يُسْمِنُ وَلَا يُغْنِى مِن جُوعٍ",
+      "translation": "Which will neither nourish nor avail against hunger.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وُجُوهٌ يَوْمَئِذٍ نَّاعِمَةٌ",
+      "translation": "(Other) faces, that Day, will be joyful,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "لِّسَعْيِهَا رَاضِيَةٌ",
+      "translation": "Glad with their endeavour (for their good deeds which they did in this world, along with the true Faith of Islamic Monotheism).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "فِى جَنَّةٍ عَالِيَةٍ",
+      "translation": "In a lofty Paradise.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "لَّا تَسْمَعُ فِيهَا لَـٰغِيَةً",
+      "translation": "Where they shall neither hear harmful speech nor falsehood,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "فِيهَا عَيْنٌ جَارِيَةٌ",
+      "translation": "Therein will be a running spring,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "فِيهَا سُرُرٌ مَّرْفُوعَةٌ",
+      "translation": "Therein will be thrones raised high,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "وَأَكْوَابٌ مَّوْضُوعَةٌ",
+      "translation": "And cups set at hand.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "وَنَمَارِقُ مَصْفُوفَةٌ",
+      "translation": "And cushions set in rows,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "وَزَرَابِىُّ مَبْثُوثَةٌ",
+      "translation": "And rich carpets (all) spread out.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "أَفَلَا يَنظُرُونَ إِلَى ٱلْإِبِلِ كَيْفَ خُلِقَتْ",
+      "translation": "Do they not look at the camels, how they are created?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "وَإِلَى ٱلسَّمَآءِ كَيْفَ رُفِعَتْ",
+      "translation": "And at the heaven, how it is raised?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَإِلَى ٱلْجِبَالِ كَيْفَ نُصِبَتْ",
+      "translation": "And at the mountains, how they are rooted and fixed firm?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "وَإِلَى ٱلْأَرْضِ كَيْفَ سُطِحَتْ",
+      "translation": "And at the earth, how it is spread out?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "فَذَكِّرْ إِنَّمَآ أَنتَ مُذَكِّرٌ",
+      "translation": "So remind them (O Muhammad ()), you are only a one who reminds.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "لَّسْتَ عَلَيْهِم بِمُصَيْطِرٍ",
+      "translation": "You are not a dictator over them.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "إِلَّا مَن تَوَلَّىٰ وَكَفَرَ",
+      "translation": "Save the one who turns away and disbelieves",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "فَيُعَذِّبُهُ ٱللَّهُ ٱلْعَذَابَ ٱلْأَكْبَرَ",
+      "translation": "Then Allah will punish him with the greatest punishment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "إِنَّ إِلَيْنَآ إِيَابَهُمْ",
+      "translation": "Verily, to Us will be their return;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "ثُمَّ إِنَّ عَلَيْنَا حِسَابَهُم",
+      "translation": "Then verily, for Us will be their reckoning.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

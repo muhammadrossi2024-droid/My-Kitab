@@ -1,0 +1,47 @@
+{
+  "number": 113,
+  "name": {
+    "arabic": "الفلق",
+    "transliteration": "Al-Falaq",
+    "englishMeaning": "The Daybreak"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 5,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:31:02.394Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ",
+      "translation": "Say: “I seek refuge with (Allah) the Lord of the daybreak,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "مِن شَرِّ مَا خَلَقَ",
+      "translation": "“From the evil of what He has created;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+      "translation": "“And from the evil of the darkening (night) as it comes with its darkness; (or the moon as it sets or goes away).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَمِن شَرِّ ٱلنَّفَّـٰثَـٰتِ فِى ٱلْعُقَدِ",
+      "translation": "“And from the evil of the witchcrafts when they blow in the knots,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+      "translation": "“And from the evil of the envier when he envies.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

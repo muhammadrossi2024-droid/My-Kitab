@@ -1,0 +1,131 @@
+{
+  "number": 87,
+  "name": {
+    "arabic": "الأعلى",
+    "transliteration": "Al-A'la",
+    "englishMeaning": "The Most High"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 19,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:17.077Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "سَبِّحِ ٱسْمَ رَبِّكَ ٱلْأَعْلَى",
+      "translation": "Glorify the Name of your Lord, the Most High,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "ٱلَّذِى خَلَقَ فَسَوَّىٰ",
+      "translation": "Who has created (everything), and then proportioned it;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَٱلَّذِى قَدَّرَ فَهَدَىٰ",
+      "translation": "And Who has measured (preordainments for each and everything even to be blessed or wretched); then guided (i.e. showed mankind the right as well as wrong paths, and guided the animals to pasture);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَٱلَّذِىٓ أَخْرَجَ ٱلْمَرْعَىٰ",
+      "translation": "And Who brings out the pasturage,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَجَعَلَهُۥ غُثَآءً أَحْوَىٰ",
+      "translation": "And then makes it dark stubble.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "سَنُقْرِئُكَ فَلَا تَنسَىٰٓ",
+      "translation": "We shall make you to recite (the Qur’an), so you (O Muhammad ()) shall not forget (it),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "إِلَّا مَا شَآءَ ٱللَّهُ ۚ إِنَّهُۥ يَعْلَمُ ٱلْجَهْرَ وَمَا يَخْفَىٰ",
+      "translation": "Except what Allah, may will, He knows what is apparent and what is hidden.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "وَنُيَسِّرُكَ لِلْيُسْرَىٰ",
+      "translation": "And We shall make easy for you (O Muhammad ()) the easy way (i.e. the doing of righteous deeds).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "فَذَكِّرْ إِن نَّفَعَتِ ٱلذِّكْرَىٰ",
+      "translation": "Therefore remind (men) in case the reminder profits (them).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "سَيَذَّكَّرُ مَن يَخْشَىٰ",
+      "translation": "The reminder will be received by him who fears (Allah),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَيَتَجَنَّبُهَا ٱلْأَشْقَى",
+      "translation": "But it will be avoided by the wretched,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "ٱلَّذِى يَصْلَى ٱلنَّارَ ٱلْكُبْرَىٰ",
+      "translation": "Who will enter the great Fire and made to taste its burning,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "ثُمَّ لَا يَمُوتُ فِيهَا وَلَا يَحْيَىٰ",
+      "translation": "Wherein he will neither die (to be in rest) nor live (a good living).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "قَدْ أَفْلَحَ مَن تَزَكَّىٰ",
+      "translation": "Indeed whosoever purifies himself (by avoiding polytheism and accepting Islamic Monotheism) shall achieve success,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "وَذَكَرَ ٱسْمَ رَبِّهِۦ فَصَلَّىٰ",
+      "translation": "And remembers (glorifies) the Name of his Lord (worships none but Allah), and prays (five compulsory prayers and Nawafil additional prayers).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "بَلْ تُؤْثِرُونَ ٱلْحَيَوٰةَ ٱلدُّنْيَا",
+      "translation": "Nay, you prefer the life of this world;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "وَٱلْـَٔاخِرَةُ خَيْرٌ وَأَبْقَىٰٓ",
+      "translation": "Although the Hereafter is better and more lasting.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "إِنَّ هَـٰذَا لَفِى ٱلصُّحُفِ ٱلْأُولَىٰ",
+      "translation": "Verily! This is in the former Scriptures,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "صُحُفِ إِبْرَٰهِيمَ وَمُوسَىٰ",
+      "translation": "The Scriptures of Ibrahim (Abraham) and Musa (Moses).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

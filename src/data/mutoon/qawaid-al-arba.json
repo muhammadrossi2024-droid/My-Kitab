@@ -1,0 +1,256 @@
+{
+  "id": "qawaid-al-arba",
+  "title": {
+    "arabic": "الْقَوَاعِدُ الْأَرْبَعُ",
+    "transliteration": "Al-Qawa'id al-Arba'",
+    "english": "The Four Principles"
+  },
+  "author": {
+    "arabic": "الشَّيْخُ مُحَمَّدُ بْنُ عَبْدِ الْوَهَّابِ بْنِ سُلَيْمَانَ التَّمِيمِيُّ",
+    "transliteration": "Shaykh Muhammad ibn Abd al-Wahhab ibn Sulayman al-Tamimi",
+    "deathYearHijri": 1206
+  },
+  "source": "Mutoon Talib al-'Ilm (متون طالب العلم), Level 1 — a-alqasim.com; manuscript-verified critical edition",
+  "bismillah": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+  "introParagraphs": [
+    {
+      "arabic": "أَسْأَلُ اللَّهَ الْكَرِيمَ، رَبَّ الْعَرْشِ الْعَظِيمِ: أَنْ يَتَوَلَّاكَ فِي الدُّنْيَا وَالْآخِرَةِ، وَأَنْ يَجْعَلَكَ مُبَارَكًا أَيْنَمَا كُنْتَ. وَأَنْ يَجْعَلَكَ مِمَّنْ إِذَا أُعْطِيَ شَكَرَ، وَإِذَا ابْتُلِيَ صَبَرَ، وَإِذَا أَذْنَبَ اسْتَغْفَرَ؛ فَإِنَّ هَؤُلَاءِ الثَّلَاثَ عُنْوَانُ السَّعَادَةِ.",
+      "verseRefs": []
+    },
+    {
+      "arabic": "اعْلَمْ ـ أَرْشَدَكَ اللَّهُ لِطَاعَتِهِ ـ: أَنَّ الْحَنِيفِيَّةَ ـ مِلَّةَ إِبْرَاهِيمَ ـ: أَنْ تَعْبُدَ اللَّهَ وَحْدَهُ مُخْلِصًا لَهُ الدِّينَ، وَبِذَلِكَ أَمَرَ اللَّهُ جَمِيعَ النَّاسِ، وَخَلَقَهُمْ لَهَا؛ كَمَا قَالَ تَعَالَى: ﴿وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ﴾.",
+      "verseRefs": [
+        "51:56"
+      ]
+    },
+    {
+      "arabic": "فَإِذَا عَرَفْتَ أَنَّ اللَّهَ خَلَقَكَ لِعِبَادَتِهِ: فَاعْلَمْ أَنَّ الْعِبَادَةَ لَا تُسَمَّى عِبَادَةً إِلَّا مَعَ التَّوْحِيدِ، كَمَا أَنَّ الصَّلَاةَ لَا تُسَمَّى صَلَاةً إِلَّا مَعَ الطَّهَارَةِ.",
+      "verseRefs": []
+    },
+    {
+      "arabic": "فَإِذَا دَخَلَ الشِّرْكُ فِي الْعِبَادَةِ فَسَدَتْ، كَالْحَدَثِ إِذَا دَخَلَ فِي الطَّهَارَةِ؛ كَمَا قَالَ تَعَالَى: ﴿مَا كَانَ لِلْمُشْرِكِينَ أَن يَعْمُرُوا مَسَاجِدَ اللَّهِ شَاهِدِينَ عَلَىٰ أَنفُسِهِم بِالْكُفْرِ أُولَـٰئِكَ حَبِطَتْ أَعْمَالُهُمْ وَفِي النَّارِ هُمْ خَالِدُونَ﴾.",
+      "verseRefs": [
+        "9:17"
+      ]
+    },
+    {
+      "arabic": "فَإِذَا عَرَفْتَ أَنَّ الشِّرْكَ إِذَا خَالَطَ الْعِبَادَةَ أَفْسَدَهَا، وَأَحْبَطَ الْعَمَلَ، وَصَارَ صَاحِبُهُ مِنَ الْخَالِدِينَ فِي النَّارِ: عَرَفْتَ أَنَّ أَهَمَّ مَا عَلَيْكَ مَعْرِفَةُ ذَلِكَ؛ لَعَلَّ اللَّهَ يُخَلِّصَكَ مِنْ هَذِهِ الشَّبَكَةِ، وَهِيَ الشِّرْكُ بِاللَّهِ.",
+      "verseRefs": []
+    },
+    {
+      "arabic": "وَذَلِكَ بِمَعْرِفَةِ أَرْبَعِ قَوَاعِدَ ذَكَرَهَا اللَّهُ تَعَالَى فِي كِتَابِهِ:",
+      "verseRefs": []
+    }
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "heading": "الْقَاعِدَةُ الْأُولَى",
+      "arabic": "أَنْ تَعْلَمَ: أَنَّ الْكُفَّارَ الَّذِينَ قَاتَلَهُمْ رَسُولُ اللَّهِ ﷺ مُقِرُّونَ أَنَّ اللَّهَ هُوَ الْخَالِقُ الرَّازِقُ، الْمُحْيِي الْمُمِيتُ، الْمُدَبِّرُ لِجَمِيعِ الْأُمُورِ، وَلَمْ يُدْخِلْهُمْ ذَلِكَ فِي الْإِسْلَامِ؛ وَالدَّلِيلُ قَوْلُهُ تَعَالَى: ﴿قُلْ مَن يَرْزُقُكُم مِّنَ السَّمَاءِ وَالْأَرْضِ أَمَّن يَمْلِكُ السَّمْعَ وَالْأَبْصَارَ وَمَن يُخْرِجُ الْحَيَّ مِنَ الْمَيِّتِ وَيُخْرِجُ الْمَيِّتَ مِنَ الْحَيِّ وَمَن يُدَبِّرُ الْأَمْرَ فَسَيَقُولُونَ اللَّهُ فَقُلْ أَفَلَا تَتَّقُونَ﴾.",
+      "verseRefs": [
+        "10:31"
+      ]
+    },
+    {
+      "number": 2,
+      "heading": "الْقَاعِدَةُ الثَّانِيَةُ",
+      "arabic": "أَنَّهُمْ يَقُولُونَ: مَا دَعَوْنَاهُمْ وَتَوَجَّهْنَا إِلَيْهِمْ، إِلَّا لِطَلَبِ الْقُرْبَةِ وَالشَّفَاعَةِ. فَدَلِيلُ الْقُرْبَةِ؛ قَوْلُهُ تَعَالَى: ﴿وَالَّذِينَ اتَّخَذُوا مِن دُونِهِ أَوْلِيَاءَ مَا نَعْبُدُهُمْ إِلَّا لِيُقَرِّبُونَا إِلَى اللَّهِ زُلْفَىٰ إِنَّ اللَّهَ يَحْكُمُ بَيْنَهُمْ فِي مَا هُمْ فِيهِ يَخْتَلِفُونَ إِنَّ اللَّهَ لَا يَهْدِي مَنْ هُوَ كَاذِبٌ كَفَّارٌ﴾. وَدَلِيلُ الشَّفَاعَةِ؛ قَوْلُهُ تَعَالَى: ﴿وَيَعْبُدُونَ مِن دُونِ اللَّهِ مَا لَا يَضُرُّهُمْ وَلَا يَنفَعُهُمْ وَيَقُولُونَ هَـٰؤُلَاءِ شُفَعَاؤُنَا عِندَ اللَّهِ قُلْ أَتُنَبِّئُونَ اللَّهَ بِمَا لَا يَعْلَمُ فِي السَّمَاوَاتِ وَلَا فِي الْأَرْضِ سُبْحَانَهُ وَتَعَالَىٰ عَمَّا يُشْرِكُونَ﴾. وَالشَّفَاعَةُ شَفَاعَتَانِ: شَفَاعَةٌ مَنْفِيَّةٌ، وَشَفَاعَةٌ مُثْبَتَةٌ. فَالشَّفَاعَةُ الْمَنْفِيَّةُ: مَا كَانَتْ تُطْلَبُ مِنْ غَيْرِ اللَّهِ فِيمَا لَا يَقْدِرُ عَلَيْهِ إِلَّا اللَّهُ؛ وَالدَّلِيلُ قَوْلُهُ تَعَالَى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِمَّا رَزَقْنَاكُم مِّن قَبْلِ أَن يَأْتِيَ يَوْمٌ لَّا بَيْعٌ فِيهِ وَلَا خُلَّةٌ وَلَا شَفَاعَةٌ وَالْكَافِرُونَ هُمُ الظَّالِمُونَ﴾. وَالشَّفَاعَةُ الْمُثْبَتَةُ: هِيَ الَّتِي تُطْلَبُ مِنَ اللَّهِ. وَالشَّافِعُ مُكْرَمٌ بِالشَّفَاعَةِ. وَالْمَشْفُوعُ لَهُ: مَنْ رَضِيَ اللَّهُ قَوْلَهُ وَعَمَلَهُ بَعْدَ الْإِذْنِ؛ كَمَا قَالَ تَعَالَى: ﴿مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ﴾.",
+      "verseRefs": [
+        "39:3",
+        "10:18",
+        "2:254",
+        "2:255"
+      ]
+    },
+    {
+      "number": 3,
+      "heading": "الْقَاعِدَةُ الثَّالِثَةُ",
+      "arabic": "أَنَّ النَّبِيَّ ﷺ ظَهَرَ عَلَى أُنَاسٍ مُتَفَرِّقِينَ فِي عِبَادَاتِهِمْ: مِنْهُمْ: مَنْ يَعْبُدُ الشَّمْسَ وَالْقَمَرَ. وَمِنْهُمْ: مَنْ يَعْبُدُ الْمَلَائِكَةَ. وَمِنْهُمْ: مَنْ يَعْبُدُ الْأَنْبِيَاءَ وَالصَّالِحِينَ. وَمِنْهُمْ: مَنْ يَعْبُدُ الْأَشْجَارَ وَالْأَحْجَارَ. وَقَاتَلَهُمْ رَسُولُ اللَّهِ ﷺ، وَلَمْ يُفَرِّقْ بَيْنَهُمْ؛ وَالدَّلِيلُ قَوْلُهُ تَعَالَى: ﴿وَقَاتِلُوهُمْ حَتَّىٰ لَا تَكُونَ فِتْنَةٌ وَيَكُونَ الدِّينُ كُلُّهُ لِلَّهِ﴾. فَدَلِيلُ الشَّمْسِ وَالْقَمَرِ؛ قَوْلُهُ تَعَالَى: ﴿وَمِنْ آيَاتِهِ اللَّيْلُ وَالنَّهَارُ وَالشَّمْسُ وَالْقَمَرُ لَا تَسْجُدُوا لِلشَّمْسِ وَلَا لِلْقَمَرِ وَاسْجُدُوا لِلَّهِ الَّذِي خَلَقَهُنَّ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ﴾. وَدَلِيلُ الْمَلَائِكَةِ؛ قَوْلُهُ تَعَالَى: ﴿وَيَوْمَ يَحْشُرُهُمْ جَمِيعًا ثُمَّ يَقُولُ لِلْمَلَائِكَةِ أَهَـٰؤُلَاءِ إِيَّاكُمْ كَانُوا يَعْبُدُونَ * قَالُوا سُبْحَانَكَ أَنتَ وَلِيُّنَا مِن دُونِهِم بَلْ كَانُوا يَعْبُدُونَ الْجِنَّ أَكْثَرُهُم بِهِم مُّؤْمِنُونَ﴾. وَدَلِيلُ الْأَنْبِيَاءِ؛ قَوْلُهُ تَعَالَى: ﴿وَإِذْ قَالَ اللَّهُ يَا عِيسَى ابْنَ مَرْيَمَ أَأَنتَ قُلتَ لِلنَّاسِ اتَّخِذُونِي وَأُمِّيَ إِلَـٰهَيْنِ مِن دُونِ اللَّهِ قَالَ سُبْحَانَكَ مَا يَكُونُ لِي أَنْ أَقُولَ مَا لَيْسَ لِي بِحَقٍّ﴾. وَدَلِيلُ الصَّالِحِينَ؛ قَوْلُهُ تَعَالَى: ﴿قُلِ ادْعُوا الَّذِينَ زَعَمْتُم مِّن دُونِهِ فَلَا يَمْلِكُونَ كَشْفَ الضُّرِّ عَنكُمْ وَلَا تَحْوِيلًا * أُولَـٰئِكَ الَّذِينَ يَدْعُونَ يَبْتَغُونَ إِلَىٰ رَبِّهِمُ الْوَسِيلَةَ أَيُّهُمْ أَقْرَبُ وَيَرْجُونَ رَحْمَتَهُ وَيَخَافُونَ عَذَابَهُ إِنَّ عَذَابَ رَبِّكَ كَانَ مَحْذُورًا﴾. وَدَلِيلُ الْأَشْجَارِ وَالْأَحْجَارِ؛ قَوْلُهُ تَعَالَى: ﴿أَفَرَأَيْتُمُ اللَّاتَ وَالْعُزَّىٰ * وَمَنَاةَ الثَّالِثَةَ الْأُخْرَىٰ﴾، وَحَدِيثُ أَبِي وَاقِدٍ اللَّيْثِيِّ رَضِيَ اللَّهُ عَنْهُ قَالَ: «خَرَجْنَا مَعَ رَسُولِ اللَّهِ ﷺ إِلَى حُنَيْنٍ وَنَحْنُ حُدَثَاءُ عَهْدٍ بِكُفْرٍ، وَلِلْمُشْرِكِينَ سِدْرَةٌ، يَعْكُفُونَ عِنْدَهَا وَيَنُوطُونَ بِهَا أَسْلِحَتَهُمْ، يُقَالُ لَهَا: ذَاتُ أَنْوَاطٍ. فَمَرَرْنَا بِسِدْرَةٍ فَقُلْنَا: يَا رَسُولَ اللَّهِ! اجْعَلْ لَنَا ذَاتَ أَنْوَاطٍ كَمَا لَهُمْ ذَاتُ أَنْوَاطٍ. فَقَالَ رَسُولُ اللَّهِ ﷺ: اللَّهُ أَكْبَرُ! إِنَّهَا السُّنَنُ، قُلْتُمْ وَالَّذِي نَفْسِي بِيَدِهِ، كَمَا قَالَتْ بَنُو إِسْرَائِيلَ لِمُوسَى: ﴿اجْعَل لَّنَا إِلَـٰهًا كَمَا لَهُمْ آلِهَةٌ﴾».",
+      "verseRefs": [
+        "8:39",
+        "41:37",
+        "34:40",
+        "34:41",
+        "5:116",
+        "17:56",
+        "17:57",
+        "53:19",
+        "53:20",
+        "7:138"
+      ]
+    },
+    {
+      "number": 4,
+      "heading": "الْقَاعِدَةُ الرَّابِعَةُ",
+      "arabic": "أَنَّ مُشْرِكِي زَمَانِنَا أَغْلَظُ شِرْكًا مِنَ الْأَوَّلِينَ؛ لِأَنَّ الْأَوَّلِينَ يُشْرِكُونَ فِي الرَّخَاءِ وَيُخْلِصُونَ فِي الشِّدَّةِ، وَمُشْرِكُو زَمَانِنَا شِرْكُهُمْ دَائِمٌ فِي الرَّخَاءِ وَالشِّدَّةِ. وَالدَّلِيلُ قَوْلُهُ تَعَالَى: ﴿فَإِذَا رَكِبُوا فِي الْفُلْكِ دَعَوُا اللَّهَ مُخْلِصِينَ لَهُ الدِّينَ فَلَمَّا نَجَّاهُمْ إِلَى الْبَرِّ إِذَا هُمْ يُشْرِكُونَ﴾. وَاللَّهُ أَعْلَمُ.",
+      "verseRefs": [
+        "29:65"
+      ]
+    }
+  ],
+  "closing": "تَمَّ بِحَمْدِ اللَّه",
+  "quranVerses": [
+    {
+      "ref": "51:56",
+      "surah": 51,
+      "ayah": 56,
+      "surahNameArabic": "الذاريات",
+      "surahNameTransliteration": "Adh-Dhariyat",
+      "arabic": "وَمَا خَلَقْتُ ٱلْجِنَّ وَٱلْإِنسَ إِلَّا لِيَعْبُدُونِ",
+      "translation": "And I (Allah) created not the jinns and humans except they should worship Me (Alone)."
+    },
+    {
+      "ref": "9:17",
+      "surah": 9,
+      "ayah": 17,
+      "surahNameArabic": "التوبة",
+      "surahNameTransliteration": "At-Tawbah",
+      "arabic": "مَا كَانَ لِلْمُشْرِكِينَ أَن يَعْمُرُوا۟ مَسَـٰجِدَ ٱللَّهِ شَـٰهِدِينَ عَلَىٰٓ أَنفُسِهِم بِٱلْكُفْرِ ۚ أُو۟لَـٰٓئِكَ حَبِطَتْ أَعْمَـٰلُهُمْ وَفِى ٱلنَّارِ هُمْ خَـٰلِدُونَ",
+      "translation": "It is not for the Mushrikun (polytheists, idolaters, pagans, disbelievers in the Oneness of Allah), to maintain the Mosques of Allah (i.e. to pray and worship Allah therein, to look after their cleanliness and their building, etc.), while they witness against their ownselves of disbelief. The works of such are in vain and in Fire shall they abide."
+    },
+    {
+      "ref": "10:31",
+      "surah": 10,
+      "ayah": 31,
+      "surahNameArabic": "يونس",
+      "surahNameTransliteration": "Yunus",
+      "arabic": "قُلْ مَن يَرْزُقُكُم مِّنَ ٱلسَّمَآءِ وَٱلْأَرْضِ أَمَّن يَمْلِكُ ٱلسَّمْعَ وَٱلْأَبْصَـٰرَ وَمَن يُخْرِجُ ٱلْحَىَّ مِنَ ٱلْمَيِّتِ وَيُخْرِجُ ٱلْمَيِّتَ مِنَ ٱلْحَىِّ وَمَن يُدَبِّرُ ٱلْأَمْرَ ۚ فَسَيَقُولُونَ ٱللَّهُ ۚ فَقُلْ أَفَلَا تَتَّقُونَ",
+      "translation": "Say (O Muhammad ): “Who provides for you from the sky and from the earth? Or who owns hearing and sight? And who brings out the living from the dead and brings out the dead from the living? And who disposes the affairs?” They will say: “Allah.” Say: “Will you not then be afraid of Allah’s Punishment (for setting up rivals in worship with Allah)?”"
+    },
+    {
+      "ref": "39:3",
+      "surah": 39,
+      "ayah": 3,
+      "surahNameArabic": "الزمر",
+      "surahNameTransliteration": "Az-Zumar",
+      "arabic": "أَلَا لِلَّهِ ٱلدِّينُ ٱلْخَالِصُ ۚ وَٱلَّذِينَ ٱتَّخَذُوا۟ مِن دُونِهِۦٓ أَوْلِيَآءَ مَا نَعْبُدُهُمْ إِلَّا لِيُقَرِّبُونَآ إِلَى ٱللَّهِ زُلْفَىٰٓ إِنَّ ٱللَّهَ يَحْكُمُ بَيْنَهُمْ فِى مَا هُمْ فِيهِ يَخْتَلِفُونَ ۗ إِنَّ ٱللَّهَ لَا يَهْدِى مَنْ هُوَ كَـٰذِبٌ كَفَّارٌ",
+      "translation": "Surely, the religion (i.e. the worship and the obedience) is for Allah only. And those who take Auliya’ (protectors and helpers) besides Him (say): “We worship them only that they may bring us near to Allah.” Verily, Allah will judge between them concerning that wherein they differ. Truly, Allah guides not him who is a liar, and a disbeliever."
+    },
+    {
+      "ref": "10:18",
+      "surah": 10,
+      "ayah": 18,
+      "surahNameArabic": "يونس",
+      "surahNameTransliteration": "Yunus",
+      "arabic": "وَيَعْبُدُونَ مِن دُونِ ٱللَّهِ مَا لَا يَضُرُّهُمْ وَلَا يَنفَعُهُمْ وَيَقُولُونَ هَـٰٓؤُلَآءِ شُفَعَـٰٓؤُنَا عِندَ ٱللَّهِ ۚ قُلْ أَتُنَبِّـُٔونَ ٱللَّهَ بِمَا لَا يَعْلَمُ فِى ٱلسَّمَـٰوَٰتِ وَلَا فِى ٱلْأَرْضِ ۚ سُبْحَـٰنَهُۥ وَتَعَـٰلَىٰ عَمَّا يُشْرِكُونَ",
+      "translation": "And they worship besides Allah things that hurt them not, nor profit them, and they say: “These are our intercessors with Allah.” Say: “Do you inform Allah of that which He knows not in the heavens and on the earth?” Glorified and Exalted be He above all that which they associate as partners with Him!"
+    },
+    {
+      "ref": "2:254",
+      "surah": 2,
+      "ayah": 254,
+      "surahNameArabic": "البقرة",
+      "surahNameTransliteration": "Al-Baqarah",
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ أَنفِقُوا۟ مِمَّا رَزَقْنَـٰكُم مِّن قَبْلِ أَن يَأْتِىَ يَوْمٌ لَّا بَيْعٌ فِيهِ وَلَا خُلَّةٌ وَلَا شَفَـٰعَةٌ ۗ وَٱلْكَـٰفِرُونَ هُمُ ٱلظَّـٰلِمُونَ",
+      "translation": "O you who believe! Spend of that with which We have provided for you, before a Day comes when there will be no bargaining, nor friendship, nor intercession. And it is the disbelievers who are the Zalimun (wrong-doers, etc.)."
+    },
+    {
+      "ref": "2:255",
+      "surah": 2,
+      "ayah": 255,
+      "surahNameArabic": "البقرة",
+      "surahNameTransliteration": "Al-Baqarah",
+      "arabic": "ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۗ مَن ذَا ٱلَّذِى يَشْفَعُ عِندَهُۥٓ إِلَّا بِإِذْنِهِۦ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَىْءٍ مِّنْ عِلْمِهِۦٓ إِلَّا بِمَا شَآءَ ۚ وَسِعَ كُرْسِيُّهُ ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضَ ۖ وَلَا يَـُٔودُهُۥ حِفْظُهُمَا ۚ وَهُوَ ٱلْعَلِىُّ ٱلْعَظِيمُ",
+      "translation": "Allah! La ilaha illa Huwa (none has the right to be worshipped but He), the Ever Living, the One Who sustains and protects all that exists. Neither slumber, nor sleep overtake Him. To Him belongs whatever is in the heavens and whatever is on earth. Who is he that can intercede with Him except with His Permission? He knows what happens to them (His creatures) in this world, and what will happen to them in the Hereafter . And they will never compass anything of His Knowledge except that which He wills. His Kursi extends over the heavens and the earth, and He feels no fatigue in guarding and preserving them. And He is the Most High, the Most Great. [This Verse 2:255 is called Ayat-ul-Kursi.]"
+    },
+    {
+      "ref": "8:39",
+      "surah": 8,
+      "ayah": 39,
+      "surahNameArabic": "الأنفال",
+      "surahNameTransliteration": "Al-Anfal",
+      "arabic": "وَقَـٰتِلُوهُمْ حَتَّىٰ لَا تَكُونَ فِتْنَةٌ وَيَكُونَ ٱلدِّينُ كُلُّهُۥ لِلَّهِ ۚ فَإِنِ ٱنتَهَوْا۟ فَإِنَّ ٱللَّهَ بِمَا يَعْمَلُونَ بَصِيرٌ",
+      "translation": "And fight them until there is no more Fitnah (disbelief and polytheism: i.e. worshipping others besides Allah) and the religion (worship) will all be for Allah Alone [in the whole of the world ]. But if they cease (worshipping others besides Allah), then certainly, Allah is All-Seer of what they do."
+    },
+    {
+      "ref": "41:37",
+      "surah": 41,
+      "ayah": 37,
+      "surahNameArabic": "فصلت",
+      "surahNameTransliteration": "Fussilat",
+      "arabic": "وَمِنْ ءَايَـٰتِهِ ٱلَّيْلُ وَٱلنَّهَارُ وَٱلشَّمْسُ وَٱلْقَمَرُ ۚ لَا تَسْجُدُوا۟ لِلشَّمْسِ وَلَا لِلْقَمَرِ وَٱسْجُدُوا۟ لِلَّهِ ٱلَّذِى خَلَقَهُنَّ إِن كُنتُمْ إِيَّاهُ تَعْبُدُونَ",
+      "translation": "And from among His Signs are the night and the day, and the sun and the moon. Prostrate not to the sun nor to the moon, but prostrate to Allah Who created them, if you (really) worship Him."
+    },
+    {
+      "ref": "34:40",
+      "surah": 34,
+      "ayah": 40,
+      "surahNameArabic": "سبأ",
+      "surahNameTransliteration": "Saba",
+      "arabic": "وَيَوْمَ يَحْشُرُهُمْ جَمِيعًا ثُمَّ يَقُولُ لِلْمَلَـٰٓئِكَةِ أَهَـٰٓؤُلَآءِ إِيَّاكُمْ كَانُوا۟ يَعْبُدُونَ",
+      "translation": "And (remember) the Day when He will gather them all together, and then will say to the angels: “Was it you that these people used to worship?”"
+    },
+    {
+      "ref": "34:41",
+      "surah": 34,
+      "ayah": 41,
+      "surahNameArabic": "سبأ",
+      "surahNameTransliteration": "Saba",
+      "arabic": "قَالُوا۟ سُبْحَـٰنَكَ أَنتَ وَلِيُّنَا مِن دُونِهِم ۖ بَلْ كَانُوا۟ يَعْبُدُونَ ٱلْجِنَّ ۖ أَكْثَرُهُم بِهِم مُّؤْمِنُونَ",
+      "translation": "They (angels) will say: “Glorified be You! You are our Wali (Lord) instead of them. Nay, but they used to worship the jinns; most of them were believers in them.”"
+    },
+    {
+      "ref": "5:116",
+      "surah": 5,
+      "ayah": 116,
+      "surahNameArabic": "المائدة",
+      "surahNameTransliteration": "Al-Ma'idah",
+      "arabic": "وَإِذْ قَالَ ٱللَّهُ يَـٰعِيسَى ٱبْنَ مَرْيَمَ ءَأَنتَ قُلْتَ لِلنَّاسِ ٱتَّخِذُونِى وَأُمِّىَ إِلَـٰهَيْنِ مِن دُونِ ٱللَّهِ ۖ قَالَ سُبْحَـٰنَكَ مَا يَكُونُ لِىٓ أَنْ أَقُولَ مَا لَيْسَ لِى بِحَقٍّ ۚ إِن كُنتُ قُلْتُهُۥ فَقَدْ عَلِمْتَهُۥ ۚ تَعْلَمُ مَا فِى نَفْسِى وَلَآ أَعْلَمُ مَا فِى نَفْسِكَ ۚ إِنَّكَ أَنتَ عَلَّـٰمُ ٱلْغُيُوبِ",
+      "translation": "And (remember) when Allah will say (on the Day of Resurrection): “O ‘Iesa (Jesus), son of Maryam (Mary)! Did you say unto men: ‘Worship me and my mother as two gods besides Allah?’ ” He will say: “Glory be to You! It was not for me to say what I had no right (to say). Had I said such a thing, You would surely have known it. You know what is in my inner-self though I do not know what is in Yours, truly, You, only You, are the All-Knower of all that is hidden and unseen."
+    },
+    {
+      "ref": "17:56",
+      "surah": 17,
+      "ayah": 56,
+      "surahNameArabic": "الإسراء",
+      "surahNameTransliteration": "Al-Isra",
+      "arabic": "قُلِ ٱدْعُوا۟ ٱلَّذِينَ زَعَمْتُم مِّن دُونِهِۦ فَلَا يَمْلِكُونَ كَشْفَ ٱلضُّرِّ عَنكُمْ وَلَا تَحْوِيلًا",
+      "translation": "Say (O Muhammad ): “Call unto those besides Him whom you pretend [to be gods like angels, Iesa (Jesus), ‘Uzair (Ezra), etc.]. They have neither the power to remove the adversity from you nor even to shift it from you to another person.”"
+    },
+    {
+      "ref": "17:57",
+      "surah": 17,
+      "ayah": 57,
+      "surahNameArabic": "الإسراء",
+      "surahNameTransliteration": "Al-Isra",
+      "arabic": "أُو۟لَـٰٓئِكَ ٱلَّذِينَ يَدْعُونَ يَبْتَغُونَ إِلَىٰ رَبِّهِمُ ٱلْوَسِيلَةَ أَيُّهُمْ أَقْرَبُ وَيَرْجُونَ رَحْمَتَهُۥ وَيَخَافُونَ عَذَابَهُۥٓ ۚ إِنَّ عَذَابَ رَبِّكَ كَانَ مَحْذُورًا",
+      "translation": "Those whom they call upon [like ‘Iesa (Jesus) – son of Maryam (Mary), ‘Uzair (Ezra), angel, etc.] desire (for themselves) means of access to their Lord (Allah), as to which of them should be the nearest and they [‘Iesa (Jesus), ‘Uzair (Ezra), angels, etc.] hope for His Mercy and fear His Torment. Verily, the Torment of your Lord is something to be afraid of!"
+    },
+    {
+      "ref": "53:19",
+      "surah": 53,
+      "ayah": 19,
+      "surahNameArabic": "النجم",
+      "surahNameTransliteration": "An-Najm",
+      "arabic": "أَفَرَءَيْتُمُ ٱللَّـٰتَ وَٱلْعُزَّىٰ",
+      "translation": "Have you then considered Al-Lat, and Al-‘Uzza (two idols of the pagan Arabs)"
+    },
+    {
+      "ref": "53:20",
+      "surah": 53,
+      "ayah": 20,
+      "surahNameArabic": "النجم",
+      "surahNameTransliteration": "An-Najm",
+      "arabic": "وَمَنَوٰةَ ٱلثَّالِثَةَ ٱلْأُخْرَىٰٓ",
+      "translation": "And Manat (another idol of the pagan Arabs), the other third?"
+    },
+    {
+      "ref": "7:138",
+      "surah": 7,
+      "ayah": 138,
+      "surahNameArabic": "الأعراف",
+      "surahNameTransliteration": "Al-A'raf",
+      "arabic": "وَجَـٰوَزْنَا بِبَنِىٓ إِسْرَٰٓءِيلَ ٱلْبَحْرَ فَأَتَوْا۟ عَلَىٰ قَوْمٍ يَعْكُفُونَ عَلَىٰٓ أَصْنَامٍ لَّهُمْ ۚ قَالُوا۟ يَـٰمُوسَى ٱجْعَل لَّنَآ إِلَـٰهًا كَمَا لَهُمْ ءَالِهَةٌ ۚ قَالَ إِنَّكُمْ قَوْمٌ تَجْهَلُونَ",
+      "translation": "And We brought the Children of Israel (with safety) across the sea, and they came upon a people devoted to some of their idols (in worship). They said: “O Musa (Moses)! Make for us an ilahan (a god) as they have aliha (gods).” He said: “Verily, you are a people who know not (the Majesty and Greatness of Allah and what is obligatory upon you, i.e. to worship none but Allah Alone, the One and the Only God of all that exists).”"
+    },
+    {
+      "ref": "29:65",
+      "surah": 29,
+      "ayah": 65,
+      "surahNameArabic": "العنكبوت",
+      "surahNameTransliteration": "Al-Ankabut",
+      "arabic": "فَإِذَا رَكِبُوا۟ فِى ٱلْفُلْكِ دَعَوُا۟ ٱللَّهَ مُخْلِصِينَ لَهُ ٱلدِّينَ فَلَمَّا نَجَّىٰهُمْ إِلَى ٱلْبَرِّ إِذَا هُمْ يُشْرِكُونَ",
+      "translation": "And when they embark on a ship, they invoke Allah, making their Faith pure for Him only, but when He brings them safely to land, behold, they give a share of their worship to others."
+    }
+  ]
+}

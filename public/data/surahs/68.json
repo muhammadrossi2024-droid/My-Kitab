@@ -1,0 +1,329 @@
+{
+  "number": 68,
+  "name": {
+    "arabic": "القلم",
+    "transliteration": "Al-Qalam",
+    "englishMeaning": "The Pen"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 52,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:29:45.245Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "نٓ ۚ وَٱلْقَلَمِ وَمَا يَسْطُرُونَ",
+      "translation": "Nun.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "مَآ أَنتَ بِنِعْمَةِ رَبِّكَ بِمَجْنُونٍ",
+      "translation": "You (O Muhammad ) are not, by the Grace of your Lord, a madman.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَإِنَّ لَكَ لَأَجْرًا غَيْرَ مَمْنُونٍ",
+      "translation": "And verily, for you (O Muhammad ) will be an endless reward.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ",
+      "translation": "And verily, you (O Muhammad ) are on an exalted standard of character.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَسَتُبْصِرُ وَيُبْصِرُونَ",
+      "translation": "You will see, and they will see,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "بِأَييِّكُمُ ٱلْمَفْتُونُ",
+      "translation": "Which of you is afflicted with madness.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "إِنَّ رَبَّكَ هُوَ أَعْلَمُ بِمَن ضَلَّ عَن سَبِيلِهِۦ وَهُوَ أَعْلَمُ بِٱلْمُهْتَدِينَ",
+      "translation": "Verily, your Lord knows better, who (among men) has gone astray from His Path, and He knows better those who are guided.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "فَلَا تُطِعِ ٱلْمُكَذِّبِينَ",
+      "translation": "So (O Muhammad ) obey not the deniers [(of Islamic Monotheism those who belie the Verses of Allah), the Oneness of Allah, and the Messenger of Allah (Muhammad ), etc.]",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "وَدُّوا۟ لَوْ تُدْهِنُ فَيُدْهِنُونَ",
+      "translation": "They wish that you should compromise (in religion out of courtesy) with them, so they (too) would compromise with you.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَلَا تُطِعْ كُلَّ حَلَّافٍ مَّهِينٍ",
+      "translation": "And obey not everyone who swears much, and is considered worthless,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "هَمَّازٍ مَّشَّآءٍۭ بِنَمِيمٍ",
+      "translation": "A slanderer, going about with calumnies,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "مَّنَّاعٍ لِّلْخَيْرِ مُعْتَدٍ أَثِيمٍ",
+      "translation": "Hinderer of the good, transgressor, sinful,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "عُتُلٍّۭ بَعْدَ ذَٰلِكَ زَنِيمٍ",
+      "translation": "Cruel, after all that base-born (of illegitimate birth),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "أَن كَانَ ذَا مَالٍ وَبَنِينَ",
+      "translation": "(He was so) because he had wealth and children.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "إِذَا تُتْلَىٰ عَلَيْهِ ءَايَـٰتُنَا قَالَ أَسَـٰطِيرُ ٱلْأَوَّلِينَ",
+      "translation": "When Our Verses (of the Qur’an) are recited to him, he says: “Tales of the men of old!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "سَنَسِمُهُۥ عَلَى ٱلْخُرْطُومِ",
+      "translation": "We shall brand him over the nose!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "إِنَّا بَلَوْنَـٰهُمْ كَمَا بَلَوْنَآ أَصْحَـٰبَ ٱلْجَنَّةِ إِذْ أَقْسَمُوا۟ لَيَصْرِمُنَّهَا مُصْبِحِينَ",
+      "translation": "Verily, We have tried them as We tried the people of the garden, when they swore to pluck the fruits of the (garden) in the morning,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "وَلَا يَسْتَثْنُونَ",
+      "translation": "Without saying: Insha’ Allah (If Allah will).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "فَطَافَ عَلَيْهَا طَآئِفٌ مِّن رَّبِّكَ وَهُمْ نَآئِمُونَ",
+      "translation": "Then there passed by on the (garden) something (fire) from your Lord at night and burnt it while they were asleep.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "فَأَصْبَحَتْ كَٱلصَّرِيمِ",
+      "translation": "So the (garden) became black by the morning, like a pitch dark night (in complete ruins).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "فَتَنَادَوْا۟ مُصْبِحِينَ",
+      "translation": "Then they called out one to another as soon as the morning broke,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "أَنِ ٱغْدُوا۟ عَلَىٰ حَرْثِكُمْ إِن كُنتُمْ صَـٰرِمِينَ",
+      "translation": "Saying: “Go to your tilth in the morning, if you would pluck the fruits.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "فَٱنطَلَقُوا۟ وَهُمْ يَتَخَـٰفَتُونَ",
+      "translation": "So they departed, conversing in secret low tones (saying),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "أَن لَّا يَدْخُلَنَّهَا ٱلْيَوْمَ عَلَيْكُم مِّسْكِينٌ",
+      "translation": "No Miskin (poor man) shall enter upon you into it today.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "وَغَدَوْا۟ عَلَىٰ حَرْدٍ قَـٰدِرِينَ",
+      "translation": "And they went in the morning with strong intention, thinking that they have power (to prevent the poor taking anything of the fruits therefrom).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "فَلَمَّا رَأَوْهَا قَالُوٓا۟ إِنَّا لَضَآلُّونَ",
+      "translation": "But when they saw the (garden), they said: “Verily, we have gone astray,”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 27,
+      "arabic": "بَلْ نَحْنُ مَحْرُومُونَ",
+      "translation": "(Then they said): “Nay! Indeed we are deprived of (the fruits)!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 28,
+      "arabic": "قَالَ أَوْسَطُهُمْ أَلَمْ أَقُل لَّكُمْ لَوْلَا تُسَبِّحُونَ",
+      "translation": "The best among them said: “Did I not tell you: why do you not say: Insha’ Allah (If Allah will).”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 29,
+      "arabic": "قَالُوا۟ سُبْحَـٰنَ رَبِّنَآ إِنَّا كُنَّا ظَـٰلِمِينَ",
+      "translation": "They said: “Glory to Our Lord! Verily, we have been Zalimun (wrong-doers, etc.).”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 30,
+      "arabic": "فَأَقْبَلَ بَعْضُهُمْ عَلَىٰ بَعْضٍ يَتَلَـٰوَمُونَ",
+      "translation": "Then they turned, one against another, in blaming.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 31,
+      "arabic": "قَالُوا۟ يَـٰوَيْلَنَآ إِنَّا كُنَّا طَـٰغِينَ",
+      "translation": "They said: “Woe to us! Verily, we were Taghun (transgressors and disobedient, etc.)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 32,
+      "arabic": "عَسَىٰ رَبُّنَآ أَن يُبْدِلَنَا خَيْرًا مِّنْهَآ إِنَّآ إِلَىٰ رَبِّنَا رَٰغِبُونَ",
+      "translation": "We hope that our Lord will give us in exchange a better (garden) than this. Truly, we turn to our Lord (wishing for good that He may forgive our sins, and reward us in the Hereafter).”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 33,
+      "arabic": "كَذَٰلِكَ ٱلْعَذَابُ ۖ وَلَعَذَابُ ٱلْـَٔاخِرَةِ أَكْبَرُ ۚ لَوْ كَانُوا۟ يَعْلَمُونَ",
+      "translation": "Such is the punishment (in this life), but truly, the punishment of the Hereafter is greater, if they but knew.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 34,
+      "arabic": "إِنَّ لِلْمُتَّقِينَ عِندَ رَبِّهِمْ جَنَّـٰتِ ٱلنَّعِيمِ",
+      "translation": "Verily, for the Muttaqun (pious and righteous persons – see V.2:2) are Gardens of delight (Paradise) with their Lord.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 35,
+      "arabic": "أَفَنَجْعَلُ ٱلْمُسْلِمِينَ كَٱلْمُجْرِمِينَ",
+      "translation": "Shall We then treat the (submitting) Muslims like the Mujrimun (criminals, polytheists and disbelievers, etc.)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 36,
+      "arabic": "مَا لَكُمْ كَيْفَ تَحْكُمُونَ",
+      "translation": "What is the matter with you? How judge you?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 37,
+      "arabic": "أَمْ لَكُمْ كِتَـٰبٌ فِيهِ تَدْرُسُونَ",
+      "translation": "Or have you a Book through which you learn.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 38,
+      "arabic": "إِنَّ لَكُمْ فِيهِ لَمَا تَخَيَّرُونَ",
+      "translation": "That you shall have all that you choose?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 39,
+      "arabic": "أَمْ لَكُمْ أَيْمَـٰنٌ عَلَيْنَا بَـٰلِغَةٌ إِلَىٰ يَوْمِ ٱلْقِيَـٰمَةِ ۙ إِنَّ لَكُمْ لَمَا تَحْكُمُونَ",
+      "translation": "Or you have oaths from Us, reaching to the Day of Resurrection that yours will be what you judge.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 40,
+      "arabic": "سَلْهُمْ أَيُّهُم بِذَٰلِكَ زَعِيمٌ",
+      "translation": "Ask them, which of them will stand surety for that!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 41,
+      "arabic": "أَمْ لَهُمْ شُرَكَآءُ فَلْيَأْتُوا۟ بِشُرَكَآئِهِمْ إِن كَانُوا۟ صَـٰدِقِينَ",
+      "translation": "Or have they “partners”? Then let them bring their “partners” if they are truthful!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 42,
+      "arabic": "يَوْمَ يُكْشَفُ عَن سَاقٍ وَيُدْعَوْنَ إِلَى ٱلسُّجُودِ فَلَا يَسْتَطِيعُونَ",
+      "translation": "(Remember) the Day when the Shin shall be laid bare (i.e. the Day of Resurrection) and they shall be called to prostrate (to Allah), but they (hypocrites) shall not be able to do so,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 43,
+      "arabic": "خَـٰشِعَةً أَبْصَـٰرُهُمْ تَرْهَقُهُمْ ذِلَّةٌ ۖ وَقَدْ كَانُوا۟ يُدْعَوْنَ إِلَى ٱلسُّجُودِ وَهُمْ سَـٰلِمُونَ",
+      "translation": "Their eyes will be cast down, ignominy will cover them; they used to be called to prostrate (offer prayers), while they were healthy and good (in the life of the world, but they did not).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 44,
+      "arabic": "فَذَرْنِى وَمَن يُكَذِّبُ بِهَـٰذَا ٱلْحَدِيثِ ۖ سَنَسْتَدْرِجُهُم مِّنْ حَيْثُ لَا يَعْلَمُونَ",
+      "translation": "Then leave Me Alone with such as belie this Qur’an. We shall punish them gradually from directions they perceive not.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 45,
+      "arabic": "وَأُمْلِى لَهُمْ ۚ إِنَّ كَيْدِى مَتِينٌ",
+      "translation": "And I will grant them a respite. Verily, My Plan is strong.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 46,
+      "arabic": "أَمْ تَسْـَٔلُهُمْ أَجْرًا فَهُم مِّن مَّغْرَمٍ مُّثْقَلُونَ",
+      "translation": "Or is it that you (O Muhammad ) ask them a wage, so that they are heavily burdened with debt?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 47,
+      "arabic": "أَمْ عِندَهُمُ ٱلْغَيْبُ فَهُمْ يَكْتُبُونَ",
+      "translation": "Or that the Ghaib (unseen here in this Verse it means Al-Lauh Al-Mahfuz) is in their hands, so that they can write it down?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 48,
+      "arabic": "فَٱصْبِرْ لِحُكْمِ رَبِّكَ وَلَا تَكُن كَصَاحِبِ ٱلْحُوتِ إِذْ نَادَىٰ وَهُوَ مَكْظُومٌ",
+      "translation": "So wait with patience for the Decision of your Lord, and be not like the Companion of the Fish, when he cried out (to Us) while he was in deep sorrow. (See the Qur’an, Verse 21:87).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 49,
+      "arabic": "لَّوْلَآ أَن تَدَٰرَكَهُۥ نِعْمَةٌ مِّن رَّبِّهِۦ لَنُبِذَ بِٱلْعَرَآءِ وَهُوَ مَذْمُومٌ",
+      "translation": "Had not a Grace from his Lord reached him, he would indeed have been (left in the stomach of the fish, but We forgave him), so he was cast off on the naked shore, while he was to be blamed.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 50,
+      "arabic": "فَٱجْتَبَـٰهُ رَبُّهُۥ فَجَعَلَهُۥ مِنَ ٱلصَّـٰلِحِينَ",
+      "translation": "But his Lord chose him and made him of the righteous.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 51,
+      "arabic": "وَإِن يَكَادُ ٱلَّذِينَ كَفَرُوا۟ لَيُزْلِقُونَكَ بِأَبْصَـٰرِهِمْ لَمَّا سَمِعُوا۟ ٱلذِّكْرَ وَيَقُولُونَ إِنَّهُۥ لَمَجْنُونٌ",
+      "translation": "And verily, those who disbelieve would almost make you slip with their eyes through hatredness when they hear the Reminder (the Qur’an), and they say: “Verily, he (Muhammad ) is a madman!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 52,
+      "arabic": "وَمَا هُوَ إِلَّا ذِكْرٌ لِّلْعَـٰلَمِينَ",
+      "translation": "But it is nothing else than a Reminder to all the ‘Alamin (mankind, jinns and all that exists).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

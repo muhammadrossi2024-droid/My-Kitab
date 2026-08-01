@@ -1,0 +1,1028 @@
+[
+  {
+    "number": 1,
+    "transliteration": "Al-Fatihah",
+    "arabic": "الفاتحة",
+    "englishMeaning": "The Opening",
+    "revelationType": "Meccan",
+    "verseCount": 7,
+    "scraped": true
+  },
+  {
+    "number": 2,
+    "transliteration": "Al-Baqarah",
+    "arabic": "البقرة",
+    "englishMeaning": "The Cow",
+    "revelationType": "Medinan",
+    "verseCount": 286,
+    "scraped": true
+  },
+  {
+    "number": 3,
+    "transliteration": "Aal-E-Imran",
+    "arabic": "آل عمران",
+    "englishMeaning": "The Family of Imran",
+    "revelationType": "Medinan",
+    "verseCount": 200,
+    "scraped": true
+  },
+  {
+    "number": 4,
+    "transliteration": "An-Nisa",
+    "arabic": "النساء",
+    "englishMeaning": "The Women",
+    "revelationType": "Medinan",
+    "verseCount": 176,
+    "scraped": true
+  },
+  {
+    "number": 5,
+    "transliteration": "Al-Ma'idah",
+    "arabic": "المائدة",
+    "englishMeaning": "The Table Spread",
+    "revelationType": "Medinan",
+    "verseCount": 120,
+    "scraped": true
+  },
+  {
+    "number": 6,
+    "transliteration": "Al-An'am",
+    "arabic": "الأنعام",
+    "englishMeaning": "The Cattle",
+    "revelationType": "Meccan",
+    "verseCount": 165,
+    "scraped": true
+  },
+  {
+    "number": 7,
+    "transliteration": "Al-A'raf",
+    "arabic": "الأعراف",
+    "englishMeaning": "The Heights",
+    "revelationType": "Meccan",
+    "verseCount": 206,
+    "scraped": true
+  },
+  {
+    "number": 8,
+    "transliteration": "Al-Anfal",
+    "arabic": "الأنفال",
+    "englishMeaning": "The Spoils of War",
+    "revelationType": "Medinan",
+    "verseCount": 75,
+    "scraped": true
+  },
+  {
+    "number": 9,
+    "transliteration": "At-Tawbah",
+    "arabic": "التوبة",
+    "englishMeaning": "The Repentance",
+    "revelationType": "Medinan",
+    "verseCount": 129,
+    "scraped": true
+  },
+  {
+    "number": 10,
+    "transliteration": "Yunus",
+    "arabic": "يونس",
+    "englishMeaning": "Jonah",
+    "revelationType": "Meccan",
+    "verseCount": 109,
+    "scraped": true
+  },
+  {
+    "number": 11,
+    "transliteration": "Hud",
+    "arabic": "هود",
+    "englishMeaning": "Hud",
+    "revelationType": "Meccan",
+    "verseCount": 123,
+    "scraped": true
+  },
+  {
+    "number": 12,
+    "transliteration": "Yusuf",
+    "arabic": "يوسف",
+    "englishMeaning": "Joseph",
+    "revelationType": "Meccan",
+    "verseCount": 111,
+    "scraped": true
+  },
+  {
+    "number": 13,
+    "transliteration": "Ar-Ra'd",
+    "arabic": "الرعد",
+    "englishMeaning": "The Thunder",
+    "revelationType": "Medinan",
+    "verseCount": 43,
+    "scraped": true
+  },
+  {
+    "number": 14,
+    "transliteration": "Ibrahim",
+    "arabic": "ابراهيم",
+    "englishMeaning": "Abraham",
+    "revelationType": "Meccan",
+    "verseCount": 52,
+    "scraped": true
+  },
+  {
+    "number": 15,
+    "transliteration": "Al-Hijr",
+    "arabic": "الحجر",
+    "englishMeaning": "The Rocky Tract",
+    "revelationType": "Meccan",
+    "verseCount": 99,
+    "scraped": true
+  },
+  {
+    "number": 16,
+    "transliteration": "An-Nahl",
+    "arabic": "النحل",
+    "englishMeaning": "The Bee",
+    "revelationType": "Meccan",
+    "verseCount": 128,
+    "scraped": true
+  },
+  {
+    "number": 17,
+    "transliteration": "Al-Isra",
+    "arabic": "الإسراء",
+    "englishMeaning": "The Night Journey",
+    "revelationType": "Meccan",
+    "verseCount": 111,
+    "scraped": true
+  },
+  {
+    "number": 18,
+    "transliteration": "Al-Kahf",
+    "arabic": "الكهف",
+    "englishMeaning": "The Cave",
+    "revelationType": "Meccan",
+    "verseCount": 110,
+    "scraped": true
+  },
+  {
+    "number": 19,
+    "transliteration": "Maryam",
+    "arabic": "مريم",
+    "englishMeaning": "Mary",
+    "revelationType": "Meccan",
+    "verseCount": 98,
+    "scraped": true
+  },
+  {
+    "number": 20,
+    "transliteration": "Ta-Ha",
+    "arabic": "طه",
+    "englishMeaning": "Ta-Ha",
+    "revelationType": "Meccan",
+    "verseCount": 135,
+    "scraped": true
+  },
+  {
+    "number": 21,
+    "transliteration": "Al-Anbiya",
+    "arabic": "الأنبياء",
+    "englishMeaning": "The Prophets",
+    "revelationType": "Meccan",
+    "verseCount": 112,
+    "scraped": true
+  },
+  {
+    "number": 22,
+    "transliteration": "Al-Hajj",
+    "arabic": "الحج",
+    "englishMeaning": "The Pilgrimage",
+    "revelationType": "Medinan",
+    "verseCount": 78,
+    "scraped": true
+  },
+  {
+    "number": 23,
+    "transliteration": "Al-Mu'minun",
+    "arabic": "المؤمنون",
+    "englishMeaning": "The Believers",
+    "revelationType": "Meccan",
+    "verseCount": 118,
+    "scraped": true
+  },
+  {
+    "number": 24,
+    "transliteration": "An-Nur",
+    "arabic": "النور",
+    "englishMeaning": "The Light",
+    "revelationType": "Medinan",
+    "verseCount": 64,
+    "scraped": true
+  },
+  {
+    "number": 25,
+    "transliteration": "Al-Furqan",
+    "arabic": "الفرقان",
+    "englishMeaning": "The Criterion",
+    "revelationType": "Meccan",
+    "verseCount": 77,
+    "scraped": true
+  },
+  {
+    "number": 26,
+    "transliteration": "Ash-Shu'ara",
+    "arabic": "الشعراء",
+    "englishMeaning": "The Poets",
+    "revelationType": "Meccan",
+    "verseCount": 227,
+    "scraped": true
+  },
+  {
+    "number": 27,
+    "transliteration": "An-Naml",
+    "arabic": "النمل",
+    "englishMeaning": "The Ant",
+    "revelationType": "Meccan",
+    "verseCount": 93,
+    "scraped": true
+  },
+  {
+    "number": 28,
+    "transliteration": "Al-Qasas",
+    "arabic": "القصص",
+    "englishMeaning": "The Stories",
+    "revelationType": "Meccan",
+    "verseCount": 88,
+    "scraped": true
+  },
+  {
+    "number": 29,
+    "transliteration": "Al-Ankabut",
+    "arabic": "العنكبوت",
+    "englishMeaning": "The Spider",
+    "revelationType": "Meccan",
+    "verseCount": 69,
+    "scraped": true
+  },
+  {
+    "number": 30,
+    "transliteration": "Ar-Rum",
+    "arabic": "الروم",
+    "englishMeaning": "The Romans",
+    "revelationType": "Meccan",
+    "verseCount": 60,
+    "scraped": true
+  },
+  {
+    "number": 31,
+    "transliteration": "Luqman",
+    "arabic": "لقمان",
+    "englishMeaning": "Luqman",
+    "revelationType": "Meccan",
+    "verseCount": 34,
+    "scraped": true
+  },
+  {
+    "number": 32,
+    "transliteration": "As-Sajdah",
+    "arabic": "السجدة",
+    "englishMeaning": "The Prostration",
+    "revelationType": "Meccan",
+    "verseCount": 30,
+    "scraped": true
+  },
+  {
+    "number": 33,
+    "transliteration": "Al-Ahzab",
+    "arabic": "الأحزاب",
+    "englishMeaning": "The Combined Forces",
+    "revelationType": "Medinan",
+    "verseCount": 73,
+    "scraped": true
+  },
+  {
+    "number": 34,
+    "transliteration": "Saba",
+    "arabic": "سبأ",
+    "englishMeaning": "Sheba",
+    "revelationType": "Meccan",
+    "verseCount": 54,
+    "scraped": true
+  },
+  {
+    "number": 35,
+    "transliteration": "Fatir",
+    "arabic": "فاطر",
+    "englishMeaning": "Originator",
+    "revelationType": "Meccan",
+    "verseCount": 45,
+    "scraped": true
+  },
+  {
+    "number": 36,
+    "transliteration": "Ya-Sin",
+    "arabic": "يس",
+    "englishMeaning": "Ya Sin",
+    "revelationType": "Meccan",
+    "verseCount": 83,
+    "scraped": true
+  },
+  {
+    "number": 37,
+    "transliteration": "As-Saffat",
+    "arabic": "الصافات",
+    "englishMeaning": "Those who set the Ranks",
+    "revelationType": "Meccan",
+    "verseCount": 182,
+    "scraped": true
+  },
+  {
+    "number": 38,
+    "transliteration": "Sad",
+    "arabic": "ص",
+    "englishMeaning": "The Letter Saad",
+    "revelationType": "Meccan",
+    "verseCount": 88,
+    "scraped": true
+  },
+  {
+    "number": 39,
+    "transliteration": "Az-Zumar",
+    "arabic": "الزمر",
+    "englishMeaning": "The Troops",
+    "revelationType": "Meccan",
+    "verseCount": 75,
+    "scraped": true
+  },
+  {
+    "number": 40,
+    "transliteration": "Ghafir",
+    "arabic": "غافر",
+    "englishMeaning": "The Forgiver",
+    "revelationType": "Meccan",
+    "verseCount": 85,
+    "scraped": true
+  },
+  {
+    "number": 41,
+    "transliteration": "Fussilat",
+    "arabic": "فصلت",
+    "englishMeaning": "Explained in Detail",
+    "revelationType": "Meccan",
+    "verseCount": 54,
+    "scraped": true
+  },
+  {
+    "number": 42,
+    "transliteration": "Ash-Shuraa",
+    "arabic": "الشورى",
+    "englishMeaning": "The Consultation",
+    "revelationType": "Meccan",
+    "verseCount": 53,
+    "scraped": true
+  },
+  {
+    "number": 43,
+    "transliteration": "Az-Zukhruf",
+    "arabic": "الزخرف",
+    "englishMeaning": "The Gold Adornments",
+    "revelationType": "Meccan",
+    "verseCount": 89,
+    "scraped": true
+  },
+  {
+    "number": 44,
+    "transliteration": "Ad-Dukhan",
+    "arabic": "الدخان",
+    "englishMeaning": "The Smoke",
+    "revelationType": "Meccan",
+    "verseCount": 59,
+    "scraped": true
+  },
+  {
+    "number": 45,
+    "transliteration": "Al-Jathiyah",
+    "arabic": "الجاثية",
+    "englishMeaning": "The Crouching",
+    "revelationType": "Meccan",
+    "verseCount": 37,
+    "scraped": true
+  },
+  {
+    "number": 46,
+    "transliteration": "Al-Ahqaf",
+    "arabic": "الأحقاف",
+    "englishMeaning": "The Wind-Curved Sandhills",
+    "revelationType": "Meccan",
+    "verseCount": 35,
+    "scraped": true
+  },
+  {
+    "number": 47,
+    "transliteration": "Muhammad",
+    "arabic": "محمد",
+    "englishMeaning": "Muhammad",
+    "revelationType": "Medinan",
+    "verseCount": 38,
+    "scraped": true
+  },
+  {
+    "number": 48,
+    "transliteration": "Al-Fath",
+    "arabic": "الفتح",
+    "englishMeaning": "The Victory",
+    "revelationType": "Medinan",
+    "verseCount": 29,
+    "scraped": true
+  },
+  {
+    "number": 49,
+    "transliteration": "Al-Hujurat",
+    "arabic": "الحجرات",
+    "englishMeaning": "The Rooms",
+    "revelationType": "Medinan",
+    "verseCount": 18,
+    "scraped": true
+  },
+  {
+    "number": 50,
+    "transliteration": "Qaf",
+    "arabic": "ق",
+    "englishMeaning": "The Letter Qaf",
+    "revelationType": "Meccan",
+    "verseCount": 45,
+    "scraped": true
+  },
+  {
+    "number": 51,
+    "transliteration": "Adh-Dhariyat",
+    "arabic": "الذاريات",
+    "englishMeaning": "The Winnowing Winds",
+    "revelationType": "Meccan",
+    "verseCount": 60,
+    "scraped": true
+  },
+  {
+    "number": 52,
+    "transliteration": "At-Tur",
+    "arabic": "الطور",
+    "englishMeaning": "The Mount",
+    "revelationType": "Meccan",
+    "verseCount": 49,
+    "scraped": true
+  },
+  {
+    "number": 53,
+    "transliteration": "An-Najm",
+    "arabic": "النجم",
+    "englishMeaning": "The Star",
+    "revelationType": "Meccan",
+    "verseCount": 62,
+    "scraped": true
+  },
+  {
+    "number": 54,
+    "transliteration": "Al-Qamar",
+    "arabic": "القمر",
+    "englishMeaning": "The Moon",
+    "revelationType": "Meccan",
+    "verseCount": 55,
+    "scraped": true
+  },
+  {
+    "number": 55,
+    "transliteration": "Ar-Rahman",
+    "arabic": "الرحمن",
+    "englishMeaning": "The Beneficent",
+    "revelationType": "Medinan",
+    "verseCount": 78,
+    "scraped": true
+  },
+  {
+    "number": 56,
+    "transliteration": "Al-Waqi'ah",
+    "arabic": "الواقعة",
+    "englishMeaning": "The Inevitable",
+    "revelationType": "Meccan",
+    "verseCount": 96,
+    "scraped": true
+  },
+  {
+    "number": 57,
+    "transliteration": "Al-Hadid",
+    "arabic": "الحديد",
+    "englishMeaning": "The Iron",
+    "revelationType": "Medinan",
+    "verseCount": 29,
+    "scraped": true
+  },
+  {
+    "number": 58,
+    "transliteration": "Al-Mujadila",
+    "arabic": "المجادلة",
+    "englishMeaning": "The Pleading Woman",
+    "revelationType": "Medinan",
+    "verseCount": 22,
+    "scraped": true
+  },
+  {
+    "number": 59,
+    "transliteration": "Al-Hashr",
+    "arabic": "الحشر",
+    "englishMeaning": "The Exile",
+    "revelationType": "Medinan",
+    "verseCount": 24,
+    "scraped": true
+  },
+  {
+    "number": 60,
+    "transliteration": "Al-Mumtahanah",
+    "arabic": "الممتحنة",
+    "englishMeaning": "She that is to be examined",
+    "revelationType": "Medinan",
+    "verseCount": 13,
+    "scraped": true
+  },
+  {
+    "number": 61,
+    "transliteration": "As-Saff",
+    "arabic": "الصف",
+    "englishMeaning": "The Ranks",
+    "revelationType": "Medinan",
+    "verseCount": 14,
+    "scraped": true
+  },
+  {
+    "number": 62,
+    "transliteration": "Al-Jumu'ah",
+    "arabic": "الجمعة",
+    "englishMeaning": "The Congregation, Friday",
+    "revelationType": "Medinan",
+    "verseCount": 11,
+    "scraped": true
+  },
+  {
+    "number": 63,
+    "transliteration": "Al-Munafiqun",
+    "arabic": "المنافقون",
+    "englishMeaning": "The Hypocrites",
+    "revelationType": "Medinan",
+    "verseCount": 11,
+    "scraped": true
+  },
+  {
+    "number": 64,
+    "transliteration": "At-Taghabun",
+    "arabic": "التغابن",
+    "englishMeaning": "The Mutual Disillusion",
+    "revelationType": "Medinan",
+    "verseCount": 18,
+    "scraped": true
+  },
+  {
+    "number": 65,
+    "transliteration": "At-Talaq",
+    "arabic": "الطلاق",
+    "englishMeaning": "The Divorce",
+    "revelationType": "Medinan",
+    "verseCount": 12,
+    "scraped": true
+  },
+  {
+    "number": 66,
+    "transliteration": "At-Tahrim",
+    "arabic": "التحريم",
+    "englishMeaning": "The Prohibition",
+    "revelationType": "Medinan",
+    "verseCount": 12,
+    "scraped": true
+  },
+  {
+    "number": 67,
+    "transliteration": "Al-Mulk",
+    "arabic": "الملك",
+    "englishMeaning": "The Sovereignty",
+    "revelationType": "Meccan",
+    "verseCount": 30,
+    "scraped": true
+  },
+  {
+    "number": 68,
+    "transliteration": "Al-Qalam",
+    "arabic": "القلم",
+    "englishMeaning": "The Pen",
+    "revelationType": "Meccan",
+    "verseCount": 52,
+    "scraped": true
+  },
+  {
+    "number": 69,
+    "transliteration": "Al-Haqqah",
+    "arabic": "الحاقة",
+    "englishMeaning": "The Reality",
+    "revelationType": "Meccan",
+    "verseCount": 52,
+    "scraped": true
+  },
+  {
+    "number": 70,
+    "transliteration": "Al-Ma'arij",
+    "arabic": "المعارج",
+    "englishMeaning": "The Ascending Stairways",
+    "revelationType": "Meccan",
+    "verseCount": 44,
+    "scraped": true
+  },
+  {
+    "number": 71,
+    "transliteration": "Nuh",
+    "arabic": "نوح",
+    "englishMeaning": "Noah",
+    "revelationType": "Meccan",
+    "verseCount": 28,
+    "scraped": true
+  },
+  {
+    "number": 72,
+    "transliteration": "Al-Jinn",
+    "arabic": "الجن",
+    "englishMeaning": "The Jinn",
+    "revelationType": "Meccan",
+    "verseCount": 28,
+    "scraped": true
+  },
+  {
+    "number": 73,
+    "transliteration": "Al-Muzzammil",
+    "arabic": "المزمل",
+    "englishMeaning": "The Enshrouded One",
+    "revelationType": "Meccan",
+    "verseCount": 20,
+    "scraped": true
+  },
+  {
+    "number": 74,
+    "transliteration": "Al-Muddaththir",
+    "arabic": "المدثر",
+    "englishMeaning": "The Cloaked One",
+    "revelationType": "Meccan",
+    "verseCount": 56,
+    "scraped": true
+  },
+  {
+    "number": 75,
+    "transliteration": "Al-Qiyamah",
+    "arabic": "القيامة",
+    "englishMeaning": "The Resurrection",
+    "revelationType": "Meccan",
+    "verseCount": 40,
+    "scraped": true
+  },
+  {
+    "number": 76,
+    "transliteration": "Al-Insan",
+    "arabic": "الانسان",
+    "englishMeaning": "Man",
+    "revelationType": "Medinan",
+    "verseCount": 31,
+    "scraped": true
+  },
+  {
+    "number": 77,
+    "transliteration": "Al-Mursalat",
+    "arabic": "المرسلات",
+    "englishMeaning": "The Emissaries",
+    "revelationType": "Meccan",
+    "verseCount": 50,
+    "scraped": true
+  },
+  {
+    "number": 78,
+    "transliteration": "An-Naba",
+    "arabic": "النبأ",
+    "englishMeaning": "The Tidings",
+    "revelationType": "Meccan",
+    "verseCount": 40,
+    "scraped": true
+  },
+  {
+    "number": 79,
+    "transliteration": "An-Nazi'at",
+    "arabic": "النازعات",
+    "englishMeaning": "Those who drag forth",
+    "revelationType": "Meccan",
+    "verseCount": 46,
+    "scraped": true
+  },
+  {
+    "number": 80,
+    "transliteration": "Abasa",
+    "arabic": "عبس",
+    "englishMeaning": "He Frowned",
+    "revelationType": "Meccan",
+    "verseCount": 42,
+    "scraped": true
+  },
+  {
+    "number": 81,
+    "transliteration": "At-Takwir",
+    "arabic": "التكوير",
+    "englishMeaning": "The Overthrowing",
+    "revelationType": "Meccan",
+    "verseCount": 29,
+    "scraped": true
+  },
+  {
+    "number": 82,
+    "transliteration": "Al-Infitar",
+    "arabic": "الإنفطار",
+    "englishMeaning": "The Cleaving",
+    "revelationType": "Meccan",
+    "verseCount": 19,
+    "scraped": true
+  },
+  {
+    "number": 83,
+    "transliteration": "Al-Mutaffifin",
+    "arabic": "المطففين",
+    "englishMeaning": "The Defrauding",
+    "revelationType": "Meccan",
+    "verseCount": 36,
+    "scraped": true
+  },
+  {
+    "number": 84,
+    "transliteration": "Al-Inshiqaq",
+    "arabic": "الإنشقاق",
+    "englishMeaning": "The Sundering",
+    "revelationType": "Meccan",
+    "verseCount": 25,
+    "scraped": true
+  },
+  {
+    "number": 85,
+    "transliteration": "Al-Buruj",
+    "arabic": "البروج",
+    "englishMeaning": "The Mansions of the Stars",
+    "revelationType": "Meccan",
+    "verseCount": 22,
+    "scraped": true
+  },
+  {
+    "number": 86,
+    "transliteration": "At-Tariq",
+    "arabic": "الطارق",
+    "englishMeaning": "The Morning Star",
+    "revelationType": "Meccan",
+    "verseCount": 17,
+    "scraped": true
+  },
+  {
+    "number": 87,
+    "transliteration": "Al-A'la",
+    "arabic": "الأعلى",
+    "englishMeaning": "The Most High",
+    "revelationType": "Meccan",
+    "verseCount": 19,
+    "scraped": true
+  },
+  {
+    "number": 88,
+    "transliteration": "Al-Ghashiyah",
+    "arabic": "الغاشية",
+    "englishMeaning": "The Overwhelming",
+    "revelationType": "Meccan",
+    "verseCount": 26,
+    "scraped": true
+  },
+  {
+    "number": 89,
+    "transliteration": "Al-Fajr",
+    "arabic": "الفجر",
+    "englishMeaning": "The Dawn",
+    "revelationType": "Meccan",
+    "verseCount": 30,
+    "scraped": true
+  },
+  {
+    "number": 90,
+    "transliteration": "Al-Balad",
+    "arabic": "البلد",
+    "englishMeaning": "The City",
+    "revelationType": "Meccan",
+    "verseCount": 20,
+    "scraped": true
+  },
+  {
+    "number": 91,
+    "transliteration": "Ash-Shams",
+    "arabic": "الشمس",
+    "englishMeaning": "The Sun",
+    "revelationType": "Meccan",
+    "verseCount": 15,
+    "scraped": true
+  },
+  {
+    "number": 92,
+    "transliteration": "Al-Layl",
+    "arabic": "الليل",
+    "englishMeaning": "The Night",
+    "revelationType": "Meccan",
+    "verseCount": 21,
+    "scraped": true
+  },
+  {
+    "number": 93,
+    "transliteration": "Ad-Duhaa",
+    "arabic": "الضحى",
+    "englishMeaning": "The Morning Hours",
+    "revelationType": "Meccan",
+    "verseCount": 11,
+    "scraped": true
+  },
+  {
+    "number": 94,
+    "transliteration": "Ash-Sharh",
+    "arabic": "الشرح",
+    "englishMeaning": "The Relief",
+    "revelationType": "Meccan",
+    "verseCount": 8,
+    "scraped": true
+  },
+  {
+    "number": 95,
+    "transliteration": "At-Tin",
+    "arabic": "التين",
+    "englishMeaning": "The Fig",
+    "revelationType": "Meccan",
+    "verseCount": 8,
+    "scraped": true
+  },
+  {
+    "number": 96,
+    "transliteration": "Al-Alaq",
+    "arabic": "العلق",
+    "englishMeaning": "The Clot",
+    "revelationType": "Meccan",
+    "verseCount": 19,
+    "scraped": true
+  },
+  {
+    "number": 97,
+    "transliteration": "Al-Qadr",
+    "arabic": "القدر",
+    "englishMeaning": "The Power, Fate",
+    "revelationType": "Meccan",
+    "verseCount": 5,
+    "scraped": true
+  },
+  {
+    "number": 98,
+    "transliteration": "Al-Bayyinah",
+    "arabic": "البينة",
+    "englishMeaning": "The Clear Proof",
+    "revelationType": "Medinan",
+    "verseCount": 8,
+    "scraped": true
+  },
+  {
+    "number": 99,
+    "transliteration": "Az-Zalzalah",
+    "arabic": "الزلزلة",
+    "englishMeaning": "The Earthquake",
+    "revelationType": "Medinan",
+    "verseCount": 8,
+    "scraped": true
+  },
+  {
+    "number": 100,
+    "transliteration": "Al-Adiyat",
+    "arabic": "العاديات",
+    "englishMeaning": "The Courser",
+    "revelationType": "Meccan",
+    "verseCount": 11,
+    "scraped": true
+  },
+  {
+    "number": 101,
+    "transliteration": "Al-Qari'ah",
+    "arabic": "القارعة",
+    "englishMeaning": "The Calamity",
+    "revelationType": "Meccan",
+    "verseCount": 11,
+    "scraped": true
+  },
+  {
+    "number": 102,
+    "transliteration": "At-Takathur",
+    "arabic": "التكاثر",
+    "englishMeaning": "The Rivalry in world increase",
+    "revelationType": "Meccan",
+    "verseCount": 8,
+    "scraped": true
+  },
+  {
+    "number": 103,
+    "transliteration": "Al-Asr",
+    "arabic": "العصر",
+    "englishMeaning": "The Declining Day, Epoch",
+    "revelationType": "Meccan",
+    "verseCount": 3,
+    "scraped": true
+  },
+  {
+    "number": 104,
+    "transliteration": "Al-Humazah",
+    "arabic": "الهمزة",
+    "englishMeaning": "The Traducer",
+    "revelationType": "Meccan",
+    "verseCount": 9,
+    "scraped": true
+  },
+  {
+    "number": 105,
+    "transliteration": "Al-Fil",
+    "arabic": "الفيل",
+    "englishMeaning": "The Elephant",
+    "revelationType": "Meccan",
+    "verseCount": 5,
+    "scraped": true
+  },
+  {
+    "number": 106,
+    "transliteration": "Quraysh",
+    "arabic": "قريش",
+    "englishMeaning": "Quraysh",
+    "revelationType": "Meccan",
+    "verseCount": 4,
+    "scraped": true
+  },
+  {
+    "number": 107,
+    "transliteration": "Al-Ma'un",
+    "arabic": "الماعون",
+    "englishMeaning": "The Small Kindnesses",
+    "revelationType": "Meccan",
+    "verseCount": 7,
+    "scraped": true
+  },
+  {
+    "number": 108,
+    "transliteration": "Al-Kawthar",
+    "arabic": "الكوثر",
+    "englishMeaning": "The Abundance",
+    "revelationType": "Meccan",
+    "verseCount": 3,
+    "scraped": true
+  },
+  {
+    "number": 109,
+    "transliteration": "Al-Kafirun",
+    "arabic": "الكافرون",
+    "englishMeaning": "The Disbelievers",
+    "revelationType": "Meccan",
+    "verseCount": 6,
+    "scraped": true
+  },
+  {
+    "number": 110,
+    "transliteration": "An-Nasr",
+    "arabic": "النصر",
+    "englishMeaning": "The Divine Support",
+    "revelationType": "Medinan",
+    "verseCount": 3,
+    "scraped": true
+  },
+  {
+    "number": 111,
+    "transliteration": "Al-Masad",
+    "arabic": "المسد",
+    "englishMeaning": "The Palm Fiber, The Flame",
+    "revelationType": "Meccan",
+    "verseCount": 5,
+    "scraped": true
+  },
+  {
+    "number": 112,
+    "transliteration": "Al-Ikhlas",
+    "arabic": "الإخلاص",
+    "englishMeaning": "The Sincerity",
+    "revelationType": "Meccan",
+    "verseCount": 4,
+    "scraped": true
+  },
+  {
+    "number": 113,
+    "transliteration": "Al-Falaq",
+    "arabic": "الفلق",
+    "englishMeaning": "The Daybreak",
+    "revelationType": "Meccan",
+    "verseCount": 5,
+    "scraped": true
+  },
+  {
+    "number": 114,
+    "transliteration": "An-Nas",
+    "arabic": "الناس",
+    "englishMeaning": "Mankind",
+    "revelationType": "Meccan",
+    "verseCount": 6,
+    "scraped": true
+  }
+]

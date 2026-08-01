@@ -1,0 +1,35 @@
+{
+  "number": 108,
+  "name": {
+    "arabic": "الكوثر",
+    "transliteration": "Al-Kawthar",
+    "englishMeaning": "The Abundance"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 3,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:52.767Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِنَّآ أَعْطَيْنَـٰكَ ٱلْكَوْثَرَ",
+      "translation": "Verily, We have granted you (O Muhammad ()) Al-Kauthar (a river in Paradise);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "فَصَلِّ لِرَبِّكَ وَٱنْحَرْ",
+      "translation": "Therefore turn in prayer to your Lord and sacrifice (to Him only).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "إِنَّ شَانِئَكَ هُوَ ٱلْأَبْتَرُ",
+      "translation": "For he who makes you angry (O Muhammad ()), – he will be cut off (from every good thing in this world and in the Hereafter).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "number": 107,
+  "name": {
+    "arabic": "الماعون",
+    "transliteration": "Al-Ma'un",
+    "englishMeaning": "The Small Kindnesses"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 7,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:51.226Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "أَرَءَيْتَ ٱلَّذِى يُكَذِّبُ بِٱلدِّينِ",
+      "translation": "Have you seen him who denies the Recompense?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "فَذَٰلِكَ ٱلَّذِى يَدُعُّ ٱلْيَتِيمَ",
+      "translation": "That is he who repulses the orphan (harshly),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلْمِسْكِينِ",
+      "translation": "And urges not the feeding of AlMiskin (the poor),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "فَوَيْلٌ لِّلْمُصَلِّينَ",
+      "translation": "So woe unto those performers of Salat (prayers) (hypocrites),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "ٱلَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ",
+      "translation": "Who delay their Salat (prayer) from their stated fixed times,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "ٱلَّذِينَ هُمْ يُرَآءُونَ",
+      "translation": "Those who do good deeds only to be seen (of men),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "وَيَمْنَعُونَ ٱلْمَاعُونَ",
+      "translation": "And refuse Al-Ma’un (small kindnesses e.g. salt, sugar, water, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

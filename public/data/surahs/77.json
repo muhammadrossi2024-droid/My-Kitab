@@ -1,0 +1,317 @@
+{
+  "number": 77,
+  "name": {
+    "arabic": "المرسلات",
+    "transliteration": "Al-Mursalat",
+    "englishMeaning": "The Emissaries"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 50,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:29:59.217Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلْمُرْسَلَـٰتِ عُرْفًا",
+      "translation": "By the winds (or angels or the Messengers of Allah) sent forth one after another.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "فَٱلْعَـٰصِفَـٰتِ عَصْفًا",
+      "translation": "And by the winds that blow violently,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَٱلنَّـٰشِرَٰتِ نَشْرًا",
+      "translation": "And by the winds that scatter clouds and rain;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "فَٱلْفَـٰرِقَـٰتِ فَرْقًا",
+      "translation": "And by the Verses (of the Qur’an) that separate the right from the wrong.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَٱلْمُلْقِيَـٰتِ ذِكْرًا",
+      "translation": "And by the angels that bring the revelations to the Messengers,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "عُذْرًا أَوْ نُذْرًا",
+      "translation": "To cut off all excuses or to warn;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "إِنَّمَا تُوعَدُونَ لَوَٰقِعٌ",
+      "translation": "Surely, what you are promised must come to pass.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "فَإِذَا ٱلنُّجُومُ طُمِسَتْ",
+      "translation": "Then when the stars lose their lights;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "وَإِذَا ٱلسَّمَآءُ فُرِجَتْ",
+      "translation": "And when the heaven is cleft asunder;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَإِذَا ٱلْجِبَالُ نُسِفَتْ",
+      "translation": "And when the mountains are blown away;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَإِذَا ٱلرُّسُلُ أُقِّتَتْ",
+      "translation": "And when the Messengers are gathered to their time appointed;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "لِأَىِّ يَوْمٍ أُجِّلَتْ",
+      "translation": "For what Day are these signs postponed?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "لِيَوْمِ ٱلْفَصْلِ",
+      "translation": "For the Day of sorting out (the men of Paradise from the men destined for Hell).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا يَوْمُ ٱلْفَصْلِ",
+      "translation": "And what will explain to you what is the Day of sorting out?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "أَلَمْ نُهْلِكِ ٱلْأَوَّلِينَ",
+      "translation": "Did We not destroy the ancients?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "ثُمَّ نُتْبِعُهُمُ ٱلْـَٔاخِرِينَ",
+      "translation": "So shall We make later generations to follow them.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "كَذَٰلِكَ نَفْعَلُ بِٱلْمُجْرِمِينَ",
+      "translation": "Thus do We deal with the Mujrimun (polytheists, disbelievers, sinners, criminals, etc.)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "أَلَمْ نَخْلُقكُّم مِّن مَّآءٍ مَّهِينٍ",
+      "translation": "Did We not create you from a worthless water (semen, etc.)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "فَجَعَلْنَـٰهُ فِى قَرَارٍ مَّكِينٍ",
+      "translation": "Then We placed it in a place of safety (womb),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "إِلَىٰ قَدَرٍ مَّعْلُومٍ",
+      "translation": "For a known period (determined by gestation)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "فَقَدَرْنَا فَنِعْمَ ٱلْقَـٰدِرُونَ",
+      "translation": "So We did measure, and We are the Best to measure (the things).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 25,
+      "arabic": "أَلَمْ نَجْعَلِ ٱلْأَرْضَ كِفَاتًا",
+      "translation": "Have We not made the earth a receptacle?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 26,
+      "arabic": "أَحْيَآءً وَأَمْوَٰتًا",
+      "translation": "For the living and the dead.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 27,
+      "arabic": "وَجَعَلْنَا فِيهَا رَوَٰسِىَ شَـٰمِخَـٰتٍ وَأَسْقَيْنَـٰكُم مَّآءً فُرَاتًا",
+      "translation": "And have placed therein firm, and tall mountains; and have given you to drink sweet water?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 28,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 29,
+      "arabic": "ٱنطَلِقُوٓا۟ إِلَىٰ مَا كُنتُم بِهِۦ تُكَذِّبُونَ",
+      "translation": "(It will be said to the disbelievers): “Depart you to that which you used to deny!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 30,
+      "arabic": "ٱنطَلِقُوٓا۟ إِلَىٰ ظِلٍّ ذِى ثَلَـٰثِ شُعَبٍ",
+      "translation": "“Depart you to a shadow (of Hell-fire smoke ascending) in three columns,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 31,
+      "arabic": "لَّا ظَلِيلٍ وَلَا يُغْنِى مِنَ ٱللَّهَبِ",
+      "translation": "“Neither shading, nor of any use against the fierce flame of the Fire.”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 32,
+      "arabic": "إِنَّهَا تَرْمِى بِشَرَرٍ كَٱلْقَصْرِ",
+      "translation": "Verily! It (Hell) throws sparks (huge) as Al-Qasr [a fort or a Qasr (huge log of wood)],",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 33,
+      "arabic": "كَأَنَّهُۥ جِمَـٰلَتٌ صُفْرٌ",
+      "translation": "As if they were Jimalatun Sufr (yellow camels or bundles of ropes).”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 34,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 35,
+      "arabic": "هَـٰذَا يَوْمُ لَا يَنطِقُونَ",
+      "translation": "That will be a Day when they shall not speak (during some part of it),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 36,
+      "arabic": "وَلَا يُؤْذَنُ لَهُمْ فَيَعْتَذِرُونَ",
+      "translation": "And they will not be permitted to put forth any excuse.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 37,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 38,
+      "arabic": "هَـٰذَا يَوْمُ ٱلْفَصْلِ ۖ جَمَعْنَـٰكُمْ وَٱلْأَوَّلِينَ",
+      "translation": "That will be a Day of Decision! We have brought you and the men of old together!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 39,
+      "arabic": "فَإِن كَانَ لَكُمْ كَيْدٌ فَكِيدُونِ",
+      "translation": "So if you have a plot, use it against Me (Allah)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 40,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 41,
+      "arabic": "إِنَّ ٱلْمُتَّقِينَ فِى ظِلَـٰلٍ وَعُيُونٍ",
+      "translation": "Verily, the Muttaqun (pious – see V.2:2) shall be amidst shades and springs.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 42,
+      "arabic": "وَفَوَٰكِهَ مِمَّا يَشْتَهُونَ",
+      "translation": "And fruits, such as they desire.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 43,
+      "arabic": "كُلُوا۟ وَٱشْرَبُوا۟ هَنِيٓـًٔۢا بِمَا كُنتُمْ تَعْمَلُونَ",
+      "translation": "“Eat and drink comfortably for that which you used to do.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 44,
+      "arabic": "إِنَّا كَذَٰلِكَ نَجْزِى ٱلْمُحْسِنِينَ",
+      "translation": "Verily, thus We reward the Muhsinun (good-doers).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 45,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 46,
+      "arabic": "كُلُوا۟ وَتَمَتَّعُوا۟ قَلِيلًا إِنَّكُم مُّجْرِمُونَ",
+      "translation": "(O you disbelievers)! Eat and enjoy yourselves (in this worldly life) for a little while. Verily, you are the Mujrimun (polytheists, disbelievers, sinners, criminals, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 47,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 48,
+      "arabic": "وَإِذَا قِيلَ لَهُمُ ٱرْكَعُوا۟ لَا يَرْكَعُونَ",
+      "translation": "And when it is said to them: “Bow down yourself (in prayer)!” They bow not down (offer not their prayers) .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 49,
+      "arabic": "وَيْلٌ يَوْمَئِذٍ لِّلْمُكَذِّبِينَ",
+      "translation": "Woe that Day to the deniers (of the Day of Resurrection)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 50,
+      "arabic": "فَبِأَىِّ حَدِيثٍۭ بَعْدَهُۥ يُؤْمِنُونَ",
+      "translation": "Then in what statement after this (the Qur’an) will they believe?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

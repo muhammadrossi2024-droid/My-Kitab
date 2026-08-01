@@ -1,0 +1,119 @@
+{
+  "number": 86,
+  "name": {
+    "arabic": "الطارق",
+    "transliteration": "At-Tariq",
+    "englishMeaning": "The Morning Star"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 17,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:15.390Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلسَّمَآءِ وَٱلطَّارِقِ",
+      "translation": "By the heaven, and At-Tariq (the night-comer, i.e. the bright star);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا ٱلطَّارِقُ",
+      "translation": "And what will make you to know what At-Tariq (night-comer) is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "ٱلنَّجْمُ ٱلثَّاقِبُ",
+      "translation": "(It is) the star of piercing brightness;",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ",
+      "translation": "There is no human being but has a protector over him (or her) (i.e. angels incharge of each human being guarding him, writing his good and bad deeds, etc.)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فَلْيَنظُرِ ٱلْإِنسَـٰنُ مِمَّ خُلِقَ",
+      "translation": "So let man see from what he is created!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "خُلِقَ مِن مَّآءٍ دَافِقٍ",
+      "translation": "He is created from a water gushing forth",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "يَخْرُجُ مِنۢ بَيْنِ ٱلصُّلْبِ وَٱلتَّرَآئِبِ",
+      "translation": "Proceeding from between the back-bone and the ribs,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "إِنَّهُۥ عَلَىٰ رَجْعِهِۦ لَقَادِرٌ",
+      "translation": "Verily, (Allah) is Able to bring him back (to life)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "يَوْمَ تُبْلَى ٱلسَّرَآئِرُ",
+      "translation": "The Day when all the secrets (deeds, prayers, fasting, etc.) will be examined (as to their truth).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "فَمَا لَهُۥ مِن قُوَّةٍ وَلَا نَاصِرٍ",
+      "translation": "Then will (man) have no power, nor any helper.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "وَٱلسَّمَآءِ ذَاتِ ٱلرَّجْعِ",
+      "translation": "By the sky (having rain clouds) which gives rain, again and again.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "وَٱلْأَرْضِ ذَاتِ ٱلصَّدْعِ",
+      "translation": "And the earth which splits (with the growth of trees and plants),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "إِنَّهُۥ لَقَوْلٌ فَصْلٌ",
+      "translation": "Verily! This (the Qur’an) is the Word that separates (the truth from falsehood, and commands strict legal laws for mankind to cut the roots of evil).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "وَمَا هُوَ بِٱلْهَزْلِ",
+      "translation": "And it is not a thing for amusement.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "إِنَّهُمْ يَكِيدُونَ كَيْدًا",
+      "translation": "Verily, they are but plotting a plot (against you O Muhammad ()).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "وَأَكِيدُ كَيْدًا",
+      "translation": "And I (too) am planning a plan.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "فَمَهِّلِ ٱلْكَـٰفِرِينَ أَمْهِلْهُمْ رُوَيْدًۢا",
+      "translation": "So give a respite to the disbelievers. Deal you gently with them for a while.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

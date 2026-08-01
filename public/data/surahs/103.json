@@ -1,0 +1,35 @@
+{
+  "number": 103,
+  "name": {
+    "arabic": "العصر",
+    "transliteration": "Al-Asr",
+    "englishMeaning": "The Declining Day, Epoch"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 3,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:44.422Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "وَٱلْعَصْرِ",
+      "translation": "By Al-‘Asr (the time).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "إِنَّ ٱلْإِنسَـٰنَ لَفِى خُسْرٍ",
+      "translation": "Verily! Man is in loss,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "إِلَّا ٱلَّذِينَ ءَامَنُوا۟ وَعَمِلُوا۟ ٱلصَّـٰلِحَـٰتِ وَتَوَاصَوْا۟ بِٱلْحَقِّ وَتَوَاصَوْا۟ بِٱلصَّبْرِ",
+      "translation": "Except those who believe (in Islamic Monotheism) and do righteous good deeds, and recommend one another to the truth (i.e. order one another to perform all kinds of good deeds (Al-Ma’ruf)which Allah has ordained, and abstain from all kinds of sins and evil deeds (Al-Munkar)which Allah has forbidden), and recommend one another to patience (for the sufferings, harms, and injuries which one may encounter in Allah’s Cause during preaching His religion of Islamic Monotheism or Jihad, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

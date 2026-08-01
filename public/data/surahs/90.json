@@ -1,0 +1,137 @@
+{
+  "number": 90,
+  "name": {
+    "arabic": "البلد",
+    "transliteration": "Al-Balad",
+    "englishMeaning": "The City"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 20,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:22.745Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "لَآ أُقْسِمُ بِهَـٰذَا ٱلْبَلَدِ",
+      "translation": "I swear by this city (Makkah);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَأَنتَ حِلٌّۢ بِهَـٰذَا ٱلْبَلَدِ",
+      "translation": "And you are free (from sin, to punish the enemies of Islam on the Day of the conquest) in this city (Makkah),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَوَالِدٍ وَمَا وَلَدَ",
+      "translation": "And by the begetter (i.e. Adam) and that which he begot (i.e. his progeny);",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "لَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ فِى كَبَدٍ",
+      "translation": "Verily, We have created man in toil.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ",
+      "translation": "Thinks he that none can overcome him?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "يَقُولُ أَهْلَكْتُ مَالًا لُّبَدًا",
+      "translation": "He says (boastfully): “I have wasted wealth in abundance!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "أَيَحْسَبُ أَن لَّمْ يَرَهُۥٓ أَحَدٌ",
+      "translation": "Thinks he that none sees him?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "أَلَمْ نَجْعَل لَّهُۥ عَيْنَيْنِ",
+      "translation": "Have We not made for him a pair of eyes?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "وَلِسَانًا وَشَفَتَيْنِ",
+      "translation": "And a tongue and a pair of lips?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَهَدَيْنَـٰهُ ٱلنَّجْدَيْنِ",
+      "translation": "And shown him the two ways (good and evil)?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "فَلَا ٱقْتَحَمَ ٱلْعَقَبَةَ",
+      "translation": "But he has made no effort to pass on the path that is steep.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا ٱلْعَقَبَةُ",
+      "translation": "And what will make you know the path that is steep?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "فَكُّ رَقَبَةٍ",
+      "translation": "(It is) Freeing a neck (slave, etc.)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "أَوْ إِطْعَـٰمٌ فِى يَوْمٍ ذِى مَسْغَبَةٍ",
+      "translation": "Or giving food in a day of hunger (famine),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "يَتِيمًا ذَا مَقْرَبَةٍ",
+      "translation": "To an orphan near of kin.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "أَوْ مِسْكِينًا ذَا مَتْرَبَةٍ",
+      "translation": "Or to a Miskin (poor) afflicted with misery.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "ثُمَّ كَانَ مِنَ ٱلَّذِينَ ءَامَنُوا۟ وَتَوَاصَوْا۟ بِٱلصَّبْرِ وَتَوَاصَوْا۟ بِٱلْمَرْحَمَةِ",
+      "translation": "Then he became one of those who believed, and recommended one another to perseverance and patience, and (also) recommended one another to pity and compassion.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "أُو۟لَـٰٓئِكَ أَصْحَـٰبُ ٱلْمَيْمَنَةِ",
+      "translation": "They are those on the Right Hand (the dwellers of Paradise),",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَٱلَّذِينَ كَفَرُوا۟ بِـَٔايَـٰتِنَا هُمْ أَصْحَـٰبُ ٱلْمَشْـَٔمَةِ",
+      "translation": "But those who disbelieved in Our Ayat (proofs, evidences, verses, lessons, signs, revelations, etc.), they are those on the Left Hand (the dwellers of Hell).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "عَلَيْهِمْ نَارٌ مُّؤْصَدَةٌۢ",
+      "translation": "The Fire will be shut over them (i.e. they will be enveloped by the Fire without any opening or window or outlet.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

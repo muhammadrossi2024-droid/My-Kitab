@@ -1,0 +1,65 @@
+{
+  "number": 102,
+  "name": {
+    "arabic": "التكاثر",
+    "transliteration": "At-Takathur",
+    "englishMeaning": "The Rivalry in world increase"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 8,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:42.903Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "أَلْهَىٰكُمُ ٱلتَّكَاثُرُ",
+      "translation": "The mutual rivalry for piling up of worldly things diverts you,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "حَتَّىٰ زُرْتُمُ ٱلْمَقَابِرَ",
+      "translation": "Until you visit the graves (i.e. till you die).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "كَلَّا سَوْفَ تَعْلَمُونَ",
+      "translation": "Nay! You shall come to know!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ",
+      "translation": "Again, Nay! You shall come to know!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "كَلَّا لَوْ تَعْلَمُونَ عِلْمَ ٱلْيَقِينِ",
+      "translation": "Nay! If you knew with a sure knowledge (the end result of piling up, you would not have occupied yourselves in worldly things)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "لَتَرَوُنَّ ٱلْجَحِيمَ",
+      "translation": "Verily, You shall see the blazing Fire (Hell)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "ثُمَّ لَتَرَوُنَّهَا عَيْنَ ٱلْيَقِينِ",
+      "translation": "And again, you shall see it with certainty of sight!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "ثُمَّ لَتُسْـَٔلُنَّ يَوْمَئِذٍ عَنِ ٱلنَّعِيمِ",
+      "translation": "Then, on that Day, you shall be asked about the delight (you indulged in, in this world)!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
+export default function SurahList() {
+  const [surahs, setSurahs] = useState(null);
+  const [error, setError] = useState(null);
+  const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    fetch("/data/surahs/index.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("index.json not found");
+        return res.json();
+      })
+      .then(setSurahs)
+      .catch((err) => setError(err.message));
+  }, []);
+
+  const filtered = useMemo(() => {
+    if (!surahs) return [];
+    const q = query.trim().toLowerCase();
+    if (!q) return surahs;
+    return surahs.filter(
+      (s) =>
+        s.transliteration.toLowerCase().includes(q) ||
+        s.englishMeaning.toLowerCase().includes(q) ||
+        String(s.number) === q
+    );
+  }, [surahs, query]);
+
+  if (error) {
+    return (
+      <div className="empty-state">
+        Couldn't load the surah list ({error}). Run the scraper first: <code>npm run scrape</code>
+      </div>
+    );
+  }
+
+  if (!surahs) {
+    return <div className="loading-state">Loading surahs…</div>;
+  }
+
+  return (
+    <div>
+      <input
+        className="search-input"
+        placeholder="Search by name or number…"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <ul className="surah-list">
+        {filtered.map((s) => (
+          <li key={s.number}>
+            <Link className="surah-list-item" to={`/surah/${s.number}`}>
+              <span className="surah-badge">{s.number}</span>
+              <span className="surah-meta">
+                <div className="surah-name-en">{s.transliteration}</div>
+                <div className="surah-name-sub">
+                  {s.englishMeaning} · {s.revelationType} · {s.verseCount} verses
+                  {!s.scraped && " · not yet scraped"}
+                </div>
+              </span>
+              <span className="surah-arabic-name">{s.arabic}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

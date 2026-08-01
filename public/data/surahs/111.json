@@ -1,0 +1,47 @@
+{
+  "number": 111,
+  "name": {
+    "arabic": "المسد",
+    "transliteration": "Al-Masad",
+    "englishMeaning": "The Palm Fiber, The Flame"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 5,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:58.351Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "تَبَّتْ يَدَآ أَبِى لَهَبٍ وَتَبَّ",
+      "translation": "Perish the two hands of Abu Lahab (an uncle of the Prophet), and perish he!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "مَآ أَغْنَىٰ عَنْهُ مَالُهُۥ وَمَا كَسَبَ",
+      "translation": "His wealth and his children (etc.) will not benefit him!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ",
+      "translation": "He will be burnt in a Fire of blazing flames!",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "وَٱمْرَأَتُهُۥ حَمَّالَةَ ٱلْحَطَبِ",
+      "translation": "And his wife too, who carries wood (thorns of Sadan which she used to put on the way of the Prophet () , or use to slander him).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "فِى جِيدِهَا حَبْلٌ مِّن مَّسَدٍۭ",
+      "translation": "In her neck is a twisted rope of Masad (palm fibre).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

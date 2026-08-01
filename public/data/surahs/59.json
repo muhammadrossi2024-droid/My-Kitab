@@ -1,0 +1,161 @@
+{
+  "number": 59,
+  "name": {
+    "arabic": "الحشر",
+    "transliteration": "Al-Hashr",
+    "englishMeaning": "The Exile"
+  },
+  "revelationType": "Medinan",
+  "totalVerses": 24,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:29:28.941Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "سَبَّحَ لِلَّهِ مَا فِى ٱلسَّمَـٰوَٰتِ وَمَا فِى ٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+      "translation": "Whatsoever is in the heavens and whatsoever is on the earth glorifies Allah. And He is the All-Mighty, the All-Wise.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "هُوَ ٱلَّذِىٓ أَخْرَجَ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَـٰبِ مِن دِيَـٰرِهِمْ لِأَوَّلِ ٱلْحَشْرِ ۚ مَا ظَنَنتُمْ أَن يَخْرُجُوا۟ ۖ وَظَنُّوٓا۟ أَنَّهُم مَّانِعَتُهُمْ حُصُونُهُم مِّنَ ٱللَّهِ فَأَتَىٰهُمُ ٱللَّهُ مِنْ حَيْثُ لَمْ يَحْتَسِبُوا۟ ۖ وَقَذَفَ فِى قُلُوبِهِمُ ٱلرُّعْبَ ۚ يُخْرِبُونَ بُيُوتَهُم بِأَيْدِيهِمْ وَأَيْدِى ٱلْمُؤْمِنِينَ فَٱعْتَبِرُوا۟ يَـٰٓأُو۟لِى ٱلْأَبْصَـٰرِ",
+      "translation": "He it is Who drove out the disbelievers among the people of the Scripture (i.e. the Jews of the tribe of Bani An-Nadir) from their homes at the first gathering. You did not think that they would get out. And they thought that their fortresses would defend them from Allah! But Allah’s (Torment) reached them from a place whereof they expected it not, and He cast terror into their hearts, so that they destroyed their own dwellings with their own hands and the hands of the believers. Then take admonition, O you with eyes (to see).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "وَلَوْلَآ أَن كَتَبَ ٱللَّهُ عَلَيْهِمُ ٱلْجَلَآءَ لَعَذَّبَهُمْ فِى ٱلدُّنْيَا ۖ وَلَهُمْ فِى ٱلْـَٔاخِرَةِ عَذَابُ ٱلنَّارِ",
+      "translation": "And had it not been that Allah had decreed exile for them, He would certainly have punished them in this world, and in the Hereafter theirs shall be the torment of the Fire.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "ذَٰلِكَ بِأَنَّهُمْ شَآقُّوا۟ ٱللَّهَ وَرَسُولَهُۥ ۖ وَمَن يُشَآقِّ ٱللَّهَ فَإِنَّ ٱللَّهَ شَدِيدُ ٱلْعِقَابِ",
+      "translation": "That is because they opposed Allah and His Messenger (Muhammad ). And whosoever opposes Allah, then verily, Allah is Severe in punishment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "مَا قَطَعْتُم مِّن لِّينَةٍ أَوْ تَرَكْتُمُوهَا قَآئِمَةً عَلَىٰٓ أُصُولِهَا فَبِإِذْنِ ٱللَّهِ وَلِيُخْزِىَ ٱلْفَـٰسِقِينَ",
+      "translation": "What you (O Muslims) cut down of the palm-trees (of the enemy), or you left them standing on their stems, it was by Leave of Allah, and in order that He might disgrace the Fasiqun (rebellious, disobedient to Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 6,
+      "arabic": "وَمَآ أَفَآءَ ٱللَّهُ عَلَىٰ رَسُولِهِۦ مِنْهُمْ فَمَآ أَوْجَفْتُمْ عَلَيْهِ مِنْ خَيْلٍ وَلَا رِكَابٍ وَلَـٰكِنَّ ٱللَّهَ يُسَلِّطُ رُسُلَهُۥ عَلَىٰ مَن يَشَآءُ ۚ وَٱللَّهُ عَلَىٰ كُلِّ شَىْءٍ قَدِيرٌ",
+      "translation": "And what Allah gave as booty (Fai’) to His Messenger (Muhammad ) from them, for which you made no expedition with either cavalry or camelry. But Allah gives power to His Messengers over whomsoever He wills. And Allah is Able to do all things.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 7,
+      "arabic": "مَّآ أَفَآءَ ٱللَّهُ عَلَىٰ رَسُولِهِۦ مِنْ أَهْلِ ٱلْقُرَىٰ فَلِلَّهِ وَلِلرَّسُولِ وَلِذِى ٱلْقُرْبَىٰ وَٱلْيَتَـٰمَىٰ وَٱلْمَسَـٰكِينِ وَٱبْنِ ٱلسَّبِيلِ كَىْ لَا يَكُونَ دُولَةًۢ بَيْنَ ٱلْأَغْنِيَآءِ مِنكُمْ ۚ وَمَآ ءَاتَىٰكُمُ ٱلرَّسُولُ فَخُذُوهُ وَمَا نَهَىٰكُمْ عَنْهُ فَٱنتَهُوا۟ ۚ وَٱتَّقُوا۟ ٱللَّهَ ۖ إِنَّ ٱللَّهَ شَدِيدُ ٱلْعِقَابِ",
+      "translation": "What Allah gave as booty (Fai’) to His Messenger (Muhammad ) from the people of the townships, – it is for Allah, His Messenger (Muhammad ), the kindred (of Messenger Muhammad ), the orphans, Al-Masakin (the poor), and the wayfarer, in order that it may not become a fortune used by the rich among you. And whatsoever the Messenger (Muhammad ) gives you, take it, and whatsoever he forbids you, abstain (from it) , and fear Allah. Verily, Allah is Severe in punishment.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 8,
+      "arabic": "لِلْفُقَرَآءِ ٱلْمُهَـٰجِرِينَ ٱلَّذِينَ أُخْرِجُوا۟ مِن دِيَـٰرِهِمْ وَأَمْوَٰلِهِمْ يَبْتَغُونَ فَضْلًا مِّنَ ٱللَّهِ وَرِضْوَٰنًا وَيَنصُرُونَ ٱللَّهَ وَرَسُولَهُۥٓ ۚ أُو۟لَـٰٓئِكَ هُمُ ٱلصَّـٰدِقُونَ",
+      "translation": "(And there is also a share in this booty) for the poor emigrants, who were expelled from their homes and their property, seeking Bounties from Allah and to please Him. And helping Allah (i.e. helping His religion) and His Messenger (Muhammad ). Such are indeed the truthful (to what they say);-",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 9,
+      "arabic": "وَٱلَّذِينَ تَبَوَّءُو ٱلدَّارَ وَٱلْإِيمَـٰنَ مِن قَبْلِهِمْ يُحِبُّونَ مَنْ هَاجَرَ إِلَيْهِمْ وَلَا يَجِدُونَ فِى صُدُورِهِمْ حَاجَةً مِّمَّآ أُوتُوا۟ وَيُؤْثِرُونَ عَلَىٰٓ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ ۚ وَمَن يُوقَ شُحَّ نَفْسِهِۦ فَأُو۟لَـٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ",
+      "translation": "And those who, before them, had homes (in Al-Madinah) and had adopted the Faith, love those who emigrate to them, and have no jealousy in their breasts for that which they have been given (from the booty of Bani An-Nadir), and give them (emigrants) preference over themselves, even though they were in need of that. And whosoever is saved from his own covetousness, such are they who will be the successful.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 10,
+      "arabic": "وَٱلَّذِينَ جَآءُو مِنۢ بَعْدِهِمْ يَقُولُونَ رَبَّنَا ٱغْفِرْ لَنَا وَلِإِخْوَٰنِنَا ٱلَّذِينَ سَبَقُونَا بِٱلْإِيمَـٰنِ وَلَا تَجْعَلْ فِى قُلُوبِنَا غِلًّا لِّلَّذِينَ ءَامَنُوا۟ رَبَّنَآ إِنَّكَ رَءُوفٌ رَّحِيمٌ",
+      "translation": "And those who came after them say: “Our Lord! Forgive us and our brethren who have preceded us in Faith, and put not in our hearts any hatred against those who have believed. Our Lord! You are indeed full of kindness, Most Merciful.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 11,
+      "arabic": "۞ أَلَمْ تَرَ إِلَى ٱلَّذِينَ نَافَقُوا۟ يَقُولُونَ لِإِخْوَٰنِهِمُ ٱلَّذِينَ كَفَرُوا۟ مِنْ أَهْلِ ٱلْكِتَـٰبِ لَئِنْ أُخْرِجْتُمْ لَنَخْرُجَنَّ مَعَكُمْ وَلَا نُطِيعُ فِيكُمْ أَحَدًا أَبَدًا وَإِن قُوتِلْتُمْ لَنَنصُرَنَّكُمْ وَٱللَّهُ يَشْهَدُ إِنَّهُمْ لَكَـٰذِبُونَ",
+      "translation": "Have you (O Muhammad ) not observed the hypocrites who say to their friends among the people of the Scripture who disbelieve: “(By Allah) If you are expelled, we (too) indeed will go out with you, and we shall never obey any one against you, and if you are attacked (in fight), we shall indeed help you.” But Allah is Witness, that they verily, are liars.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 12,
+      "arabic": "لَئِنْ أُخْرِجُوا۟ لَا يَخْرُجُونَ مَعَهُمْ وَلَئِن قُوتِلُوا۟ لَا يَنصُرُونَهُمْ وَلَئِن نَّصَرُوهُمْ لَيُوَلُّنَّ ٱلْأَدْبَـٰرَ ثُمَّ لَا يُنصَرُونَ",
+      "translation": "Surely, if they (the Jews) are expelled, never will they (hypocrites) go out with them, and if they are attacked, they will never help them. And if they do help them, they (hypocrites) will turn their backs, so they will not be victorious.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 13,
+      "arabic": "لَأَنتُمْ أَشَدُّ رَهْبَةً فِى صُدُورِهِم مِّنَ ٱللَّهِ ۚ ذَٰلِكَ بِأَنَّهُمْ قَوْمٌ لَّا يَفْقَهُونَ",
+      "translation": "Verily, you (believers in the Oneness of Allah – Islamic Monotheism) are more awful as a fear in their (Jews of Bani An-Nadir) breasts than Allah. That is because they are a people who comprehend not (the Majesty and Power of Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 14,
+      "arabic": "لَا يُقَـٰتِلُونَكُمْ جَمِيعًا إِلَّا فِى قُرًى مُّحَصَّنَةٍ أَوْ مِن وَرَآءِ جُدُرٍۭ ۚ بَأْسُهُم بَيْنَهُمْ شَدِيدٌ ۚ تَحْسَبُهُمْ جَمِيعًا وَقُلُوبُهُمْ شَتَّىٰ ۚ ذَٰلِكَ بِأَنَّهُمْ قَوْمٌ لَّا يَعْقِلُونَ",
+      "translation": "They fight not against you even together, except in fortified townships, or from behind walls. Their enmity among themselves is very great. You would think they were united, but their hearts are divided, that is because they are a people who understand not.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 15,
+      "arabic": "كَمَثَلِ ٱلَّذِينَ مِن قَبْلِهِمْ قَرِيبًا ۖ ذَاقُوا۟ وَبَالَ أَمْرِهِمْ وَلَهُمْ عَذَابٌ أَلِيمٌ",
+      "translation": "They are like their immediate predecessors (the Jews of Bani Qainuqa’, who suffered), they tasted the evil result of their conduct, and (in the Hereafter, there is) for them a painful torment;-",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 16,
+      "arabic": "كَمَثَلِ ٱلشَّيْطَـٰنِ إِذْ قَالَ لِلْإِنسَـٰنِ ٱكْفُرْ فَلَمَّا كَفَرَ قَالَ إِنِّى بَرِىٓءٌ مِّنكَ إِنِّىٓ أَخَافُ ٱللَّهَ رَبَّ ٱلْعَـٰلَمِينَ",
+      "translation": "(Their allies deceived them) like Shaitan (Satan), when he says to man: “Disbelieve in Allah.” But when (man) disbelieves in Allah, Shaitan (Satan) says: “I am free of you, I fear Allah, the Lord of the ‘Alamin (mankind, jinns and all that exists)!”",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 17,
+      "arabic": "فَكَانَ عَـٰقِبَتَهُمَآ أَنَّهُمَا فِى ٱلنَّارِ خَـٰلِدَيْنِ فِيهَا ۚ وَذَٰلِكَ جَزَٰٓؤُا۟ ٱلظَّـٰلِمِينَ",
+      "translation": "So the end of both will be that they will be in the Fire, abiding therein. Such is the recompense of the Zalimun (i.e. polytheists, wrong-doers, disbelievers in Allah and in His Oneness, etc.).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 18,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ ٱتَّقُوا۟ ٱللَّهَ وَلْتَنظُرْ نَفْسٌ مَّا قَدَّمَتْ لِغَدٍ ۖ وَٱتَّقُوا۟ ٱللَّهَ ۚ إِنَّ ٱللَّهَ خَبِيرٌۢ بِمَا تَعْمَلُونَ",
+      "translation": "O you who believe! Fear Allah and keep your duty to Him. And let every person look to what he has sent forth for the morrow, and fear Allah. Verily, Allah is All-Aware of what you do .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 19,
+      "arabic": "وَلَا تَكُونُوا۟ كَٱلَّذِينَ نَسُوا۟ ٱللَّهَ فَأَنسَىٰهُمْ أَنفُسَهُمْ ۚ أُو۟لَـٰٓئِكَ هُمُ ٱلْفَـٰسِقُونَ",
+      "translation": "And be not like those who forgot Allah (i.e. became disobedient to Allah) and He caused them to forget their ownselves, (let them to forget to do righteous deeds). Those are the Fasiqun (rebellious, disobedient to Allah).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 20,
+      "arabic": "لَا يَسْتَوِىٓ أَصْحَـٰبُ ٱلنَّارِ وَأَصْحَـٰبُ ٱلْجَنَّةِ ۚ أَصْحَـٰبُ ٱلْجَنَّةِ هُمُ ٱلْفَآئِزُونَ",
+      "translation": "Not equal are the dwellers of the Fire and the dwellers of the Paradise. It is the dwellers of Paradise that will be successful.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 21,
+      "arabic": "لَوْ أَنزَلْنَا هَـٰذَا ٱلْقُرْءَانَ عَلَىٰ جَبَلٍ لَّرَأَيْتَهُۥ خَـٰشِعًا مُّتَصَدِّعًا مِّنْ خَشْيَةِ ٱللَّهِ ۚ وَتِلْكَ ٱلْأَمْثَـٰلُ نَضْرِبُهَا لِلنَّاسِ لَعَلَّهُمْ يَتَفَكَّرُونَ",
+      "translation": "Had We sent down this Qur’an on a mountain, you would surely have seen it humbling itself and rending asunder by the fear of Allah. Such are the parables which We put forward to mankind that they may reflect .",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 22,
+      "arabic": "هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَـٰلِمُ ٱلْغَيْبِ وَٱلشَّهَـٰدَةِ ۖ هُوَ ٱلرَّحْمَـٰنُ ٱلرَّحِيمُ",
+      "translation": "He is Allah, than Whom there is La ilaha illa Huwa (none has the right to be worshipped but He) the All-Knower of the unseen and the seen (open). He is the Most Beneficent, the Most Merciful.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 23,
+      "arabic": "هُوَ ٱللَّهُ ٱلَّذِى لَآ إِلَـٰهَ إِلَّا هُوَ ٱلْمَلِكُ ٱلْقُدُّوسُ ٱلسَّلَـٰمُ ٱلْمُؤْمِنُ ٱلْمُهَيْمِنُ ٱلْعَزِيزُ ٱلْجَبَّارُ ٱلْمُتَكَبِّرُ ۚ سُبْحَـٰنَ ٱللَّهِ عَمَّا يُشْرِكُونَ",
+      "translation": "He is Allah than Whom there is La ilaha illa Huwa (none has the right to be worshipped but He) the King, the Holy, the One Free from all defects, the Giver of security, the Watcher over His creatures, the All-Mighty, the Compeller, the Supreme. Glory be to Allah! (High is He) above all that they associate as partners with Him.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 24,
+      "arabic": "هُوَ ٱللَّهُ ٱلْخَـٰلِقُ ٱلْبَارِئُ ٱلْمُصَوِّرُ ۖ لَهُ ٱلْأَسْمَآءُ ٱلْحُسْنَىٰ ۚ يُسَبِّحُ لَهُۥ مَا فِى ٱلسَّمَـٰوَٰتِ وَٱلْأَرْضِ ۖ وَهُوَ ٱلْعَزِيزُ ٱلْحَكِيمُ",
+      "translation": "He is Allah, the Creator, the Inventor of all things, the Bestower of forms. To Him belong the Best Names . All that is in the heavens and the earth glorify Him. And He is the All-Mighty, the All-Wise.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}

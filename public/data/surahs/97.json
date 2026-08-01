@@ -1,0 +1,47 @@
+{
+  "number": 97,
+  "name": {
+    "arabic": "القدر",
+    "transliteration": "Al-Qadr",
+    "englishMeaning": "The Power, Fate"
+  },
+  "revelationType": "Meccan",
+  "totalVerses": 5,
+  "sources": {
+    "translation": "https://noblequran.com/",
+    "arabic": "https://api.quran.com/api/v4"
+  },
+  "scrapedAt": "2026-08-01T00:30:33.200Z",
+  "verses": [
+    {
+      "number": 1,
+      "arabic": "إِنَّآ أَنزَلْنَـٰهُ فِى لَيْلَةِ ٱلْقَدْرِ",
+      "translation": "Verily! We have sent it (this Qur’an) down in the night of Al-Qadr (Decree)",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 2,
+      "arabic": "وَمَآ أَدْرَىٰكَ مَا لَيْلَةُ ٱلْقَدْرِ",
+      "translation": "And what will make you know what the night of Al-Qadr (Decree) is?",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 3,
+      "arabic": "لَيْلَةُ ٱلْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ",
+      "translation": "The night of Al-Qadr (Decree) is better than a thousand months (i.e. worshipping Allah in that night is better than worshipping Him a thousand months, i.e. 83 years and 4 months).",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 4,
+      "arabic": "تَنَزَّلُ ٱلْمَلَـٰٓئِكَةُ وَٱلرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ",
+      "translation": "Therein descend the angels and the Ruh [Jibrael (Gabriel)] by Allah’s Permission with all Decrees,",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    },
+    {
+      "number": 5,
+      "arabic": "سَلَـٰمٌ هِىَ حَتَّىٰ مَطْلَعِ ٱلْفَجْرِ",
+      "translation": "Peace! (All that night, there is Peace and Goodness from Allah to His believing slaves) until the appearance of dawn.",
+      "translator": "Muhammad Muhsin Khan & Muhammad Taqi-ud-Din al-Hilali"
+    }
+  ]
+}
