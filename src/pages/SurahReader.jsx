@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
-import { reciters, isFullSurahReciter, surahAudioUrl } from "../data/reciters.js";
+import { reciters, isFullSurahReciter, surahAudioUrl, supportsWordTiming, getReciter } from "../data/reciters.js";
 import { verseAudioUrl } from "../utils/audio.js";
 import {
   downloadSurah,
@@ -44,6 +44,30 @@ function getVerseWords(verse) {
   return merged;
 }
 
+// For reciters with no per-word (or even per-verse) timing data at all —
+// i.e. one continuous file for the whole surah — each ayah's "playing"
+// window is estimated as proportional to its word count within the audio's
+// actual real-time duration. This isn't word-level precision, but keeps the
+// highlighted ayah roughly in sync as the recording progresses, as opposed
+// to no tracking at all.
+function computeVerseBoundaries(surah) {
+  const counts = surah.verses.map((v) => Math.max(1, getVerseWords(v).length));
+  const total = counts.reduce((sum, c) => sum + c, 0);
+  let cumulative = 0;
+  return surah.verses.map((v, i) => {
+    const start = cumulative / total;
+    cumulative += counts[i];
+    return { verseNumber: v.number, start, end: cumulative / total };
+  });
+}
+
+function verseAtFraction(boundaries, fraction) {
+  for (const b of boundaries) {
+    if (fraction >= b.start && fraction < b.end) return b.verseNumber;
+  }
+  return boundaries.length > 0 ? boundaries[boundaries.length - 1].verseNumber : null;
+}
+
 export default function SurahReader() {
   const { number } = useParams();
   const surahNumber = parseInt(number, 10);
@@ -54,6 +78,7 @@ export default function SurahReader() {
   const [playingVerse, setPlayingVerse] = useState(null);
   const [activeWordRange, setActiveWordRange] = useState(null); // { start, end } | null — end-exclusive
   const [fullSurahPlaying, setFullSurahPlaying] = useState(false);
+  const [fullSurahActiveVerse, setFullSurahActiveVerse] = useState(null); // estimated "currently playing" ayah
   const [downloaded, setDownloaded] = useState(false);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
   const hasScrolledRef = useRef(false);
@@ -67,6 +92,9 @@ export default function SurahReader() {
   const chapterTimingRef = useRef(null); // Map<verseKey, {url, segments}> | null — real word timing for this surah+reciter
 
   const fullSurahMode = isFullSurahReciter(settings.reciter);
+  const reciterSupportsWord = supportsWordTiming(settings.reciter);
+  const effectiveFollowAlong = settings.followAlong === "word" && reciterSupportsWord ? "word" : "ayah";
+  const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
   useEffect(() => {
     setSurah(null);
@@ -85,12 +113,12 @@ export default function SurahReader() {
   }, [surahNumber, settings.reciter]);
 
   // Fetch real per-word timing (quran.com's segment data) for this surah +
-  // reciter, once, when either changes. Only a handful of reciters have this
-  // data; chapterTimingRef stays null for the rest, and playback simply
-  // falls back to ayah-level highlighting (no word spans lit up).
+  // reciter, once, when either changes — but only when Follow-along is set
+  // to "Word-by-word" and this reciter actually has that data; otherwise
+  // there's nothing to do with it, so skip the request entirely.
   useEffect(() => {
     chapterTimingRef.current = null;
-    if (!surah || fullSurahMode) return;
+    if (!surah || effectiveFollowAlong !== "word") return;
     let cancelled = false;
     fetchChapterWordTiming(settings.reciter, surah.number).then((map) => {
       if (!cancelled) chapterTimingRef.current = map;
@@ -98,7 +126,7 @@ export default function SurahReader() {
     return () => {
       cancelled = true;
     };
-  }, [surah, settings.reciter, fullSurahMode]);
+  }, [surah, settings.reciter, effectiveFollowAlong]);
 
   useEffect(() => {
     if (!surah || hasScrolledRef.current) return;
@@ -182,6 +210,7 @@ export default function SurahReader() {
     setPlayingVerse(null);
     setActiveWordRange(null);
     setFullSurahPlaying(false);
+    setFullSurahActiveVerse(null);
   }
 
   // Decides, for a given verse, what to actually play and whether real
@@ -204,9 +233,11 @@ export default function SurahReader() {
       return { src: cachedSrc, blobUrl: cachedSrc, segments: null };
     }
 
-    const timing = chapterTimingRef.current?.get(`${surah.number}:${verseNumber}`);
-    if (timing?.url && segmentsMatchWordCount(timing.segments, words.length)) {
-      return { src: timing.url, blobUrl: null, segments: timing.segments };
+    if (effectiveFollowAlong === "word") {
+      const timing = chapterTimingRef.current?.get(`${surah.number}:${verseNumber}`);
+      if (timing?.url && segmentsMatchWordCount(timing.segments, words.length)) {
+        return { src: timing.url, blobUrl: null, segments: timing.segments };
+      }
     }
 
     return { src: everyayahUrl, blobUrl: null, segments: null };
@@ -301,12 +332,19 @@ export default function SurahReader() {
     if (!surah) return;
     discardCurrentAudio();
     discardPreload();
+    const boundaries = computeVerseBoundaries(surah);
     const audio = new Audio();
     audio.src = surahAudioUrl(surah.number, settings.reciter);
     audioRef.current = audio;
+    audio.ontimeupdate = () => {
+      if (!audio.duration) return;
+      const fraction = Math.min(1, audio.currentTime / audio.duration);
+      setFullSurahActiveVerse(verseAtFraction(boundaries, fraction));
+    };
     audio.onended = () => {
       surah.verses.forEach((v) => markListened(surah.number, v.number));
       setFullSurahPlaying(false);
+      setFullSurahActiveVerse(null);
     };
     audio.onerror = () => setFullSurahPlaying(false);
     audio.play().catch(() => setFullSurahPlaying(false));
@@ -437,7 +475,14 @@ export default function SurahReader() {
         {fullSurahMode && (
           <p style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginTop: 10 }}>
             This reciter is only available as one continuous recording per surah — no per-verse
-            play, word highlighting, or offline download.
+            play or offline download. The currently-playing ayah is still tracked and highlighted,
+            estimated from its position in the recording rather than word-level timing.
+          </p>
+        )}
+        {wordModeUnavailable && (
+          <p style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginTop: 10 }}>
+            {getReciter(settings.reciter).name} doesn't have word-level timing data — showing
+            ayah-by-ayah tracking instead.
           </p>
         )}
 
@@ -457,7 +502,9 @@ export default function SurahReader() {
           const read = isRead(surah.number, verse.number);
           const listened = isListened(surah.number, verse.number);
           const words = getVerseWords(verse);
-          const isThisVersePlaying = playingVerse === verse.number;
+          const isThisVersePlaying = fullSurahMode
+            ? fullSurahActiveVerse === verse.number
+            : playingVerse === verse.number;
           return (
             <div
               className={"ayah-block" + (isThisVersePlaying ? " ayah-playing" : "")}

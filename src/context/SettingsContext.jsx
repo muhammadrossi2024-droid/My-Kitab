@@ -10,6 +10,11 @@ const DEFAULT_SETTINGS = {
   translationFontSize: 17,
   displayMode: "both", // "both" | "arabic" | "english"
   reciter: DEFAULT_RECITER_ID,
+  // The default reciter (Al-Minshawi) supports word-level timing, so "word"
+  // is the sensible starting preference. This is a stored preference, not a
+  // computed value — switching to a reciter without word data doesn't
+  // overwrite it, playback just falls back to ayah-level for that reciter.
+  followAlong: "word", // "word" | "ayah"
 };
 
 function loadSettings() {

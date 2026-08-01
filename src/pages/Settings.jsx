@@ -1,8 +1,10 @@
 import { useSettings } from "../context/SettingsContext.jsx";
-import { reciters } from "../data/reciters.js";
+import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
+  const reciterSupportsWord = supportsWordTiming(settings.reciter);
+  const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
   return (
     <div>
@@ -74,6 +76,33 @@ export default function Settings() {
             ))}
           </select>
         </div>
+
+        <div className="form-row">
+          <div>
+            <div className="form-row-label">Follow-along</div>
+            <div className="form-row-desc">How highlighting tracks the recitation during playback.</div>
+          </div>
+          <div className="theme-toggle-group">
+            <button
+              className={"theme-toggle-btn" + (settings.followAlong === "word" ? " active" : "")}
+              onClick={() => updateSettings({ followAlong: "word" })}
+            >
+              Word-by-word
+            </button>
+            <button
+              className={"theme-toggle-btn" + (settings.followAlong === "ayah" ? " active" : "")}
+              onClick={() => updateSettings({ followAlong: "ayah" })}
+            >
+              Ayah-by-ayah
+            </button>
+          </div>
+        </div>
+        {wordModeUnavailable && (
+          <p style={{ color: "var(--text-muted)", fontSize: "0.82rem", marginTop: -8, marginBottom: 14 }}>
+            {getReciter(settings.reciter).name} doesn't have word-level timing data, so playback will
+            use ayah-by-ayah tracking instead.
+          </p>
+        )}
 
         <div className="form-row">
           <div>

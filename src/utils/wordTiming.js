@@ -6,22 +6,12 @@
 // during playback. This is real per-word timestamp data, not an estimate.
 //
 // Coverage is limited to the specific reciter recordings quran.com has
-// tokenized this way. Confirmed present for all 5 of this app's per-verse
-// reciters (recitation IDs below), tested against both short (1:2) and long
-// (2:255, 50 words) ayat.
-const QURAN_COM_RECITATION_IDS = {
-  minshawy: 9, // Mohamed Siddiq al-Minshawi, Murattal
-  abdulbasit: 2, // AbdulBaset AbdulSamad, Murattal
-  husary: 6, // Mahmoud Khalil Al-Husary
-  shuraym: 10, // Sa`ud ash-Shuraym
-  sudais: 3, // Abdur-Rahman as-Sudais
-};
+// tokenized this way — see the `quranComId` field in src/data/reciters.js
+// (confirmed present for all 5 of this app's per-verse reciters, tested
+// against both short (1:2) and long (2:255, 50 words) ayat).
+import { getQuranComRecitationId } from "../data/reciters.js";
 
 const chapterCache = new Map(); // `${recitationId}:${surah}` -> Promise<Map<verseKey, {url, segments}>>
-
-export function getQuranComRecitationId(reciterId) {
-  return QURAN_COM_RECITATION_IDS[reciterId] || null;
-}
 
 function resolveAudioUrl(rawUrl) {
   if (!rawUrl) return null;

@@ -11,12 +11,17 @@
 // (https://server16.mp3quran.net/h_dukhain/Rewayat-Hafs-A-n-Assem/{surah}.mp3),
 // so this reciter plays as one continuous file per surah instead — no
 // per-verse seek, word highlighting, or per-verse offline download.
+// `quranComId` is the recitation ID quran.com uses for its `fields=segments`
+// API, which returns real per-word timestamp data (see src/utils/wordTiming
+// .js). Only reciters with this ID support "Word-by-word" follow-along;
+// everyone else (currently just Haitham Al-Dukhan) is limited to
+// ayah-by-ayah tracking since no source provides per-word timing for them.
 export const reciters = [
-  { id: "minshawy", type: "per-verse", name: "Al-Minshawi (Murattal)", folder: "Minshawy_Murattal_128kbps" },
-  { id: "abdulbasit", type: "per-verse", name: "Abdul Basit Abdul Samad (Murattal)", folder: "Abdul_Basit_Murattal_192kbps" },
-  { id: "husary", type: "per-verse", name: "Mahmoud Khalil Al-Husary", folder: "Husary_128kbps" },
-  { id: "shuraym", type: "per-verse", name: "Saud Al-Shuraim", folder: "Saood_ash-Shuraym_128kbps" },
-  { id: "sudais", type: "per-verse", name: "Abdur-Rahman As-Sudais", folder: "Abdurrahmaan_As-Sudais_192kbps" },
+  { id: "minshawy", type: "per-verse", name: "Al-Minshawi (Murattal)", folder: "Minshawy_Murattal_128kbps", quranComId: 9 },
+  { id: "abdulbasit", type: "per-verse", name: "Abdul Basit Abdul Samad (Murattal)", folder: "Abdul_Basit_Murattal_192kbps", quranComId: 2 },
+  { id: "husary", type: "per-verse", name: "Mahmoud Khalil Al-Husary", folder: "Husary_128kbps", quranComId: 6 },
+  { id: "shuraym", type: "per-verse", name: "Saud Al-Shuraim", folder: "Saood_ash-Shuraym_128kbps", quranComId: 10 },
+  { id: "sudais", type: "per-verse", name: "Abdur-Rahman As-Sudais", folder: "Abdurrahmaan_As-Sudais_192kbps", quranComId: 3 },
   {
     id: "dukhan",
     type: "full-surah",
@@ -33,6 +38,14 @@ export function getReciter(reciterId) {
 
 export function isFullSurahReciter(reciterId) {
   return getReciter(reciterId).type === "full-surah";
+}
+
+export function supportsWordTiming(reciterId) {
+  return Boolean(getReciter(reciterId).quranComId);
+}
+
+export function getQuranComRecitationId(reciterId) {
+  return getReciter(reciterId).quranComId || null;
 }
 
 export function getReciterFolder(reciterId) {
