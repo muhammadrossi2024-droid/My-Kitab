@@ -448,6 +448,78 @@ a {
   transform: translateX(20px);
 }
 
+.ayah-picker-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.ayah-picker-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ayah-picker-trigger:hover {
+  color: var(--accent);
+}
+
+.ayah-picker-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+}
+
+.ayah-picker-popover {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  z-index: 21;
+  width: 280px;
+  max-height: 260px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  text-align: left;
+}
+
+.ayah-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+
+.ayah-picker-item {
+  padding: 6px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.ayah-picker-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.ayah-picker-item.active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+
 .select-input {
   padding: 8px 12px;
   border-radius: 8px;

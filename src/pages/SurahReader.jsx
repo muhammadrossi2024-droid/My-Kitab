@@ -81,6 +81,7 @@ export default function SurahReader() {
   const [fullSurahActiveVerse, setFullSurahActiveVerse] = useState(null); // estimated "currently playing" ayah
   const [downloaded, setDownloaded] = useState(false);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
+  const [ayahPickerOpen, setAyahPickerOpen] = useState(false);
   const hasScrolledRef = useRef(false);
   const audioRef = useRef(null);
   const playingVerseRef = useRef(null);
@@ -99,6 +100,7 @@ export default function SurahReader() {
   useEffect(() => {
     setSurah(null);
     setError(null);
+    setAyahPickerOpen(false);
     hasScrolledRef.current = false;
     verseElsRef.current = new Map();
     stopPlayback();
@@ -382,6 +384,38 @@ export default function SurahReader() {
     }
   }
 
+  // Seeks within a full-surah reciter's single continuous file to the
+  // estimated start of `verseNumber`, using the same word-count-proportional
+  // boundaries the ayah-by-ayah highlight is already driven by. Approximate,
+  // like the rest of that highlighting, but the closest thing to a "jump to
+  // this ayah" available when there's no per-verse audio to seek between.
+  function seekFullSurahToVerse(verseNumber) {
+    if (!surah || !audioRef.current || !audioRef.current.duration) return;
+    const boundaries = computeVerseBoundaries(surah);
+    const target = boundaries.find((b) => b.verseNumber === verseNumber);
+    if (!target) return;
+    audioRef.current.currentTime = target.start * audioRef.current.duration;
+    setFullSurahActiveVerse(verseNumber);
+  }
+
+  function handleJumpToAyah(verseNumber) {
+    setAyahPickerOpen(false);
+    const audioActive = fullSurahMode ? fullSurahPlaying : Boolean(playingVerse);
+    if (audioActive) {
+      if (fullSurahMode) {
+        seekFullSurahToVerse(verseNumber);
+      } else {
+        playFromVerse(verseNumber);
+      }
+    }
+    // playFromVerse already scrolls to the verse itself; for the "not
+    // currently playing" and full-surah-seek cases, do it explicitly here.
+    if (!audioActive || fullSurahMode) {
+      const el = document.getElementById(`ayah-${verseNumber}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+
   async function handleDownloadToggle() {
     if (!surah || fullSurahMode) return;
     if (downloaded) {
@@ -431,7 +465,40 @@ export default function SurahReader() {
         </div>
         <h1 style={{ margin: "8px 0 4px" }}>{surah.name.transliteration}</h1>
         <div style={{ color: "var(--text-muted)" }}>
-          {surah.name.englishMeaning} · {surah.revelationType} · {surah.totalVerses} verses
+          {surah.name.englishMeaning} · {surah.revelationType} ·{" "}
+          <span className="ayah-picker-wrap">
+            <button
+              className="ayah-picker-trigger"
+              onClick={() => setAyahPickerOpen((v) => !v)}
+              aria-haspopup="true"
+              aria-expanded={ayahPickerOpen}
+            >
+              {surah.totalVerses} verses ▾
+            </button>
+            {ayahPickerOpen && (
+              <>
+                <div className="ayah-picker-backdrop" onClick={() => setAyahPickerOpen(false)} />
+                <div className="ayah-picker-popover">
+                  <div className="ayah-picker-grid">
+                    {Array.from({ length: surah.totalVerses }, (_, i) => i + 1).map((n) => (
+                      <button
+                        key={n}
+                        className={
+                          "ayah-picker-item" +
+                          ((fullSurahMode ? fullSurahActiveVerse : playingVerse) === n
+                            ? " active"
+                            : "")
+                        }
+                        onClick={() => handleJumpToAyah(n)}
+                      >
+                        {n}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </span>
         </div>
 
         <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 14, flexWrap: "wrap", alignItems: "center" }}>
