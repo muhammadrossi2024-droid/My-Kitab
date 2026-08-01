@@ -6,7 +6,7 @@ const LAST_READ_KEY = "quran-app:last-read";
 const LAST_MUTOON_READ_KEY = "quran-app:last-mutoon-read";
 
 const DEFAULT_SETTINGS = {
-  theme: "light", // "light" | "dark"
+  theme: "dark", // "light" | "dark"
   arabicFontSize: 32,
   translationFontSize: 17,
   displayMode: "both", // "both" | "arabic" | "english"
