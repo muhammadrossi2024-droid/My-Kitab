@@ -1,7 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
+
+// Flattens a matn into the sequence of "pages" a reader swipes through: an
+// optional front-matter page (bismillah/intro), one page per section, and
+// an optional closing page.
+function buildPages(book) {
+  const pages = [];
+  if (book.bismillah || book.intro || book.introParagraphs) {
+    pages.push({ key: "intro", type: "intro" });
+  }
+  for (const section of book.sections) {
+    pages.push({ key: `section-${section.number}`, type: "section", section });
+  }
+  if (book.closing) {
+    pages.push({ key: "closing", type: "closing" });
+  }
+  return pages;
+}
 
 const bookModules = import.meta.glob("../data/mutoon/*.json");
 
@@ -56,11 +73,18 @@ export default function MutoonReader() {
   const [error, setError] = useState(null);
   const [mode, setMode] = useState("text"); // "text" | "verses"
   const [justMarkedSection, setJustMarkedSection] = useState(null);
+  const [pageIndex, setPageIndex] = useState(0);
+  const [pageAnim, setPageAnim] = useState(null); // "next" | "prev" | null
+  const swipeStartRef = useRef(null); // {x, y} | null — only tracked for touch/pen pointers
+
+  const pages = useMemo(() => (book ? buildPages(book) : []), [book]);
 
   useEffect(() => {
     setBook(null);
     setError(null);
     setMode("text");
+    setPageIndex(0);
+    setPageAnim(null);
     const loader = bookModules[`../data/mutoon/${bookId}.json`];
     if (!loader) {
       setError("not found");
@@ -71,20 +95,109 @@ export default function MutoonReader() {
       .catch((err) => setError(err.message));
   }, [bookId]);
 
-  // Jump straight to a section anchor when arriving via a "Resume" link.
+  // Jump straight to a section's page when arriving via a "Resume" link.
   useEffect(() => {
     if (!book) return;
     const hash = window.location.hash;
     if (hash.startsWith("#section-")) {
-      const el = document.getElementById(hash.slice(1));
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      const idx = pages.findIndex((p) => p.key === hash.slice(1));
+      if (idx !== -1) setPageIndex(idx);
     }
-  }, [book]);
+  }, [book, pages]);
+
+  function goToPage(nextIndex, direction) {
+    if (nextIndex < 0 || nextIndex >= pages.length) return;
+    setPageAnim(direction);
+    setPageIndex(nextIndex);
+  }
+
+  function handlePointerDown(e) {
+    if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+    swipeStartRef.current = { x: e.clientX, y: e.clientY };
+  }
+
+  function handlePointerUp(e) {
+    const start = swipeStartRef.current;
+    swipeStartRef.current = null;
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) {
+      goToPage(pageIndex + 1, "next");
+    } else {
+      goToPage(pageIndex - 1, "prev");
+    }
+  }
 
   function handleMarkLastRead(section) {
     setLastMutoonRead(bookId, section.number, section.heading);
     setJustMarkedSection(section.number);
     setTimeout(() => setJustMarkedSection(null), 2000);
+  }
+
+  function renderPageContent(page) {
+    if (!page) return null;
+    if (page.type === "intro") {
+      return (
+        <>
+          {book.bismillah && (
+            <p
+              className="ayah-arabic"
+              style={{ textAlign: "center", fontSize: settings.arabicFontSize }}
+            >
+              {book.bismillah}
+            </p>
+          )}
+          {book.intro && (
+            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+              {book.intro}
+            </p>
+          )}
+          {book.introParagraphs &&
+            book.introParagraphs.map((para, i) => (
+              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
+            ))}
+        </>
+      );
+    }
+    if (page.type === "section") {
+      const { section } = page;
+      const justMarked = justMarkedSection === section.number;
+      return (
+        <>
+          <span className="ayah-number-badge">{section.heading || section.number}</span>
+          {section.paragraphs ? (
+            section.paragraphs.map((para, i) => (
+              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
+            ))
+          ) : (
+            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+              {section.arabic}
+            </p>
+          )}
+          {section.englishTranslation && (
+            <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>
+              {section.englishTranslation}
+            </p>
+          )}
+          <button
+            className={"btn mark-last-read-btn mutoon-page-mark-btn" + (justMarked ? " marked" : "")}
+            onClick={() => handleMarkLastRead(section)}
+          >
+            {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
+          </button>
+        </>
+      );
+    }
+    if (page.type === "closing") {
+      return (
+        <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+          {book.closing}
+        </p>
+      );
+    }
+    return null;
   }
 
   if (error) {
@@ -93,6 +206,14 @@ export default function MutoonReader() {
   if (!book) {
     return <div className="loading-state">Loading…</div>;
   }
+
+  const currentPage = pages[pageIndex];
+  const currentIsLastRead =
+    currentPage &&
+    currentPage.type === "section" &&
+    lastMutoonRead &&
+    lastMutoonRead.bookId === bookId &&
+    lastMutoonRead.sectionNumber === currentPage.section.number;
 
   return (
     <div>
@@ -127,75 +248,47 @@ export default function MutoonReader() {
       </div>
 
       {mode === "text" ? (
-        <div className="mutoon-book" key="full-text">
-          {(book.bismillah || book.intro || book.introParagraphs) && (
-            <div className="mutoon-page">
-              {book.bismillah && (
-                <p
-                  className="ayah-arabic"
-                  style={{ textAlign: "center", fontSize: settings.arabicFontSize }}
-                >
-                  {book.bismillah}
-                </p>
-              )}
-              {book.intro && (
-                <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                  {book.intro}
-                </p>
-              )}
-              {book.introParagraphs &&
-                book.introParagraphs.map((para, i) => (
-                  <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
-                ))}
+        <>
+          <div
+            className="mutoon-pager"
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+          >
+            <div
+              key={currentPage?.key}
+              className={
+                "mutoon-page" +
+                (pageAnim === "next" ? " mutoon-page-anim-next" : "") +
+                (pageAnim === "prev" ? " mutoon-page-anim-prev" : "") +
+                (currentIsLastRead ? " mutoon-page-last-read" : "")
+              }
+              id={currentPage?.type === "section" ? `section-${currentPage.section.number}` : undefined}
+            >
+              {renderPageContent(currentPage)}
             </div>
-          )}
-          {book.sections.map((section) => {
-            const justMarked = justMarkedSection === section.number;
-            const isLastRead =
-              lastMutoonRead &&
-              lastMutoonRead.bookId === bookId &&
-              lastMutoonRead.sectionNumber === section.number;
-            return (
-              <div
-                className={"mutoon-page" + (isLastRead ? " mutoon-page-last-read" : "")}
-                id={`section-${section.number}`}
-                key={section.number}
-              >
-                <span className="ayah-number-badge">{section.heading || section.number}</span>
-                {section.paragraphs ? (
-                  section.paragraphs.map((para, i) => (
-                    <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
-                  ))
-                ) : (
-                  <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                    {section.arabic}
-                  </p>
-                )}
-                {section.englishTranslation && (
-                  <p
-                    className="ayah-translation"
-                    style={{ fontSize: settings.translationFontSize }}
-                  >
-                    {section.englishTranslation}
-                  </p>
-                )}
-                <button
-                  className={"btn mark-last-read-btn mutoon-page-mark-btn" + (justMarked ? " marked" : "")}
-                  onClick={() => handleMarkLastRead(section)}
-                >
-                  {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
-                </button>
-              </div>
-            );
-          })}
-          {book.closing && (
-            <div className="mutoon-page">
-              <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                {book.closing}
-              </p>
-            </div>
-          )}
-        </div>
+          </div>
+          <div className="mutoon-pager-controls">
+            <button
+              className="mutoon-pager-btn"
+              onClick={() => goToPage(pageIndex - 1, "prev")}
+              disabled={pageIndex === 0}
+              aria-label="Previous page"
+            >
+              ‹
+            </button>
+            <span className="mutoon-pager-indicator">
+              Page {pageIndex + 1} of {pages.length}
+            </span>
+            <button
+              className="mutoon-pager-btn"
+              onClick={() => goToPage(pageIndex + 1, "next")}
+              disabled={pageIndex === pages.length - 1}
+              aria-label="Next page"
+            >
+              ›
+            </button>
+          </div>
+        </>
       ) : (
         <div className="card" key="verses">
           {book.quranVerses.map((v) => (
