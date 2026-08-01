@@ -39,8 +39,8 @@ export default function Home() {
         </div>
 
         {lastRead && lastSurahMeta && (
-          <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
-            <div className="form-row-label">Continue Reading</div>
+          <div className="home-continue-block">
+            <div className="home-continue-label">Continue Reading</div>
             <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
               Updates automatically when you tap "Mark as last read" on any ayah.
             </p>
@@ -66,8 +66,8 @@ export default function Home() {
         </div>
 
         {lastMutoonRead && lastMutoonBook && (
-          <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
-            <div className="form-row-label">Continue Reading</div>
+          <div className="home-continue-block">
+            <div className="home-continue-label">Continue Reading</div>
             <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
               Updates automatically when you tap "Mark as last read" on any point.
             </p>
@@ -82,6 +82,23 @@ export default function Home() {
             </Link>
           </div>
         )}
+      </div>
+
+      <div className="card">
+        <div className="form-row-label">Medinah Book Vocabulary</div>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>Coming soon.</p>
+      </div>
+
+      <div className="card">
+        <div className="form-row-label">Settings</div>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
+          Adjust reciter, font size, theme, and other reading preferences.
+        </p>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+          <Link className="btn btn-primary" to="/settings">
+            Open Settings
+          </Link>
+        </div>
       </div>
     </div>
   );

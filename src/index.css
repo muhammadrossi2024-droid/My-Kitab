@@ -119,6 +119,20 @@ a {
   margin-top: 16px;
 }
 
+.home-continue-block {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border);
+}
+
+.home-continue-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
