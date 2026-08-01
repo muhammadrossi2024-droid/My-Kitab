@@ -3,35 +3,45 @@ import { Link, useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
 import { reciters, isFullSurahReciter, surahAudioUrl } from "../data/reciters.js";
+import { verseAudioUrl } from "../utils/audio.js";
 import {
   downloadSurah,
   fetchSurahJson,
+  getCachedAudioBlob,
   hasCacheSupport,
   isSurahDownloaded,
   removeSurahDownload,
-  resolveAudioSrc,
 } from "../utils/offline.js";
+import { fetchChapterWordTiming, segmentsMatchWordCount, wordRangeAtTime } from "../utils/wordTiming.js";
+
+// Quranic annotation marks (rub-el-hizb "۞" and the small waqf/pause
+// ligatures "ۖۗۙۚۛ") appear as their own space-separated tokens in the
+// Uthmani text but aren't real words — quran.com's own word tokenization
+// (which the real per-word timing segments are keyed against) doesn't count
+// them either. Folding them into the adjacent word keeps our word count
+// aligned with quran.com's so segmentsMatchWordCount actually matches.
+function isAnnotationMark(token) {
+  return /^[۞ۖ-ۜ]+$/.test(token);
+}
 
 // Splits an ayah's Arabic text into its words for word-by-word highlighting.
 function getVerseWords(verse) {
-  return verse.arabic.split(/\s+/).filter(Boolean);
-}
-
-// No source provides real per-word timestamps for any of these reciters, so
-// each word's on-screen "speaking window" is estimated as proportional to
-// its character length within the ayah's actual playback position (real
-// currentTime/duration from the <audio> element, not a fixed timer). This
-// tracks along with playback but isn't frame-accurate — long madd
-// (elongation) syllables in particular will drift slightly.
-function wordIndexForFraction(words, fraction) {
-  if (words.length === 0) return null;
-  const totalLen = words.reduce((sum, w) => sum + (w.length || 1), 0);
-  let cumulative = 0;
-  for (let i = 0; i < words.length; i++) {
-    cumulative += words[i].length || 1;
-    if (fraction <= cumulative / totalLen) return i;
+  const raw = verse.arabic.split(/\s+/).filter(Boolean);
+  const merged = [];
+  for (const token of raw) {
+    if (isAnnotationMark(token) && merged.length > 0) {
+      merged[merged.length - 1] += " " + token;
+    } else {
+      merged.push(token);
+    }
   }
-  return words.length - 1;
+  // A leading mark (e.g. ۞ at the start of a Rub' al-Hizb) has no previous
+  // word yet — fold it into the word that follows instead.
+  if (merged.length > 1 && isAnnotationMark(merged[0])) {
+    merged[1] = merged[0] + " " + merged[1];
+    merged.shift();
+  }
+  return merged;
 }
 
 export default function SurahReader() {
@@ -42,7 +52,7 @@ export default function SurahReader() {
   const [surah, setSurah] = useState(null);
   const [error, setError] = useState(null);
   const [playingVerse, setPlayingVerse] = useState(null);
-  const [activeWordIndex, setActiveWordIndex] = useState(null);
+  const [activeWordRange, setActiveWordRange] = useState(null); // { start, end } | null — end-exclusive
   const [fullSurahPlaying, setFullSurahPlaying] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
@@ -50,10 +60,11 @@ export default function SurahReader() {
   const audioRef = useRef(null);
   const playingVerseRef = useRef(null);
   const blobUrlRef = useRef(null);
-  const preloadRef = useRef(null); // { verseNumber, audio, blobUrl } | null — the next verse, buffering ahead
+  const preloadRef = useRef(null); // { verseNumber, audio, blobUrl, segments } | null — the next verse, buffering ahead
   const preloadTokenRef = useRef(0);
   const verseElsRef = useRef(new Map());
   const observerRef = useRef(null);
+  const chapterTimingRef = useRef(null); // Map<verseKey, {url, segments}> | null — real word timing for this surah+reciter
 
   const fullSurahMode = isFullSurahReciter(settings.reciter);
 
@@ -72,6 +83,22 @@ export default function SurahReader() {
   useEffect(() => {
     setDownloaded(isSurahDownloaded(surahNumber, settings.reciter));
   }, [surahNumber, settings.reciter]);
+
+  // Fetch real per-word timing (quran.com's segment data) for this surah +
+  // reciter, once, when either changes. Only a handful of reciters have this
+  // data; chapterTimingRef stays null for the rest, and playback simply
+  // falls back to ayah-level highlighting (no word spans lit up).
+  useEffect(() => {
+    chapterTimingRef.current = null;
+    if (!surah || fullSurahMode) return;
+    let cancelled = false;
+    fetchChapterWordTiming(settings.reciter, surah.number).then((map) => {
+      if (!cancelled) chapterTimingRef.current = map;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [surah, settings.reciter, fullSurahMode]);
 
   useEffect(() => {
     if (!surah || hasScrolledRef.current) return;
@@ -153,8 +180,36 @@ export default function SurahReader() {
     discardPreload();
     playingVerseRef.current = null;
     setPlayingVerse(null);
-    setActiveWordIndex(null);
+    setActiveWordRange(null);
     setFullSurahPlaying(false);
+  }
+
+  // Decides, for a given verse, what to actually play and whether real
+  // per-word timing is usable:
+  //   1. a previously-downloaded (offline) copy always wins — ayah-level
+  //      highlighting only, since an offline file isn't guaranteed to be the
+  //      exact same encode quran.com's segment timestamps were measured
+  //      against;
+  //   2. otherwise, quran.com's own audio + real word segments, when this
+  //      reciter has segment data AND its word count matches our own
+  //      tokenization of the ayah;
+  //   3. otherwise, the everyayah.com file with ayah-level highlighting only.
+  async function resolveVersePlan(verseNumber) {
+    const verse = surah.verses.find((v) => v.number === verseNumber);
+    const words = verse ? getVerseWords(verse) : [];
+    const everyayahUrl = verseAudioUrl(surah.number, verseNumber, settings.reciter);
+
+    const cachedSrc = await getCachedAudioBlob(everyayahUrl);
+    if (cachedSrc) {
+      return { src: cachedSrc, blobUrl: cachedSrc, segments: null };
+    }
+
+    const timing = chapterTimingRef.current?.get(`${surah.number}:${verseNumber}`);
+    if (timing?.url && segmentsMatchWordCount(timing.segments, words.length)) {
+      return { src: timing.url, blobUrl: null, segments: timing.segments };
+    }
+
+    return { src: everyayahUrl, blobUrl: null, segments: null };
   }
 
   // Starts buffering the verse after `afterVerseNumber` in the background so
@@ -168,15 +223,16 @@ export default function SurahReader() {
     if (!next) return;
 
     const token = ++preloadTokenRef.current;
-    resolveAudioSrc(surah.number, next.number, settings.reciter).then((src) => {
+    resolveVersePlan(next.number).then((plan) => {
       if (preloadTokenRef.current !== token) return; // superseded — user jumped elsewhere
       const audio = new Audio();
       audio.preload = "auto";
-      audio.src = src;
+      audio.src = plan.src;
       preloadRef.current = {
         verseNumber: next.number,
         audio,
-        blobUrl: src.startsWith("blob:") ? src : null,
+        blobUrl: plan.blobUrl,
+        segments: plan.segments,
       };
     });
   }
@@ -185,14 +241,16 @@ export default function SurahReader() {
     if (!surah) return;
     playingVerseRef.current = verseNumber;
     setPlayingVerse(verseNumber);
-    setActiveWordIndex(null);
+    setActiveWordRange(null);
 
     let audio;
     let blobUrl = null;
+    let segments = null;
     const preloaded = preloadRef.current;
     if (preloaded && preloaded.verseNumber === verseNumber) {
       audio = preloaded.audio;
       blobUrl = preloaded.blobUrl;
+      segments = preloaded.segments;
       preloadRef.current = null;
     } else {
       if (preloaded) {
@@ -200,12 +258,13 @@ export default function SurahReader() {
         if (preloaded.blobUrl) URL.revokeObjectURL(preloaded.blobUrl);
         preloadRef.current = null;
       }
-      const src = await resolveAudioSrc(surah.number, verseNumber, settings.reciter);
-      // The user may have paused/skipped while the src was resolving.
+      const plan = await resolveVersePlan(verseNumber);
+      // The user may have paused/skipped while the plan was resolving.
       if (playingVerseRef.current !== verseNumber) return;
       audio = new Audio();
-      audio.src = src;
-      blobUrl = src.startsWith("blob:") ? src : null;
+      audio.src = plan.src;
+      blobUrl = plan.blobUrl;
+      segments = plan.segments;
     }
 
     discardCurrentAudio();
@@ -213,11 +272,9 @@ export default function SurahReader() {
     audioRef.current = audio;
 
     audio.ontimeupdate = () => {
-      if (playingVerseRef.current !== verseNumber || !audio.duration) return;
-      const verse = surah.verses.find((v) => v.number === verseNumber);
-      if (!verse) return;
-      const fraction = Math.min(1, audio.currentTime / audio.duration);
-      setActiveWordIndex(wordIndexForFraction(getVerseWords(verse), fraction));
+      if (playingVerseRef.current !== verseNumber) return;
+      if (!segments) return; // no real timing for this verse — ayah-level highlight only
+      setActiveWordRange(wordRangeAtTime(segments, audio.currentTime * 1000));
     };
 
     audio.onended = () => {
@@ -400,9 +457,10 @@ export default function SurahReader() {
           const read = isRead(surah.number, verse.number);
           const listened = isListened(surah.number, verse.number);
           const words = getVerseWords(verse);
+          const isThisVersePlaying = playingVerse === verse.number;
           return (
             <div
-              className={"ayah-block" + (playingVerse === verse.number ? " ayah-playing" : "")}
+              className={"ayah-block" + (isThisVersePlaying ? " ayah-playing" : "")}
               id={`ayah-${verse.number}`}
               data-verse={verse.number}
               key={verse.number}
@@ -418,10 +476,10 @@ export default function SurahReader() {
                   <button
                     className="verse-play-btn"
                     onClick={() => toggleVerse(verse.number)}
-                    aria-label={playingVerse === verse.number ? "Pause verse" : "Play verse"}
-                    title={playingVerse === verse.number ? "Pause" : "Play from here"}
+                    aria-label={isThisVersePlaying ? "Pause verse" : "Play verse"}
+                    title={isThisVersePlaying ? "Pause" : "Play from here"}
                   >
-                    {playingVerse === verse.number ? "⏸" : "▶"}
+                    {isThisVersePlaying ? "⏸" : "▶"}
                   </button>
                 )}
               </div>
@@ -434,7 +492,10 @@ export default function SurahReader() {
                         key={i}
                         className={
                           "ayah-word" +
-                          (playingVerse === verse.number && activeWordIndex === i
+                          (isThisVersePlaying &&
+                          activeWordRange &&
+                          i >= activeWordRange.start &&
+                          i < activeWordRange.end
                             ? " ayah-word-active"
                             : "")
                         }

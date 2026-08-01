@@ -100,21 +100,18 @@ export async function fetchSurahJson(surahNumber) {
   return res.json();
 }
 
-// Resolves the URL to hand to an <audio> element for a verse, preferring a
-// cached blob (works offline) over the live remote URL.
-export async function resolveAudioSrc(surahNumber, verseNumber, reciterId = DEFAULT_RECITER_ID) {
-  const remoteUrl = verseAudioUrl(surahNumber, verseNumber, reciterId);
-  if (hasCacheSupport()) {
-    try {
-      const cache = await caches.open(CACHE_NAME);
-      const cached = await cache.match(remoteUrl);
-      if (cached) {
-        const blob = await cached.blob();
-        return URL.createObjectURL(blob);
-      }
-    } catch {
-      // fall through to remote URL
-    }
+// Looks up a previously-downloaded verse's audio in Cache Storage, returning
+// a blob: URL if present or null otherwise (never falls through to a live
+// network fetch — callers decide what to use when there's no cached copy).
+export async function getCachedAudioBlob(remoteUrl) {
+  if (!hasCacheSupport()) return null;
+  try {
+    const cache = await caches.open(CACHE_NAME);
+    const cached = await cache.match(remoteUrl);
+    if (!cached) return null;
+    const blob = await cached.blob();
+    return URL.createObjectURL(blob);
+  } catch {
+    return null;
   }
-  return remoteUrl;
 }
