@@ -86,7 +86,14 @@ export default function Home() {
 
       <div className="card">
         <div className="form-row-label">Medinah Book Vocabulary</div>
-        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>Coming soon.</p>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
+          Lesson-by-lesson vocabulary from the Medinah Arabic course.
+        </p>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+          <Link className="btn btn-primary" to="/medinah">
+            Browse Lessons
+          </Link>
+        </div>
       </div>
 
       <div className="card">

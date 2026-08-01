@@ -6,6 +6,9 @@ import SurahReader from "./pages/SurahReader.jsx";
 import Search from "./pages/Search.jsx";
 import Mutoon from "./pages/Mutoon.jsx";
 import MutoonReader from "./pages/MutoonReader.jsx";
+import MedinahBooks from "./pages/MedinahBooks.jsx";
+import MedinahLessons from "./pages/MedinahLessons.jsx";
+import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
@@ -20,6 +23,9 @@ export default function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/mutoon" element={<Mutoon />} />
           <Route path="/mutoon/:bookId" element={<MutoonReader />} />
+          <Route path="/medinah" element={<MedinahBooks />} />
+          <Route path="/medinah/:bookId" element={<MedinahLessons />} />
+          <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>

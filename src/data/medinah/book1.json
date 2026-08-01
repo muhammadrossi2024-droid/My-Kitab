@@ -1,0 +1,17 @@
+{
+  "id": "book1",
+  "title": {
+    "english": "Medinah Arabic Book 1",
+    "arabic": "دُرُوسُ اللُّغَةِ الْعَرَبِيَّةِ"
+  },
+  "author": "Dr. V. Abdur Rahim",
+  "source": "Islamic University of Madinah",
+  "lessons": [
+    {
+      "number": 1,
+      "title": "Lesson 1",
+      "content": [],
+      "vocabulary": []
+    }
+  ]
+}
