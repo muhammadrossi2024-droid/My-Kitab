@@ -2,7 +2,8 @@ import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "Home", end: true },
-  { to: "/surahs", label: "Surahs" },
+  { to: "/surahs", label: "Quran" },
+  { to: "/mutoon", label: "Mutoon" },
   { to: "/search", label: "🔍 Search" },
   { to: "/settings", label: "⚙️", ariaLabel: "Settings" },
 ];

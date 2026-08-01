@@ -357,6 +357,35 @@ a {
   margin-bottom: 10px;
 }
 
+.mutoon-list {
+  margin: 4px 0 12px;
+}
+
+.mutoon-list-lead {
+  margin-bottom: 10px;
+}
+
+.mutoon-list-item {
+  border-right: 3px solid var(--border);
+  padding-right: 14px;
+  margin-bottom: 14px;
+}
+
+.mutoon-list-item .ayah-arabic {
+  margin: 0;
+}
+
+.mutoon-list-badge {
+  margin-bottom: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.mutoon-list-trailing {
+  margin-top: 6px;
+}
+
 .ayah-arabic {
   direction: rtl;
   text-align: right;

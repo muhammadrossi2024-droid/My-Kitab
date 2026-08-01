@@ -4,12 +4,57 @@ import { useSettings } from "../context/SettingsContext.jsx";
 
 const bookModules = import.meta.glob("../data/mutoon/*.json");
 
+// A paragraph is either a plain string / {arabic} object, or a numbered
+// list — { type: "list", lead, items: [{label, arabic}], trailing }, used
+// wherever the matn itself enumerates a set of points (the four masail,
+// the pillars of Islam/Iman, etc.) instead of running prose.
+function isListParagraph(p) {
+  return p && typeof p === "object" && p.type === "list";
+}
+
+function plainText(p) {
+  return typeof p === "string" ? p : p.arabic;
+}
+
+function Paragraph({ p, fontSize }) {
+  if (isListParagraph(p)) {
+    return (
+      <div className="mutoon-list">
+        {p.lead && (
+          <p className="ayah-arabic mutoon-list-lead" style={{ fontSize }}>
+            {p.lead}
+          </p>
+        )}
+        {p.items.map((point, i) => (
+          <div className="mutoon-list-item" key={i}>
+            <span className="ayah-number-badge mutoon-list-badge">{point.label}</span>
+            <p className="ayah-arabic" style={{ fontSize }}>
+              {point.arabic}
+            </p>
+          </div>
+        ))}
+        {p.trailing && (
+          <p className="ayah-arabic mutoon-list-trailing" style={{ fontSize }}>
+            {p.trailing}
+          </p>
+        )}
+      </div>
+    );
+  }
+  return (
+    <p className="ayah-arabic" style={{ fontSize }}>
+      {plainText(p)}
+    </p>
+  );
+}
+
 export default function MutoonReader() {
   const { bookId } = useParams();
-  const { settings } = useSettings();
+  const { settings, lastMutoonRead, setLastMutoonRead } = useSettings();
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
   const [mode, setMode] = useState("text"); // "text" | "verses"
+  const [justMarkedSection, setJustMarkedSection] = useState(null);
 
   useEffect(() => {
     setBook(null);
@@ -24,6 +69,22 @@ export default function MutoonReader() {
       .then((mod) => setBook(mod.default))
       .catch((err) => setError(err.message));
   }, [bookId]);
+
+  // Jump straight to a section anchor when arriving via a "Resume" link.
+  useEffect(() => {
+    if (!book) return;
+    const hash = window.location.hash;
+    if (hash.startsWith("#section-")) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [book]);
+
+  function handleMarkLastRead(section) {
+    setLastMutoonRead(bookId, section.number, section.heading);
+    setJustMarkedSection(section.number);
+    setTimeout(() => setJustMarkedSection(null), 2000);
+  }
 
   if (error) {
     return <div className="empty-state">This text isn't available yet.</div>;
@@ -81,26 +142,48 @@ export default function MutoonReader() {
           )}
           {book.introParagraphs &&
             book.introParagraphs.map((para, i) => (
-              <p key={i} className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                {para.arabic}
-              </p>
+              <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
             ))}
-          {book.sections.map((section) => (
-            <div className="ayah-block" key={section.number}>
-              <span className="ayah-number-badge">{section.heading || section.number}</span>
-              <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                {section.arabic}
-              </p>
-              {section.englishTranslation && (
-                <p
-                  className="ayah-translation"
-                  style={{ fontSize: settings.translationFontSize }}
+          {book.sections.map((section) => {
+            const justMarked = justMarkedSection === section.number;
+            const isLastRead =
+              lastMutoonRead &&
+              lastMutoonRead.bookId === bookId &&
+              lastMutoonRead.sectionNumber === section.number;
+            return (
+              <div
+                className={"ayah-block" + (isLastRead ? " ayah-playing" : "")}
+                id={`section-${section.number}`}
+                key={section.number}
+              >
+                <span className="ayah-number-badge">{section.heading || section.number}</span>
+                {section.paragraphs ? (
+                  section.paragraphs.map((para, i) => (
+                    <Paragraph key={i} p={para} fontSize={settings.arabicFontSize} />
+                  ))
+                ) : (
+                  <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+                    {section.arabic}
+                  </p>
+                )}
+                {section.englishTranslation && (
+                  <p
+                    className="ayah-translation"
+                    style={{ fontSize: settings.translationFontSize }}
+                  >
+                    {section.englishTranslation}
+                  </p>
+                )}
+                <button
+                  className={"btn mark-last-read-btn" + (justMarked ? " marked" : "")}
+                  style={{ marginTop: 8, fontSize: "0.8rem", padding: "6px 12px" }}
+                  onClick={() => handleMarkLastRead(section)}
                 >
-                  {section.englishTranslation}
-                </p>
-              )}
-            </div>
-          ))}
+                  {justMarked ? "✓ Marked" : "🔖 Mark as last read"}
+                </button>
+              </div>
+            );
+          })}
           {book.closing && (
             <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize, marginTop: 20 }}>
               {book.closing}

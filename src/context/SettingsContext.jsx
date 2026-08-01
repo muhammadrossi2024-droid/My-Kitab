@@ -3,6 +3,7 @@ import { DEFAULT_RECITER_ID, reciters } from "../data/reciters.js";
 
 const STORAGE_KEY = "quran-app:settings";
 const LAST_READ_KEY = "quran-app:last-read";
+const LAST_MUTOON_READ_KEY = "quran-app:last-mutoon-read";
 
 const DEFAULT_SETTINGS = {
   theme: "light", // "light" | "dark"
@@ -47,11 +48,21 @@ function loadLastRead() {
   }
 }
 
+function loadLastMutoonRead() {
+  try {
+    const raw = localStorage.getItem(LAST_MUTOON_READ_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
 const SettingsContext = createContext(null);
 
 export function SettingsProvider({ children }) {
   const [settings, setSettings] = useState(loadSettings);
   const [lastRead, setLastReadState] = useState(loadLastRead);
+  const [lastMutoonRead, setLastMutoonReadState] = useState(loadLastMutoonRead);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
@@ -68,9 +79,23 @@ export function SettingsProvider({ children }) {
     localStorage.setItem(LAST_READ_KEY, JSON.stringify(value));
   };
 
+  const setLastMutoonRead = (bookId, sectionNumber, sectionHeading) => {
+    const value = { bookId, sectionNumber, sectionHeading, at: new Date().toISOString() };
+    setLastMutoonReadState(value);
+    localStorage.setItem(LAST_MUTOON_READ_KEY, JSON.stringify(value));
+  };
+
   const value = useMemo(
-    () => ({ settings, updateSettings, resetSettings, lastRead, setLastRead }),
-    [settings, lastRead]
+    () => ({
+      settings,
+      updateSettings,
+      resetSettings,
+      lastRead,
+      setLastRead,
+      lastMutoonRead,
+      setLastMutoonRead,
+    }),
+    [settings, lastRead, lastMutoonRead]
   );
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;

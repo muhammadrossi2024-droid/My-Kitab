@@ -4,8 +4,10 @@ import { useSettings } from "../context/SettingsContext.jsx";
 import { mutoonBooks } from "../data/mutoon/index.js";
 
 export default function Home() {
-  const { lastRead } = useSettings();
+  const { lastRead, lastMutoonRead } = useSettings();
   const [lastSurahMeta, setLastSurahMeta] = useState(null);
+  const lastMutoonBook =
+    lastMutoonRead && mutoonBooks.find((b) => b.id === lastMutoonRead.bookId);
 
   useEffect(() => {
     fetch("/data/surahs/index.json")
@@ -80,6 +82,24 @@ export default function Home() {
             </li>
           ))}
         </ul>
+
+        {lastMutoonRead && lastMutoonBook && (
+          <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid var(--border)" }}>
+            <div className="form-row-label">Continue Reading</div>
+            <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
+              Updates automatically when you tap "Mark as last read" on any point.
+            </p>
+            <p className="form-row-desc" style={{ marginBottom: 12 }}>
+              You left off at {lastMutoonBook.titleTransliteration}, {lastMutoonRead.sectionHeading}.
+            </p>
+            <Link
+              className="btn btn-primary"
+              to={`/mutoon/${lastMutoonRead.bookId}#section-${lastMutoonRead.sectionNumber}`}
+            >
+              Resume Reading
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
