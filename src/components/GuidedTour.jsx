@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
@@ -95,6 +95,14 @@ async function settleAndMeasure(el, { scrollIntoView }) {
   return el.getBoundingClientRect();
 }
 
+const CARD_MAX_WIDTH = 360;
+const CARD_MARGIN = 16;
+const CARD_GAP = 24; // gap between the card and its target/screen edge
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), Math.max(min, max));
+}
+
 export default function GuidedTour({ onDone }) {
   const { settings } = useSettings();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
@@ -104,9 +112,26 @@ export default function GuidedTour({ onDone }) {
   const [stepIndex, setStepIndex] = useState(0);
   const [rect, setRect] = useState(null);
   const cleanupWatchRef = useRef(null);
+  const cardRef = useRef(null);
+  const [cardPos, setCardPos] = useState(null); // { left, top, width } in px, or null while unmeasured
+  const [rectStepIndex, setRectStepIndex] = useState(stepIndex); // which step `rect` belongs to
 
   const step = steps[stepIndex];
   const isLast = stepIndex === steps.length - 1;
+
+  // `rect` is only cleared for real inside the polling useEffect below, which
+  // — being a passive effect — doesn't run until after the browser has
+  // already painted once. Without this, the step right after a Next click
+  // would paint one frame with the NEW step's title/text but the OLD step's
+  // target position, since stepIndex updates synchronously but rect doesn't.
+  // This is React's documented "adjust state during render" pattern: it
+  // resets rect before this render is ever committed, so that stale frame
+  // never paints at all.
+  if (stepIndex !== rectStepIndex) {
+    setRectStepIndex(stepIndex);
+    setRect(null);
+    setCardPos(null);
+  }
 
   function goNext() {
     if (isLast) onDone();
@@ -179,10 +204,46 @@ export default function GuidedTour({ onDone }) {
   }, [stepIndex, location.pathname]);
 
   const showCard = step.kind === "center" || !!rect;
-  // Place the card on whichever side of the target has more room — below it
-  // when the target sits in the top half of the screen, above it otherwise
-  // (nav bar items live at the very bottom, so the card must go above them).
+  // Preferred side: below the target when it sits in the top half of the
+  // screen, above it otherwise (nav bar items live at the very bottom, so
+  // the card must go above them) — used for the arrow direction and as the
+  // card's starting anchor before clamping.
   const cardBelow = step.kind === "spotlight" && rect && rect.top < window.innerHeight / 2;
+
+  // Measure the card's real (width-dependent) height synchronously before
+  // the browser paints, then clamp both axes to the actual viewport — so it
+  // is correctly positioned on the very first visible frame, never rendered
+  // off-screen and corrected a moment later.
+  useLayoutEffect(() => {
+    if (!showCard) {
+      setCardPos(null);
+      return;
+    }
+    const el = cardRef.current;
+    if (!el) return;
+
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const width = Math.min(CARD_MAX_WIDTH, vw - CARD_MARGIN * 2);
+    const height = el.getBoundingClientRect().height;
+
+    let left;
+    let top;
+    if (step.kind === "center" || !rect) {
+      left = (vw - width) / 2;
+      top = (vh - height) / 2;
+    } else {
+      const preferredCenterX = rect.left + rect.width / 2;
+      left = preferredCenterX - width / 2;
+      top = cardBelow ? rect.bottom + CARD_GAP : rect.top - CARD_GAP - height;
+    }
+
+    left = clamp(left, CARD_MARGIN, vw - width - CARD_MARGIN);
+    top = clamp(top, CARD_MARGIN, vh - height - CARD_MARGIN);
+
+    setCardPos({ left, top, width });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showCard, step, rect, cardBelow]);
 
   return (
     <div className="tour-overlay">
@@ -210,13 +271,15 @@ export default function GuidedTour({ onDone }) {
 
       {showCard && (
         <div
-          className={"tour-card" + (step.kind === "center" ? " tour-card-center" : "")}
+          ref={cardRef}
+          className="tour-card"
           style={
-            step.kind === "spotlight"
-              ? cardBelow
-                ? { top: rect.bottom + 34 }
-                : { bottom: window.innerHeight - rect.top + 34 }
-              : undefined
+            cardPos
+              ? { left: cardPos.left, top: cardPos.top, width: cardPos.width, visibility: "visible" }
+              : // First pass: laid out with its real width so height can be
+                // measured above, but not yet visible — avoids any flash at
+                // a wrong (unclamped) position.
+                { left: 0, top: 0, width: Math.min(CARD_MAX_WIDTH, window.innerWidth - CARD_MARGIN * 2), visibility: "hidden" }
           }
         >
           <img src={logoSrc} alt="" className="chat-avatar tour-card-avatar" />

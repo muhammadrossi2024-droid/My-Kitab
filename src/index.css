@@ -1333,22 +1333,32 @@ a {
 .tour-card {
   position: fixed;
   z-index: 151;
-  left: 50%;
-  transform: translateX(-50%);
+  /* left/top/width are set inline in JS, computed and clamped against the
+     actual viewport (see GuidedTour.jsx) — deliberately no `transform` here.
+     A previous version centered via `left:50%; transform:translateX(-50%)`,
+     but this element's own entrance animation also set `transform: scale()`
+     via keyframes, and CSS transform isn't additive across separate
+     declarations — the animation's scale() silently overrode the centering
+     translate for its whole duration, so the card sat off-center (clipped
+     off the right edge) until the animation ended and the static transform
+     "snapped" back in. Only opacity animates now, which can't conflict. */
   display: flex;
   gap: 10px;
-  width: min(360px, calc(100vw - 32px));
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 14px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-  animation: splash-fade-in 0.25s ease;
+  animation: tour-card-fade-in 0.15s ease;
 }
 
-.tour-card-center {
-  top: 50%;
-  transform: translate(-50%, -50%);
+@keyframes tour-card-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .tour-card-avatar {
