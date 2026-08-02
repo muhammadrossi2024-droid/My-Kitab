@@ -1,5 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import SplashScreen from "./components/SplashScreen.jsx";
+import AssistantIntro from "./components/AssistantIntro.jsx";
+import { useIntro } from "./context/IntroContext.jsx";
 import Home from "./pages/Home.jsx";
 import SurahList from "./pages/SurahList.jsx";
 import SurahReader from "./pages/SurahReader.jsx";
@@ -14,6 +17,16 @@ import MyKitab from "./pages/MyKitab.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
+  const { showIntro, stage, advanceToChat, dismissIntro } = useIntro();
+
+  if (showIntro) {
+    return stage === "splash" ? (
+      <SplashScreen onDone={advanceToChat} />
+    ) : (
+      <AssistantIntro onDone={dismissIntro} />
+    );
+  }
+
   return (
     <div className="app-shell">
       <Navbar />

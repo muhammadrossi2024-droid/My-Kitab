@@ -1,8 +1,10 @@
 import { useSettings } from "../context/SettingsContext.jsx";
+import { useIntro } from "../context/IntroContext.jsx";
 import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
+  const { restartIntro } = useIntro();
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
@@ -151,6 +153,12 @@ export default function Settings() {
             </p>
           )}
         </div>
+      </div>
+
+      <div className="card">
+        <button className="btn" onClick={restartIntro}>
+          Replay welcome guide
+        </button>
       </div>
 
       <div className="card">

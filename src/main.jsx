@@ -4,15 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import { SettingsProvider } from "./context/SettingsContext.jsx";
 import { ProgressProvider } from "./context/ProgressContext.jsx";
+import { IntroProvider } from "./context/IntroContext.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <SettingsProvider>
       <ProgressProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <IntroProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </IntroProvider>
       </ProgressProvider>
     </SettingsProvider>
   </StrictMode>
