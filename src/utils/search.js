@@ -48,7 +48,7 @@ async function loadCombined() {
   return [...quran, ...content];
 }
 
-function levenshtein(a, b) {
+export function levenshtein(a, b) {
   if (Math.abs(a.length - b.length) > 4) return 99; // cheap early-out
   const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
   for (let j = 0; j <= b.length; j++) dp[0][j] = j;
@@ -67,7 +67,7 @@ function levenshtein(a, b) {
 // stop being considered "the same word/phrase, just mistyped" — scales with
 // length so short words aren't over-matched and long phrases still tolerate
 // a couple of typos.
-function fuzzyThreshold(len) {
+export function fuzzyThreshold(len) {
   if (len <= 5) return 1;
   if (len <= 12) return 2;
   return 3;
@@ -110,7 +110,7 @@ function getUniqueWords(index) {
 // Finds the closest known corpus word to a (possibly misspelled) query word,
 // within its fuzzy-match threshold, to give typo tolerance without a full
 // spellchecker. Works for both English words and normalized Arabic words.
-function correctWord(word, wordList, minLen) {
+export function correctWord(word, wordList, minLen) {
   if (word.length < minLen) return word;
   const threshold = fuzzyThreshold(word.length);
   let best = null;

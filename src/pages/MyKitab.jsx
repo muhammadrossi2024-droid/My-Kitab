@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { addPdf, deletePdf, listPdfs } from "../utils/myKitabDb.js";
+import { Link } from "react-router-dom";
+import { addPdf, deletePdf, listPdfs, makePdfId } from "../utils/myKitabDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
 
 function titleFromFilename(name) {
-  return name.replace(/\.pdf$/i, "");
+  return (name || "").replace(/\.pdf$/i, "").trim();
 }
 
 function formatSize(bytes) {
@@ -69,25 +70,23 @@ export default function MyKitab() {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       setUploadStatus({ current: i + 1, total: files.length });
-      if (file.type !== "application/pdf" && !/\.pdf$/i.test(file.name)) {
-        errors.push(`${file.name}: not a PDF file`);
-        continue;
-      }
+      const label = file.name && file.name.trim() ? file.name : "This file";
       try {
         const buffer = await file.arrayBuffer();
-        const pages = await extractPdfPages(buffer);
+        const { pages, metadataTitle } = await extractPdfPages(buffer);
+        const title = titleFromFilename(file.name) || metadataTitle || "Untitled PDF";
         await addPdf({
-          id: crypto.randomUUID(),
-          title: titleFromFilename(file.name),
-          name: file.name,
+          id: makePdfId(),
+          title,
+          name: file.name && file.name.trim() ? file.name : `${title}.pdf`,
           size: file.size,
           addedAt: Date.now(),
           pageCount: pages.length,
           blob: file,
           pages,
         });
-      } catch {
-        errors.push(`${file.name}: couldn't be read as a PDF`);
+      } catch (err) {
+        errors.push(`${label}: ${err?.message || "couldn't be read as a PDF"}`);
       }
     }
 
@@ -146,13 +145,13 @@ export default function MyKitab() {
           <ul className="mykitab-pdf-list">
             {pdfs.map((pdf) => (
               <li className="mykitab-pdf-item" key={pdf.id}>
-                <div className="mykitab-pdf-info">
+                <Link to={`/my-kitab/${pdf.id}`} className="mykitab-pdf-info">
                   <div className="mykitab-pdf-title">{pdf.title}</div>
                   <div className="mykitab-pdf-meta">
                     {pdf.pageCount} page{pdf.pageCount === 1 ? "" : "s"} · {formatSize(pdf.size)} ·
                     added {formatDate(pdf.addedAt)}
                   </div>
-                </div>
+                </Link>
                 <button
                   className="mykitab-delete-btn"
                   onClick={() => handleDelete(pdf.id)}
@@ -189,12 +188,16 @@ export default function MyKitab() {
         {!searching && results && results.length > 0 && (
           <div className="mykitab-result-list">
             {results.map((r, i) => (
-              <div className="mykitab-result" key={`${r.pdfId}-${r.pageNumber}-${i}`}>
+              <Link
+                to={`/my-kitab/${r.pdfId}?page=${r.pageNumber}&q=${encodeURIComponent(r.matchText)}`}
+                className="mykitab-result"
+                key={`${r.pdfId}-${r.pageNumber}-${i}`}
+              >
                 <div className="mykitab-result-ref">
                   {r.pdfTitle} · page {r.pageNumber}
                 </div>
                 <p className="mykitab-result-excerpt">{r.excerpt}</p>
-              </div>
+              </Link>
             ))}
           </div>
         )}

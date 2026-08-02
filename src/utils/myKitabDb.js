@@ -67,9 +67,26 @@ export async function getAllPdfsFull() {
   return reqToPromise(tx.objectStore(STORE).getAll());
 }
 
+// One full record (blob + pages) — for opening a single PDF in the viewer.
+export async function getPdf(id) {
+  const db = await openDb();
+  const tx = db.transaction(STORE, "readonly");
+  return reqToPromise(tx.objectStore(STORE).get(id));
+}
+
 export async function deletePdf(id) {
   const db = await openDb();
   const tx = db.transaction(STORE, "readwrite");
   tx.objectStore(STORE).delete(id);
   await txToPromise(tx);
+}
+
+// crypto.randomUUID() is only defined in secure contexts (https/localhost) —
+// this falls back to a plain random ID so adding a PDF can't fail outright
+// just because it's opened over e.g. a plain-http LAN address.
+export function makePdfId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `pdf-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 }

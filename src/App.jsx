@@ -14,6 +14,7 @@ import MedinahLessons from "./pages/MedinahLessons.jsx";
 import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Athkar from "./pages/Athkar.jsx";
 import MyKitab from "./pages/MyKitab.jsx";
+import MyKitabViewer from "./pages/MyKitabViewer.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
           <Route path="/athkar" element={<Athkar />} />
           <Route path="/my-kitab" element={<MyKitab />} />
+          <Route path="/my-kitab/:id" element={<MyKitabViewer />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
