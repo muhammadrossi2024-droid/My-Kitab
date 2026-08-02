@@ -1300,6 +1300,13 @@ a {
 
 .tour-spotlight.rounded {
   border-radius: 16px;
+  /* The continuous glow pulse (below) reads as a nice subtle accent around a
+     small nav-icon circle, but the rounded shape rings a much bigger target
+     (the whole Continue Reading card, the mark-as-last-read button) — the
+     same glow stretched around that much perimeter, animating forever,
+     reads as busy/competing with the card's own content instead. Keep just
+     the one-shot fade-in so these steps stay as calm as the others. */
+  animation: tour-ring-in 0.15s ease;
 }
 
 @keyframes tour-pulse {

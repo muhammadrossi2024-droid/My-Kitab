@@ -323,8 +323,18 @@ export default function GuidedTour({ onDone }) {
     top = clamp(top, CARD_MARGIN, vh - height - CARD_MARGIN);
 
     setCardPos({ left, top, width });
+    // Also depends on `textStep`, not just `displayStep`: the card's height
+    // is read from the DOM (el.getBoundingClientRect()), but the visible
+    // text lags a step behind via the cross-fade below. Without this, a step
+    // pair whose copy differs enough in line count (e.g. Athkar -> Search)
+    // would get its position computed from the OLD (still-showing) text's
+    // height, then silently reflow to the new height with no transition the
+    // instant the text swapped in — a snap/flicker right in the middle of
+    // the fade. Re-running this on the text swap re-measures against the
+    // real new height and corrects `top` through the same top/left
+    // transition, so the correction glides instead of jumping.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showCard, displayStep, displayRect, cardBelow]);
+  }, [showCard, displayStep, displayRect, cardBelow, textStep]);
 
   return (
     <div className="tour-overlay">
