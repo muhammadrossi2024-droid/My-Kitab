@@ -1,41 +1,55 @@
 import { normalizeArabic, isArabicText } from "./arabicNormalize.js";
 import { topics } from "../data/topics.js";
 
-let indexPromise = null;
+let quranIndexPromise = null;
+let contentIndexPromise = null;
 let uniqueWordsCache = null;
 
-// Fetches and caches public/data/search-index.json for the session, adding
-// the normalized fields client-side (kept out of the JSON file to roughly
-// halve its download size).
+// Fetches and caches public/data/search-index.json (Qur'an verses) for the
+// session, adding normalized fields and a common {type, label, link} shape
+// client-side (kept out of the JSON file to roughly halve its download size).
 export function loadSearchIndex() {
-  if (!indexPromise) {
-    indexPromise = fetch("/data/search-index.json")
+  if (!quranIndexPromise) {
+    quranIndexPromise = fetch("/data/search-index.json")
       .then((res) => res.json())
       .then((raw) => {
         for (const v of raw) {
+          v.type = "quran";
+          v.label = `Qur'an ${v.surah}:${v.ayah}`;
           v.arabicNorm = normalizeArabic(v.arabic);
+          v.translationLower = (v.translation || "").toLowerCase();
+          v.link = `/surah/${v.surah}#ayah-${v.ayah}`;
+        }
+        return raw;
+      });
+  }
+  return quranIndexPromise;
+}
+
+// Fetches and caches public/data/content-index.json (Mutoon body text and
+// standalone Hadith entries), built by scripts/build-content-index.mjs.
+export function loadContentIndex() {
+  if (!contentIndexPromise) {
+    contentIndexPromise = fetch("/data/content-index.json")
+      .then((res) => res.json())
+      .then((raw) => {
+        for (const v of raw) {
+          v.arabicNorm = normalizeArabic(v.arabic || "");
           v.translationLower = (v.translation || "").toLowerCase();
         }
         return raw;
       });
   }
-  return indexPromise;
+  return contentIndexPromise;
 }
 
-function getUniqueWords(index) {
-  if (uniqueWordsCache) return uniqueWordsCache;
-  const set = new Set();
-  for (const v of index) {
-    for (const w of v.translationLower.split(/[^a-z']+/)) {
-      if (w.length >= 4) set.add(w);
-    }
-  }
-  uniqueWordsCache = Array.from(set);
-  return uniqueWordsCache;
+async function loadCombined() {
+  const [quran, content] = await Promise.all([loadSearchIndex(), loadContentIndex()]);
+  return [...quran, ...content];
 }
 
 function levenshtein(a, b) {
-  if (Math.abs(a.length - b.length) > 2) return 99; // cheap early-out
+  if (Math.abs(a.length - b.length) > 4) return 99; // cheap early-out
   const dp = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
   for (let j = 0; j <= b.length; j++) dp[0][j] = j;
   for (let i = 1; i <= a.length; i++) {
@@ -49,13 +63,60 @@ function levenshtein(a, b) {
   return dp[a.length][b.length];
 }
 
+// How many edits (insert/delete/substitute) we tolerate before two strings
+// stop being considered "the same word/phrase, just mistyped" — scales with
+// length so short words aren't over-matched and long phrases still tolerate
+// a couple of typos.
+function fuzzyThreshold(len) {
+  if (len <= 5) return 1;
+  if (len <= 12) return 2;
+  return 3;
+}
+
+// Below this length, an edit distance of even 1 represents too large a
+// fraction of the string to reliably mean "the same word, just mistyped"
+// (e.g. "الأب" vs "الصبر" are 2 edits apart but unrelated words) — so short
+// strings are only matched by substring, never by fuzzy distance.
+const MIN_FUZZY_LEN = 4;
+
+export function isFuzzyMatch(a, b) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  if (a.length < MIN_FUZZY_LEN || b.length < MIN_FUZZY_LEN) return false;
+  const threshold = fuzzyThreshold(Math.max(a.length, b.length));
+  if (Math.abs(a.length - b.length) > threshold) return false;
+  return levenshtein(a, b) <= threshold;
+}
+
+// Builds the corpus of unique words (English translation words + normalized
+// Arabic words) across every indexed item, used to correct likely typos in
+// a query to the nearest real word actually present in the content.
+function getUniqueWords(index) {
+  if (uniqueWordsCache) return uniqueWordsCache;
+  const enSet = new Set();
+  const arSet = new Set();
+  for (const v of index) {
+    for (const w of (v.translationLower || "").split(/[^a-z']+/)) {
+      if (w.length >= 4) enSet.add(w);
+    }
+    for (const w of (v.arabicNorm || "").split(/\s+/)) {
+      if (w.length >= 3) arSet.add(w);
+    }
+  }
+  uniqueWordsCache = { en: Array.from(enSet), ar: Array.from(arSet) };
+  return uniqueWordsCache;
+}
+
 // Finds the closest known corpus word to a (possibly misspelled) query word,
-// within edit distance 1, to give typo tolerance without a full spellchecker.
-function correctWord(word, uniqueWords) {
-  if (word.length < 4) return word;
+// within its fuzzy-match threshold, to give typo tolerance without a full
+// spellchecker. Works for both English words and normalized Arabic words.
+function correctWord(word, wordList, minLen) {
+  if (word.length < minLen) return word;
+  const threshold = fuzzyThreshold(word.length);
   let best = null;
-  let bestDist = 2;
-  for (const w of uniqueWords) {
+  let bestDist = threshold + 1;
+  for (const w of wordList) {
+    if (Math.abs(w.length - word.length) > threshold) continue;
     const d = levenshtein(word, w);
     if (d < bestDist) {
       bestDist = d;
@@ -63,12 +124,13 @@ function correctWord(word, uniqueWords) {
       if (d === 0) break;
     }
   }
-  return best || word;
+  return bestDist <= threshold ? best : word;
 }
 
 // Returns topics whose keyword lists (English, Arabic, or transliteration)
-// match the query, so a concept search like "dealing with hardship" or
-// "sabr" surfaces the right pre-tagged topic even with no literal overlap.
+// match the query — with typo tolerance — so a concept search like "dealing
+// with hardship", "sabr", or a misspelled "tawhed"/"tawheeed" surfaces the
+// right pre-tagged topic even with no exact literal overlap.
 export function searchTopics(query) {
   const q = query.trim();
   if (!q) return [];
@@ -78,58 +140,96 @@ export function searchTopics(query) {
   return topics.filter((topic) => {
     if (isArabicText(q)) {
       const arKeywords = [topic.ar, ...topic.keywords.ar].map(normalizeArabic);
-      return arKeywords.some((k) => k.includes(qArabic) || qArabic.includes(k));
+      return arKeywords.some(
+        (k) => k.includes(qArabic) || qArabic.includes(k) || isFuzzyMatch(qArabic, k)
+      );
     }
     const enKeywords = [topic.en.toLowerCase(), ...topic.keywords.en, ...topic.keywords.translit];
-    return enKeywords.some((k) => k.includes(qLower) || qLower.includes(k));
+    return enKeywords.some(
+      (k) => k.includes(qLower) || qLower.includes(k) || isFuzzyMatch(qLower, k)
+    );
   });
 }
 
-// Literal keyword/root search across the whole Qur'an. Handles Arabic
-// (diacritic-insensitive) and English (case-insensitive, multi-word AND,
-// single-edit-distance typo tolerance) queries.
-export function searchLiteral(query, index) {
+// Finds every indexed item (Qur'an, Mutoon, Hadith) whose own Arabic or
+// English text contains one of a topic's keywords — i.e. concept coverage
+// that isn't limited to the Qur'an's hand-curated topicTags mapping, and
+// isn't limited to the user's literal query word either.
+function topicContentMatches(topic, index) {
+  const enKeywords = [topic.en.toLowerCase(), ...topic.keywords.en, ...topic.keywords.translit];
+  const arKeywords = [topic.ar, ...topic.keywords.ar].map(normalizeArabic);
+  return index.filter((v) => {
+    const enHit = v.translationLower && enKeywords.some((k) => v.translationLower.includes(k));
+    const arHit = v.arabicNorm && arKeywords.some((k) => v.arabicNorm.includes(k));
+    return enHit || arHit;
+  });
+}
+
+// Literal keyword/root search across the whole corpus (Qur'an + Mutoon +
+// Hadith). Handles Arabic (diacritic-insensitive) and English
+// (case-insensitive, multi-word AND) queries, retrying with typo-corrected
+// words when the exact query has no hits.
+export function searchLiteral(query, index, uniqueWords) {
   const q = query.trim();
   if (!q) return [];
 
   if (isArabicText(q)) {
     const qNorm = normalizeArabic(q);
-    return index.filter((v) => v.arabicNorm.includes(qNorm));
+    const exact = index.filter((v) => v.arabicNorm && v.arabicNorm.includes(qNorm));
+    if (exact.length > 0) return exact;
+
+    const words = qNorm.split(/\s+/).filter(Boolean);
+    const corrected = words.map((w) => correctWord(w, uniqueWords.ar, 3));
+    if (corrected.join(" ") === words.join(" ")) return [];
+    return index.filter((v) => v.arabicNorm && corrected.every((w) => v.arabicNorm.includes(w)));
   }
 
-  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-  const exact = index.filter((v) => words.every((w) => v.translationLower.includes(w)));
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const exact = index.filter((v) => words.every((w) => (v.translationLower || "").includes(w)));
   if (exact.length > 0) return exact;
 
   // No exact hits — retry with each word corrected to its closest known
-  // corpus word (edit distance <= 1) to tolerate simple typos.
-  const uniqueWords = getUniqueWords(index);
-  const correctedWords = words.map((w) => correctWord(w, uniqueWords));
-  if (correctedWords.join(" ") === words.join(" ")) return [];
-  return index.filter((v) => correctedWords.every((w) => v.translationLower.includes(w)));
+  // corpus word to tolerate simple typos ("tawhed"/"tawheeed" -> "tawheed").
+  const corrected = words.map((w) => correctWord(w, uniqueWords.en, 4));
+  if (corrected.join(" ") === words.join(" ")) return [];
+  return index.filter((v) => corrected.every((w) => (v.translationLower || "").includes(w)));
 }
 
-// Runs both search levels and groups results: one section per matched
-// topic, plus a "Keyword Matches" section for literal hits not already
-// covered by a matched topic — never a flat list.
+// Runs both search levels across the combined Qur'an + Mutoon + Hadith
+// corpus and groups results: one section per matched topic (curated Qur'an
+// tags plus live concept/keyword matches across all content), plus a
+// "Keyword Matches" section for literal hits not already covered by a
+// matched topic — never a flat list.
 export async function runSearch(query) {
-  const index = await loadSearchIndex();
-  const matchedTopics = searchTopics(query);
+  const [quranIndex, contentIndex] = await Promise.all([loadSearchIndex(), loadContentIndex()]);
+  const combined = [...quranIndex, ...contentIndex];
+  const uniqueWords = getUniqueWords(combined);
 
+  const matchedTopics = searchTopics(query);
+  const keyOf = (v) => v.link;
   const shown = new Set();
+
   const topicGroups = matchedTopics.map((topic) => {
-    const verses = index.filter((v) => v.topics.includes(topic.id));
-    for (const v of verses) shown.add(`${v.surah}:${v.ayah}`);
-    return { topic, verses };
+    const curated = quranIndex.filter((v) => v.topics && v.topics.includes(topic.id));
+    const conceptMatches = topicContentMatches(topic, combined);
+    const merged = [];
+    const seen = new Set();
+    for (const v of [...curated, ...conceptMatches]) {
+      if (seen.has(keyOf(v))) continue;
+      seen.add(keyOf(v));
+      merged.push(v);
+    }
+    for (const v of merged) shown.add(keyOf(v));
+    return { topic, results: merged };
   });
 
-  const literal = searchLiteral(query, index)
-    .filter((v) => !shown.has(`${v.surah}:${v.ayah}`))
+  const literal = searchLiteral(query, combined, uniqueWords)
+    .filter((v) => !shown.has(keyOf(v)))
     .slice(0, 50);
 
   return {
     topicGroups,
     literalMatches: literal,
-    isEmpty: topicGroups.every((g) => g.verses.length === 0) && literal.length === 0,
+    isEmpty: topicGroups.every((g) => g.results.length === 0) && literal.length === 0,
   };
 }

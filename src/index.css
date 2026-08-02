@@ -1019,6 +1019,11 @@ a {
   margin-bottom: 6px;
 }
 
+.search-result-heading {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
 .search-result .ayah-arabic {
   text-align: right;
 }

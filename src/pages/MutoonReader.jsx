@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 
@@ -82,10 +82,14 @@ function Paragraph({ p, fontSize }) {
 
 export default function MutoonReader() {
   const { bookId } = useParams();
+  const [searchParams] = useSearchParams();
   const { settings, lastMutoonRead, setLastMutoonRead } = useSettings();
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
-  const [mode, setMode] = useState("text"); // "text" | "verses"
+  const initialTab = searchParams.get("tab");
+  const [mode, setMode] = useState(
+    initialTab === "hadith" || initialTab === "verses" ? initialTab : "text"
+  ); // "text" | "verses" | "hadith"
   const [justMarkedPage, setJustMarkedPage] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageAnim, setPageAnim] = useState(null); // "next" | "prev" | null

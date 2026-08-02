@@ -3,19 +3,31 @@ import { useNavigate } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { runSearch } from "../utils/search.js";
 
-function ResultCard({ verse, onOpen }) {
+function ResultCard({ item, onOpen }) {
   const { settings } = useSettings();
+  const label = item.type === "quran" ? item.label : item.label;
   return (
-    <button className="search-result" onClick={() => onOpen(verse)}>
+    <button className="search-result" onClick={() => onOpen(item)}>
       <div className="search-result-ref">
-        {verse.surahName} {verse.surah}:{verse.ayah}
+        {label}
+        {item.heading && <span className="search-result-heading"> · {item.heading}</span>}
       </div>
-      <p className="ayah-arabic" style={{ fontSize: Math.min(settings.arabicFontSize, 28), margin: "6px 0" }}>
-        {verse.arabic}
-      </p>
-      <p className="ayah-translation" style={{ fontSize: Math.min(settings.translationFontSize, 16) }}>
-        {verse.translation}
-      </p>
+      {item.arabic && (
+        <p
+          className="ayah-arabic"
+          style={{ fontSize: Math.min(settings.arabicFontSize, 28), margin: "6px 0" }}
+        >
+          {item.arabic}
+        </p>
+      )}
+      {item.translation && (
+        <p
+          className="ayah-translation"
+          style={{ fontSize: Math.min(settings.translationFontSize, 16) }}
+        >
+          {item.translation}
+        </p>
+      )}
     </button>
   );
 }
@@ -47,8 +59,8 @@ export default function Search() {
     return () => clearTimeout(debounceRef.current);
   }, [query]);
 
-  function openVerse(verse) {
-    navigate(`/surah/${verse.surah}#ayah-${verse.ayah}`);
+  function openItem(item) {
+    navigate(item.link);
   }
 
   return (
@@ -74,15 +86,15 @@ export default function Search() {
       {!loading && result && !result.isEmpty && (
         <div>
           {result.topicGroups
-            .filter((g) => g.verses.length > 0)
+            .filter((g) => g.results.length > 0)
             .map((g) => (
               <details className="search-section" open key={g.topic.id}>
                 <summary>
-                  {g.topic.en} <span className="search-section-count">({g.verses.length})</span>
+                  {g.topic.en} <span className="search-section-count">({g.results.length})</span>
                 </summary>
                 <div className="search-results-grid">
-                  {g.verses.map((v) => (
-                    <ResultCard verse={v} onOpen={openVerse} key={`${v.surah}:${v.ayah}`} />
+                  {g.results.map((item) => (
+                    <ResultCard item={item} onOpen={openItem} key={item.link} />
                   ))}
                 </div>
               </details>
@@ -95,8 +107,8 @@ export default function Search() {
                 <span className="search-section-count">({result.literalMatches.length})</span>
               </summary>
               <div className="search-results-grid">
-                {result.literalMatches.map((v) => (
-                  <ResultCard verse={v} onOpen={openVerse} key={`${v.surah}:${v.ayah}`} />
+                {result.literalMatches.map((item) => (
+                  <ResultCard item={item} onOpen={openItem} key={item.link} />
                 ))}
               </div>
             </details>
@@ -107,7 +119,7 @@ export default function Search() {
       {!query.trim() && (
         <div className="empty-state">
           Try searching a word ("mercy"), an Arabic phrase ("الصبر"), or a topic ("reliance on
-          Allah").
+          Allah"). Results are pulled from the Qur'an, Mutoon, and Hadith.
         </div>
       )}
     </div>
