@@ -115,6 +115,54 @@ export default function GuidedTour({ onDone }) {
   const cardRef = useRef(null);
   const [cardPos, setCardPos] = useState(null); // { left, top, width } in px, or null while unmeasured
 
+  // Scrolling the page while a target is spotlighted was the source of the
+  // "highlighting the wrong element" bug: `rect` is a viewport-relative
+  // snapshot (getBoundingClientRect), so any scroll after it's taken makes
+  // it stale. Continuously re-measuring on every scroll event was the other
+  // option, but that fights the position CSS-transition (see .tour-spotlight)
+  // — a 1:1 scroll-driven update racing a 0.3s eased transition either looks
+  // laggy (transition on) or reintroduces snapping (transition off mid-scroll).
+  // Freezing the background instead sidesteps the whole class of bug: once a
+  // target is settled, the page simply cannot move under it. Only unlocked
+  // for the brief window while the NEXT target is being located/scrolled
+  // into view (see the effect below), then re-locked at the new position.
+  const scrollLockRef = useRef({ locked: false, y: 0 });
+
+  function lockScroll() {
+    if (scrollLockRef.current.locked) return;
+    const y = window.scrollY;
+    scrollLockRef.current = { locked: true, y };
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const body = document.body;
+    body.style.position = "fixed";
+    body.style.top = `-${y}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
+  }
+
+  function unlockScroll() {
+    if (!scrollLockRef.current.locked) return;
+    const { y } = scrollLockRef.current;
+    scrollLockRef.current = { locked: false, y: 0 };
+    const body = document.body;
+    body.style.position = "";
+    body.style.top = "";
+    body.style.left = "";
+    body.style.right = "";
+    body.style.width = "";
+    body.style.paddingRight = "";
+    window.scrollTo(0, y);
+  }
+
+  // Guarantees the lock is released however the tour ends (Done, Skip, or
+  // an unmount mid-transition) — independent of the per-step lock/unlock
+  // dance in the effect below.
+  useEffect(() => {
+    return () => unlockScroll();
+  }, []);
+
   // What's actually ON SCREEN — deliberately allowed to lag `stepIndex`.
   // For a same-page step (nav icon -> nav icon), the PREVIOUS target stays
   // displayed until the next one is found and settled, so the ring/card can
@@ -138,8 +186,14 @@ export default function GuidedTour({ onDone }) {
   useEffect(() => {
     const step = steps[stepIndex];
 
+    // Unlock for the search: a route change needs to actually scroll (top
+    // of the new page), and settleAndMeasure below may call scrollIntoView
+    // — both are no-ops against a locked (position: fixed) body.
+    unlockScroll();
+
     if (step.kind !== "spotlight") {
       setDisplay({ index: stepIndex, rect: null });
+      lockScroll();
       return;
     }
     if (step.route && location.pathname !== step.route) {
@@ -148,7 +202,7 @@ export default function GuidedTour({ onDone }) {
       // ready, same as before.
       setDisplay({ index: stepIndex, rect: null });
       navigate(step.route);
-      return; // effect reruns once the route actually changes
+      return; // effect reruns once the route actually changes, still unlocked
     }
 
     let cancelled = false;
@@ -192,6 +246,7 @@ export default function GuidedTour({ onDone }) {
           // Atomic swap: new text and new position land together, so the
           // card never shows step N's copy pointed at step N+1's target.
           setDisplay({ index: stepIndex, rect: r });
+          lockScroll();
           watch(el);
         });
         return;
