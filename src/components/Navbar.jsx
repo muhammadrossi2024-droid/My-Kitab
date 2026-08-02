@@ -4,7 +4,8 @@ import { useSettings } from "../context/SettingsContext.jsx";
 const links = [
   { to: "/surahs", label: "Quran" },
   { to: "/mutoon", label: "Mutoon" },
-  { to: "/search", label: "🔍 Search" },
+  { to: "/athkar", label: "Athkar" },
+  { to: "/search", label: "🔍", ariaLabel: "Search" },
   { to: "/settings", label: "⚙️", ariaLabel: "Settings" },
 ];
 
