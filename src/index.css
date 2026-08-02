@@ -84,7 +84,8 @@ a {
   position: fixed;
   left: 50%;
   bottom: calc(16px + env(safe-area-inset-bottom));
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
   width: max-content;
   max-width: calc(100% - 32px);
   padding: 8px;
@@ -95,6 +96,52 @@ a {
   -webkit-backdrop-filter: blur(14px);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
   z-index: 20;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+}
+
+.navbar-hidden {
+  transform: translateX(-50%) translateY(140%) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.navbar-handle {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(10px);
+  z-index: 19;
+  width: 40px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elevated) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+}
+
+.navbar-handle.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.navbar-handle:hover {
+  color: var(--accent);
+}
+
+.navbar-handle-icon {
+  width: 16px;
+  height: 16px;
 }
 
 .navbar-link {
@@ -1199,35 +1246,6 @@ a {
   letter-spacing: 0.01em;
 }
 
-.assistant-intro {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg);
-}
-
-.assistant-intro-scroll {
-  flex: 1;
-  overflow-y: auto;
-  padding: max(20px, env(safe-area-inset-top)) 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 640px;
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-.chat-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  animation: splash-fade-in 0.25s ease;
-}
-
 .chat-avatar {
   width: 32px;
   height: 32px;
@@ -1239,30 +1257,145 @@ a {
   box-sizing: border-box;
 }
 
-.chat-bubble {
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+}
+
+.tour-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  animation: splash-fade-in 0.3s ease;
+}
+
+.tour-spotlight {
+  position: fixed;
+  pointer-events: none;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--accent);
+  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1), left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1), height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: tour-pulse 1.8s ease-in-out infinite;
+}
+
+.tour-spotlight.circle {
+  border-radius: 999px;
+}
+
+.tour-spotlight.rounded {
+  border-radius: 16px;
+}
+
+@keyframes tour-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--accent), 0 0 0 0 var(--accent);
+  }
+  50% {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--accent), 0 0 18px 6px var(--accent);
+  }
+}
+
+.tour-arrow {
+  position: fixed;
+  z-index: 151;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.tour-arrow.up {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 10px solid var(--accent);
+}
+
+.tour-arrow.down {
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid var(--accent);
+}
+
+.tour-card {
+  position: fixed;
+  z-index: 151;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  border-top-left-radius: 4px;
-  padding: 12px 14px;
-  color: var(--text);
-  line-height: 1.6;
-  max-width: 80%;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  animation: splash-fade-in 0.25s ease;
 }
 
-.chat-tab-link {
-  color: var(--accent);
+.tour-card-center {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.tour-card-avatar {
+  width: 36px;
+  height: 36px;
+}
+
+.tour-card-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.tour-card-title {
   font-weight: 700;
-  text-decoration: none;
+  margin-bottom: 4px;
 }
 
-.chat-tab-link:hover {
+.tour-card-text {
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+}
+
+.tour-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tour-card-progress {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.tour-next-btn {
+  padding: 8px 18px;
+  font-size: 0.88rem;
+}
+
+.tour-skip-btn {
+  position: fixed;
+  z-index: 152;
+  top: max(16px, env(safe-area-inset-top));
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
   text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.assistant-intro-start {
-  margin: 0 16px max(16px, env(safe-area-inset-bottom));
-  align-self: center;
+.tour-skip-btn:hover {
+  color: var(--text);
 }
 
 .mykitab-viewer-header {

@@ -48,7 +48,7 @@ export default function SurahList() {
   return (
     <div>
       {lastRead && lastSurahMeta && (
-        <div className="card" style={{ marginBottom: 16 }}>
+        <div className="card" data-tour="continue-reading" style={{ marginBottom: 16 }}>
           <div className="form-row-label">Continue Reading</div>
           <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
             Updates automatically when you tap "Mark as last read" on any ayah.

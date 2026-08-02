@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
-import AssistantIntro from "./components/AssistantIntro.jsx";
+import GuidedTour from "./components/GuidedTour.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
+import { useNavVisibility } from "./context/NavVisibilityContext.jsx";
 import Home from "./pages/Home.jsx";
 import SurahList from "./pages/SurahList.jsx";
 import SurahReader from "./pages/SurahReader.jsx";
@@ -18,15 +20,15 @@ import MyKitabViewer from "./pages/MyKitabViewer.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
-  const { showIntro, stage, advanceToChat, dismissIntro } = useIntro();
+  const { showIntro, stage, advanceToTour, dismissIntro } = useIntro();
+  const { lock, unlock } = useNavVisibility();
 
-  if (showIntro) {
-    return stage === "splash" ? (
-      <SplashScreen onDone={advanceToChat} />
-    ) : (
-      <AssistantIntro onDone={dismissIntro} />
-    );
-  }
+  // The guided tour spotlights the real nav bar, so it must stay on screen
+  // (not auto-hidden by scroll) for the whole splash+tour sequence.
+  useEffect(() => {
+    if (showIntro) lock();
+    else unlock();
+  }, [showIntro, lock, unlock]);
 
   return (
     <div className="app-shell">
@@ -48,6 +50,9 @@ export default function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
+
+      {showIntro && stage === "splash" && <SplashScreen onDone={advanceToTour} />}
+      {showIntro && stage === "tour" && <GuidedTour onDone={dismissIntro} />}
     </div>
   );
 }
