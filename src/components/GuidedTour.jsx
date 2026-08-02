@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { links } from "./Navbar.jsx";
 
@@ -51,7 +52,48 @@ function buildSteps() {
 }
 
 const FIND_TIMEOUT_MS = 3000;
-const FIND_POLL_MS = 120;
+const FIND_POLL_MS = 100;
+
+// Waits for the target's layout to actually settle — into view, fonts
+// loaded, a couple of frames past that — before reporting its bounds, so the
+// spotlight never snaps to a stale pre-layout position (the root cause of it
+// landing on "empty space" for elements below the fold or behind a
+// still-loading web font).
+// Resolves after the next two paints, like a standard double-rAF wait — but
+// races it against a plain timer so a backgrounded/hidden tab (where Chrome
+// suspends rAF callbacks entirely) can't hang this forever; either signal is
+// equally fine here since all we need is "give layout a moment to settle".
+function nextPaint() {
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      resolve();
+    };
+    requestAnimationFrame(() => requestAnimationFrame(finish));
+    setTimeout(finish, 120);
+  });
+}
+
+async function settleAndMeasure(el, { scrollIntoView }) {
+  if (scrollIntoView) {
+    el.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
+  }
+  if (document.fonts && document.fonts.status !== "loaded") {
+    try {
+      await Promise.race([
+        document.fonts.ready,
+        new Promise((resolve) => setTimeout(resolve, 1500)),
+      ]);
+    } catch {
+      // Proceed with whatever's loaded — a missing webfont shouldn't block
+      // the tour forever.
+    }
+  }
+  await nextPaint();
+  return el.getBoundingClientRect();
+}
 
 export default function GuidedTour({ onDone }) {
   const { settings } = useSettings();
@@ -61,6 +103,7 @@ export default function GuidedTour({ onDone }) {
   const [steps] = useState(buildSteps);
   const [stepIndex, setStepIndex] = useState(0);
   const [rect, setRect] = useState(null);
+  const cleanupWatchRef = useRef(null);
 
   const step = steps[stepIndex];
   const isLast = stepIndex === steps.length - 1;
@@ -70,7 +113,8 @@ export default function GuidedTour({ onDone }) {
     else setStepIndex((i) => i + 1);
   }
 
-  // Find (and, if needed, navigate to) this step's target element.
+  // Find (and, if needed, navigate to) this step's target, then measure it
+  // only once its layout has actually settled.
   useEffect(() => {
     if (step.kind !== "spotlight") {
       setRect(null);
@@ -83,13 +127,37 @@ export default function GuidedTour({ onDone }) {
 
     let cancelled = false;
     setRect(null);
+    cleanupWatchRef.current?.();
+    cleanupWatchRef.current = null;
     const startedAt = Date.now();
+
+    // Once found and measured, keep watching for any further layout shift
+    // (late-loading content, orientation change) and re-measure in place —
+    // this never re-triggers the scroll/settle sequence, just tracks it.
+    function watch(el) {
+      const remeasure = () => {
+        if (cancelled) return;
+        setRect(el.getBoundingClientRect());
+      };
+      const ro = new ResizeObserver(remeasure);
+      ro.observe(el);
+      ro.observe(document.body);
+      window.addEventListener("resize", remeasure);
+      cleanupWatchRef.current = () => {
+        ro.disconnect();
+        window.removeEventListener("resize", remeasure);
+      };
+    }
 
     function poll() {
       if (cancelled) return;
       const el = document.querySelector(step.selector);
       if (el) {
-        setRect(el.getBoundingClientRect());
+        settleAndMeasure(el, { scrollIntoView: !!step.route }).then((r) => {
+          if (cancelled) return;
+          setRect(r);
+          watch(el);
+        });
         return;
       }
       if (Date.now() - startedAt > FIND_TIMEOUT_MS) {
@@ -101,24 +169,14 @@ export default function GuidedTour({ onDone }) {
       setTimeout(poll, FIND_POLL_MS);
     }
     poll();
+
     return () => {
       cancelled = true;
+      cleanupWatchRef.current?.();
+      cleanupWatchRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex, location.pathname]);
-
-  // Keep the spotlight aligned with its target across resizes/orientation
-  // changes while a step is showing.
-  useEffect(() => {
-    if (!rect || step.kind !== "spotlight") return;
-    function reposition() {
-      const el = document.querySelector(step.selector);
-      if (el) setRect(el.getBoundingClientRect());
-    }
-    window.addEventListener("resize", reposition);
-    return () => window.removeEventListener("resize", reposition);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [!!rect, step]);
 
   const showCard = step.kind === "center" || !!rect;
   // Place the card on whichever side of the target has more room — below it
@@ -178,6 +236,7 @@ export default function GuidedTour({ onDone }) {
       )}
 
       <button className="tour-skip-btn" onClick={onDone}>
+        <X className="tour-skip-icon" strokeWidth={2.5} />
         Skip
       </button>
     </div>
