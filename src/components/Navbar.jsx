@@ -4,6 +4,7 @@ const links = [
   { to: "/surahs", label: "Quran" },
   { to: "/mutoon", label: "Mutoon" },
   { to: "/athkar", label: "Athkar" },
+  { to: "/my-kitab", label: "📚", ariaLabel: "My Kitab" },
   { to: "/search", label: "🔍", ariaLabel: "Search" },
   { to: "/settings", label: "⚙️", ariaLabel: "Settings" },
 ];

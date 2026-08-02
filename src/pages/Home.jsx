@@ -41,6 +41,18 @@ export default function Home() {
       </div>
 
       <div className="card">
+        <div className="form-row-label">My Kitab</div>
+        <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
+          Upload your own PDFs and search across just your personal library.
+        </p>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+          <Link className="btn btn-primary" to="/my-kitab">
+            Open My Kitab
+          </Link>
+        </div>
+      </div>
+
+      <div className="card">
         <div className="form-row-label">Settings</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
           Adjust reciter, font size, theme, and other reading preferences.

@@ -1043,3 +1043,95 @@ a {
 .back-to-top-btn:hover {
   filter: brightness(1.08);
 }
+
+.mykitab-upload-errors {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--chip-bg);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.mykitab-pdf-list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mykitab-pdf-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.mykitab-pdf-info {
+  min-width: 0;
+}
+
+.mykitab-pdf-title {
+  font-weight: 600;
+  overflow-wrap: break-word;
+}
+
+.mykitab-pdf-meta {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  margin-top: 2px;
+}
+
+.mykitab-delete-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mykitab-delete-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.mykitab-result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.mykitab-result {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.mykitab-result-ref {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+.mykitab-result-excerpt {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}

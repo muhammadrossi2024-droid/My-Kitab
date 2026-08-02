@@ -10,6 +10,7 @@ import MedinahBooks from "./pages/MedinahBooks.jsx";
 import MedinahLessons from "./pages/MedinahLessons.jsx";
 import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Athkar from "./pages/Athkar.jsx";
+import MyKitab from "./pages/MyKitab.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/medinah/:bookId" element={<MedinahLessons />} />
           <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
           <Route path="/athkar" element={<Athkar />} />
+          <Route path="/my-kitab" element={<MyKitab />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </main>
