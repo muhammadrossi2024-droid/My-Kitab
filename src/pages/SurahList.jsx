@@ -47,20 +47,27 @@ export default function SurahList() {
 
   return (
     <div>
-      {lastRead && lastSurahMeta && (
-        <div className="card" data-tour="continue-reading" style={{ marginBottom: 16 }}>
-          <div className="form-row-label">Continue Reading</div>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
-            Updates automatically when you tap "Mark as last read" on any ayah.
+      <div className="card" data-tour="continue-reading" style={{ marginBottom: 16 }}>
+        <div className="form-row-label">Continue Reading</div>
+        {lastRead && lastSurahMeta ? (
+          <>
+            <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
+              Updates automatically when you tap "Mark as last read" on any ayah.
+            </p>
+            <p className="form-row-desc" style={{ marginBottom: 12 }}>
+              You left off at Surah {lastSurahMeta.transliteration}, verse {lastRead.ayah}.
+            </p>
+            <Link className="btn btn-primary" to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}>
+              Resume Reading
+            </Link>
+          </>
+        ) : (
+          <p className="form-row-desc" style={{ marginTop: 2, marginBottom: 0 }}>
+            Nothing saved yet. Open any surah and tap "🔖 Mark as last read" under an ayah to save
+            your place — it'll show up here so you can jump straight back to it.
           </p>
-          <p className="form-row-desc" style={{ marginBottom: 12 }}>
-            You left off at Surah {lastSurahMeta.transliteration}, verse {lastRead.ayah}.
-          </p>
-          <Link className="btn btn-primary" to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}>
-            Resume Reading
-          </Link>
-        </div>
-      )}
+        )}
+      </div>
 
       <input
         className="search-input"

@@ -53,6 +53,7 @@ function buildSteps() {
 
 const FIND_TIMEOUT_MS = 3000;
 const FIND_POLL_MS = 100;
+const TEXT_FADE_MS = 150;
 
 // Waits for the target's layout to actually settle — into view, fonts
 // loaded, a couple of frames past that — before reporting its bounds, so the
@@ -110,48 +111,47 @@ export default function GuidedTour({ onDone }) {
   const location = useLocation();
   const [steps] = useState(buildSteps);
   const [stepIndex, setStepIndex] = useState(0);
-  const [rect, setRect] = useState(null);
   const cleanupWatchRef = useRef(null);
   const cardRef = useRef(null);
   const [cardPos, setCardPos] = useState(null); // { left, top, width } in px, or null while unmeasured
-  const [rectStepIndex, setRectStepIndex] = useState(stepIndex); // which step `rect` belongs to
 
-  const step = steps[stepIndex];
-  const isLast = stepIndex === steps.length - 1;
+  // What's actually ON SCREEN — deliberately allowed to lag `stepIndex`.
+  // For a same-page step (nav icon -> nav icon), the PREVIOUS target stays
+  // displayed until the next one is found and settled, so the ring/card can
+  // CSS-transition smoothly between two valid positions instead of ever
+  // vanishing and popping back in. For a step that requires navigating to a
+  // different page, the old target no longer exists there, so this is
+  // cleared immediately (nothing to smoothly slide to).
+  const [display, setDisplay] = useState({ index: 0, rect: null });
+  const displayStep = steps[display.index];
+  const displayRect = display.rect;
 
-  // `rect` is only cleared for real inside the polling useEffect below, which
-  // — being a passive effect — doesn't run until after the browser has
-  // already painted once. Without this, the step right after a Next click
-  // would paint one frame with the NEW step's title/text but the OLD step's
-  // target position, since stepIndex updates synchronously but rect doesn't.
-  // This is React's documented "adjust state during render" pattern: it
-  // resets rect before this render is ever committed, so that stale frame
-  // never paints at all.
-  if (stepIndex !== rectStepIndex) {
-    setRectStepIndex(stepIndex);
-    setRect(null);
-    setCardPos(null);
-  }
+  const isLast = display.index === steps.length - 1;
 
   function goNext() {
-    if (isLast) onDone();
+    if (stepIndex === steps.length - 1) onDone();
     else setStepIndex((i) => i + 1);
   }
 
-  // Find (and, if needed, navigate to) this step's target, then measure it
-  // only once its layout has actually settled.
+  // Find (and, if needed, navigate to) the CURRENT step's target, then
+  // commit it to `display` only once its layout has actually settled.
   useEffect(() => {
+    const step = steps[stepIndex];
+
     if (step.kind !== "spotlight") {
-      setRect(null);
+      setDisplay({ index: stepIndex, rect: null });
       return;
     }
     if (step.route && location.pathname !== step.route) {
+      // Leaving this page — the old target won't exist on the next one, so
+      // there's nothing sensible to animate from. Hide until the new one's
+      // ready, same as before.
+      setDisplay({ index: stepIndex, rect: null });
       navigate(step.route);
       return; // effect reruns once the route actually changes
     }
 
     let cancelled = false;
-    setRect(null);
     cleanupWatchRef.current?.();
     cleanupWatchRef.current = null;
     const startedAt = Date.now();
@@ -159,14 +159,23 @@ export default function GuidedTour({ onDone }) {
     // Once found and measured, keep watching for any further layout shift
     // (late-loading content, orientation change) and re-measure in place —
     // this never re-triggers the scroll/settle sequence, just tracks it.
+    // Only observes the target itself (not document.body — that combined
+    // with an unconditional setState on every firing was enough to create a
+    // ResizeObserver feedback loop that starved the browser's timer queue
+    // entirely, see below) and skips the update when nothing actually moved.
+    function rectsEqual(a, b) {
+      return (
+        !!a && !!b && a.top === b.top && a.left === b.left && a.width === b.width && a.height === b.height
+      );
+    }
     function watch(el) {
       const remeasure = () => {
         if (cancelled) return;
-        setRect(el.getBoundingClientRect());
+        const next = el.getBoundingClientRect();
+        setDisplay((d) => (rectsEqual(d.rect, next) ? d : { ...d, rect: next }));
       };
       const ro = new ResizeObserver(remeasure);
       ro.observe(el);
-      ro.observe(document.body);
       window.addEventListener("resize", remeasure);
       cleanupWatchRef.current = () => {
         ro.disconnect();
@@ -180,14 +189,15 @@ export default function GuidedTour({ onDone }) {
       if (el) {
         settleAndMeasure(el, { scrollIntoView: !!step.route }).then((r) => {
           if (cancelled) return;
-          setRect(r);
+          // Atomic swap: new text and new position land together, so the
+          // card never shows step N's copy pointed at step N+1's target.
+          setDisplay({ index: stepIndex, rect: r });
           watch(el);
         });
         return;
       }
       if (Date.now() - startedAt > FIND_TIMEOUT_MS) {
-        // Target never showed up (e.g. no reading progress yet to spotlight)
-        // — don't get the tour stuck, just move on.
+        // Target never showed up — don't get the tour stuck, just move on.
         goNext();
         return;
       }
@@ -203,12 +213,28 @@ export default function GuidedTour({ onDone }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepIndex, location.pathname]);
 
-  const showCard = step.kind === "center" || !!rect;
+  // Text cross-fade, decoupled from the ring/card's position — lags
+  // `display` by a short fade-out so the copy fades out, swaps, and fades
+  // back in, instead of jump-cutting the instant the target resolves.
+  const [textStep, setTextStep] = useState(displayStep);
+  const [textFading, setTextFading] = useState(false);
+  useEffect(() => {
+    if (displayStep === textStep) return;
+    setTextFading(true);
+    const t = setTimeout(() => {
+      setTextStep(displayStep);
+      setTextFading(false);
+    }, TEXT_FADE_MS);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayStep]);
+
+  const showCard = displayStep.kind === "center" || !!displayRect;
   // Preferred side: below the target when it sits in the top half of the
   // screen, above it otherwise (nav bar items live at the very bottom, so
   // the card must go above them) — used for the arrow direction and as the
   // card's starting anchor before clamping.
-  const cardBelow = step.kind === "spotlight" && rect && rect.top < window.innerHeight / 2;
+  const cardBelow = displayStep.kind === "spotlight" && displayRect && displayRect.top < window.innerHeight / 2;
 
   // Measure the card's real (width-dependent) height synchronously before
   // the browser paints, then clamp both axes to the actual viewport — so it
@@ -229,13 +255,13 @@ export default function GuidedTour({ onDone }) {
 
     let left;
     let top;
-    if (step.kind === "center" || !rect) {
+    if (displayStep.kind === "center" || !displayRect) {
       left = (vw - width) / 2;
       top = (vh - height) / 2;
     } else {
-      const preferredCenterX = rect.left + rect.width / 2;
+      const preferredCenterX = displayRect.left + displayRect.width / 2;
       left = preferredCenterX - width / 2;
-      top = cardBelow ? rect.bottom + CARD_GAP : rect.top - CARD_GAP - height;
+      top = cardBelow ? displayRect.bottom + CARD_GAP : displayRect.top - CARD_GAP - height;
     }
 
     left = clamp(left, CARD_MARGIN, vw - width - CARD_MARGIN);
@@ -243,27 +269,27 @@ export default function GuidedTour({ onDone }) {
 
     setCardPos({ left, top, width });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showCard, step, rect, cardBelow]);
+  }, [showCard, displayStep, displayRect, cardBelow]);
 
   return (
     <div className="tour-overlay">
-      {(step.kind === "center" || !rect) && <div className="tour-backdrop" />}
-      {step.kind === "spotlight" && rect && (
+      {(displayStep.kind === "center" || !displayRect) && <div className="tour-backdrop" />}
+      {displayStep.kind === "spotlight" && displayRect && (
         <>
           <div
-            className={"tour-spotlight" + (step.shape === "circle" ? " circle" : " rounded")}
+            className={"tour-spotlight" + (displayStep.shape === "circle" ? " circle" : " rounded")}
             style={{
-              top: rect.top - 8,
-              left: rect.left - 8,
-              width: rect.width + 16,
-              height: rect.height + 16,
+              top: displayRect.top - 8,
+              left: displayRect.left - 8,
+              width: displayRect.width + 16,
+              height: displayRect.height + 16,
             }}
           />
           <div
             className={"tour-arrow" + (cardBelow ? " up" : " down")}
             style={{
-              left: rect.left + rect.width / 2,
-              top: cardBelow ? rect.bottom + 10 : rect.top - 18,
+              left: displayRect.left + displayRect.width / 2,
+              top: cardBelow ? displayRect.bottom + 10 : displayRect.top - 18,
             }}
           />
         </>
@@ -283,12 +309,12 @@ export default function GuidedTour({ onDone }) {
           }
         >
           <img src={logoSrc} alt="" className="chat-avatar tour-card-avatar" />
-          <div className="tour-card-body">
-            <div className="tour-card-title">{step.title}</div>
-            <p className="tour-card-text">{step.text}</p>
+          <div className={"tour-card-body" + (textFading ? " fading" : "")}>
+            <div className="tour-card-title">{textStep.title}</div>
+            <p className="tour-card-text">{textStep.text}</p>
             <div className="tour-card-actions">
               <span className="tour-card-progress">
-                {stepIndex + 1} / {steps.length}
+                {steps.indexOf(textStep) + 1} / {steps.length}
               </span>
               <button className="btn btn-primary tour-next-btn" onClick={goNext}>
                 {isLast ? "Done" : "Next"}

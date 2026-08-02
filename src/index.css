@@ -1274,11 +1274,14 @@ a {
   position: fixed;
   pointer-events: none;
   box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.72), 0 0 0 3px var(--accent);
-  /* No top/left/width/height transition on purpose — the target's rect is
-     only ever committed to state once its layout has fully settled (see
-     settleAndMeasure in GuidedTour.jsx), so there is no wrong intermediate
-     position left to animate away from. It should snap straight to the
-     right place; only opacity fades in, for polish, not motion. */
+  /* Safe to animate top/left/width/height here: `rect` (GuidedTour.jsx) is
+     only ever committed to state once a target's layout has fully settled,
+     so every value this transitions FROM and TO is a genuinely correct,
+     on-screen position — never the wrong pre-layout one from the old bug.
+     Same easing/duration as the nav bar's own show/hide transition, for a
+     consistent feel rather than a new effect bolted on. */
+  transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   animation: tour-pulse 1.8s ease-in-out infinite, tour-ring-in 0.15s ease;
 }
 
@@ -1316,6 +1319,7 @@ a {
   height: 0;
   transform: translateX(-50%);
   pointer-events: none;
+  transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tour-arrow.up {
@@ -1341,7 +1345,13 @@ a {
      declarations — the animation's scale() silently overrode the centering
      translate for its whole duration, so the card sat off-center (clipped
      off the right edge) until the animation ended and the static transform
-     "snapped" back in. Only opacity animates now, which can't conflict. */
+     "snapped" back in. Only opacity animates now, which can't conflict.
+     The card stays mounted across same-page steps (GuidedTour.jsx lags
+     `display` behind `stepIndex` on purpose), so this left/top transition
+     is what makes it glide to the next step's position instead of jumping —
+     same easing/duration as the spotlight ring and the nav bar's own
+     show/hide transition. */
+  transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   gap: 10px;
   background: var(--bg-elevated);
@@ -1369,6 +1379,12 @@ a {
 .tour-card-body {
   min-width: 0;
   flex: 1;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+}
+
+.tour-card-body.fading {
+  opacity: 0;
 }
 
 .tour-card-title {
