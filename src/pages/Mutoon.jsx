@@ -14,14 +14,12 @@ export default function Mutoon() {
       <SectionHero
         icon={Library}
         image="/hero-mutoon.jpg"
-        imagePosition="center 42%"
-        imageZoom={1.7}
-        imageFocus="0% 50%"
-        fadeMid="28%"
-        fadeEnd="65%"
-        blurMid="18%"
-        blurEnd="42%"
-        contentMaxWidth="30%"
+        imagePosition="center 48%"
+        fadeMid="16%"
+        fadeEnd="38%"
+        blurMid="8%"
+        blurEnd="22%"
+        contentMaxWidth="22%"
         title="Mutoon"
         description="Classical texts for the student of knowledge (متون طالب العلم)."
       />

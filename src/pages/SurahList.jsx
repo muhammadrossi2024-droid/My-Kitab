@@ -52,14 +52,12 @@ export default function SurahList() {
       <SectionHero
         icon={BookOpen}
         image="/hero-quran.jpg"
-        imagePosition="center"
-        imageZoom={1.7}
-        imageFocus="0% 50%"
-        fadeMid="28%"
-        fadeEnd="65%"
-        blurMid="18%"
-        blurEnd="42%"
-        contentMaxWidth="30%"
+        imagePosition="center 56%"
+        fadeMid="14%"
+        fadeEnd="36%"
+        blurMid="7%"
+        blurEnd="20%"
+        contentMaxWidth="20%"
         title="The Noble Quran"
         description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
       />
