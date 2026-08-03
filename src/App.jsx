@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import GuidedTour from "./components/GuidedTour.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
@@ -32,6 +33,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <TopBanner />
       <Navbar />
       <main className="app-main">
         <Routes>

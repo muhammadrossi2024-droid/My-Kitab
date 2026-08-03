@@ -6,7 +6,7 @@ import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
 // intro screen to generate its one-message-per-tab walkthrough, so adding,
 // renaming, or reordering a tab here can never leave that guide stale.
 export const links = [
-  { to: "/my-kitab", label: "My Kitab", icon: Folder },
+  { to: "/my-kitab", label: "My Library", icon: Folder },
   { to: "/surahs", label: "Quran", icon: BookOpen },
   { to: "/mutoon", label: "Mutoon", icon: Library },
   { to: "/athkar", label: "Athkar", icon: Sparkles },

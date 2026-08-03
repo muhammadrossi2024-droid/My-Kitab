@@ -248,7 +248,7 @@ export default function MyKitabViewer() {
   const header = (
     <div className="mykitab-viewer-header">
       <Link to="/my-kitab" className="mykitab-viewer-back">
-        ‹ My Kitab
+        ‹ My Library
       </Link>
       {record && <div className="mykitab-viewer-title">{record.title}</div>}
     </div>

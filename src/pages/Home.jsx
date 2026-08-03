@@ -41,13 +41,13 @@ export default function Home() {
       </div>
 
       <div className="card">
-        <div className="form-row-label">My Kitab</div>
+        <div className="form-row-label">My Library</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
           Upload your own PDFs and search across just your personal library.
         </p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
           <Link className="btn btn-primary" to="/my-kitab">
-            Open My Kitab
+            Open My Library
           </Link>
         </div>
       </div>

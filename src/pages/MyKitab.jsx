@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Folder } from "lucide-react";
 import { addPdf, deletePdf, listPdfs, makePdfId } from "../utils/myKitabDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
+import PageHero from "../components/PageHero.jsx";
 
 function titleFromFilename(name) {
   return (name || "").replace(/\.pdf$/i, "").trim();
@@ -102,7 +104,11 @@ export default function MyKitab() {
 
   return (
     <div>
-      <h1>My Kitab</h1>
+      <PageHero
+        icon={Folder}
+        title="My Library"
+        description="Your personal collection of Islamic knowledge."
+      />
 
       <div className="card">
         <div className="form-row-label">Your library</div>
