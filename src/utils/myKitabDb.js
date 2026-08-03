@@ -3,8 +3,9 @@
 // has to re-parse the PDF), stored client-side per-browser like the app's
 // existing localStorage progress/settings and Cache Storage offline audio.
 const DB_NAME = "quran-app-my-kitab";
-const DB_VERSION = 1;
+const DB_VERSION = 2; // v2 added the "albums" store (see ALBUMS_STORE below)
 const STORE = "pdfs";
+const ALBUMS_STORE = "albums";
 
 function openDb() {
   return new Promise((resolve, reject) => {
@@ -13,6 +14,9 @@ function openDb() {
       const db = req.result;
       if (!db.objectStoreNames.contains(STORE)) {
         db.createObjectStore(STORE, { keyPath: "id" });
+      }
+      if (!db.objectStoreNames.contains(ALBUMS_STORE)) {
+        db.createObjectStore(ALBUMS_STORE, { keyPath: "id" });
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -35,7 +39,10 @@ function txToPromise(tx) {
   });
 }
 
-// record: { id, title, name, size, addedAt, pageCount, blob, pages: [{ pageNumber, text }] }
+// record: { id, title, name, size, addedAt, pageCount, albumId, blob,
+//           coverThumb, pages: [{ pageNumber, text }] }
+// albumId is null for a PDF not filed into any album. coverThumb is a small
+// PNG Blob of the rendered first page, or null if it couldn't be generated.
 export async function addPdf(record) {
   const db = await openDb();
   const tx = db.transaction(STORE, "readwrite");
@@ -43,19 +50,23 @@ export async function addPdf(record) {
   await txToPromise(tx);
 }
 
-// Metadata only (no blob/pages) — cheap to load for the list view.
+// Metadata only (no pages text) — cheap-ish to load for the list view.
+// coverThumb (a small Blob) is included since the list needs it to render
+// thumbnails; the far larger original PDF `blob` is deliberately excluded.
 export async function listPdfs() {
   const db = await openDb();
   const tx = db.transaction(STORE, "readonly");
   const all = await reqToPromise(tx.objectStore(STORE).getAll());
   return all
-    .map(({ id, title, name, size, addedAt, pageCount }) => ({
+    .map(({ id, title, name, size, addedAt, pageCount, albumId, coverThumb }) => ({
       id,
       title,
       name,
       size,
       addedAt,
       pageCount,
+      albumId: albumId ?? null,
+      coverThumb: coverThumb ?? null,
     }))
     .sort((a, b) => b.addedAt - a.addedAt);
 }
@@ -78,6 +89,65 @@ export async function deletePdf(id) {
   const db = await openDb();
   const tx = db.transaction(STORE, "readwrite");
   tx.objectStore(STORE).delete(id);
+  await txToPromise(tx);
+}
+
+// Moves a PDF into an album, or back to "All PDFs" when albumId is null.
+export async function setPdfAlbum(id, albumId) {
+  const db = await openDb();
+  const tx = db.transaction(STORE, "readwrite");
+  const store = tx.objectStore(STORE);
+  const record = await reqToPromise(store.get(id));
+  if (record) {
+    record.albumId = albumId;
+    store.put(record);
+  }
+  await txToPromise(tx);
+}
+
+// album: { id, name, createdAt }
+export async function listAlbums() {
+  const db = await openDb();
+  const tx = db.transaction(ALBUMS_STORE, "readonly");
+  const all = await reqToPromise(tx.objectStore(ALBUMS_STORE).getAll());
+  return all.sort((a, b) => a.createdAt - b.createdAt);
+}
+
+export async function addAlbum(name) {
+  const db = await openDb();
+  const tx = db.transaction(ALBUMS_STORE, "readwrite");
+  const album = { id: makePdfId(), name, createdAt: Date.now() };
+  tx.objectStore(ALBUMS_STORE).put(album);
+  await txToPromise(tx);
+  return album;
+}
+
+export async function renameAlbum(id, name) {
+  const db = await openDb();
+  const tx = db.transaction(ALBUMS_STORE, "readwrite");
+  const store = tx.objectStore(ALBUMS_STORE);
+  const album = await reqToPromise(store.get(id));
+  if (album) {
+    album.name = name;
+    store.put(album);
+  }
+  await txToPromise(tx);
+}
+
+// Deletes an album and un-files any PDFs that were in it (they fall back to
+// "All PDFs" rather than being deleted themselves).
+export async function deleteAlbum(id) {
+  const db = await openDb();
+  const tx = db.transaction([STORE, ALBUMS_STORE], "readwrite");
+  const pdfStore = tx.objectStore(STORE);
+  const allPdfs = await reqToPromise(pdfStore.getAll());
+  for (const record of allPdfs) {
+    if (record.albumId === id) {
+      record.albumId = null;
+      pdfStore.put(record);
+    }
+  }
+  tx.objectStore(ALBUMS_STORE).delete(id);
   await txToPromise(tx);
 }
 

@@ -1,10 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Folder } from "lucide-react";
-import { addPdf, deletePdf, listPdfs, makePdfId } from "../utils/myKitabDb.js";
+import { Folder, FileText } from "lucide-react";
+import {
+  addAlbum,
+  addPdf,
+  deletePdf,
+  listAlbums,
+  listPdfs,
+  makePdfId,
+  setPdfAlbum,
+} from "../utils/myKitabDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
 import PageHero from "../components/PageHero.jsx";
+import ConfirmDialog from "../components/ConfirmDialog.jsx";
 
 function titleFromFilename(name) {
   return (name || "").replace(/\.pdf$/i, "").trim();
@@ -20,6 +29,34 @@ function formatDate(ts) {
   return new Date(ts).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
 }
 
+// Renders a PDF's stored cover Blob as an <img>, managing its object URL's
+// lifetime (created on mount/blob-change, revoked on cleanup) so the list
+// doesn't leak a URL per PDF. Falls back to a generic document icon for
+// PDFs uploaded before this feature existed, or where the first page
+// couldn't be rendered.
+function PdfCoverThumb({ blob }) {
+  const [url, setUrl] = useState(null);
+
+  useEffect(() => {
+    if (!blob) {
+      setUrl(null);
+      return;
+    }
+    const objectUrl = URL.createObjectURL(blob);
+    setUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [blob]);
+
+  if (!url) {
+    return (
+      <div className="mykitab-pdf-thumb mykitab-pdf-thumb-placeholder" aria-hidden="true">
+        <FileText className="mykitab-pdf-thumb-icon" />
+      </div>
+    );
+  }
+  return <img src={url} alt="" className="mykitab-pdf-thumb" />;
+}
+
 export default function MyKitab() {
   const [pdfs, setPdfs] = useState([]);
   const [loadingList, setLoadingList] = useState(true);
@@ -27,19 +64,36 @@ export default function MyKitab() {
   const [uploadErrors, setUploadErrors] = useState([]);
   const fileInputRef = useRef(null);
 
+  const [albums, setAlbums] = useState([]);
+  const [activeAlbumId, setActiveAlbumId] = useState(null); // null = "All PDFs"
+  const [showNewAlbumForm, setShowNewAlbumForm] = useState(false);
+  const [newAlbumName, setNewAlbumName] = useState("");
+
+  const [deleteTarget, setDeleteTarget] = useState(null); // the pdf record pending confirmation
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
   const [searching, setSearching] = useState(false);
   const debounceRef = useRef(null);
   const requestIdRef = useRef(0);
 
+  const [question, setQuestion] = useState("");
+  const [asking, setAsking] = useState(false);
+  const [answer, setAnswer] = useState(null); // { text, citations } | { notFound: true } | null
+  const [askError, setAskError] = useState(null);
+
   async function refreshList() {
     setPdfs(await listPdfs());
     setLoadingList(false);
   }
 
+  async function refreshAlbums() {
+    setAlbums(await listAlbums());
+  }
+
   useEffect(() => {
     refreshList();
+    refreshAlbums();
   }, []);
 
   useEffect(() => {
@@ -75,7 +129,7 @@ export default function MyKitab() {
       const label = file.name && file.name.trim() ? file.name : "This file";
       try {
         const buffer = await file.arrayBuffer();
-        const { pages, metadataTitle } = await extractPdfPages(buffer);
+        const { pages, metadataTitle, coverThumb } = await extractPdfPages(buffer);
         const title = titleFromFilename(file.name) || metadataTitle || "Untitled PDF";
         await addPdf({
           id: makePdfId(),
@@ -84,7 +138,11 @@ export default function MyKitab() {
           size: file.size,
           addedAt: Date.now(),
           pageCount: pages.length,
-          blob: file,
+          // Uploading while viewing a specific album files the new PDF
+          // straight into it, rather than always landing in "All PDFs".
+          albumId: activeAlbumId,
+          blob: file, // the original File, stored as-is — no re-encoding/compression
+          coverThumb,
           pages,
         });
       } catch (err) {
@@ -97,10 +155,74 @@ export default function MyKitab() {
     await refreshList();
   }
 
-  async function handleDelete(id) {
-    await deletePdf(id);
+  function requestDelete(pdf) {
+    setDeleteTarget(pdf);
+  }
+
+  async function confirmDelete() {
+    if (!deleteTarget) return;
+    await deletePdf(deleteTarget.id);
+    setDeleteTarget(null);
     await refreshList();
   }
+
+  async function handleCreateAlbum(e) {
+    e.preventDefault();
+    const name = newAlbumName.trim();
+    if (!name) return;
+    await addAlbum(name);
+    setNewAlbumName("");
+    setShowNewAlbumForm(false);
+    await refreshAlbums();
+  }
+
+  async function handleMovePdf(pdfId, albumId) {
+    await setPdfAlbum(pdfId, albumId || null);
+    await refreshList();
+  }
+
+  async function handleAsk(e) {
+    e.preventDefault();
+    const q = question.trim();
+    if (!q || asking) return;
+
+    setAsking(true);
+    setAnswer(null);
+    setAskError(null);
+    try {
+      // Retrieval reuses the same local, PDFs-only search as the excerpt
+      // search below — only what it finds ever reaches the model, so an
+      // empty result short-circuits straight to "not found" with no
+      // network call at all.
+      const passages = await searchMyKitab(q);
+      if (passages.length === 0) {
+        setAnswer({ notFound: true });
+        return;
+      }
+      const res = await fetch("/api/ask-library", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question: q,
+          passages: passages.slice(0, 8).map((p) => ({
+            pdfId: p.pdfId,
+            pdfTitle: p.pdfTitle,
+            pageNumber: p.pageNumber,
+            excerpt: p.excerpt,
+          })),
+        }),
+      });
+      if (!res.ok) throw new Error(`The library couldn't be asked right now (${res.status}).`);
+      const data = await res.json();
+      setAnswer(data);
+    } catch (err) {
+      setAskError(err?.message || "Something went wrong asking your library.");
+    } finally {
+      setAsking(false);
+    }
+  }
+
+  const visiblePdfs = activeAlbumId ? pdfs.filter((p) => p.albumId === activeAlbumId) : pdfs;
 
   return (
     <div>
@@ -113,7 +235,7 @@ export default function MyKitab() {
       <div className="card">
         <div className="form-row-label">Your library</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 16 }}>
-          Upload your own PDFs to keep them here, on this device.
+          Upload your own PDFs to keep them here, on this device, at their original quality.
         </p>
 
         <input
@@ -143,32 +265,152 @@ export default function MyKitab() {
           </div>
         )}
 
-        {!loadingList && pdfs.length === 0 && (
-          <div className="empty-state">No PDFs added yet — tap "Add PDF" to upload one.</div>
+        {(albums.length > 0 || pdfs.length > 0) && (
+          <div className="mykitab-album-row">
+            <button
+              className={"mykitab-album-chip" + (activeAlbumId === null ? " active" : "")}
+              onClick={() => setActiveAlbumId(null)}
+            >
+              All PDFs
+            </button>
+            {albums.map((a) => (
+              <button
+                key={a.id}
+                className={"mykitab-album-chip" + (activeAlbumId === a.id ? " active" : "")}
+                onClick={() => setActiveAlbumId(a.id)}
+              >
+                {a.name}
+              </button>
+            ))}
+            <button
+              className="mykitab-album-chip-new"
+              onClick={() => setShowNewAlbumForm((v) => !v)}
+            >
+              + New album
+            </button>
+          </div>
         )}
 
-        {pdfs.length > 0 && (
+        {showNewAlbumForm && (
+          <form className="mykitab-new-album-form" onSubmit={handleCreateAlbum}>
+            <input
+              className="mykitab-new-album-input"
+              placeholder="Album name"
+              value={newAlbumName}
+              onChange={(e) => setNewAlbumName(e.target.value)}
+              autoFocus
+            />
+            <button type="submit" className="btn btn-primary">
+              Create
+            </button>
+          </form>
+        )}
+
+        {!loadingList && visiblePdfs.length === 0 && (
+          <div className="empty-state">
+            {pdfs.length === 0
+              ? 'No PDFs added yet — tap "Add PDF" to upload one.'
+              : "No PDFs in this album yet."}
+          </div>
+        )}
+
+        {visiblePdfs.length > 0 && (
           <ul className="mykitab-pdf-list">
-            {pdfs.map((pdf) => (
+            {visiblePdfs.map((pdf) => (
               <li className="mykitab-pdf-item" key={pdf.id}>
                 <Link to={`/my-kitab/${pdf.id}`} className="mykitab-pdf-info">
-                  <div className="mykitab-pdf-title">{pdf.title}</div>
-                  <div className="mykitab-pdf-meta">
-                    {pdf.pageCount} page{pdf.pageCount === 1 ? "" : "s"} · {formatSize(pdf.size)} ·
-                    added {formatDate(pdf.addedAt)}
+                  <PdfCoverThumb blob={pdf.coverThumb} />
+                  <div className="mykitab-pdf-text">
+                    <div className="mykitab-pdf-title">{pdf.title}</div>
+                    <div className="mykitab-pdf-meta">
+                      {pdf.pageCount} page{pdf.pageCount === 1 ? "" : "s"} · {formatSize(pdf.size)} ·
+                      added {formatDate(pdf.addedAt)}
+                    </div>
                   </div>
                 </Link>
-                <button
-                  className="mykitab-delete-btn"
-                  onClick={() => handleDelete(pdf.id)}
-                  aria-label={`Delete ${pdf.title}`}
-                  title="Delete"
-                >
-                  ×
-                </button>
+                <div className="mykitab-pdf-actions">
+                  {albums.length > 0 && (
+                    <select
+                      className="mykitab-album-select"
+                      value={pdf.albumId || ""}
+                      onChange={(e) => handleMovePdf(pdf.id, e.target.value)}
+                      aria-label={`Move ${pdf.title} to album`}
+                    >
+                      <option value="">No album</option>
+                      {albums.map((a) => (
+                        <option key={a.id} value={a.id}>
+                          {a.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  <button
+                    className="mykitab-delete-btn"
+                    onClick={() => requestDelete(pdf)}
+                    aria-label={`Delete ${pdf.title}`}
+                    title="Delete"
+                  >
+                    ×
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
+        )}
+      </div>
+
+      <div className="card">
+        <div className="form-row-label">Ask your library</div>
+        <p style={{ color: "var(--text-muted)", marginBottom: 16 }}>
+          Ask a question in plain English — answers are drawn only from the PDFs you've uploaded,
+          never general knowledge.
+        </p>
+
+        <form className="mykitab-ask-form" onSubmit={handleAsk}>
+          <input
+            className="mykitab-ask-input"
+            placeholder="e.g. What does this book say about patience?"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            disabled={pdfs.length === 0}
+          />
+          <button className="btn btn-primary" type="submit" disabled={asking || pdfs.length === 0}>
+            {asking ? "Asking…" : "Ask"}
+          </button>
+        </form>
+
+        {pdfs.length === 0 && (
+          <div className="empty-state">Add a PDF above, then ask a question about it here.</div>
+        )}
+
+        {asking && <div className="loading-state">Reading your library…</div>}
+
+        {!asking && askError && <div className="empty-state mykitab-answer-error">{askError}</div>}
+
+        {!asking && !askError && answer && answer.notFound && (
+          <div className="empty-state">
+            Nothing in your uploaded PDFs answers that — try rephrasing, or check that a PDF
+            covering this actually made it into your library.
+          </div>
+        )}
+
+        {!asking && !askError && answer && !answer.notFound && (
+          <div className="mykitab-answer">
+            <p className="mykitab-answer-text">{answer.text}</p>
+            {answer.citations && answer.citations.length > 0 && (
+              <div className="mykitab-answer-citations">
+                {answer.citations.map((c, i) => (
+                  <Link
+                    key={i}
+                    to={`/my-kitab/${c.pdfId}?page=${c.pageNumber}`}
+                    className="mykitab-answer-citation"
+                  >
+                    {c.pdfTitle} · page {c.pageNumber} →
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         )}
       </div>
 
@@ -216,6 +458,16 @@ export default function MyKitab() {
           </div>
         )}
       </div>
+
+      {deleteTarget && (
+        <ConfirmDialog
+          title="Delete this PDF?"
+          message={`"${deleteTarget.title}" will be permanently removed from your library. This can't be undone.`}
+          confirmLabel="Delete"
+          onCancel={() => setDeleteTarget(null)}
+          onConfirm={confirmDelete}
+        />
+      )}
     </div>
   );
 }

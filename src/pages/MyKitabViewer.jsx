@@ -26,6 +26,7 @@ export default function MyKitabViewer() {
   const [renderedSet, setRenderedSet] = useState(() => new Set());
   const [pageErrors, setPageErrors] = useState(() => new Map());
   const [zoom, setZoom] = useState(1);
+  const [pageInput, setPageInput] = useState("");
 
   const canvasRefs = useRef([]);
   const pageWrapRefs = useRef([]);
@@ -103,7 +104,10 @@ export default function MyKitabViewer() {
     if (!canvas) return;
     try {
       const page = await pdfDoc.getPage(pageNumber);
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Full device pixel ratio, uncapped — a capped ratio was quietly
+      // downsampling pages on high-DPI (3x) phone screens, the opposite of
+      // "original quality" rendering.
+      const dpr = window.devicePixelRatio || 1;
       const viewport = page.getViewport({ scale: RENDER_SCALE * dpr });
       canvas.width = viewport.width;
       canvas.height = viewport.height;
@@ -131,22 +135,56 @@ export default function MyKitabViewer() {
     }
   }
 
-  // Lazily render each page's canvas as its placeholder scrolls into view.
+  // Frees a page's canvas once it's scrolled well out of view — full-quality
+  // (uncapped-dpr) canvases are large, so for a long PDF keeping every
+  // visited page's canvas alive would keep growing memory use and slow down
+  // scrolling. Reverting to the unrendered placeholder (same 360px min-height
+  // box shown before a page's first render, see .mykitab-page in index.css)
+  // re-renders cheaply if the user scrolls back.
+  function unrenderPage(pageNumber) {
+    const canvas = canvasRefs.current[pageNumber - 1];
+    if (canvas) {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
+    renderedRef.current.delete(pageNumber);
+    setRenderedSet(new Set(renderedRef.current));
+  }
+
+  // Virtualized rendering: only pages near the viewport ever hold a rendered
+  // canvas. A generous rootMargin keeps a comfortable buffer of pages ready
+  // just off-screen (so flicking through quickly doesn't show blank
+  // placeholders), while pages that scroll out past that buffer get their
+  // canvas freed again instead of accumulating forever.
   useEffect(() => {
     if (!pdfDoc || numPages === 0) return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          ensurePageRendered(Number(entry.target.dataset.page));
+          const pageNumber = Number(entry.target.dataset.page);
+          if (entry.isIntersecting) ensurePageRendered(pageNumber);
+          else unrenderPage(pageNumber);
         }
       },
-      { rootMargin: "600px 0px" }
+      { rootMargin: "900px 0px" }
     );
     pageWrapRefs.current.forEach((el) => el && observer.observe(el));
     return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfDoc, numPages]);
+
+  function jumpToPage(pageNumber) {
+    if (!Number.isInteger(pageNumber) || pageNumber < 1 || pageNumber > numPages) return;
+    const el = pageWrapRefs.current[pageNumber - 1];
+    if (el) el.scrollIntoView({ block: "start" });
+    ensurePageRendered(pageNumber);
+  }
+
+  function handleJumpSubmit(e) {
+    e.preventDefault();
+    jumpToPage(parseInt(pageInput, 10));
+    setPageInput("");
+  }
 
   // Deep link from a search result: jump to the page and highlight the match.
   useEffect(() => {
@@ -251,6 +289,23 @@ export default function MyKitabViewer() {
         ‹ My Library
       </Link>
       {record && <div className="mykitab-viewer-title">{record.title}</div>}
+      {numPages > 0 && (
+        <form className="mykitab-jump-form" onSubmit={handleJumpSubmit}>
+          <input
+            type="number"
+            min={1}
+            max={numPages}
+            className="mykitab-jump-input"
+            placeholder={`Page (1–${numPages})`}
+            value={pageInput}
+            onChange={(e) => setPageInput(e.target.value)}
+            aria-label="Jump to page"
+          />
+          <button type="submit" className="btn mykitab-jump-btn">
+            Go
+          </button>
+        </form>
+      )}
     </div>
   );
 
