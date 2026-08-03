@@ -14,15 +14,21 @@ export default function PrayingHandsIcon({ className }) {
           <path
             fill="currentColor"
             stroke="none"
-            d="M13.3 21 L13.3 17.5 C13.3 15.8 14.5 15 16 15 C17.5 15 18.7 15.8 18.7 17.5 L18.7 21 Z"
+            d="M13.2 21 L13.2 17.6 C13.2 15.7 14.4 14.7 16 14.7 C17.6 14.7 18.8 15.7 18.8 17.6 L18.8 21 Z"
           />
           <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <path d="M14.1 16 L13.4 8.5" />
-            <path d="M15.7 15.3 L15.9 6" />
-            <path d="M17.3 15.3 L17.6 6.7" />
-            <path d="M18.7 16 L19.6 9.3" />
-            <path d="M18.5 18.5 L21 20.3" />
+            <path d="M14.0 15.8 Q 12.9 12.5 13.2 8.8" />
+            <path d="M15.6 15.2 Q 15.9 10 15.3 5.2" />
+            <path d="M17.1 15.3 Q 17.6 10.5 17.2 6.7" />
+            <path d="M18.5 16.0 Q 19.6 12.5 19.0 9.5" />
           </g>
+          <path
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            d="M13.0 18.3 Q 10.6 18.5 10.3 16.8"
+          />
         </g>
       </defs>
       <use href={`#${handId}`} transform="translate(-1.5,0)" />
