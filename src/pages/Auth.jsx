@@ -28,6 +28,10 @@ function mapFirebaseError(code) {
       return "Too many attempts. Please wait a moment and try again.";
     case "auth/network-request-failed":
       return "Network error — please check your connection and try again.";
+    case "app/not-configured":
+    case "auth/invalid-api-key":
+    case "auth/api-key-not-valid":
+      return "Sign-in isn't available right now. Please try again shortly.";
     case "auth/popup-closed-by-user":
     case "auth/cancelled-popup-request":
       return null;
