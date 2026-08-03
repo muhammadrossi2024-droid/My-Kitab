@@ -27,6 +27,20 @@
   font-display: swap;
 }
 
+:root {
+  /* Fixed warm cream used for the section-hero image fade (see
+     .section-hero-glass) — deliberately NOT theme-aware. The fade should
+     read the same warm off-white in both light and dark mode rather than
+     dissolving into each theme's own --bg/--accent-soft. Because that
+     patch is always this light cream regardless of theme, the title/desc
+     text sitting on it also needs fixed (light-mode-style, dark-on-cream)
+     colors — the normal --accent/--text-muted tokens flip to pale colors
+     in dark mode that would be unreadable here. */
+  --hero-fade-cream: #f0ede4;
+  --hero-on-cream-title: #2f6a4f;
+  --hero-on-cream-desc: #6b6255;
+}
+
 :root[data-theme="light"] {
   --bg: #faf7f2;
   --bg-elevated: #ffffff;
@@ -316,12 +330,12 @@ a {
   margin: 0 0 4px;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--hero-on-cream-title);
 }
 
 .section-hero-desc {
   margin: 0;
-  color: var(--text-muted);
+  color: var(--hero-on-cream-desc);
   font-size: 0.82rem;
   line-height: 1.4;
 }
@@ -356,15 +370,17 @@ a {
   mask-image: linear-gradient(to right, #000 0%, #000 32%, transparent 62%);
 }
 
-/* The tint overlay: opaque card color on the left (text sits here, image
+/* The tint overlay: opaque warm cream on the left (text sits here, image
    fully hidden), fading to fully transparent well before the card's right
    edge so that edge shows the photo completely unmodified — sharp, no
-   blur, no tint. Pure background gradient, no filter of its own. */
+   blur, no tint. Pure background gradient, no filter of its own. Uses the
+   fixed --hero-fade-cream token (not --accent-soft) so the fade reads the
+   same warm cream in both light and dark mode. */
 .section-hero-glass {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(to right, var(--accent-soft) 0%, var(--accent-soft) 42%, transparent 88%);
+  background: linear-gradient(to right, var(--hero-fade-cream) 0%, var(--hero-fade-cream) 42%, transparent 88%);
 }
 
 @media (max-width: 420px) {
