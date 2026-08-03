@@ -73,7 +73,7 @@ a {
   max-width: 860px;
   width: 100%;
   margin: 0 auto;
-  padding: calc(88px + env(safe-area-inset-top)) 20px
+  padding: calc(100px + env(safe-area-inset-top)) 20px
     calc(64px + 56px + 16px + env(safe-area-inset-bottom));
 }
 
@@ -86,8 +86,8 @@ a {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px calc(14px + 6px);
-  padding-top: calc(14px + env(safe-area-inset-top));
+  padding: 18px 20px calc(18px + 6px);
+  padding-top: calc(18px + env(safe-area-inset-top));
   background: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -109,8 +109,8 @@ a {
 }
 
 .top-banner-logo {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -230,73 +230,85 @@ a {
 
 .section-hero {
   position: relative;
-  aspect-ratio: 1.9 / 1;
-  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--accent-soft);
   border: 1px solid var(--border);
-  background: var(--chip-bg);
-  overflow: hidden;
+  border-radius: 14px;
+  padding: 16px;
   margin-bottom: 16px;
+  overflow: hidden;
   animation: page-hero-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.section-hero-content {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  flex: 1;
+}
+
+.section-hero-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  margin-bottom: 8px;
+}
+
+.section-hero-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.section-hero-title {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.section-hero-desc {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.section-hero-media {
+  flex-shrink: 0;
+  width: 112px;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--chip-bg);
+}
+
 .section-hero-image {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Bottom-up scrim rather than a flat text box — darkest right behind the
-   text, fading to nothing by the upper half so the photo itself still
-   reads. Dark mode gets a touch more density since the surrounding page is
-   already dark and a lighter scrim would make the card look washed out /
-   inconsistent with everything around it. */
-.section-hero-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0) 78%);
-}
-
-:root[data-theme="dark"] .section-hero-scrim {
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 48%, rgba(0, 0, 0, 0.08) 78%);
-}
-
-.section-hero-text {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 16px 18px;
-}
-
-/* Deliberately theme-invariant (always white-on-scrim, not var(--text)) —
-   the card is a self-contained photo unit, and the scrim's own contrast is
-   what makes the text readable, not the surrounding page background. */
-.section-hero-title {
-  margin: 0 0 4px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
-}
-
-.section-hero-desc {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.92);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-  max-width: 92%;
-}
-
 @media (max-width: 420px) {
   .section-hero {
-    aspect-ratio: 1.6 / 1;
+    padding: 14px;
+    gap: 12px;
   }
 
   .section-hero-title {
     font-size: 1.1rem;
+  }
+
+  .section-hero-media {
+    width: 84px;
   }
 }
 

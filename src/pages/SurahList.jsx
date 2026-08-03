@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import SectionHero from "../components/SectionHero.jsx";
 
@@ -49,6 +50,7 @@ export default function SurahList() {
   return (
     <div>
       <SectionHero
+        icon={BookOpen}
         image="/hero-quran.jpg"
         imagePosition="center"
         title="The Noble Quran"

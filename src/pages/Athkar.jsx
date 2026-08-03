@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Sparkles } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import athkarData from "../data/athkar/morning-evening.json";
 import SectionHero from "../components/SectionHero.jsx";
@@ -14,6 +15,7 @@ export default function Athkar() {
   return (
     <div>
       <SectionHero
+        icon={Sparkles}
         image="/hero-athkar.jpg"
         imagePosition="75% 45%"
         title="Athkar"

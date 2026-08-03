@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { Library } from "lucide-react";
 import { mutoonBooks } from "../data/mutoon/index.js";
 import { useSettings } from "../context/SettingsContext.jsx";
 import SectionHero from "../components/SectionHero.jsx";
@@ -11,6 +12,7 @@ export default function Mutoon() {
   return (
     <div>
       <SectionHero
+        icon={Library}
         image="/hero-mutoon.jpg"
         imagePosition="center 42%"
         title="Mutoon"

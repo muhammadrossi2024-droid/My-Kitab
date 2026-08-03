@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText } from "lucide-react";
+import { FileText, Folder } from "lucide-react";
 import {
   addAlbum,
   addPdf,
@@ -242,6 +242,7 @@ export default function MyKitab() {
   return (
     <div>
       <SectionHero
+        icon={Folder}
         image="/hero-library.jpg"
         imagePosition="center"
         title="My Library"
