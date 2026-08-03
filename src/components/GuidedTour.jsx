@@ -9,20 +9,19 @@ import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
 // scrolls the real page, so navigation and side effects (e.g. actually
 // marking an ayah as last read) are the real thing, not a mock.
 
+const TOTAL_STEPS = 11;
 const FIND_TIMEOUT_MS = 4000;
 const FIND_POLL_MS = 100;
 const TEXT_FADE_MS = 150;
 const TAP_RIPPLE_MS = 480;
-// Required "brief pause" between one action finishing and the next starting.
-const POST_ACTION_PAUSE_MS = 500;
-// Lets the ring visibly land on a target before the tap fires, so the tap
-// reads as deliberate rather than instantaneous.
-const PRE_TAP_SETTLE_MS = 500;
-const DWELL_MS = 1900;
-const DWELL_LONG_MS = 2300;
-const WELCOME_DWELL_MS = 2400;
-const SCROLL_MIN_MS = 550;
-const SCROLL_MAX_MS = 1400;
+// Required hold at every tap, highlight, and scroll-stop point.
+const PAUSE_MS = 2500;
+// Short technical buffer after a click/navigate before the next thing is
+// measured — not one of the required "stops", just enough for the DOM/route
+// to catch up.
+const SETTLE_MS = 400;
+const SCROLL_MIN_MS = 900;
+const SCROLL_MAX_MS = 2200;
 
 const CARD_MAX_WIDTH = 360;
 const CARD_MARGIN = 16;
@@ -85,11 +84,30 @@ function waitForSelector(selector, cancelRef, timeoutMs = FIND_TIMEOUT_MS) {
   });
 }
 
+// Like waitForSelector, but returns the Nth match (0-indexed) — used to grab
+// Ayah 4's Mark Ayah button specifically rather than the first one on the
+// page.
+function waitForNthSelector(selector, index, cancelRef, timeoutMs = FIND_TIMEOUT_MS) {
+  return new Promise((resolve) => {
+    const startedAt = Date.now();
+    function poll() {
+      if (cancelRef.current) return resolve(null);
+      const els = document.querySelectorAll(selector);
+      if (els.length > index) return resolve(els[index]);
+      if (Date.now() - startedAt > timeoutMs) return resolve(null);
+      setTimeout(poll, FIND_POLL_MS);
+    }
+    poll();
+  });
+}
+
 // A real, eased, interruptible scroll animation (not scrollIntoView, which
 // jumps or which the browser's own "smooth" timing can't be controlled or
 // awaited precisely) — `onFrame` fires every animation frame so the caller
 // can re-measure and re-anchor a spotlight in lockstep, with zero drift,
-// rather than measuring once and hoping nothing moved.
+// rather than measuring once and hoping nothing moved. Duration scales with
+// distance (clamped to a generous min/max) specifically so a multi-ayah
+// scroll reads as visibly passing each ayah, not a jump-cut.
 function animateScrollTo(targetY, cancelRef, onFrame) {
   return new Promise((resolve) => {
     const startY = window.scrollY;
@@ -101,7 +119,7 @@ function animateScrollTo(targetY, cancelRef, onFrame) {
       resolve();
       return;
     }
-    const duration = clamp(Math.abs(distance) * 0.7, SCROLL_MIN_MS, SCROLL_MAX_MS);
+    const duration = clamp(Math.abs(distance) * 1.1, SCROLL_MIN_MS, SCROLL_MAX_MS);
     const startTime = performance.now();
     function ease(t) {
       return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -177,30 +195,37 @@ export default function GuidedTour({ onDone }) {
     if (!cancelledRef.current) setTapEffect(null);
   }
 
-  // The common shape for "find a nav icon, ring it, tap it, let it
-  // navigate, then hold a tooltip on it" — used for every step except the
-  // Quran reading demo, which has its own bespoke scroll choreography.
-  async function tapNavStep({ selector, step, title, text, thenSelector, thenTitle, thenText }) {
-    const el = await waitForSelector(selector, cancelledRef);
-    if (!el || cancelledRef.current) return;
+  // Rings a target and shows its tooltip together (never the ring alone with
+  // stale text), then holds for the required 2.5s before anything else
+  // happens. Returns the measured rect, or null if cancelled/not found.
+  async function ringAndPause(el, shape, title, text, step) {
     const rect = await settleAndMeasure(el);
-    if (cancelledRef.current) return;
-    // Ring and text land together — showing the ring alone first (with the
-    // previous step's stale text still up) reads as a mismatch, as if the
-    // tour had already moved on before it actually described anything.
-    setDisplay({ kind: "spotlight", rect, shape: "circle", live: false });
-    setCard(title, text, step);
-    await sleep(PRE_TAP_SETTLE_MS);
-    if (cancelledRef.current) return;
+    if (cancelledRef.current) return null;
+    setDisplay({ kind: "spotlight", rect, shape, live: false });
+    if (title != null) setCard(title, text, step);
+    await sleepInterruptible(PAUSE_MS);
+    if (cancelledRef.current) return null;
+    return rect;
+  }
+
+  // Ripple, then the real click, then a brief technical settle (not one of
+  // the required pause points — just long enough for the resulting
+  // navigation/state change to land before the caller measures again).
+  async function tapAndSettle(el, rect) {
     await doTap(rect);
     if (cancelledRef.current) return;
     el.click();
-    await sleep(POST_ACTION_PAUSE_MS);
-    if (cancelledRef.current) return;
+    await sleep(SETTLE_MS);
+  }
 
-    const settledRect = el.getBoundingClientRect();
-    setDisplay({ kind: "spotlight", rect: settledRect, shape: "circle", live: false });
-    await sleepInterruptible(DWELL_MS);
+  // The common shape for "find a nav icon, ring + pause, tap it, let it
+  // navigate" — used for every plain nav-icon step.
+  async function tapNavStep({ selector, step, title, text, thenSelector, thenTitle, thenText }) {
+    const el = await waitForSelector(selector, cancelledRef);
+    if (!el || cancelledRef.current) return;
+    const rect = await ringAndPause(el, "circle", title, text, step);
+    if (!rect || cancelledRef.current) return;
+    await tapAndSettle(el, rect);
     if (cancelledRef.current) return;
 
     if (thenSelector) {
@@ -210,7 +235,7 @@ export default function GuidedTour({ onDone }) {
       if (cancelledRef.current) return;
       setDisplay({ kind: "spotlight", rect: rect2, shape: "rounded", live: false });
       setCard(thenTitle, thenText, step);
-      await sleepInterruptible(DWELL_MS);
+      await sleepInterruptible(PAUSE_MS);
     }
   }
 
@@ -219,7 +244,7 @@ export default function GuidedTour({ onDone }) {
 
     setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
     setCard("Welcome", "Assalamu alaikum! Sit back and watch a quick walkthrough of My Kitab.", null);
-    await sleepInterruptible(WELCOME_DWELL_MS);
+    await sleepInterruptible(PAUSE_MS);
     if (cancelledRef.current) return;
 
     // Step 1 — tap Quran
@@ -231,97 +256,146 @@ export default function GuidedTour({ onDone }) {
     });
     if (cancelledRef.current) return;
 
-    // Step 2 — open a surah, scroll down to the first Mark Ayah button, tap it
-    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
-    setCard("Opening a Surah", "Let's open Al-Fatihah to see the reading view.", 2);
+    // Bridge into Step 2 — open Al-Fatihah
     const surahRow = await waitForSelector(".surah-list-item", cancelledRef);
     if (!surahRow || cancelledRef.current) return;
-    const rowRect = await settleAndMeasure(surahRow);
-    if (cancelledRef.current) return;
-    setDisplay({ kind: "spotlight", rect: rowRect, shape: "rounded", live: false });
-    await sleep(PRE_TAP_SETTLE_MS);
-    if (cancelledRef.current) return;
-    await doTap(rowRect);
-    if (cancelledRef.current) return;
-    surahRow.click();
-    await sleep(POST_ACTION_PAUSE_MS);
+    const rowRect = await ringAndPause(
+      surahRow,
+      "rounded",
+      "Opening a Surah",
+      "Let's open Al-Fatihah to see the reading view.",
+      2
+    );
+    if (!rowRect || cancelledRef.current) return;
+    await tapAndSettle(surahRow, rowRect);
     if (cancelledRef.current) return;
 
-    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
-    const markBtn = await waitForSelector(".mark-last-read-btn", cancelledRef);
-    if (!markBtn || cancelledRef.current) return;
+    // Step 2 — scroll down to Ayah 4 (visibly passing Ayahs 1-3)
+    const markBtn4 = await waitForNthSelector(".mark-last-read-btn", 3, cancelledRef);
+    if (!markBtn4 || cancelledRef.current) return;
     window.scrollTo(0, 0);
     await sleep(300);
     if (cancelledRef.current) return;
 
-    const initialMarkRect = markBtn.getBoundingClientRect();
-    const targetY = window.scrollY + initialMarkRect.top - (window.innerHeight / 2 - initialMarkRect.height / 2);
-    setCard("Mark Ayah", "Scrolling down to find the Mark Ayah button…", 2);
+    const initialRect = markBtn4.getBoundingClientRect();
+    const targetY = window.scrollY + initialRect.top - (window.innerHeight / 2 - initialRect.height / 2);
+    setCard("Ayah 4", "Scrolling down through Ayahs 1, 2, and 3 to reach Ayah 4…", 2);
     await animateScrollTo(targetY, cancelledRef, () => {
-      const r = markBtn.getBoundingClientRect();
+      const r = markBtn4.getBoundingClientRect();
       setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: true });
     });
     if (cancelledRef.current) return;
 
-    const settledMarkRect = await settleAndMeasure(markBtn);
+    const settled4 = await settleAndMeasure(markBtn4);
     if (cancelledRef.current) return;
-    setDisplay({ kind: "spotlight", rect: settledMarkRect, shape: "rounded", live: false });
-    setCard("Mark Ayah", "Tap this under any ayah to save your place as you read.", 2);
-    await sleepInterruptible(DWELL_MS);
+    setDisplay({ kind: "spotlight", rect: settled4, shape: "rounded", live: false });
+    setCard("Ayah 4", "Here's Ayah 4 — the Mark Ayah button sits right below it.", 2);
+    await sleepInterruptible(PAUSE_MS);
     if (cancelledRef.current) return;
 
-    await doTap(settledMarkRect);
+    // Step 3 — tap Mark Ayah on Ayah 4
+    const rect3 = await ringAndPause(
+      markBtn4,
+      "rounded",
+      "Mark Ayah",
+      "Tap this under Ayah 4 to save your place as you read.",
+      3
+    );
+    if (!rect3 || cancelledRef.current) return;
+    await tapAndSettle(markBtn4, rect3);
     if (cancelledRef.current) return;
-    markBtn.click();
-    await sleep(250);
-    if (cancelledRef.current) return;
-    const markedRect = markBtn.getBoundingClientRect();
+    const markedRect = markBtn4.getBoundingClientRect();
     setDisplay({ kind: "spotlight", rect: markedRect, shape: "rounded", live: false });
-    setCard("Mark Ayah", "Saved — you can always find your place again from here.", 2);
-    await sleepInterruptible(DWELL_LONG_MS);
+    setCard("Mark Ayah", "Saved — Ayah 4 is now your last read position.", 3);
+    await sleepInterruptible(PAUSE_MS);
     if (cancelledRef.current) return;
 
-    // Step 3 — scroll back to the top (reverse of step 2's scroll)
+    // Step 4 — Continue Reading. First, a bridge back to the surah list,
+    // where the Continue Reading pill now lives (it only renders once a
+    // position is saved).
+    const quranNavAgain = await waitForSelector('[data-tour-id="/surahs"]', cancelledRef);
+    if (!quranNavAgain || cancelledRef.current) return;
+    const backRect = await ringAndPause(
+      quranNavAgain,
+      "circle",
+      "Back to the List",
+      "Let's go back to the surah list to see Continue Reading.",
+      4
+    );
+    if (!backRect || cancelledRef.current) return;
+    await tapAndSettle(quranNavAgain, backRect);
+    if (cancelledRef.current) return;
+
+    const resumeLink = await waitForSelector(".resume-reading-link", cancelledRef);
+    if (!resumeLink || cancelledRef.current) return;
+    const resumeRect = await ringAndPause(
+      resumeLink,
+      "rounded",
+      "Continue Reading",
+      "This picks up right where you left off — tap it to jump back to Ayah 4.",
+      4
+    );
+    if (!resumeRect || cancelledRef.current) return;
+    await tapAndSettle(resumeLink, resumeRect);
+    if (cancelledRef.current) return;
+
+    // The reader page has its own effect that smooth-scrolls to the #ayah-N
+    // hash on load — let that finish before taking over with our own
+    // scroll/ring so the two don't fight each other.
     setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
-    setCard("Back to the Top", "Scrolling back up to the top of the page.", 3);
-    await sleep(POST_ACTION_PAUSE_MS);
+    await sleep(1200);
+    if (cancelledRef.current) return;
+    const ayah4Block = document.getElementById("ayah-4");
+    if (ayah4Block && !cancelledRef.current) {
+      const r = await settleAndMeasure(ayah4Block);
+      if (cancelledRef.current) return;
+      setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: false });
+      setCard("Continue Reading", "And there we are — right back at Ayah 4.", 4);
+      await sleepInterruptible(PAUSE_MS);
+      if (cancelledRef.current) return;
+    }
+
+    // Step 5 — scroll back up to the top of the Quran section
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    setCard("Back to the Top", "Scrolling back up to the top of the page.", 5);
+    await sleep(SETTLE_MS);
     if (cancelledRef.current) return;
     await animateScrollTo(0, cancelledRef, null);
     if (cancelledRef.current) return;
-    await sleep(POST_ACTION_PAUSE_MS);
+    await sleepInterruptible(PAUSE_MS);
     if (cancelledRef.current) return;
 
-    // Step 4 — tap Mutoon
+    // Step 6 — tap Mutoon
     await tapNavStep({
       selector: '[data-tour-id="/mutoon"]',
-      step: 4,
+      step: 6,
       title: "Mutoon",
       text: "Classical texts for the student of knowledge, laid out page by page.",
     });
     if (cancelledRef.current) return;
 
-    // Step 5 — tap Thikr
+    // Step 7 — tap Thikr
     await tapNavStep({
       selector: '[data-tour-id="/athkar"]',
-      step: 5,
+      step: 7,
       title: "Thikr",
       text: "Morning and evening remembrances, with translations and repetition counts.",
     });
     if (cancelledRef.current) return;
 
-    // Step 6 — tap Library
+    // Step 8 — tap Library
     await tapNavStep({
       selector: '[data-tour-id="/my-kitab"]',
-      step: 6,
+      step: 8,
       title: "Library",
       text: "Your personal library — upload your own PDFs and search within them.",
     });
     if (cancelledRef.current) return;
 
-    // Step 7 — tap Search
+    // Step 9 — tap Search
     await tapNavStep({
       selector: '[data-tour-id="/search"]',
-      step: 7,
+      step: 9,
       title: "Search",
       text: "Search the Qur'an, Mutoon, and Hadith by topic or keyword.",
       thenSelector: ".search-input",
@@ -330,21 +404,21 @@ export default function GuidedTour({ onDone }) {
     });
     if (cancelledRef.current) return;
 
-    // Step 8 — tap Settings
+    // Step 10 — tap Settings
     await tapNavStep({
       selector: '[data-tour-id="/settings"]',
-      step: 8,
+      step: 10,
       title: "Settings",
       text: "Your reciter, font sizes, theme, and reading preferences.",
     });
     if (cancelledRef.current) return;
 
-    // Step 9 — Done
+    // Step 11 — Done
     setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
     setCard(
       "You're All Set",
       "That's everything — enjoy exploring My Kitab. You can start this tour again anytime from the Home screen.",
-      9
+      11
     );
     setIsFinal(true);
     showNav();
@@ -507,7 +581,9 @@ export default function GuidedTour({ onDone }) {
             <div className="tour-card-title">{textShown.title}</div>
             <p className="tour-card-text">{textShown.text}</p>
             <div className="tour-card-actions">
-              <span className="tour-card-progress">{textShown.step != null ? `${textShown.step} / 9` : ""}</span>
+              <span className="tour-card-progress">
+                {textShown.step != null ? `${textShown.step} / ${TOTAL_STEPS}` : ""}
+              </span>
               {isFinal && (
                 <button className="btn btn-primary tour-next-btn" onClick={handleDone}>
                   Done
