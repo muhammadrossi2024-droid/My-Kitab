@@ -96,15 +96,15 @@ export default function Auth() {
         return;
       }
 
-      const { isNewUser } =
-        mode === "signup"
-          ? await signUpWithEmail(email.trim(), password)
-          : await logInWithEmail(email.trim(), password);
-      // New accounts land in the library to encourage exploring it; a
-      // returning login should land on Home, not wherever the router
-      // happened to still be pointed (e.g. a stale route left over from
-      // before the session expired).
-      navigate(isNewUser ? "/my-kitab" : "/");
+      if (mode === "signup") {
+        await signUpWithEmail(email.trim(), password);
+      } else {
+        await logInWithEmail(email.trim(), password);
+      }
+      // Every successful login or signup lands on Home, not wherever the
+      // router happened to still be pointed (e.g. a stale route left over
+      // from before the session expired).
+      navigate("/");
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);
@@ -117,8 +117,8 @@ export default function Auth() {
     setFormError(null);
     setSubmitting(true);
     try {
-      const { isNewUser } = await signInWithGoogle();
-      navigate(isNewUser ? "/my-kitab" : "/");
+      await signInWithGoogle();
+      navigate("/");
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);

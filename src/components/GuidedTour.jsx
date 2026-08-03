@@ -14,8 +14,6 @@ const FIND_TIMEOUT_MS = 4000;
 const FIND_POLL_MS = 100;
 const TEXT_FADE_MS = 150;
 const TAP_RIPPLE_MS = 480;
-// Required hold at every tap, highlight, and scroll-stop point.
-const PAUSE_MS = 2500;
 // Short technical buffer after a click/navigate before the next thing is
 // measured — not one of the required "stops", just enough for the DOM/route
 // to catch up.
@@ -152,28 +150,31 @@ export default function GuidedTour({ onDone }) {
   const [cardText, setCardText] = useState({ title: "Welcome", text: "", step: null, key: 0 });
   const [tapEffect, setTapEffect] = useState(null);
   const [isFinal, setIsFinal] = useState(false);
+  // Whether the tour is currently parked at a step boundary, waiting for the
+  // user to press Next — the Next button is only clickable while this is true.
+  const [waitingForNext, setWaitingForNext] = useState(false);
 
   const cancelledRef = useRef(false);
-  const advanceRef = useRef(null); // resolves the current interruptible dwell, if any
+  const advanceRef = useRef(null); // resolves the current "waiting for Next" pause, if any
   const startedRef = useRef(false);
   const tapIdRef = useRef(0);
   const cardKeyRef = useRef(0);
   const cardRef = useRef(null);
   const [cardPos, setCardPos] = useState(null);
 
-  function sleepInterruptible(ms) {
+  // Never resolves on its own — only a Next press (or Skip cancelling the
+  // tour) calls advanceRef.current() to resolve it. This is what makes every
+  // stop point manual instead of a timed auto-advance.
+  function waitForNextPress() {
     return new Promise((resolve) => {
       if (cancelledRef.current) {
         resolve();
         return;
       }
-      const t = setTimeout(() => {
-        advanceRef.current = null;
-        resolve();
-      }, ms);
+      setWaitingForNext(true);
       advanceRef.current = () => {
-        clearTimeout(t);
         advanceRef.current = null;
+        setWaitingForNext(false);
         resolve();
       };
     });
@@ -203,7 +204,7 @@ export default function GuidedTour({ onDone }) {
     if (cancelledRef.current) return null;
     setDisplay({ kind: "spotlight", rect, shape, live: false });
     if (title != null) setCard(title, text, step);
-    await sleepInterruptible(PAUSE_MS);
+    await waitForNextPress();
     if (cancelledRef.current) return null;
     return rect;
   }
@@ -235,7 +236,7 @@ export default function GuidedTour({ onDone }) {
       if (cancelledRef.current) return;
       setDisplay({ kind: "spotlight", rect: rect2, shape: "rounded", live: false });
       setCard(thenTitle, thenText, step);
-      await sleepInterruptible(PAUSE_MS);
+      await waitForNextPress();
     }
   }
 
@@ -244,7 +245,7 @@ export default function GuidedTour({ onDone }) {
 
     setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
     setCard("Welcome", "Assalamu alaikum! Sit back and watch a quick walkthrough of My Kitab.", null);
-    await sleepInterruptible(PAUSE_MS);
+    await waitForNextPress();
     if (cancelledRef.current) return;
 
     // Step 1 — tap Quran
@@ -290,7 +291,7 @@ export default function GuidedTour({ onDone }) {
     if (cancelledRef.current) return;
     setDisplay({ kind: "spotlight", rect: settled4, shape: "rounded", live: false });
     setCard("Ayah 4", "Here's Ayah 4 — the Mark Ayah button sits right below it.", 2);
-    await sleepInterruptible(PAUSE_MS);
+    await waitForNextPress();
     if (cancelledRef.current) return;
 
     // Step 3 — tap Mark Ayah on Ayah 4
@@ -307,7 +308,7 @@ export default function GuidedTour({ onDone }) {
     const markedRect = markBtn4.getBoundingClientRect();
     setDisplay({ kind: "spotlight", rect: markedRect, shape: "rounded", live: false });
     setCard("Mark Ayah", "Saved — Ayah 4 is now your last read position.", 3);
-    await sleepInterruptible(PAUSE_MS);
+    await waitForNextPress();
     if (cancelledRef.current) return;
 
     // Step 4 — Continue Reading. First, a bridge back to the surah list,
@@ -351,7 +352,7 @@ export default function GuidedTour({ onDone }) {
       if (cancelledRef.current) return;
       setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: false });
       setCard("Continue Reading", "And there we are — right back at Ayah 4.", 4);
-      await sleepInterruptible(PAUSE_MS);
+      await waitForNextPress();
       if (cancelledRef.current) return;
     }
 
@@ -362,7 +363,7 @@ export default function GuidedTour({ onDone }) {
     if (cancelledRef.current) return;
     await animateScrollTo(0, cancelledRef, null);
     if (cancelledRef.current) return;
-    await sleepInterruptible(PAUSE_MS);
+    await waitForNextPress();
     if (cancelledRef.current) return;
 
     // Step 6 — tap Mutoon
@@ -456,6 +457,10 @@ export default function GuidedTour({ onDone }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function handleNext() {
+    advanceRef.current?.();
+  }
 
   function handleSkip() {
     cancelledRef.current = true;
@@ -584,9 +589,17 @@ export default function GuidedTour({ onDone }) {
               <span className="tour-card-progress">
                 {textShown.step != null ? `${textShown.step} / ${TOTAL_STEPS}` : ""}
               </span>
-              {isFinal && (
+              {isFinal ? (
                 <button className="btn btn-primary tour-next-btn" onClick={handleDone}>
                   Done
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary tour-next-btn"
+                  onClick={handleNext}
+                  disabled={!waitingForNext}
+                >
+                  Next
                 </button>
               )}
             </div>
