@@ -276,10 +276,6 @@ a {
 
 .section-hero {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   background: var(--accent-soft);
   border: 1px solid var(--border);
   border-radius: 14px;
@@ -291,9 +287,12 @@ a {
 
 .section-hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   min-width: 0;
-  flex: 1;
+  /* Keeps text clear of the card's right edge, where the gradient below
+     lets the photo show through most vividly — the fade is tuned for text
+     sitting to its left, not for text running all the way across it. */
+  max-width: 76%;
 }
 
 .section-hero-icon-badge {
@@ -328,11 +327,9 @@ a {
 }
 
 .section-hero-media {
-  flex-shrink: 0;
-  width: 112px;
-  aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   background: var(--chip-bg);
 }
 
@@ -343,18 +340,38 @@ a {
   object-fit: cover;
 }
 
+/* The glass/frosted layer: a soft blur of the photo behind it, with a
+   left-to-right fade (in the card's own --accent-soft tone) so the image
+   reads as texture near the text and shows through more vividly toward
+   the card's right edge. Built with color-mix off the theme token rather
+   than a hardcoded white/black so it stays correct in both themes without
+   a separate dark-mode override. */
+.section-hero-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--accent-soft) 97%, transparent) 0%,
+    color-mix(in srgb, var(--accent-soft) 92%, transparent) 40%,
+    color-mix(in srgb, var(--accent-soft) 60%, transparent) 65%,
+    color-mix(in srgb, var(--accent-soft) 30%, transparent) 100%
+  );
+}
+
 @media (max-width: 420px) {
   .section-hero {
     padding: 14px;
-    gap: 12px;
   }
 
   .section-hero-title {
     font-size: 1.1rem;
   }
 
-  .section-hero-media {
-    width: 84px;
+  .section-hero-content {
+    max-width: 82%;
   }
 }
 
