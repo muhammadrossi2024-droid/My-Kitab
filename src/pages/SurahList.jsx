@@ -55,17 +55,6 @@ export default function SurahList() {
         imagePosition="center"
         title="The Noble Quran"
         description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
-        dataTour="continue-reading"
-        titleAction={
-          lastRead && lastSurahMeta ? (
-            <Link
-              className="btn btn-primary section-hero-action-btn"
-              to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}
-            >
-              Resume Reading
-            </Link>
-          ) : undefined
-        }
       />
 
       <input
@@ -74,6 +63,17 @@ export default function SurahList() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+
+      {lastRead && lastSurahMeta && (
+        <Link
+          className="btn btn-primary resume-reading-link"
+          data-tour="continue-reading"
+          to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}
+        >
+          Resume Reading
+        </Link>
+      )}
+
       <ul className="surah-list">
         {filtered.map((s) => (
           <li key={s.number}>

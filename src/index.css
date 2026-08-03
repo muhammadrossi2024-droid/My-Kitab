@@ -261,14 +261,6 @@ a {
   flex: 1;
 }
 
-.section-hero-icon-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-  margin-bottom: 8px;
-}
-
 .section-hero-icon-badge {
   display: inline-flex;
   align-items: center;
@@ -278,7 +270,7 @@ a {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 
 .section-hero-icon {
@@ -291,14 +283,6 @@ a {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent);
-}
-
-.section-hero-action-btn {
-  padding: 2px 8px;
-  font-size: 0.62rem;
-  border-radius: 999px;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .section-hero-desc {
@@ -488,6 +472,13 @@ a {
   background: var(--accent);
   color: var(--accent-contrast);
   border-color: var(--accent);
+}
+
+/* The "Resume Reading" shortcut shown above a section's list, once a saved
+   position exists — an ordinary primary button, just given room to breathe
+   from the list immediately below it. */
+.resume-reading-link {
+  margin-bottom: 16px;
 }
 
 .btn:hover {

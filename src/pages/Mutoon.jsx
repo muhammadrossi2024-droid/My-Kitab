@@ -17,17 +17,16 @@ export default function Mutoon() {
         imagePosition="center 42%"
         title="Mutoon"
         description="Classical texts for the student of knowledge (متون طالب العلم)."
-        titleAction={
-          lastMutoonRead && lastMutoonBook ? (
-            <Link
-              className="btn btn-primary section-hero-action-btn"
-              to={`/mutoon/${lastMutoonRead.bookId}#${lastMutoonRead.pageKey}`}
-            >
-              Resume Reading
-            </Link>
-          ) : undefined
-        }
       />
+
+      {lastMutoonRead && lastMutoonBook && (
+        <Link
+          className="btn btn-primary resume-reading-link"
+          to={`/mutoon/${lastMutoonRead.bookId}#${lastMutoonRead.pageKey}`}
+        >
+          Resume Reading
+        </Link>
+      )}
 
       <ul className="surah-list mutoon-book-list">
         {mutoonBooks.map((book) => (
