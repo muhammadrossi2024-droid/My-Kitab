@@ -243,12 +243,10 @@ export default function MyKitab() {
     <div>
       <SectionHero
         icon={Folder}
-        image="/hero-library.jpg"
-        imagePosition="center 36%"
+        image="/hero-mutoon.jpg"
+        imagePosition="center 48%"
         fadeMid="16%"
         fadeEnd="38%"
-        blurMid="8%"
-        blurEnd="22%"
         contentMaxWidth="20%"
         title="My Library"
         description="Your personal collection of Islamic knowledge."

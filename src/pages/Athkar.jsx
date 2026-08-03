@@ -21,8 +21,6 @@ export default function Athkar() {
         imagePosition="center 42%"
         fadeMid="16%"
         fadeEnd="40%"
-        blurMid="8%"
-        blurEnd="24%"
         contentMaxWidth="20%"
         title="Athkar"
         description="Authentic supplications for the morning and evening, with translation and references."

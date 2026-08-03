@@ -27,20 +27,6 @@
   font-display: swap;
 }
 
-:root {
-  /* Fixed warm cream used for the section-hero image fade (see
-     .section-hero-glass) — deliberately NOT theme-aware. The fade should
-     read the same warm off-white in both light and dark mode rather than
-     dissolving into each theme's own --bg/--accent-soft. Because that
-     patch is always this light cream regardless of theme, the title/desc
-     text sitting on it also needs fixed (light-mode-style, dark-on-cream)
-     colors — the normal --accent/--text-muted tokens flip to pale colors
-     in dark mode that would be unreadable here. */
-  --hero-fade-cream: #f0ede4;
-  --hero-on-cream-title: #2f6a4f;
-  --hero-on-cream-desc: #6b6255;
-}
-
 :root[data-theme="light"] {
   --bg: #faf7f2;
   --bg-elevated: #ffffff;
@@ -51,6 +37,12 @@
   --accent-contrast: #ffffff;
   --chip-bg: #f0ead9;
   --accent-soft: #e0f0e6;
+  /* Fixed warm cream for the section-hero image fade (see
+     .section-hero-glass) — light mode always uses this exact cream
+     regardless of --accent-soft. --text/--accent already read correctly
+     against it (dark green/brown on a light cream), so no separate
+     "on-fade" text tokens are needed here. */
+  --hero-fade-color: #f0ede4;
 }
 
 :root[data-theme="dark"] {
@@ -63,6 +55,11 @@
   --accent-contrast: #0f1a15;
   --chip-bg: #26221a;
   --accent-soft: #1a2c23;
+  /* Dark mode's section-hero fade reverts to the original dark-green
+     tint (matching --accent-soft) instead of the light mode's fixed
+     cream — --text/--accent are already tuned to read against this dark
+     background. */
+  --hero-fade-color: var(--accent-soft);
 }
 
 * {
@@ -331,12 +328,12 @@ a {
   margin: 0 0 4px;
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--hero-on-cream-title);
+  color: var(--accent);
 }
 
 .section-hero-desc {
   margin: 0;
-  color: var(--hero-on-cream-desc);
+  color: var(--text-muted);
   font-size: 0.82rem;
   line-height: 1.4;
 }
@@ -353,51 +350,59 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Uniform rightward shift applied identically to every card's image —
+     not a per-card tuning, the exact same scale/origin everywhere (see
+     the SectionHero.jsx header comment). Determined against the Dhikr
+     card so his thobe lands just short of the card's right edge. */
+  transform: scale(1.32);
+  transform-origin: 0% 50%;
 }
 
-/* The blur only ever covers the left/transition zone, and is masked out
-   entirely by ~62% card width — NOT applied to the whole image. backdrop-
-   filter blurs everything in its box uniformly regardless of what's drawn
-   on top of it, so a full-card blurred layer would blur the vivid right
-   edge too even under a transparent gradient; masking the blur layer
-   itself is what actually confines it to the left side. */
+/* The blur covers exactly the same left-to-right span as the tint below
+   (reuses --hero-fade-mid/--hero-fade-end) so it's actually visible on
+   the partially-faded image in the transition zone, rather than being
+   confined to a region that's already fully hidden under opaque tint.
+   backdrop-filter blurs everything in its own box uniformly regardless
+   of what's drawn on top of it, so masking this layer itself is what
+   confines the blur to the left/transition side and keeps the right-side
+   clear zone completely sharp. */
 .section-hero-blur {
   position: absolute;
   inset: 0;
   z-index: 1;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   -webkit-mask-image: linear-gradient(
     to right,
     #000 0%,
-    #000 var(--hero-blur-mid, 32%),
-    transparent var(--hero-blur-end, 62%)
+    #000 var(--hero-fade-mid, 42%),
+    transparent var(--hero-fade-end, 88%)
   );
   mask-image: linear-gradient(
     to right,
     #000 0%,
-    #000 var(--hero-blur-mid, 32%),
-    transparent var(--hero-blur-end, 62%)
+    #000 var(--hero-fade-mid, 42%),
+    transparent var(--hero-fade-end, 88%)
   );
 }
 
-/* The tint overlay: opaque warm cream on the left (text sits here, image
-   fully hidden), fading to fully transparent well before the card's right
-   edge so that edge shows the photo completely unmodified — sharp, no
-   blur, no tint. Pure background gradient, no filter of its own. Uses the
-   fixed --hero-fade-cream token (not --accent-soft) so the fade reads the
-   same warm cream in both light and dark mode. The two stop positions are
-   overridable per-card via --hero-fade-mid/--hero-fade-end (see
-   SectionHero.jsx) so a given card can pull its fade further left for a
-   bigger sharp/clear zone without affecting the shared default. */
+/* The tint overlay: opaque on the left (text sits here, image fully
+   hidden), fading to fully transparent well before the card's right edge
+   so that edge shows the photo completely unmodified — sharp, no blur,
+   no tint. Pure background gradient, no filter of its own. Uses the
+   theme-aware --hero-fade-color (fixed cream in light mode, dark green
+   in dark mode — see the :root[data-theme] blocks above). The two stop
+   positions are overridable per-card via --hero-fade-mid/--hero-fade-end
+   (see SectionHero.jsx) so a given card can pull its fade further left
+   for a bigger sharp/clear zone without affecting the shared default. */
 .section-hero-glass {
   position: absolute;
   inset: 0;
   z-index: 2;
   background: linear-gradient(
     to right,
-    var(--hero-fade-cream) 0%,
-    var(--hero-fade-cream) var(--hero-fade-mid, 42%),
+    var(--hero-fade-color) 0%,
+    var(--hero-fade-color) var(--hero-fade-mid, 42%),
     transparent var(--hero-fade-end, 88%)
   );
 }

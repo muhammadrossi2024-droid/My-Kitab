@@ -55,8 +55,6 @@ export default function SurahList() {
         imagePosition="center 56%"
         fadeMid="14%"
         fadeEnd="36%"
-        blurMid="7%"
-        blurEnd="20%"
         contentMaxWidth="20%"
         title="The Noble Quran"
         description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
