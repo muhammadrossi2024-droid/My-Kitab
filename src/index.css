@@ -261,6 +261,14 @@ a {
   flex: 1;
 }
 
+.section-hero-icon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
 .section-hero-icon-badge {
   display: inline-flex;
   align-items: center;
@@ -270,7 +278,7 @@ a {
   border-radius: 50%;
   background: var(--accent);
   color: var(--accent-contrast);
-  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .section-hero-icon {
@@ -278,26 +286,19 @@ a {
   height: 16px;
 }
 
-.section-hero-title-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 4px;
-}
-
 .section-hero-title {
-  margin: 0;
+  margin: 0 0 4px;
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent);
 }
 
 .section-hero-action-btn {
-  padding: 5px 12px;
-  font-size: 0.78rem;
-  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  border-radius: 999px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .section-hero-desc {
