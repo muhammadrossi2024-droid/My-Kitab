@@ -264,8 +264,8 @@ a {
 .section-hero-icon-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 6px;
   margin-bottom: 8px;
 }
 
@@ -294,8 +294,8 @@ a {
 }
 
 .section-hero-action-btn {
-  padding: 4px 10px;
-  font-size: 0.7rem;
+  padding: 2px 8px;
+  font-size: 0.62rem;
   border-radius: 999px;
   white-space: nowrap;
   flex-shrink: 0;
