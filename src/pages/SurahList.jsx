@@ -50,7 +50,7 @@ export default function SurahList() {
     <div>
       <SectionHero
         image="/hero-quran.jpg"
-        imagePosition="center 65%"
+        imagePosition="center"
         title="The Noble Quran"
         description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
       />

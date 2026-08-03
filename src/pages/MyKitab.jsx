@@ -243,7 +243,7 @@ export default function MyKitab() {
     <div>
       <SectionHero
         image="/hero-library.jpg"
-        imagePosition="center 55%"
+        imagePosition="center"
         title="My Library"
         description="Your personal collection of Islamic knowledge."
       />
