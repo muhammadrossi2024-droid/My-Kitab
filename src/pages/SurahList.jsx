@@ -52,7 +52,7 @@ export default function SurahList() {
       <SectionHero
         icon={BookOpen}
         image="/hero-quran.jpg"
-        imagePosition="center 56%"
+        imagePosition="center 44%"
         fadeMid="14%"
         fadeEnd="36%"
         contentMaxWidth="20%"
