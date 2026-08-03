@@ -2,16 +2,14 @@ import { NavLink } from "react-router-dom";
 import { BookOpen, ChevronUp, Folder, Home, Library, Sparkles } from "lucide-react";
 import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
 
-// Single source of truth for the bottom nav — also read by the assistant
-// intro screen to generate its one-message-per-tab walkthrough, so adding,
-// renaming, or reordering a tab here can never leave that guide stale.
-// Search and Settings live in TopBanner.jsx instead, not here.
+// Single source of truth for the bottom nav — order and labels shown to
+// the user. Search and Settings live in TopBanner.jsx instead, not here.
 export const links = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/my-kitab", label: "My Library", icon: Folder },
   { to: "/surahs", label: "Quran", icon: BookOpen },
   { to: "/mutoon", label: "Mutoon", icon: Library },
-  { to: "/athkar", label: "Athkar", icon: Sparkles },
+  { to: "/athkar", label: "Thikr", icon: Sparkles },
+  { to: "/my-kitab", label: "Library", icon: Folder },
 ];
 
 export default function Navbar() {
@@ -34,6 +32,7 @@ export default function Navbar() {
               title={link.label}
             >
               <Icon className="navbar-link-icon" strokeWidth={2} />
+              <span className="navbar-link-label">{link.label}</span>
             </NavLink>
           );
         })}
