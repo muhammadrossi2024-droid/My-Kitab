@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
@@ -123,6 +124,7 @@ function animateScrollTo(targetY, cancelRef, onFrame) {
 export default function GuidedTour({ onDone }) {
   const { settings } = useSettings();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
+  const navigate = useNavigate();
   const { lock: lockNav, unlock: unlockNav, show: showNav } = useNavVisibility();
 
   // What's on screen right now — driven imperatively by runTour() below,
@@ -384,15 +386,13 @@ export default function GuidedTour({ onDone }) {
   function handleSkip() {
     cancelledRef.current = true;
     advanceRef.current?.();
+    navigate("/");
     onDone();
   }
 
-  function handleNext() {
-    if (isFinal) {
-      onDone();
-      return;
-    }
-    advanceRef.current?.();
+  function handleDone() {
+    navigate("/");
+    onDone();
   }
 
   // Text cross-fade, decoupled from the ring's position — fades out, swaps,
@@ -508,9 +508,11 @@ export default function GuidedTour({ onDone }) {
             <p className="tour-card-text">{textShown.text}</p>
             <div className="tour-card-actions">
               <span className="tour-card-progress">{textShown.step != null ? `${textShown.step} / 9` : ""}</span>
-              <button className="btn btn-primary tour-next-btn" onClick={handleNext}>
-                {isFinal ? "Done" : "Next"}
-              </button>
+              {isFinal && (
+                <button className="btn btn-primary tour-next-btn" onClick={handleDone}>
+                  Done
+                </button>
+              )}
             </div>
           </div>
         </div>

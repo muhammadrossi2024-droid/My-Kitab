@@ -2190,7 +2190,11 @@ a {
 .tour-skip-btn {
   position: fixed;
   z-index: 152;
-  top: max(16px, env(safe-area-inset-top));
+  /* Below the top banner (44px logo + ~42px vertical padding), not just
+     below the safe-area inset — the banner's own Search/Settings icons
+     sit top-right too, so anchoring Skip at the same 16px top used to
+     put it directly on top of them on those two steps. */
+  top: calc(102px + env(safe-area-inset-top));
   right: 16px;
   display: inline-flex;
   align-items: center;

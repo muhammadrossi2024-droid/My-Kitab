@@ -100,7 +100,11 @@ export default function Auth() {
         mode === "signup"
           ? await signUpWithEmail(email.trim(), password)
           : await logInWithEmail(email.trim(), password);
-      if (isNewUser) navigate("/my-kitab");
+      // New accounts land in the library to encourage exploring it; a
+      // returning login should land on Home, not wherever the router
+      // happened to still be pointed (e.g. a stale route left over from
+      // before the session expired).
+      navigate(isNewUser ? "/my-kitab" : "/");
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);
@@ -114,7 +118,7 @@ export default function Auth() {
     setSubmitting(true);
     try {
       const { isNewUser } = await signInWithGoogle();
-      if (isNewUser) navigate("/my-kitab");
+      navigate(isNewUser ? "/my-kitab" : "/");
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);
