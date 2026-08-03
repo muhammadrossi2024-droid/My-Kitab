@@ -1731,10 +1731,10 @@ a {
   animation: splash-fade-in 0.4s ease;
 }
 
-.auth-theme-toggle {
+.auth-theme-toggle,
+.auth-close {
   position: fixed;
   top: calc(16px + env(safe-area-inset-top));
-  right: 16px;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1747,7 +1747,16 @@ a {
   cursor: pointer;
 }
 
-.auth-theme-toggle:hover {
+.auth-theme-toggle {
+  right: 16px;
+}
+
+.auth-close {
+  left: 16px;
+}
+
+.auth-theme-toggle:hover,
+.auth-close:hover {
   filter: brightness(1.05);
 }
 

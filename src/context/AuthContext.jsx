@@ -12,6 +12,16 @@ import { auth, googleProvider } from "../lib/firebase.js";
 
 const AuthContext = createContext(null);
 
+const SKIP_KEY = "quran-app:auth-skipped";
+
+function loadSkipped() {
+  try {
+    return localStorage.getItem(SKIP_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 function requireAuth() {
   if (!auth) {
     throw Object.assign(new Error("Sign-in isn't available right now."), {
@@ -23,6 +33,12 @@ function requireAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  // Lets a visitor dismiss the login/signup screen and browse without an
+  // account — remembered across visits (like the tour-seen flag) so they
+  // aren't re-prompted every time, but cleared the moment they do sign in,
+  // so a later logout takes them back to a real login screen rather than
+  // silently skipping past it again.
+  const [skipped, setSkipped] = useState(loadSkipped);
 
   useEffect(() => {
     if (!auth) {
@@ -32,9 +48,37 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser);
       setAuthLoading(false);
+      if (firebaseUser) {
+        try {
+          localStorage.removeItem(SKIP_KEY);
+        } catch {
+          // Ignored — worst case the flag lingers unused since `user` alone
+          // already satisfies the App.jsx gate.
+        }
+        setSkipped(false);
+      }
     });
     return unsubscribe;
   }, []);
+
+  const skipAuth = () => {
+    try {
+      localStorage.setItem(SKIP_KEY, "1");
+    } catch {
+      // localStorage unavailable — the choice just won't be remembered next
+      // visit, which is a fine fallback (same as the tour-seen flag).
+    }
+    setSkipped(true);
+  };
+
+  const returnToAuth = () => {
+    try {
+      localStorage.removeItem(SKIP_KEY);
+    } catch {
+      // See skipAuth — non-fatal either way.
+    }
+    setSkipped(false);
+  };
 
   const signUpWithEmail = async (email, password) => {
     requireAuth();
@@ -65,6 +109,9 @@ export function AuthProvider({ children }) {
   const value = {
     user,
     authLoading,
+    skipped,
+    skipAuth,
+    returnToAuth,
     signUpWithEmail,
     logInWithEmail,
     signInWithGoogle,
