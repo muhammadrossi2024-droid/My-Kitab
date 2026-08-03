@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Sun, Moon, X } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useSettings } from "../context/SettingsContext.jsx";
 
@@ -42,7 +42,7 @@ function mapFirebaseError(code) {
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { signUpWithEmail, logInWithEmail, signInWithGoogle, resetPassword, skipAuth } = useAuth();
+  const { signUpWithEmail, logInWithEmail, signInWithGoogle, resetPassword } = useAuth();
   const { settings, updateSettings } = useSettings();
 
   const [mode, setMode] = useState("login"); // "login" | "signup" | "reset"
@@ -125,15 +125,6 @@ export default function Auth() {
 
   return (
     <div className="auth-screen">
-      <button
-        className="auth-close"
-        onClick={skipAuth}
-        aria-label="Continue without an account"
-        title="Continue without an account"
-      >
-        <X size={18} />
-      </button>
-
       <button
         className="auth-theme-toggle"
         onClick={() => updateSettings({ theme: settings.theme === "dark" ? "light" : "dark" })}

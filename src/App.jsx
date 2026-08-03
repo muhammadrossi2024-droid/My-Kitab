@@ -24,7 +24,7 @@ import MyKitabViewer from "./pages/MyKitabViewer.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
-  const { user, authLoading, skipped } = useAuth();
+  const { user, authLoading } = useAuth();
   const { showIntro, stage, advanceToTour, dismissIntro } = useIntro();
   const { lock, unlock } = useNavVisibility();
 
@@ -40,7 +40,7 @@ export default function App() {
   // just long enough to avoid a flash of the login page for a returning,
   // already-signed-in user.
   if (authLoading) return <AuthLoadingScreen />;
-  if (!user && !skipped) return <Auth />;
+  if (!user) return <Auth />;
 
   return (
     <div className="app-shell">

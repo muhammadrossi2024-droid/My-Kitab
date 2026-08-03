@@ -6,7 +6,7 @@ import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
   const { restartIntro } = useIntro();
-  const { user, logOut, returnToAuth } = useAuth();
+  const { user, logOut } = useAuth();
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
@@ -161,19 +161,11 @@ export default function Settings() {
         <div className="form-row">
           <div>
             <div className="form-row-label">Account</div>
-            <div className="form-row-desc">
-              {user ? user.email : "You're using My Kitab without an account."}
-            </div>
+            <div className="form-row-desc">{user?.email}</div>
           </div>
-          {user ? (
-            <button className="btn" onClick={logOut}>
-              Log out
-            </button>
-          ) : (
-            <button className="btn" onClick={returnToAuth}>
-              Log in
-            </button>
-          )}
+          <button className="btn" onClick={logOut}>
+            Log out
+          </button>
         </div>
       </div>
 
