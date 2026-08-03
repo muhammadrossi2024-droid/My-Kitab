@@ -303,10 +303,11 @@ a {
   position: relative;
   z-index: 3;
   min-width: 0;
-  /* Keeps text inside the near-opaque left half of the overlay (see
-     .section-hero-glass below) — past ~50% card width the photo starts
-     becoming genuinely visible, which is no place for text to sit. */
-  max-width: 46%;
+  /* Keeps text inside the near-opaque zone of the overlay (see
+     .section-hero-glass below) — past that point the photo starts
+     becoming genuinely visible, which is no place for text to sit.
+     Overridable per-card via --hero-content-max-width (see SectionHero.jsx). */
+  max-width: var(--hero-content-max-width, 46%);
 }
 
 .section-hero-icon-badge {
@@ -366,8 +367,18 @@ a {
   z-index: 1;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 32%, transparent 62%);
-  mask-image: linear-gradient(to right, #000 0%, #000 32%, transparent 62%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 var(--hero-blur-mid, 32%),
+    transparent var(--hero-blur-end, 62%)
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    #000 var(--hero-blur-mid, 32%),
+    transparent var(--hero-blur-end, 62%)
+  );
 }
 
 /* The tint overlay: opaque warm cream on the left (text sits here, image
@@ -375,12 +386,20 @@ a {
    edge so that edge shows the photo completely unmodified — sharp, no
    blur, no tint. Pure background gradient, no filter of its own. Uses the
    fixed --hero-fade-cream token (not --accent-soft) so the fade reads the
-   same warm cream in both light and dark mode. */
+   same warm cream in both light and dark mode. The two stop positions are
+   overridable per-card via --hero-fade-mid/--hero-fade-end (see
+   SectionHero.jsx) so a given card can pull its fade further left for a
+   bigger sharp/clear zone without affecting the shared default. */
 .section-hero-glass {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(to right, var(--hero-fade-cream) 0%, var(--hero-fade-cream) 42%, transparent 88%);
+  background: linear-gradient(
+    to right,
+    var(--hero-fade-cream) 0%,
+    var(--hero-fade-cream) var(--hero-fade-mid, 42%),
+    transparent var(--hero-fade-end, 88%)
+  );
 }
 
 @media (max-width: 420px) {

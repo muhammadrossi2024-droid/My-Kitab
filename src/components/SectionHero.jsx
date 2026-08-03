@@ -12,17 +12,37 @@
 // create horizontal room to pan within — imageZoom is that scale factor,
 // and imageFocus is the transform-origin it pans around (kept minimal,
 // only used where a card's subject needs it).
+//
+// fadeMid/fadeEnd/blurMid/blurEnd/contentMaxWidth: the card-width % stops
+// that drive the tint/blur gradients in index.css (see .section-hero-glass
+// and .section-hero-blur) — passed through as CSS custom properties so a
+// card can pull its fade further left (a bigger sharp/clear zone) without
+// touching the shared defaults every other card still uses.
 export default function SectionHero({
   icon: Icon,
   image,
   imagePosition = "center",
   imageZoom,
   imageFocus = "50% 50%",
+  fadeMid,
+  fadeEnd,
+  blurMid,
+  blurEnd,
+  contentMaxWidth,
   title,
   description,
 }) {
   return (
-    <div className="section-hero">
+    <div
+      className="section-hero"
+      style={{
+        ...(fadeMid ? { "--hero-fade-mid": fadeMid } : null),
+        ...(fadeEnd ? { "--hero-fade-end": fadeEnd } : null),
+        ...(blurMid ? { "--hero-blur-mid": blurMid } : null),
+        ...(blurEnd ? { "--hero-blur-end": blurEnd } : null),
+        ...(contentMaxWidth ? { "--hero-content-max-width": contentMaxWidth } : null),
+      }}
+    >
       <div className="section-hero-media">
         <img
           src={image}

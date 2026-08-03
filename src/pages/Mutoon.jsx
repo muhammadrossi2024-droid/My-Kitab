@@ -15,6 +15,13 @@ export default function Mutoon() {
         icon={Library}
         image="/hero-mutoon.jpg"
         imagePosition="center 42%"
+        imageZoom={1.7}
+        imageFocus="0% 50%"
+        fadeMid="28%"
+        fadeEnd="65%"
+        blurMid="18%"
+        blurEnd="42%"
+        contentMaxWidth="30%"
         title="Mutoon"
         description="Classical texts for the student of knowledge (متون طالب العلم)."
       />
