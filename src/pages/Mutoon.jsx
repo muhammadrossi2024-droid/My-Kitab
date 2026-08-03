@@ -17,32 +17,17 @@ export default function Mutoon() {
         imagePosition="center 42%"
         title="Mutoon"
         description="Classical texts for the student of knowledge (متون طالب العلم)."
-      />
-
-      <div className="card" style={{ marginBottom: 16 }}>
-        <div className="form-row-label">Continue Reading</div>
-        {lastMutoonRead && lastMutoonBook ? (
-          <>
-            <p style={{ color: "var(--text-muted)", fontSize: "0.78rem", margin: "2px 0 8px" }}>
-              Updates automatically when you tap "Mark as last read" on any point.
-            </p>
-            <p className="form-row-desc" style={{ marginBottom: 12 }}>
-              You left off at {lastMutoonBook.titleTransliteration}, {lastMutoonRead.pageHeading}.
-            </p>
+        titleAction={
+          lastMutoonRead && lastMutoonBook ? (
             <Link
-              className="btn btn-primary"
+              className="btn btn-primary section-hero-action-btn"
               to={`/mutoon/${lastMutoonRead.bookId}#${lastMutoonRead.pageKey}`}
             >
               Resume Reading
             </Link>
-          </>
-        ) : (
-          <p className="form-row-desc" style={{ marginTop: 2, marginBottom: 0 }}>
-            Nothing saved yet. Open any book and tap "🔖 Mark as last read" on any point to save
-            your place — it'll show up here so you can jump straight back to it.
-          </p>
-        )}
-      </div>
+          ) : undefined
+        }
+      />
 
       <ul className="surah-list mutoon-book-list">
         {mutoonBooks.map((book) => (
