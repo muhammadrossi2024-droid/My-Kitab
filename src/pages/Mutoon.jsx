@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { mutoonBooks } from "../data/mutoon/index.js";
 import { useSettings } from "../context/SettingsContext.jsx";
+import SectionHero from "../components/SectionHero.jsx";
 
 export default function Mutoon() {
   const { lastMutoonRead } = useSettings();
@@ -9,10 +10,12 @@ export default function Mutoon() {
 
   return (
     <div>
-      <h1>Mutoon</h1>
-      <p style={{ color: "var(--text-muted)" }}>
-        Classical texts for the student of knowledge (متون طالب العلم).
-      </p>
+      <SectionHero
+        image="/hero-mutoon.jpg"
+        imagePosition="center 42%"
+        title="Mutoon"
+        description="Classical texts for the student of knowledge (متون طالب العلم)."
+      />
 
       <div className="card" style={{ marginBottom: 16 }}>
         <div className="form-row-label">Continue Reading</div>

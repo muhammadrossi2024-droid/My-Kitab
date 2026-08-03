@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import athkarData from "../data/athkar/morning-evening.json";
+import SectionHero from "../components/SectionHero.jsx";
 
 export default function Athkar() {
   const { settings } = useSettings();
@@ -12,6 +13,13 @@ export default function Athkar() {
 
   return (
     <div>
+      <SectionHero
+        image="/hero-athkar.jpg"
+        imagePosition="75% 45%"
+        title="Athkar"
+        description="Authentic supplications for the morning and evening, with translation and references."
+      />
+
       <div className="reader-header">
         <div className="surah-arabic-name" style={{ fontSize: "2rem" }}>
           {athkarData.title.arabic}

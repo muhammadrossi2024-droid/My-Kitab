@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
+import SectionHero from "../components/SectionHero.jsx";
 
 export default function SurahList() {
   const { lastRead } = useSettings();
@@ -47,6 +48,13 @@ export default function SurahList() {
 
   return (
     <div>
+      <SectionHero
+        image="/hero-quran.jpg"
+        imagePosition="center 65%"
+        title="The Noble Quran"
+        description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
+      />
+
       <div className="card" data-tour="continue-reading" style={{ marginBottom: 16 }}>
         <div className="form-row-label">Continue Reading</div>
         {lastRead && lastSurahMeta ? (

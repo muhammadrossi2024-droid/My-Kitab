@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Folder, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import {
   addAlbum,
   addPdf,
@@ -12,7 +12,7 @@ import {
 } from "../utils/myKitabDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
-import PageHero from "../components/PageHero.jsx";
+import SectionHero from "../components/SectionHero.jsx";
 import ConfirmDialog from "../components/ConfirmDialog.jsx";
 
 // Fallback for when the PDF has no usable /Title metadata — cleans up a raw
@@ -241,8 +241,9 @@ export default function MyKitab() {
 
   return (
     <div>
-      <PageHero
-        icon={Folder}
+      <SectionHero
+        image="/hero-library.jpg"
+        imagePosition="center 55%"
         title="My Library"
         description="Your personal collection of Islamic knowledge."
       />
