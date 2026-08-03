@@ -24,15 +24,15 @@ import Settings from "./pages/Settings.jsx";
 
 export default function App() {
   const { user, authLoading } = useAuth();
-  const { showIntro, stage, advanceToTour, dismissIntro } = useIntro();
+  const { showSplash, dismissSplash, showTour, dismissTour } = useIntro();
   const { lock, unlock } = useNavVisibility();
 
   // The guided tour spotlights the real nav bar, so it must stay on screen
-  // (not auto-hidden by scroll) for the whole splash+tour sequence.
+  // (not auto-hidden by scroll) while either the splash or the tour is up.
   useEffect(() => {
-    if (showIntro) lock();
+    if (showSplash || showTour) lock();
     else unlock();
-  }, [showIntro, lock, unlock]);
+  }, [showSplash, showTour, lock, unlock]);
 
   // One persistent splash instance spans both "waiting on Firebase's initial
   // auth check" and (for an authenticated, first-ever-this-session visit)
@@ -43,11 +43,11 @@ export default function App() {
   // its fade-in even though the two looked almost identical. Keeping it as
   // the same element across that transition means React just re-renders it
   // in place instead of tearing down and rebuilding the DOM node.
-  const showSplash = authLoading || (!!user && showIntro && stage === "splash");
+  const showSplashOverlay = authLoading || (!!user && showSplash);
 
   return (
     <>
-      {showSplash && <SplashScreen active={!authLoading} onDone={advanceToTour} />}
+      {showSplashOverlay && <SplashScreen active={!authLoading} onDone={dismissSplash} />}
 
       {!authLoading && !user && <Auth />}
 
@@ -73,7 +73,7 @@ export default function App() {
             </Routes>
           </main>
 
-          {showIntro && stage === "tour" && <GuidedTour onDone={dismissIntro} />}
+          {showTour && <GuidedTour onDone={dismissTour} />}
         </div>
       )}
     </>

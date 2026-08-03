@@ -5,7 +5,7 @@ import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
-  const { restartIntro } = useIntro();
+  const { startTour } = useIntro();
   const { user, logOut } = useAuth();
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
@@ -170,7 +170,7 @@ export default function Settings() {
       </div>
 
       <div className="card">
-        <button className="btn" onClick={restartIntro}>
+        <button className="btn" onClick={startTour}>
           Replay welcome guide
         </button>
       </div>
