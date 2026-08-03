@@ -1,15 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Settings } from "lucide-react";
+import { useSettings } from "../context/SettingsContext.jsx";
 
 // Persistent app identity banner, shown above every page. Solid black in
-// dark mode / solid white in light mode, with the My Kitab book mark as a
-// single fixed logo (not theme-swapped, since its own background already
-// reads fine against both banner colors).
+// dark mode / solid white in light mode, with the theme-matching transparent
+// book mark logo laid directly on top.
 //
 // Search and Settings live here (not in the bottom nav) — small, unobtrusive
 // icon buttons pinned to the right edge, always reachable from any page.
 export default function TopBanner() {
-  const logoSrc = "/logo-mykitab.png";
+  const { settings } = useSettings();
+  const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
   const location = useLocation();
   const navigate = useNavigate();
 
