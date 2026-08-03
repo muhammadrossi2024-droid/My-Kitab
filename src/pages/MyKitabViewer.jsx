@@ -6,11 +6,38 @@ import { openPdfDocument } from "../utils/pdfExtract.js";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
-const RENDER_SCALE = 1.6; // baseline canvas resolution before pinch-zoom
 const HIGHLIGHT_WINDOW = 8; // text-layer spans considered together as one highlight run
+
+// Render resolution: previously a flat `1.6 * devicePixelRatio` scale, which
+// on an ordinary non-retina screen (dpr 1) rendered only ~1.12x the page's
+// displayed CSS width — barely above 1:1, so it looked soft/"compressed"
+// compared to the actual file, and turned visibly blocky under pinch-zoom.
+// Instead, size the canvas relative to how large the page actually appears
+// on screen: its real displayed width (matching .mykitab-page's own
+// `width: min(600px, 88vw)`) times the device pixel ratio times a zoom
+// headroom factor, so it stays sharp through a good chunk of pinch-zoom
+// rather than just matching the page at rest. Capped so very high-DPI
+// devices don't produce an unworkably large canvas.
+const BASE_DISPLAY_WIDTH = 600; // px — matches .mykitab-page's CSS width cap
+const ZOOM_HEADROOM = 1.5; // stay crisp through this much pinch-zoom before native-pixel softening
+const MAX_RENDER_WIDTH = 3600; // px — safety ceiling on canvas size
 
 function significantWords(text) {
   return (text.toLowerCase().match(/[a-z']+/g) || []).filter((w) => w.length >= 3);
+}
+
+// Shared by both the actual canvas render and the text-layer overlay, so
+// the two always agree on exactly what size the page is displayed at.
+function computeViewports(page, wrapEl) {
+  const baseViewport = page.getViewport({ scale: 1 });
+  const displayWidth = Math.min(BASE_DISPLAY_WIDTH, wrapEl?.clientWidth || BASE_DISPLAY_WIDTH);
+  const displayViewport = page.getViewport({ scale: displayWidth / baseViewport.width });
+
+  const dpr = window.devicePixelRatio || 1;
+  const renderWidth = Math.min(displayWidth * dpr * ZOOM_HEADROOM, MAX_RENDER_WIDTH);
+  const renderViewport = page.getViewport({ scale: renderWidth / baseViewport.width });
+
+  return { displayViewport, renderViewport };
 }
 
 export default function MyKitabViewer() {
@@ -101,20 +128,17 @@ export default function MyKitabViewer() {
   async function renderPage(pageNumber) {
     if (!pdfDoc) return;
     const canvas = canvasRefs.current[pageNumber - 1];
+    const wrapEl = pageWrapRefs.current[pageNumber - 1];
     if (!canvas) return;
     try {
       const page = await pdfDoc.getPage(pageNumber);
-      // Full device pixel ratio, uncapped — a capped ratio was quietly
-      // downsampling pages on high-DPI (3x) phone screens, the opposite of
-      // "original quality" rendering.
-      const dpr = window.devicePixelRatio || 1;
-      const viewport = page.getViewport({ scale: RENDER_SCALE * dpr });
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      canvas.style.width = `${viewport.width / dpr}px`;
-      canvas.style.height = `${viewport.height / dpr}px`;
+      const { displayViewport, renderViewport } = computeViewports(page, wrapEl);
+      canvas.width = Math.round(renderViewport.width);
+      canvas.height = Math.round(renderViewport.height);
+      canvas.style.width = `${displayViewport.width}px`;
+      canvas.style.height = `${displayViewport.height}px`;
       const ctx = canvas.getContext("2d");
-      await page.render({ canvasContext: ctx, viewport }).promise;
+      await page.render({ canvasContext: ctx, viewport: renderViewport }).promise;
       renderedRef.current.add(pageNumber);
       setRenderedSet(new Set(renderedRef.current));
     } catch (err) {
@@ -136,11 +160,10 @@ export default function MyKitabViewer() {
   }
 
   // Frees a page's canvas once it's scrolled well out of view — full-quality
-  // (uncapped-dpr) canvases are large, so for a long PDF keeping every
-  // visited page's canvas alive would keep growing memory use and slow down
-  // scrolling. Reverting to the unrendered placeholder (same 360px min-height
-  // box shown before a page's first render, see .mykitab-page in index.css)
-  // re-renders cheaply if the user scrolls back.
+  // canvases (see computeViewports) are large, so for a long PDF keeping
+  // every visited page's canvas alive would keep growing memory use and
+  // slow down scrolling. Reverting to the unrendered placeholder (see
+  // .mykitab-page in index.css) re-renders cheaply if the user scrolls back.
   function unrenderPage(pageNumber) {
     const canvas = canvasRefs.current[pageNumber - 1];
     if (canvas) {
@@ -151,25 +174,42 @@ export default function MyKitabViewer() {
     setRenderedSet(new Set(renderedRef.current));
   }
 
-  // Virtualized rendering: only pages near the viewport ever hold a rendered
-  // canvas. A generous rootMargin keeps a comfortable buffer of pages ready
-  // just off-screen (so flicking through quickly doesn't show blank
-  // placeholders), while pages that scroll out past that buffer get their
-  // canvas freed again instead of accumulating forever.
+  // Virtualized rendering, via two separate observers with deliberately
+  // different margins rather than one observer reacting to both directions
+  // of the same boundary. With a single shared margin, a page sitting right
+  // at that line would render, then immediately unrender, then re-render on
+  // the tiniest scroll wobble — visibly stuttering right as it's supposed to
+  // be settling in. Rendering eagerly (tight margin) but only freeing a page
+  // once it's scrolled well past that (loose margin) gives a dead zone in
+  // between where a page's state can't flap back and forth.
   useEffect(() => {
     if (!pdfDoc || numPages === 0) return;
-    const observer = new IntersectionObserver(
+
+    const renderObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const pageNumber = Number(entry.target.dataset.page);
-          if (entry.isIntersecting) ensurePageRendered(pageNumber);
-          else unrenderPage(pageNumber);
+          if (entry.isIntersecting) ensurePageRendered(Number(entry.target.dataset.page));
         }
       },
       { rootMargin: "900px 0px" }
     );
-    pageWrapRefs.current.forEach((el) => el && observer.observe(el));
-    return () => observer.disconnect();
+    const unrenderObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) unrenderPage(Number(entry.target.dataset.page));
+        }
+      },
+      { rootMargin: "2400px 0px" }
+    );
+    pageWrapRefs.current.forEach((el) => {
+      if (!el) return;
+      renderObserver.observe(el);
+      unrenderObserver.observe(el);
+    });
+    return () => {
+      renderObserver.disconnect();
+      unrenderObserver.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pdfDoc, numPages]);
 
@@ -207,7 +247,7 @@ export default function MyKitabViewer() {
     if (!textLayerEl) return;
 
     const page = await pdfDoc.getPage(pageNumber);
-    const displayViewport = page.getViewport({ scale: RENDER_SCALE });
+    const { displayViewport } = computeViewports(page, wrap);
     const content = await page.getTextContent();
 
     textLayerEl.innerHTML = "";

@@ -15,8 +15,20 @@ import { searchMyKitab } from "../utils/myKitabSearch.js";
 import PageHero from "../components/PageHero.jsx";
 import ConfirmDialog from "../components/ConfirmDialog.jsx";
 
+// Fallback for when the PDF has no usable /Title metadata — cleans up a raw
+// filename into something readable instead of showing it as-is: exported
+// filenames almost always use hyphens/underscores as word separators, not
+// literal punctuation, and slug-style all-lowercase names read better
+// title-cased. Filenames that already mix case (e.g.
+// "A-General-Advice-to-All-Muslims-A5-Ibn-Baz") already encode their own
+// real capitalization, so that case is left alone rather than reflowed.
 function titleFromFilename(name) {
-  return (name || "").replace(/\.pdf$/i, "").trim();
+  let title = (name || "").replace(/\.pdf$/i, "").trim();
+  title = title.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+  if (title && title === title.toLowerCase()) {
+    title = title.replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+  return title;
 }
 
 function formatSize(bytes) {
@@ -130,7 +142,10 @@ export default function MyKitab() {
       try {
         const buffer = await file.arrayBuffer();
         const { pages, metadataTitle, coverThumb } = await extractPdfPages(buffer);
-        const title = titleFromFilename(file.name) || metadataTitle || "Untitled PDF";
+        // The PDF's own /Title metadata is the real, author-set title when
+        // present — prefer it over a filename guess, which was previously
+        // (and wrongly) checked first, so metadata never actually won.
+        const title = metadataTitle || titleFromFilename(file.name) || "Untitled PDF";
         await addPdf({
           id: makePdfId(),
           title,

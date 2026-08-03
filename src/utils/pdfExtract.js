@@ -55,6 +55,14 @@ async function renderCoverThumbnail(pdf) {
   canvas.width = Math.round(viewport.width);
   canvas.height = Math.round(viewport.height);
   const ctx = canvas.getContext("2d");
+  // A canvas starts fully transparent, and most PDF pages never explicitly
+  // paint a full-page background (they just draw ink onto what's assumed to
+  // be a white sheet) — without this fill, any part of the page the PDF
+  // doesn't touch stays transparent, so the thumbnail box's own themed
+  // background (var(--chip-bg), not white in dark mode) shows through as
+  // odd patches/gaps instead of a clean page.
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   await page.render({ canvasContext: ctx, viewport }).promise;
 
   return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));

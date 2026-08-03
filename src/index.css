@@ -1384,7 +1384,10 @@ a {
 
 .mykitab-pdf-title {
   font-weight: 600;
-  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .mykitab-pdf-meta {
@@ -1831,9 +1834,11 @@ a {
 .mykitab-viewer-title {
   font-weight: 700;
   font-size: 1.1rem;
-  overflow-wrap: break-word;
   min-width: 0;
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mykitab-jump-form {
@@ -1875,7 +1880,11 @@ a {
 
 .mykitab-page {
   position: relative;
-  min-height: 360px;
+  /* ISO paper (A4/A5/...) ratio — a placeholder this close to the page's
+     real eventual height means rendering swaps in with little to no layout
+     jump, instead of suddenly growing/shrinking the page above whatever the
+     user is currently scrolled past (part of why scrolling felt glitchy). */
+  aspect-ratio: 1 / 1.414;
   width: min(600px, 88vw);
   background: var(--chip-bg);
   border-radius: 8px;
@@ -1884,7 +1893,7 @@ a {
 }
 
 .mykitab-page.rendered {
-  min-height: 0;
+  aspect-ratio: auto;
   background: none;
 }
 
