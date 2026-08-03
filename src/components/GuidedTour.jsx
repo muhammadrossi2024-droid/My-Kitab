@@ -1,102 +1,44 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
+import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
 
-// Fixed sequence, in this exact order — not auto-generated from the nav
-// links, since it deliberately covers a specific reading-flow walkthrough
-// (and skips tabs like My Library) rather than one step per nav icon.
-function buildSteps() {
-  return [
-    {
-      kind: "center",
-      title: "Welcome",
-      text: "Assalamu alaikum! Welcome to My Kitab — let's take a quick tour of what everything does.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/"]',
-      title: "Home",
-      text: "Your starting point. Tap it any time to jump back here, and to restart this tour later.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/surahs"]',
-      title: "Quran",
-      text: "The full Qur'an, with Arabic text and English translation. Try opening a surah and tapping a verse to hear it recited.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/mutoon"]',
-      title: "Mutoon",
-      text: "Classical texts for the student of knowledge, laid out page by page. Try opening a book and swiping through a lesson.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/athkar"]',
-      title: "Thikr",
-      text: "Morning and evening remembrances, with translations and repetition counts.",
-    },
-    {
-      kind: "spotlight",
-      shape: "rounded",
-      route: "/surah/1",
-      selector: ".mark-last-read-btn",
-      title: "Mark as Last Read",
-      text: "Tap this under any ayah to save your place — it's what powers Resume Reading.",
-    },
-    {
-      kind: "spotlight",
-      shape: "rounded",
-      route: "/surahs",
-      selector: ".resume-reading-link",
-      // Only rendered once a position has actually been saved. Falling back
-      // to the always-present search input (which sits right above where
-      // the button appears) keeps this step from ever silently skipping for
-      // a brand-new reader who hasn't marked a page yet.
-      fallbackSelector: ".search-input",
-      title: "Resume Reading",
-      text: "Once you tap \"Mark as last read\" on any ayah, a Resume Reading button appears right here so you can jump straight back to where you left off.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/search"]',
-      title: "Search",
-      text: "Search the Qur'an, Mutoon, and Hadith by topic or keyword, in English or Arabic.",
-    },
-    {
-      kind: "spotlight",
-      shape: "circle",
-      selector: '[data-tour-id="/settings"]',
-      title: "Settings",
-      text: "Your reciter, font sizes, theme, and reading preferences.",
-    },
-    {
-      kind: "center",
-      title: "You're All Set",
-      text: "That's everything — enjoy exploring My Kitab. You can start this tour again anytime from the Home screen.",
-    },
-  ];
-}
+// This tour drives the app itself rather than just narrating it: it clicks
+// real elements (a genuine `el.click()`, not a simulated coordinate tap) and
+// scrolls the real page, so navigation and side effects (e.g. actually
+// marking an ayah as last read) are the real thing, not a mock.
 
-const FIND_TIMEOUT_MS = 3000;
+const FIND_TIMEOUT_MS = 4000;
 const FIND_POLL_MS = 100;
 const TEXT_FADE_MS = 150;
+const TAP_RIPPLE_MS = 480;
+// Required "brief pause" between one action finishing and the next starting.
+const POST_ACTION_PAUSE_MS = 500;
+// Lets the ring visibly land on a target before the tap fires, so the tap
+// reads as deliberate rather than instantaneous.
+const PRE_TAP_SETTLE_MS = 500;
+const DWELL_MS = 1900;
+const DWELL_LONG_MS = 2300;
+const WELCOME_DWELL_MS = 2400;
+const SCROLL_MIN_MS = 550;
+const SCROLL_MAX_MS = 1400;
 
-// Waits for the target's layout to actually settle — into view, fonts
-// loaded, a couple of frames past that — before reporting its bounds, so the
-// spotlight never snaps to a stale pre-layout position (the root cause of it
-// landing on "empty space" for elements below the fold or behind a
-// still-loading web font).
-// Resolves after the next two paints, like a standard double-rAF wait — but
-// races it against a plain timer so a backgrounded/hidden tab (where Chrome
-// suspends rAF callbacks entirely) can't hang this forever; either signal is
-// equally fine here since all we need is "give layout a moment to settle".
+const CARD_MAX_WIDTH = 360;
+const CARD_MARGIN = 16;
+const CARD_GAP = 24; // gap between the card and its target/screen edge
+
+const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " ", "Spacebar"]);
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), Math.max(min, max));
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// Waits for the next two paints (see settleAndMeasure below), racing a plain
+// timer so a backgrounded tab (where rAF is suspended) can't hang forever.
 function nextPaint() {
   return new Promise((resolve) => {
     let done = false;
@@ -110,226 +52,367 @@ function nextPaint() {
   });
 }
 
-async function settleAndMeasure(el, { scrollIntoView }) {
+// Waits for the target's layout to actually settle — fonts loaded, a couple
+// of frames past that — before reading its bounds, so the spotlight never
+// snaps to a stale pre-layout position.
+async function settleAndMeasure(el, { scrollIntoView } = {}) {
   if (scrollIntoView) {
     el.scrollIntoView({ block: "center", inline: "nearest", behavior: "instant" });
   }
   if (document.fonts && document.fonts.status !== "loaded") {
     try {
-      await Promise.race([
-        document.fonts.ready,
-        new Promise((resolve) => setTimeout(resolve, 1500)),
-      ]);
+      await Promise.race([document.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]);
     } catch {
-      // Proceed with whatever's loaded — a missing webfont shouldn't block
-      // the tour forever.
+      // Proceed with whatever's loaded — a missing webfont shouldn't block the tour forever.
     }
   }
   await nextPaint();
   return el.getBoundingClientRect();
 }
 
-const CARD_MAX_WIDTH = 360;
-const CARD_MARGIN = 16;
-const CARD_GAP = 24; // gap between the card and its target/screen edge
+function waitForSelector(selector, cancelRef, timeoutMs = FIND_TIMEOUT_MS) {
+  return new Promise((resolve) => {
+    const startedAt = Date.now();
+    function poll() {
+      if (cancelRef.current) return resolve(null);
+      const el = document.querySelector(selector);
+      if (el) return resolve(el);
+      if (Date.now() - startedAt > timeoutMs) return resolve(null);
+      setTimeout(poll, FIND_POLL_MS);
+    }
+    poll();
+  });
+}
 
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), Math.max(min, max));
+// A real, eased, interruptible scroll animation (not scrollIntoView, which
+// jumps or which the browser's own "smooth" timing can't be controlled or
+// awaited precisely) — `onFrame` fires every animation frame so the caller
+// can re-measure and re-anchor a spotlight in lockstep, with zero drift,
+// rather than measuring once and hoping nothing moved.
+function animateScrollTo(targetY, cancelRef, onFrame) {
+  return new Promise((resolve) => {
+    const startY = window.scrollY;
+    const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const clampedTarget = clamp(targetY, 0, maxY);
+    const distance = clampedTarget - startY;
+    if (Math.abs(distance) < 2) {
+      onFrame?.();
+      resolve();
+      return;
+    }
+    const duration = clamp(Math.abs(distance) * 0.7, SCROLL_MIN_MS, SCROLL_MAX_MS);
+    const startTime = performance.now();
+    function ease(t) {
+      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+    function tick(now) {
+      if (cancelRef.current) {
+        resolve();
+        return;
+      }
+      const t = Math.min(1, (now - startTime) / duration);
+      window.scrollTo(0, startY + distance * ease(t));
+      onFrame?.();
+      if (t < 1) requestAnimationFrame(tick);
+      else resolve();
+    }
+    requestAnimationFrame(tick);
+  });
 }
 
 export default function GuidedTour({ onDone }) {
   const { settings } = useSettings();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [steps] = useState(buildSteps);
-  const [stepIndex, setStepIndex] = useState(0);
-  const cleanupWatchRef = useRef(null);
+  const { lock: lockNav, unlock: unlockNav, show: showNav } = useNavVisibility();
+
+  // What's on screen right now — driven imperatively by runTour() below,
+  // not derived from a step list, since the tour is now a live script
+  // rather than a series of "wait for the user to click Next" states.
+  const [display, setDisplay] = useState({ kind: "center", rect: null, shape: "circle", live: false });
+  const [cardText, setCardText] = useState({ title: "Welcome", text: "", step: null, key: 0 });
+  const [tapEffect, setTapEffect] = useState(null);
+  const [isFinal, setIsFinal] = useState(false);
+
+  const cancelledRef = useRef(false);
+  const advanceRef = useRef(null); // resolves the current interruptible dwell, if any
+  const startedRef = useRef(false);
+  const tapIdRef = useRef(0);
+  const cardKeyRef = useRef(0);
   const cardRef = useRef(null);
-  const [cardPos, setCardPos] = useState(null); // { left, top, width } in px, or null while unmeasured
+  const [cardPos, setCardPos] = useState(null);
 
-  // Scrolling the page while a target is spotlighted was the source of the
-  // "highlighting the wrong element" bug: `rect` is a viewport-relative
-  // snapshot (getBoundingClientRect), so any scroll after it's taken makes
-  // it stale. Continuously re-measuring on every scroll event was the other
-  // option, but that fights the position CSS-transition (see .tour-spotlight)
-  // — a 1:1 scroll-driven update racing a 0.3s eased transition either looks
-  // laggy (transition on) or reintroduces snapping (transition off mid-scroll).
-  // Freezing the background instead sidesteps the whole class of bug: once a
-  // target is settled, the page simply cannot move under it. Only unlocked
-  // for the brief window while the NEXT target is being located/scrolled
-  // into view (see the effect below), then re-locked at the new position.
-  const scrollLockRef = useRef({ locked: false, y: 0 });
-
-  function lockScroll() {
-    if (scrollLockRef.current.locked) return;
-    const y = window.scrollY;
-    scrollLockRef.current = { locked: true, y };
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    const body = document.body;
-    body.style.position = "fixed";
-    body.style.top = `-${y}px`;
-    body.style.left = "0";
-    body.style.right = "0";
-    body.style.width = "100%";
-    if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
-  }
-
-  function unlockScroll() {
-    if (!scrollLockRef.current.locked) return;
-    const { y } = scrollLockRef.current;
-    scrollLockRef.current = { locked: false, y: 0 };
-    const body = document.body;
-    body.style.position = "";
-    body.style.top = "";
-    body.style.left = "";
-    body.style.right = "";
-    body.style.width = "";
-    body.style.paddingRight = "";
-    window.scrollTo(0, y);
-  }
-
-  // Guarantees the lock is released however the tour ends (Done, Skip, or
-  // an unmount mid-transition) — independent of the per-step lock/unlock
-  // dance in the effect below.
-  useEffect(() => {
-    return () => unlockScroll();
-  }, []);
-
-  // What's actually ON SCREEN — deliberately allowed to lag `stepIndex`.
-  // For a same-page step (nav icon -> nav icon), the PREVIOUS target stays
-  // displayed until the next one is found and settled, so the ring/card can
-  // CSS-transition smoothly between two valid positions instead of ever
-  // vanishing and popping back in. For a step that requires navigating to a
-  // different page, the old target no longer exists there, so this is
-  // cleared immediately (nothing to smoothly slide to).
-  const [display, setDisplay] = useState({ index: 0, rect: null });
-  const displayStep = steps[display.index];
-  const displayRect = display.rect;
-
-  const isLast = display.index === steps.length - 1;
-
-  function goNext() {
-    if (stepIndex === steps.length - 1) onDone();
-    else setStepIndex((i) => i + 1);
-  }
-
-  // Find (and, if needed, navigate to) the CURRENT step's target, then
-  // commit it to `display` only once its layout has actually settled.
-  useEffect(() => {
-    const step = steps[stepIndex];
-
-    // Unlock for the search: a route change needs to actually scroll (top
-    // of the new page), and settleAndMeasure below may call scrollIntoView
-    // — both are no-ops against a locked (position: fixed) body.
-    unlockScroll();
-
-    if (step.kind !== "spotlight") {
-      setDisplay({ index: stepIndex, rect: null });
-      lockScroll();
-      return;
-    }
-    if (step.route && location.pathname !== step.route) {
-      // Leaving this page — the old target won't exist on the next one, so
-      // there's nothing sensible to animate from. Hide until the new one's
-      // ready, same as before.
-      setDisplay({ index: stepIndex, rect: null });
-      navigate(step.route);
-      return; // effect reruns once the route actually changes, still unlocked
-    }
-
-    let cancelled = false;
-    cleanupWatchRef.current?.();
-    cleanupWatchRef.current = null;
-    const startedAt = Date.now();
-
-    // Once found and measured, keep watching for any further layout shift
-    // (late-loading content, orientation change) and re-measure in place —
-    // this never re-triggers the scroll/settle sequence, just tracks it.
-    // Only observes the target itself (not document.body — that combined
-    // with an unconditional setState on every firing was enough to create a
-    // ResizeObserver feedback loop that starved the browser's timer queue
-    // entirely, see below) and skips the update when nothing actually moved.
-    function rectsEqual(a, b) {
-      return (
-        !!a && !!b && a.top === b.top && a.left === b.left && a.width === b.width && a.height === b.height
-      );
-    }
-    function watch(el) {
-      const remeasure = () => {
-        if (cancelled) return;
-        const next = el.getBoundingClientRect();
-        setDisplay((d) => (rectsEqual(d.rect, next) ? d : { ...d, rect: next }));
-      };
-      const ro = new ResizeObserver(remeasure);
-      ro.observe(el);
-      window.addEventListener("resize", remeasure);
-      cleanupWatchRef.current = () => {
-        ro.disconnect();
-        window.removeEventListener("resize", remeasure);
-      };
-    }
-
-    function poll() {
-      if (cancelled) return;
-      const el =
-        document.querySelector(step.selector) ||
-        (step.fallbackSelector ? document.querySelector(step.fallbackSelector) : null);
-      if (el) {
-        settleAndMeasure(el, { scrollIntoView: !!step.route }).then((r) => {
-          if (cancelled) return;
-          // Atomic swap: new text and new position land together, so the
-          // card never shows step N's copy pointed at step N+1's target.
-          setDisplay({ index: stepIndex, rect: r });
-          lockScroll();
-          watch(el);
-        });
+  function sleepInterruptible(ms) {
+    return new Promise((resolve) => {
+      if (cancelledRef.current) {
+        resolve();
         return;
       }
-      if (Date.now() - startedAt > FIND_TIMEOUT_MS) {
-        // Target never showed up — don't get the tour stuck, just move on.
-        goNext();
-        return;
-      }
-      setTimeout(poll, FIND_POLL_MS);
+      const t = setTimeout(() => {
+        advanceRef.current = null;
+        resolve();
+      }, ms);
+      advanceRef.current = () => {
+        clearTimeout(t);
+        advanceRef.current = null;
+        resolve();
+      };
+    });
+  }
+
+  function setCard(title, text, step) {
+    cardKeyRef.current += 1;
+    setCardText({ title, text, step, key: cardKeyRef.current });
+  }
+
+  // Ripple at the target's center, then clear it — the visible "this is
+  // what got tapped" indicator required before every navigation.
+  async function doTap(rect) {
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    tapIdRef.current += 1;
+    setTapEffect({ x: cx, y: cy, id: tapIdRef.current });
+    await sleep(TAP_RIPPLE_MS);
+    if (!cancelledRef.current) setTapEffect(null);
+  }
+
+  // The common shape for "find a nav icon, ring it, tap it, let it
+  // navigate, then hold a tooltip on it" — used for every step except the
+  // Quran reading demo, which has its own bespoke scroll choreography.
+  async function tapNavStep({ selector, step, title, text, thenSelector, thenTitle, thenText }) {
+    const el = await waitForSelector(selector, cancelledRef);
+    if (!el || cancelledRef.current) return;
+    const rect = await settleAndMeasure(el);
+    if (cancelledRef.current) return;
+    // Ring and text land together — showing the ring alone first (with the
+    // previous step's stale text still up) reads as a mismatch, as if the
+    // tour had already moved on before it actually described anything.
+    setDisplay({ kind: "spotlight", rect, shape: "circle", live: false });
+    setCard(title, text, step);
+    await sleep(PRE_TAP_SETTLE_MS);
+    if (cancelledRef.current) return;
+    await doTap(rect);
+    if (cancelledRef.current) return;
+    el.click();
+    await sleep(POST_ACTION_PAUSE_MS);
+    if (cancelledRef.current) return;
+
+    const settledRect = el.getBoundingClientRect();
+    setDisplay({ kind: "spotlight", rect: settledRect, shape: "circle", live: false });
+    await sleepInterruptible(DWELL_MS);
+    if (cancelledRef.current) return;
+
+    if (thenSelector) {
+      const el2 = await waitForSelector(thenSelector, cancelledRef);
+      if (!el2 || cancelledRef.current) return;
+      const rect2 = await settleAndMeasure(el2, { scrollIntoView: true });
+      if (cancelledRef.current) return;
+      setDisplay({ kind: "spotlight", rect: rect2, shape: "rounded", live: false });
+      setCard(thenTitle, thenText, step);
+      await sleepInterruptible(DWELL_MS);
     }
-    poll();
+  }
+
+  async function runTour() {
+    lockNav();
+
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    setCard("Welcome", "Assalamu alaikum! Sit back and watch a quick walkthrough of My Kitab.", null);
+    await sleepInterruptible(WELCOME_DWELL_MS);
+    if (cancelledRef.current) return;
+
+    // Step 1 — tap Quran
+    await tapNavStep({
+      selector: '[data-tour-id="/surahs"]',
+      step: 1,
+      title: "Quran",
+      text: "The full Qur'an, with Arabic text and English translation.",
+    });
+    if (cancelledRef.current) return;
+
+    // Step 2 — open a surah, scroll down to the first Mark Ayah button, tap it
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    setCard("Opening a Surah", "Let's open Al-Fatihah to see the reading view.", 2);
+    const surahRow = await waitForSelector(".surah-list-item", cancelledRef);
+    if (!surahRow || cancelledRef.current) return;
+    const rowRect = await settleAndMeasure(surahRow);
+    if (cancelledRef.current) return;
+    setDisplay({ kind: "spotlight", rect: rowRect, shape: "rounded", live: false });
+    await sleep(PRE_TAP_SETTLE_MS);
+    if (cancelledRef.current) return;
+    await doTap(rowRect);
+    if (cancelledRef.current) return;
+    surahRow.click();
+    await sleep(POST_ACTION_PAUSE_MS);
+    if (cancelledRef.current) return;
+
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    const markBtn = await waitForSelector(".mark-last-read-btn", cancelledRef);
+    if (!markBtn || cancelledRef.current) return;
+    window.scrollTo(0, 0);
+    await sleep(300);
+    if (cancelledRef.current) return;
+
+    const initialMarkRect = markBtn.getBoundingClientRect();
+    const targetY = window.scrollY + initialMarkRect.top - (window.innerHeight / 2 - initialMarkRect.height / 2);
+    setCard("Mark Ayah", "Scrolling down to find the Mark Ayah button…", 2);
+    await animateScrollTo(targetY, cancelledRef, () => {
+      const r = markBtn.getBoundingClientRect();
+      setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: true });
+    });
+    if (cancelledRef.current) return;
+
+    const settledMarkRect = await settleAndMeasure(markBtn);
+    if (cancelledRef.current) return;
+    setDisplay({ kind: "spotlight", rect: settledMarkRect, shape: "rounded", live: false });
+    setCard("Mark Ayah", "Tap this under any ayah to save your place as you read.", 2);
+    await sleepInterruptible(DWELL_MS);
+    if (cancelledRef.current) return;
+
+    await doTap(settledMarkRect);
+    if (cancelledRef.current) return;
+    markBtn.click();
+    await sleep(250);
+    if (cancelledRef.current) return;
+    const markedRect = markBtn.getBoundingClientRect();
+    setDisplay({ kind: "spotlight", rect: markedRect, shape: "rounded", live: false });
+    setCard("Mark Ayah", "Saved — you can always find your place again from here.", 2);
+    await sleepInterruptible(DWELL_LONG_MS);
+    if (cancelledRef.current) return;
+
+    // Step 3 — scroll back to the top (reverse of step 2's scroll)
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    setCard("Back to the Top", "Scrolling back up to the top of the page.", 3);
+    await sleep(POST_ACTION_PAUSE_MS);
+    if (cancelledRef.current) return;
+    await animateScrollTo(0, cancelledRef, null);
+    if (cancelledRef.current) return;
+    await sleep(POST_ACTION_PAUSE_MS);
+    if (cancelledRef.current) return;
+
+    // Step 4 — tap Mutoon
+    await tapNavStep({
+      selector: '[data-tour-id="/mutoon"]',
+      step: 4,
+      title: "Mutoon",
+      text: "Classical texts for the student of knowledge, laid out page by page.",
+    });
+    if (cancelledRef.current) return;
+
+    // Step 5 — tap Thikr
+    await tapNavStep({
+      selector: '[data-tour-id="/athkar"]',
+      step: 5,
+      title: "Thikr",
+      text: "Morning and evening remembrances, with translations and repetition counts.",
+    });
+    if (cancelledRef.current) return;
+
+    // Step 6 — tap Library
+    await tapNavStep({
+      selector: '[data-tour-id="/my-kitab"]',
+      step: 6,
+      title: "Library",
+      text: "Your personal library — upload your own PDFs and search within them.",
+    });
+    if (cancelledRef.current) return;
+
+    // Step 7 — tap Search
+    await tapNavStep({
+      selector: '[data-tour-id="/search"]',
+      step: 7,
+      title: "Search",
+      text: "Search the Qur'an, Mutoon, and Hadith by topic or keyword.",
+      thenSelector: ".search-input",
+      thenTitle: "Search",
+      thenText: 'Type here to search — try a concept like "patience".',
+    });
+    if (cancelledRef.current) return;
+
+    // Step 8 — tap Settings
+    await tapNavStep({
+      selector: '[data-tour-id="/settings"]',
+      step: 8,
+      title: "Settings",
+      text: "Your reciter, font sizes, theme, and reading preferences.",
+    });
+    if (cancelledRef.current) return;
+
+    // Step 9 — Done
+    setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
+    setCard(
+      "You're All Set",
+      "That's everything — enjoy exploring My Kitab. You can start this tour again anytime from the Home screen.",
+      9
+    );
+    setIsFinal(true);
+    showNav();
+    unlockNav();
+  }
+
+  useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+
+    // The tour drives its own scroll — block the user's wheel/touch/key
+    // scroll input for the duration so it can't fight the script or desync
+    // the spotlight, without disabling window.scrollTo (a JS call, not an
+    // input event, so it's unaffected by these listeners).
+    function preventWheelTouch(e) {
+      e.preventDefault();
+    }
+    function preventScrollKeys(e) {
+      if (SCROLL_KEYS.has(e.key)) e.preventDefault();
+    }
+    window.addEventListener("wheel", preventWheelTouch, { passive: false });
+    window.addEventListener("touchmove", preventWheelTouch, { passive: false });
+    window.addEventListener("keydown", preventScrollKeys);
+
+    runTour();
 
     return () => {
-      cancelled = true;
-      cleanupWatchRef.current?.();
-      cleanupWatchRef.current = null;
+      cancelledRef.current = true;
+      advanceRef.current?.();
+      showNav();
+      unlockNav();
+      window.removeEventListener("wheel", preventWheelTouch);
+      window.removeEventListener("touchmove", preventWheelTouch);
+      window.removeEventListener("keydown", preventScrollKeys);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stepIndex, location.pathname]);
+  }, []);
 
-  // Text cross-fade, decoupled from the ring/card's position — lags
-  // `display` by a short fade-out so the copy fades out, swaps, and fades
-  // back in, instead of jump-cutting the instant the target resolves.
-  const [textStep, setTextStep] = useState(displayStep);
+  function handleSkip() {
+    cancelledRef.current = true;
+    advanceRef.current?.();
+    onDone();
+  }
+
+  function handleNext() {
+    if (isFinal) {
+      onDone();
+      return;
+    }
+    advanceRef.current?.();
+  }
+
+  // Text cross-fade, decoupled from the ring's position — fades out, swaps,
+  // fades back in, instead of jump-cutting the instant the text changes.
+  const [textShown, setTextShown] = useState(cardText);
   const [textFading, setTextFading] = useState(false);
   useEffect(() => {
-    if (displayStep === textStep) return;
+    if (cardText.key === textShown.key) return;
     setTextFading(true);
     const t = setTimeout(() => {
-      setTextStep(displayStep);
+      setTextShown(cardText);
       setTextFading(false);
     }, TEXT_FADE_MS);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [displayStep]);
+  }, [cardText]);
 
-  const showCard = displayStep.kind === "center" || !!displayRect;
-  // Preferred side: below the target when it sits in the top half of the
-  // screen, above it otherwise (nav bar items live at the very bottom, so
-  // the card must go above them) — used for the arrow direction and as the
-  // card's starting anchor before clamping.
-  const cardBelow = displayStep.kind === "spotlight" && displayRect && displayRect.top < window.innerHeight / 2;
+  const showCard = display.kind === "center" || !!display.rect;
+  const cardBelow = display.kind === "spotlight" && display.rect && display.rect.top < window.innerHeight / 2;
 
-  // Measure the card's real (width-dependent) height synchronously before
-  // the browser paints, then clamp both axes to the actual viewport — so it
-  // is correctly positioned on the very first visible frame, never rendered
-  // off-screen and corrected a moment later.
   useLayoutEffect(() => {
     if (!showCard) {
       setCardPos(null);
@@ -345,54 +428,57 @@ export default function GuidedTour({ onDone }) {
 
     let left;
     let top;
-    if (displayStep.kind === "center" || !displayRect) {
+    if (display.kind === "center" || !display.rect) {
       left = (vw - width) / 2;
       top = (vh - height) / 2;
     } else {
-      const preferredCenterX = displayRect.left + displayRect.width / 2;
+      const preferredCenterX = display.rect.left + display.rect.width / 2;
       left = preferredCenterX - width / 2;
-      top = cardBelow ? displayRect.bottom + CARD_GAP : displayRect.top - CARD_GAP - height;
+      top = cardBelow ? display.rect.bottom + CARD_GAP : display.rect.top - CARD_GAP - height;
     }
 
     left = clamp(left, CARD_MARGIN, vw - width - CARD_MARGIN);
     top = clamp(top, CARD_MARGIN, vh - height - CARD_MARGIN);
 
     setCardPos({ left, top, width });
-    // Also depends on `textStep`, not just `displayStep`: the card's height
-    // is read from the DOM (el.getBoundingClientRect()), but the visible
-    // text lags a step behind via the cross-fade below. Without this, a step
-    // pair whose copy differs enough in line count (e.g. Athkar -> Search)
-    // would get its position computed from the OLD (still-showing) text's
-    // height, then silently reflow to the new height with no transition the
-    // instant the text swapped in — a snap/flicker right in the middle of
-    // the fade. Re-running this on the text swap re-measures against the
-    // real new height and corrects `top` through the same top/left
-    // transition, so the correction glides instead of jumping.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showCard, displayStep, displayRect, cardBelow, textStep]);
+  }, [showCard, display, cardBelow, textShown]);
+
+  // While `display.live` is true (mid-scroll, re-anchoring every frame) the
+  // ring/arrow/card position transition is turned off so they track the
+  // target 1:1 with zero lag; the normal eased CSS transition returns for
+  // every discrete step-to-step move.
+  const liveStyle = display.live ? { transition: "none" } : undefined;
 
   return (
     <div className="tour-overlay">
-      {(displayStep.kind === "center" || !displayRect) && <div className="tour-backdrop" />}
-      {displayStep.kind === "spotlight" && displayRect && (
+      <div className="tour-input-blocker" />
+      {(display.kind === "center" || !display.rect) && <div className="tour-backdrop" />}
+      {display.kind === "spotlight" && display.rect && (
         <>
           <div
-            className={"tour-spotlight" + (displayStep.shape === "circle" ? " circle" : " rounded")}
+            className={"tour-spotlight" + (display.shape === "circle" ? " circle" : " rounded")}
             style={{
-              top: displayRect.top - 8,
-              left: displayRect.left - 8,
-              width: displayRect.width + 16,
-              height: displayRect.height + 16,
+              top: display.rect.top - 8,
+              left: display.rect.left - 8,
+              width: display.rect.width + 16,
+              height: display.rect.height + 16,
+              ...liveStyle,
             }}
           />
           <div
             className={"tour-arrow" + (cardBelow ? " up" : " down")}
             style={{
-              left: displayRect.left + displayRect.width / 2,
-              top: cardBelow ? displayRect.bottom + 10 : displayRect.top - 18,
+              left: display.rect.left + display.rect.width / 2,
+              top: cardBelow ? display.rect.bottom + 10 : display.rect.top - 18,
+              ...liveStyle,
             }}
           />
         </>
+      )}
+
+      {tapEffect && (
+        <span key={tapEffect.id} className="tour-tap-ripple" style={{ left: tapEffect.x, top: tapEffect.y }} />
       )}
 
       {showCard && (
@@ -401,30 +487,36 @@ export default function GuidedTour({ onDone }) {
           className="tour-card"
           style={
             cardPos
-              ? { left: cardPos.left, top: cardPos.top, width: cardPos.width, visibility: "visible" }
-              : // First pass: laid out with its real width so height can be
-                // measured above, but not yet visible — avoids any flash at
-                // a wrong (unclamped) position.
-                { left: 0, top: 0, width: Math.min(CARD_MAX_WIDTH, window.innerWidth - CARD_MARGIN * 2), visibility: "hidden" }
+              ? {
+                  left: cardPos.left,
+                  top: cardPos.top,
+                  width: cardPos.width,
+                  visibility: "visible",
+                  ...liveStyle,
+                }
+              : {
+                  left: 0,
+                  top: 0,
+                  width: Math.min(CARD_MAX_WIDTH, window.innerWidth - CARD_MARGIN * 2),
+                  visibility: "hidden",
+                }
           }
         >
           <img src={logoSrc} alt="" className="chat-avatar tour-card-avatar" />
           <div className={"tour-card-body" + (textFading ? " fading" : "")}>
-            <div className="tour-card-title">{textStep.title}</div>
-            <p className="tour-card-text">{textStep.text}</p>
+            <div className="tour-card-title">{textShown.title}</div>
+            <p className="tour-card-text">{textShown.text}</p>
             <div className="tour-card-actions">
-              <span className="tour-card-progress">
-                {steps.indexOf(textStep) + 1} / {steps.length}
-              </span>
-              <button className="btn btn-primary tour-next-btn" onClick={goNext}>
-                {isLast ? "Done" : "Next"}
+              <span className="tour-card-progress">{textShown.step != null ? `${textShown.step} / 9` : ""}</span>
+              <button className="btn btn-primary tour-next-btn" onClick={handleNext}>
+                {isFinal ? "Done" : "Next"}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      <button className="tour-skip-btn" onClick={onDone}>
+      <button className="tour-skip-btn" onClick={handleSkip}>
         <X className="tour-skip-icon" strokeWidth={2.5} />
         Skip
       </button>
