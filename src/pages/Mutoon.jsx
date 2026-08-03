@@ -13,11 +13,6 @@ export default function Mutoon() {
     <div>
       <SectionHero
         icon={Library}
-        image="/hero-library.jpg"
-        imagePosition="center 36%"
-        fadeMid="16%"
-        fadeEnd="38%"
-        contentMaxWidth="22%"
         title="Mutoon"
         description="Classical texts for the student of knowledge (متون طالب العلم)."
       />

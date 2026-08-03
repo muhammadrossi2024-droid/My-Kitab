@@ -51,11 +51,6 @@ export default function SurahList() {
     <div>
       <SectionHero
         icon={BookOpen}
-        image="/hero-quran.jpg"
-        imagePosition="center 44%"
-        fadeMid="14%"
-        fadeEnd="36%"
-        contentMaxWidth="20%"
         title="The Noble Quran"
         description="Read the Noble Qur'an with Arabic text and English translation, saved locally so it loads instantly."
       />

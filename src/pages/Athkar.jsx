@@ -17,11 +17,6 @@ export default function Athkar() {
     <div>
       <SectionHero
         icon={Sparkles}
-        image="/hero-athkar.jpg"
-        imagePosition="center 42%"
-        fadeMid="16%"
-        fadeEnd="40%"
-        contentMaxWidth="20%"
         title="Athkar"
         description="Authentic supplications for the morning and evening, with translation and references."
       />

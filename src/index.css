@@ -37,12 +37,6 @@
   --accent-contrast: #ffffff;
   --chip-bg: #f0ead9;
   --accent-soft: #e0f0e6;
-  /* Fixed warm cream for the section-hero image fade (see
-     .section-hero-glass) — light mode always uses this exact cream
-     regardless of --accent-soft. --text/--accent already read correctly
-     against it (dark green/brown on a light cream), so no separate
-     "on-fade" text tokens are needed here. */
-  --hero-fade-color: #f0ede4;
 }
 
 :root[data-theme="dark"] {
@@ -55,11 +49,6 @@
   --accent-contrast: #0f1a15;
   --chip-bg: #26221a;
   --accent-soft: #1a2c23;
-  /* Dark mode's section-hero fade reverts to the original dark-green
-     tint (matching --accent-soft) instead of the light mode's fixed
-     cream — --text/--accent are already tuned to read against this dark
-     background. */
-  --hero-fade-color: var(--accent-soft);
 }
 
 * {
@@ -292,19 +281,7 @@ a {
   border-radius: 14px;
   padding: 16px;
   margin-bottom: 16px;
-  overflow: hidden;
   animation: page-hero-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.section-hero-content {
-  position: relative;
-  z-index: 3;
-  min-width: 0;
-  /* Keeps text inside the near-opaque zone of the overlay (see
-     .section-hero-glass below) — past that point the photo starts
-     becoming genuinely visible, which is no place for text to sit.
-     Overridable per-card via --hero-content-max-width (see SectionHero.jsx). */
-  max-width: var(--hero-content-max-width, 46%);
 }
 
 .section-hero-icon-badge {
@@ -338,75 +315,6 @@ a {
   line-height: 1.4;
 }
 
-.section-hero-media {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: var(--chip-bg);
-}
-
-.section-hero-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Uniform rightward shift applied identically to every card's image —
-     not a per-card tuning, the exact same scale/origin everywhere (see
-     the SectionHero.jsx header comment). Determined against the Dhikr
-     card so his thobe lands just short of the card's right edge. */
-  transform: scale(1.32);
-  transform-origin: 0% 50%;
-}
-
-/* The blur covers exactly the same left-to-right span as the tint below
-   (reuses --hero-fade-mid/--hero-fade-end) so it's actually visible on
-   the partially-faded image in the transition zone, rather than being
-   confined to a region that's already fully hidden under opaque tint.
-   backdrop-filter blurs everything in its own box uniformly regardless
-   of what's drawn on top of it, so masking this layer itself is what
-   confines the blur to the left/transition side and keeps the right-side
-   clear zone completely sharp. */
-.section-hero-blur {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  -webkit-mask-image: linear-gradient(
-    to right,
-    #000 0%,
-    #000 var(--hero-fade-mid, 42%),
-    transparent var(--hero-fade-end, 88%)
-  );
-  mask-image: linear-gradient(
-    to right,
-    #000 0%,
-    #000 var(--hero-fade-mid, 42%),
-    transparent var(--hero-fade-end, 88%)
-  );
-}
-
-/* The tint overlay: opaque on the left (text sits here, image fully
-   hidden), fading to fully transparent well before the card's right edge
-   so that edge shows the photo completely unmodified — sharp, no blur,
-   no tint. Pure background gradient, no filter of its own. Uses the
-   theme-aware --hero-fade-color (fixed cream in light mode, dark green
-   in dark mode — see the :root[data-theme] blocks above). The two stop
-   positions are overridable per-card via --hero-fade-mid/--hero-fade-end
-   (see SectionHero.jsx) so a given card can pull its fade further left
-   for a bigger sharp/clear zone without affecting the shared default. */
-.section-hero-glass {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: linear-gradient(
-    to right,
-    var(--hero-fade-color) 0%,
-    var(--hero-fade-color) var(--hero-fade-mid, 42%),
-    transparent var(--hero-fade-end, 88%)
-  );
-}
-
 @media (max-width: 420px) {
   .section-hero {
     padding: 14px;
@@ -414,10 +322,6 @@ a {
 
   .section-hero-title {
     font-size: 1.1rem;
-  }
-
-  .section-hero-content {
-    max-width: 82%;
   }
 }
 
