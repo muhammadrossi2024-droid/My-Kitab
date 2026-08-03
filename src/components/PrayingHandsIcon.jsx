@@ -1,11 +1,32 @@
-// Hands-in-dua glyph — not in lucide-react, so sourced from Phosphor Icons
-// (MIT licensed, regular weight) instead of hand-drawing an approximation.
-// Filled (not stroked) by design; fill="currentColor" still picks up the
-// same active/hover coloring as the stroke-based lucide icons around it.
+import { useId } from "react";
+
+// Hands-in-dua glyph — open, upward palms (not pressed together), fingers
+// spread. No open-source icon set has this pose in a matching style, so
+// it's hand-built from simple primitives: a filled palm block plus
+// round-capped strokes for the fingers/thumb, which reads far more clearly
+// at nav-icon size than a single detailed outline path would.
 export default function PrayingHandsIcon({ className }) {
+  const handId = useId();
   return (
-    <svg viewBox="0 0 256 256" fill="currentColor" className={className}>
-      <path d="M235.32,180l-36.24-36.25L162.62,23.46A21.76,21.76,0,0,0,128,12.93,21.76,21.76,0,0,0,93.38,23.46L56.92,143.76,20.68,180a16,16,0,0,0,0,22.62l32.69,32.69a16,16,0,0,0,22.63,0L124.28,187a40.68,40.68,0,0,0,3.72-4.29,40.68,40.68,0,0,0,3.72,4.29L180,235.32a16,16,0,0,0,22.63,0l32.69-32.69A16,16,0,0,0,235.32,180ZM64.68,224,32,191.32l12.69-12.69,32.69,32.69ZM120,158.75a23.85,23.85,0,0,1-7,17L88.68,200,56,167.32l13.65-13.66a8,8,0,0,0,2-3.34l37-122.22A5.78,5.78,0,0,1,120,29.78Zm23,17a23.85,23.85,0,0,1-7-17v-129a5.78,5.78,0,0,1,11.31-1.68l37,122.22a8,8,0,0,0,2,3.34l14.49,14.49-33.4,32ZM191.32,224l-12.56-12.57,33.39-32L224,191.32Z" />
+    <svg viewBox="0 0 24 24" className={className}>
+      <defs>
+        <g id={handId}>
+          <path
+            fill="currentColor"
+            stroke="none"
+            d="M13.3 21 L13.3 17.5 C13.3 15.8 14.5 15 16 15 C17.5 15 18.7 15.8 18.7 17.5 L18.7 21 Z"
+          />
+          <g fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <path d="M14.1 16 L13.4 8.5" />
+            <path d="M15.7 15.3 L15.9 6" />
+            <path d="M17.3 15.3 L17.6 6.7" />
+            <path d="M18.7 16 L19.6 9.3" />
+            <path d="M18.5 18.5 L21 20.3" />
+          </g>
+        </g>
+      </defs>
+      <use href={`#${handId}`} transform="translate(-1.5,0)" />
+      <use href={`#${handId}`} transform="translate(1.5,0) scale(-1,1) translate(-24,0)" />
     </svg>
   );
 }
