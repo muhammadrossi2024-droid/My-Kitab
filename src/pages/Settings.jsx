@@ -1,11 +1,9 @@
 import { useSettings } from "../context/SettingsContext.jsx";
-import { useIntro } from "../context/IntroContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
-  const { startTour } = useIntro();
   const { user, logOut } = useAuth();
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
@@ -167,12 +165,6 @@ export default function Settings() {
             Log out
           </button>
         </div>
-      </div>
-
-      <div className="card">
-        <button className="btn" onClick={startTour}>
-          Replay welcome guide
-        </button>
       </div>
 
       <div className="card">

@@ -23,11 +23,18 @@ export default function TopBanner() {
         <div className="top-banner-tagline">Your personal Islamic library</div>
       </div>
       <div className="top-banner-actions">
-        <Link to="/search" className="top-banner-action-link" aria-label="Search" title="Search">
+        <Link
+          to="/search"
+          data-tour-id="/search"
+          className="top-banner-action-link"
+          aria-label="Search"
+          title="Search"
+        >
           <Search className="top-banner-action-icon" strokeWidth={2} />
         </Link>
         <Link
           to="/settings"
+          data-tour-id="/settings"
           className="top-banner-action-link"
           aria-label="Settings"
           title="Settings"

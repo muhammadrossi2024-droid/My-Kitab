@@ -67,7 +67,6 @@ export default function SurahList() {
       {lastRead && lastSurahMeta && (
         <Link
           className="btn btn-primary resume-reading-link"
-          data-tour="continue-reading"
           to={`/surah/${lastRead.surah}#ayah-${lastRead.ayah}`}
         >
           Resume Reading

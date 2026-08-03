@@ -2,54 +2,86 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
-import { links } from "./Navbar.jsx";
 
-// Same copy as before — only the presentation changed (chat bubbles -> a
-// spotlight tour). Keyed by route so it survives `links` being reordered.
-const TAB_BLURBS = {
-  "/": "Your starting point, with a quick link into every section. Tap it any time to jump back here.",
-  "/my-kitab": "Your personal library. Upload your own PDFs and search only within them — try adding one and searching a word from it.",
-  "/surahs": "The full Qur'an, with Arabic text and English translation. Try opening a surah and tapping a verse to hear it recited.",
-  "/mutoon": "Classical texts for the student of knowledge, laid out page by page. Try opening a book and swiping through a lesson.",
-  "/athkar": "Morning and evening remembrances, with translations and repetition counts. Try running through the morning athkar and tracking your reps.",
-  "/search": "Search the Qur'an, Mutoon, and Hadith by topic or keyword, in English or Arabic. Try searching a concept like \"patience\" or \"الصبر\".",
-  "/settings": "Your reciter, font sizes, theme, and reading preferences. Try switching between light and dark mode.",
-};
-
+// Fixed sequence, in this exact order — not auto-generated from the nav
+// links, since it deliberately covers a specific reading-flow walkthrough
+// (and skips tabs like My Library) rather than one step per nav icon.
 function buildSteps() {
-  const steps = [
+  return [
     {
       kind: "center",
       title: "Welcome",
       text: "Assalamu alaikum! Welcome to My Kitab — let's take a quick tour of what everything does.",
     },
-  ];
-  for (const link of links) {
-    steps.push({
+    {
       kind: "spotlight",
       shape: "circle",
-      selector: `[data-tour-id="${link.to}"]`,
-      title: link.label,
-      text: TAB_BLURBS[link.to] || `The ${link.label} tab.`,
-    });
-  }
-  steps.push({
-    kind: "spotlight",
-    shape: "rounded",
-    route: "/surahs",
-    selector: '[data-tour="continue-reading"]',
-    title: "Continue Reading",
-    text: "Once you've marked a page, it shows up here so you can jump straight back to where you left off.",
-  });
-  steps.push({
-    kind: "spotlight",
-    shape: "rounded",
-    route: "/surah/1",
-    selector: ".mark-last-read-btn",
-    title: "Mark as last read",
-    text: "Tap this under any ayah to save your place — it's what powers Continue Reading.",
-  });
-  return steps;
+      selector: '[data-tour-id="/"]',
+      title: "Home",
+      text: "Your starting point. Tap it any time to jump back here, and to restart this tour later.",
+    },
+    {
+      kind: "spotlight",
+      shape: "circle",
+      selector: '[data-tour-id="/surahs"]',
+      title: "Quran",
+      text: "The full Qur'an, with Arabic text and English translation. Try opening a surah and tapping a verse to hear it recited.",
+    },
+    {
+      kind: "spotlight",
+      shape: "circle",
+      selector: '[data-tour-id="/mutoon"]',
+      title: "Mutoon",
+      text: "Classical texts for the student of knowledge, laid out page by page. Try opening a book and swiping through a lesson.",
+    },
+    {
+      kind: "spotlight",
+      shape: "circle",
+      selector: '[data-tour-id="/athkar"]',
+      title: "Thikr",
+      text: "Morning and evening remembrances, with translations and repetition counts.",
+    },
+    {
+      kind: "spotlight",
+      shape: "rounded",
+      route: "/surah/1",
+      selector: ".mark-last-read-btn",
+      title: "Mark as Last Read",
+      text: "Tap this under any ayah to save your place — it's what powers Resume Reading.",
+    },
+    {
+      kind: "spotlight",
+      shape: "rounded",
+      route: "/surahs",
+      selector: ".resume-reading-link",
+      // Only rendered once a position has actually been saved. Falling back
+      // to the always-present search input (which sits right above where
+      // the button appears) keeps this step from ever silently skipping for
+      // a brand-new reader who hasn't marked a page yet.
+      fallbackSelector: ".search-input",
+      title: "Resume Reading",
+      text: "Once you tap \"Mark as last read\" on any ayah, a Resume Reading button appears right here so you can jump straight back to where you left off.",
+    },
+    {
+      kind: "spotlight",
+      shape: "circle",
+      selector: '[data-tour-id="/search"]',
+      title: "Search",
+      text: "Search the Qur'an, Mutoon, and Hadith by topic or keyword, in English or Arabic.",
+    },
+    {
+      kind: "spotlight",
+      shape: "circle",
+      selector: '[data-tour-id="/settings"]',
+      title: "Settings",
+      text: "Your reciter, font sizes, theme, and reading preferences.",
+    },
+    {
+      kind: "center",
+      title: "You're All Set",
+      text: "That's everything — enjoy exploring My Kitab. You can start this tour again anytime from the Home screen.",
+    },
+  ];
 }
 
 const FIND_TIMEOUT_MS = 3000;
@@ -240,7 +272,9 @@ export default function GuidedTour({ onDone }) {
 
     function poll() {
       if (cancelled) return;
-      const el = document.querySelector(step.selector);
+      const el =
+        document.querySelector(step.selector) ||
+        (step.fallbackSelector ? document.querySelector(step.fallbackSelector) : null);
       if (el) {
         settleAndMeasure(el, { scrollIntoView: !!step.route }).then((r) => {
           if (cancelled) return;
