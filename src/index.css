@@ -37,6 +37,7 @@
   --accent-contrast: #ffffff;
   --chip-bg: #f0ead9;
   --accent-soft: #e0f0e6;
+  --banner-bg: #ffffff;
 }
 
 :root[data-theme="dark"] {
@@ -49,6 +50,7 @@
   --accent-contrast: #0f1a15;
   --chip-bg: #26221a;
   --accent-soft: #1a2c23;
+  --banner-bg: #000000;
 }
 
 * {
@@ -99,9 +101,7 @@ a {
   gap: 12px;
   padding: 18px 20px calc(18px + 6px);
   padding-top: calc(18px + env(safe-area-inset-top));
-  background: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--banner-bg);
   border-bottom: 1px solid var(--border);
   border-radius: 0 0 20px 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
