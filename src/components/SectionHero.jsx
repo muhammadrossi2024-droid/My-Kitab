@@ -14,6 +14,7 @@ export default function SectionHero({ icon: Icon, image, imagePosition = "center
           style={{ objectPosition: imagePosition }}
         />
       </div>
+      <div className="section-hero-blur" aria-hidden="true" />
       <div className="section-hero-glass" aria-hidden="true" />
       <div className="section-hero-content">
         {Icon && (

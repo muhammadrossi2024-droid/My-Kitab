@@ -287,12 +287,12 @@ a {
 
 .section-hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   min-width: 0;
-  /* Keeps text clear of the card's right edge, where the gradient below
-     lets the photo show through most vividly — the fade is tuned for text
-     sitting to its left, not for text running all the way across it. */
-  max-width: 76%;
+  /* Keeps text inside the near-opaque left half of the overlay (see
+     .section-hero-glass below) — past ~50% card width the photo starts
+     becoming genuinely visible, which is no place for text to sit. */
+  max-width: 46%;
 }
 
 .section-hero-icon-badge {
@@ -340,25 +340,31 @@ a {
   object-fit: cover;
 }
 
-/* The glass/frosted layer: a soft blur of the photo behind it, with a
-   left-to-right fade (in the card's own --accent-soft tone) so the image
-   reads as texture near the text and shows through more vividly toward
-   the card's right edge. Built with color-mix off the theme token rather
-   than a hardcoded white/black so it stays correct in both themes without
-   a separate dark-mode override. */
-.section-hero-glass {
+/* The blur only ever covers the left/transition zone, and is masked out
+   entirely by ~62% card width — NOT applied to the whole image. backdrop-
+   filter blurs everything in its box uniformly regardless of what's drawn
+   on top of it, so a full-card blurred layer would blur the vivid right
+   edge too even under a transparent gradient; masking the blur layer
+   itself is what actually confines it to the left side. */
+.section-hero-blur {
   position: absolute;
   inset: 0;
   z-index: 1;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  background: linear-gradient(
-    to right,
-    color-mix(in srgb, var(--accent-soft) 97%, transparent) 0%,
-    color-mix(in srgb, var(--accent-soft) 92%, transparent) 40%,
-    color-mix(in srgb, var(--accent-soft) 60%, transparent) 65%,
-    color-mix(in srgb, var(--accent-soft) 30%, transparent) 100%
-  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 32%, transparent 62%);
+  mask-image: linear-gradient(to right, #000 0%, #000 32%, transparent 62%);
+}
+
+/* The tint overlay: opaque card color on the left (text sits here, image
+   fully hidden), fading to fully transparent well before the card's right
+   edge so that edge shows the photo completely unmodified — sharp, no
+   blur, no tint. Pure background gradient, no filter of its own. */
+.section-hero-glass {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(to right, var(--accent-soft) 0%, var(--accent-soft) 42%, transparent 88%);
 }
 
 @media (max-width: 420px) {
