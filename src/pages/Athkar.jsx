@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import athkarData from "../data/athkar/morning-evening.json";
 import SectionHero from "../components/SectionHero.jsx";
 import ArabicText from "../components/ArabicText.jsx";
+import PrayingHandsIcon from "../components/PrayingHandsIcon.jsx";
 
 export default function Athkar() {
   const { settings } = useSettings();
@@ -16,7 +16,7 @@ export default function Athkar() {
   return (
     <div>
       <SectionHero
-        icon={Sparkles}
+        icon={PrayingHandsIcon}
         title="Athkar"
         description="Authentic morning and evening supplications, complete with English translation and source references."
       />

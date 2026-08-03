@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { BookOpen, ChevronUp, Folder, Home, Library, Sparkles } from "lucide-react";
+import { BookOpen, ChevronUp, Folder, Home, Library } from "lucide-react";
 import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
+import PrayingHandsIcon from "./PrayingHandsIcon.jsx";
 
 // Single source of truth for the bottom nav — order and labels shown to
 // the user. Search and Settings live in TopBanner.jsx instead, not here.
@@ -8,7 +9,7 @@ export const links = [
   { to: "/", label: "Home", icon: Home },
   { to: "/surahs", label: "Quran", icon: BookOpen },
   { to: "/mutoon", label: "Mutoon", icon: Library },
-  { to: "/athkar", label: "Thikr", icon: Sparkles },
+  { to: "/athkar", label: "Thikr", icon: PrayingHandsIcon },
   { to: "/my-kitab", label: "Library", icon: Folder },
 ];
 
