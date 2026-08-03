@@ -997,6 +997,13 @@ a {
   font-weight: 600;
 }
 
+/* Modifier for a card's own headline label (as opposed to a row label
+   inside a multi-row card like Settings) where it should read as a
+   slightly bigger, more inviting heading rather than a form field name. */
+.form-row-label-lg {
+  font-size: 1.15rem;
+}
+
 .form-row-desc {
   color: var(--text-muted);
   font-size: 0.85rem;

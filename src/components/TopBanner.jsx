@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 
@@ -14,6 +14,19 @@ import { useSettings } from "../context/SettingsContext.jsx";
 export default function TopBanner() {
   const { settings } = useSettings();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Tapping the icon for the page you're already on toggles back to
+  // wherever you came from, instead of a no-op re-navigation to the same
+  // route. navigate(-1) is synchronous (no async work in between), so a
+  // rapid second tap can't double-trigger or lag.
+  function toggle(path, e) {
+    if (location.pathname === path) {
+      e.preventDefault();
+      navigate(-1);
+    }
+  }
 
   return (
     <header className="top-banner">
@@ -29,6 +42,7 @@ export default function TopBanner() {
           className="top-banner-action-link"
           aria-label="Search"
           title="Search"
+          onClick={(e) => toggle("/search", e)}
         >
           <Search className="top-banner-action-icon" strokeWidth={2} />
         </Link>
@@ -38,6 +52,7 @@ export default function TopBanner() {
           className="top-banner-action-link"
           aria-label="Settings"
           title="Settings"
+          onClick={(e) => toggle("/settings", e)}
         >
           <SlidersHorizontal className="top-banner-action-icon" strokeWidth={2} />
         </Link>
