@@ -244,7 +244,7 @@ export default function MyKitab() {
       <SectionHero
         icon={Folder}
         title="My Library"
-        description="Your personal collection of Islamic knowledge."
+        description="Your personal collection of Islamic knowledge — upload PDFs and keep them organized and searchable."
       />
 
       <div className="card">

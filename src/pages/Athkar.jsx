@@ -18,7 +18,7 @@ export default function Athkar() {
       <SectionHero
         icon={Sparkles}
         title="Athkar"
-        description="Authentic supplications for the morning and evening, with translation and references."
+        description="Authentic morning and evening supplications, complete with English translation and source references."
       />
 
       <div className="reader-header">

@@ -1,19 +1,22 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, Settings } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 
-// Persistent app identity banner, shown above every page. Reuses the same
-// theme-aware logo files as the splash screen (dark-green ink on light,
-// mint-green on dark) — deliberately kept on the app's own bg-elevated
-// surface rather than a solid accent-colored fill: --accent IS that same
-// dark-green/mint-green in each theme, so an accent-filled banner would
-// wash the logo out to near-invisible in both themes.
+// Persistent app identity banner, shown above every page. The banner itself
+// is a fixed dark-green fill (same shade as --accent in light mode, e.g.
+// the "Resume Reading" button) in both themes — see .top-banner in
+// index.css. Because that fill is always dark, the logo needs to be light
+// against it: dark mode keeps its usual light-on-dark logo-dark.png, but
+// light mode swaps in a dedicated white banner-only logo (logo-banner-
+// white.png) instead of the normal dark-ink logo-light.png used
+// everywhere else (splash, auth, settings) — that one would be nearly
+// invisible on this green fill.
 //
 // Search and Settings live here (not in the bottom nav) — small, unobtrusive
 // icon buttons pinned to the right edge, always reachable from any page.
 export default function TopBanner() {
   const { settings } = useSettings();
-  const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
+  const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-banner-white.png";
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -54,7 +57,7 @@ export default function TopBanner() {
           title="Settings"
           onClick={(e) => toggle("/settings", e)}
         >
-          <SlidersHorizontal className="top-banner-action-icon" strokeWidth={2} />
+          <Settings className="top-banner-action-icon" strokeWidth={2} />
         </Link>
       </div>
     </header>

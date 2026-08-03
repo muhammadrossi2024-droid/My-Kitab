@@ -14,7 +14,7 @@ export default function Mutoon() {
       <SectionHero
         icon={Library}
         title="Mutoon"
-        description="Classical texts for the student of knowledge (متون طالب العلم)."
+        description="Classical texts for the student of knowledge (متون طالب العلم), laid out page by page for easy reading."
       />
 
       {lastMutoonRead && lastMutoonBook && (
