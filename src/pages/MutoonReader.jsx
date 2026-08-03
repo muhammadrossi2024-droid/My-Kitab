@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
+import ArabicText from "../components/ArabicText.jsx";
 
 // Flattens a matn into the sequence of "pages" a reader swipes through.
 // Each front-matter unit (bismillah / intro / each intro paragraph) and each
@@ -54,20 +55,20 @@ function Paragraph({ p, fontSize }) {
       <div className="mutoon-list">
         {p.lead && (
           <p className="ayah-arabic mutoon-list-lead" style={{ fontSize }}>
-            {p.lead}
+            <ArabicText text={p.lead} />
           </p>
         )}
         {p.items.map((point, i) => (
           <div className="mutoon-list-item" key={i}>
             <span className="ayah-number-badge mutoon-list-badge">{point.label}</span>
             <p className="ayah-arabic" style={{ fontSize }}>
-              {point.arabic}
+              <ArabicText text={point.arabic} />
             </p>
           </div>
         ))}
         {p.trailing && (
           <p className="ayah-arabic mutoon-list-trailing" style={{ fontSize }}>
-            {p.trailing}
+            <ArabicText text={p.trailing} />
           </p>
         )}
       </div>
@@ -75,7 +76,7 @@ function Paragraph({ p, fontSize }) {
   }
   return (
     <p className="ayah-arabic" style={{ fontSize }}>
-      {plainText(p)}
+      <ArabicText text={plainText(p)} />
     </p>
   );
 }
@@ -339,7 +340,7 @@ export default function MutoonReader() {
                 {v.surahNameTransliteration} {v.ref}
               </span>
               <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                {v.arabic}
+                <ArabicText text={v.arabic} />
               </p>
               <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>
                 {v.translation}

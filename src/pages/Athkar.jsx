@@ -3,6 +3,7 @@ import { Sparkles } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import athkarData from "../data/athkar/morning-evening.json";
 import SectionHero from "../components/SectionHero.jsx";
+import ArabicText from "../components/ArabicText.jsx";
 
 export default function Athkar() {
   const { settings } = useSettings();
@@ -58,7 +59,7 @@ export default function Athkar() {
                 )}
               </div>
               <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                {variant.arabic}
+                <ArabicText text={variant.arabic} />
               </p>
               <p className="athkar-transliteration">{variant.transliteration}</p>
               <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>

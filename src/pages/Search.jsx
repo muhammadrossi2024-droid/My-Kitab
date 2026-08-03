@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { runSearch } from "../utils/search.js";
+import ArabicText from "../components/ArabicText.jsx";
 
 function ResultCard({ item, onOpen }) {
   const { settings } = useSettings();
@@ -17,7 +18,7 @@ function ResultCard({ item, onOpen }) {
           className="ayah-arabic"
           style={{ fontSize: Math.min(settings.arabicFontSize, 28), margin: "6px 0" }}
         >
-          {item.arabic}
+          <ArabicText text={item.arabic} />
         </p>
       )}
       {item.translation && (

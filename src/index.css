@@ -16,6 +16,17 @@
   font-display: swap;
 }
 
+/* Same file as above, registered under its own family name (no unicode-range
+   slicing) so the standalone waqf-mark <span> from ArabicText.jsx gets a
+   single, unambiguous font for its own isolated layout box — see .waqf-mark
+   below and the comment in ArabicText.jsx for why the unicode-range swap
+   above isn't enough on its own for these specific marks. */
+@font-face {
+  font-family: "Amiri Quran";
+  src: url("/fonts/AmiriQuran-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
 :root[data-theme="light"] {
   --bg: #faf7f2;
   --bg-elevated: #ffffff;
@@ -830,6 +841,18 @@ a {
   font-family: "Scheherazade New", "Traditional Arabic", "Amiri", serif;
   line-height: 2.2;
   margin: 0 0 12px;
+}
+
+/* Gives each standalone waqf mark its own real layout box (see
+   ArabicText.jsx) instead of the mark stacking, un-repositioned, on the
+   previous word. inline-block forces the browser to lay it out as an
+   ordinary sized box rather than a combining mark; the small margins are the
+   actual clearance fix, sized to roughly match the natural word-gap on
+   either side rather than an arbitrary nudge. */
+.waqf-mark {
+  display: inline-block;
+  font-family: "Amiri Quran", "Scheherazade New", serif;
+  margin: 0 0.2em;
 }
 
 .ayah-word {
