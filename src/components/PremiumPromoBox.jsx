@@ -1,16 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import { Crown } from "lucide-react";
+import { Crown, Check } from "lucide-react";
+import { usePremium } from "../context/PremiumContext.jsx";
 
 // Single luxury promo box shown once, at the very bottom of the Home
 // screen — deliberately black/gold and unrelated to the app's own theme
 // tokens, so it reads as a distinct "special" moment rather than another
 // themed card. The price strikethrough + "FREE" reveal plays once, the
 // first time the box scrolls into view (IntersectionObserver below),
-// never again after that for this mount.
+// never again after that for this mount. The CTA is a real on/off toggle
+// (premium has no paywall yet, so there's nothing to gate) — turning it on
+// is what makes every card on Home pick up a gold outline; see
+// HomeSectionCards.jsx.
 export default function PremiumPromoBox() {
   const boxRef = useRef(null);
   const [inView, setInView] = useState(false);
-  const [claimed, setClaimed] = useState(false);
+  const { isPremiumUser, setIsPremiumUser } = usePremium();
 
   useEffect(() => {
     const el = boxRef.current;
@@ -29,17 +33,15 @@ export default function PremiumPromoBox() {
     return () => observer.disconnect();
   }, []);
 
-  function handleClaim() {
-    // Placeholder — premium has no real subscription/checkout yet, and is
-    // free for everyone in the meantime, so there's nothing to charge.
-    console.log("[premium-promo] Claim Free Premium clicked");
-    setClaimed(true);
+  function handleToggle() {
+    console.log(`[premium-promo] ${isPremiumUser ? "disable" : "claim"} Premium clicked`);
+    setIsPremiumUser(!isPremiumUser);
   }
 
   return (
     <div className="premium-promo-wrap" ref={boxRef}>
       <div className="premium-promo">
-        <Crown className="premium-promo-icon" size={30} strokeWidth={1.75} />
+        <Crown className="premium-promo-icon" size={22} strokeWidth={1.75} />
 
         <h2 className="premium-promo-title">
           Go <span className="premium-promo-title-gold">Premium</span>
@@ -62,15 +64,20 @@ export default function PremiumPromoBox() {
 
         <div className={"premium-promo-free" + (inView ? " animate" : "")}>FREE</div>
 
-        <p className="premium-promo-sub">Full access, on us — for a limited time.</p>
-
-        {claimed ? (
-          <p className="premium-promo-claimed">You're all set — enjoy full Premium access!</p>
-        ) : (
-          <button className="premium-promo-cta" onClick={handleClaim}>
-            Claim Free Premium
-          </button>
-        )}
+        <button
+          type="button"
+          className={"premium-promo-cta" + (isPremiumUser ? " active" : "")}
+          onClick={handleToggle}
+        >
+          {isPremiumUser ? (
+            <>
+              <Check size={16} strokeWidth={3} />
+              Premium Active — Tap to Turn Off
+            </>
+          ) : (
+            "Claim Free Premium"
+          )}
+        </button>
       </div>
     </div>
   );

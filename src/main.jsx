@@ -7,6 +7,7 @@ import { SettingsProvider } from "./context/SettingsContext.jsx";
 import { ProgressProvider } from "./context/ProgressContext.jsx";
 import { IntroProvider } from "./context/IntroContext.jsx";
 import { NavVisibilityProvider } from "./context/NavVisibilityContext.jsx";
+import { PremiumProvider } from "./context/PremiumContext.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
@@ -16,9 +17,11 @@ createRoot(document.getElementById("root")).render(
         <ProgressProvider>
           <IntroProvider>
             <NavVisibilityProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <PremiumProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </PremiumProvider>
             </NavVisibilityProvider>
           </IntroProvider>
         </ProgressProvider>
