@@ -1,4 +1,5 @@
 import { useIntro } from "../context/IntroContext.jsx";
+import InstallGuide from "../components/InstallGuide.jsx";
 
 export default function Home() {
   const { startTour } = useIntro();
@@ -18,6 +19,8 @@ export default function Home() {
           </button>
         </div>
       </div>
+
+      <InstallGuide />
     </div>
   );
 }
