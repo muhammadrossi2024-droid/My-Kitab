@@ -7,12 +7,12 @@ import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
 // renaming, or reordering a tab here can never leave that guide stale.
 export const links = [
   { to: "/", label: "Home", icon: Home },
-  { to: "/my-kitab", label: "My Library", navLabel: "Library", icon: Folder },
-  { to: "/surahs", label: "Quran", navLabel: "Quran", icon: BookOpen },
-  { to: "/mutoon", label: "Mutoon", navLabel: "Mutoon", icon: Library },
-  { to: "/athkar", label: "Athkar", navLabel: "Dhikr", icon: Sparkles },
-  { to: "/search", label: "Search", navLabel: "Search", icon: Search },
-  { to: "/settings", label: "Settings", navLabel: "Settings", icon: SlidersHorizontal },
+  { to: "/my-kitab", label: "My Library", icon: Folder },
+  { to: "/surahs", label: "Quran", icon: BookOpen },
+  { to: "/mutoon", label: "Mutoon", icon: Library },
+  { to: "/athkar", label: "Athkar", icon: Sparkles },
+  { to: "/search", label: "Search", icon: Search },
+  { to: "/settings", label: "Settings", icon: SlidersHorizontal },
 ];
 
 export default function Navbar() {
@@ -30,12 +30,13 @@ export default function Navbar() {
               to={link.to}
               end={isHome}
               data-tour-id={link.to}
-              className={({ isActive }) => "navbar-link" + (isActive ? " active" : "")}
+              className={({ isActive }) =>
+                "navbar-link" + (isHome ? " navbar-link-home" : "") + (isActive ? " active" : "")
+              }
               aria-label={link.label}
               title={link.label}
             >
               <Icon className="navbar-link-icon" strokeWidth={2} />
-              {link.navLabel && <span className="navbar-link-label">{link.navLabel}</span>}
             </NavLink>
           );
         })}
