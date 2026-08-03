@@ -3,3 +3,8 @@ dist/
 scratch_pdf_pages/
 *.log
 .DS_Store
+
+# Environment variables (Firebase config — see .env.example for the template)
+.env
+.env.local
+.env.*.local

@@ -4,8 +4,11 @@ import Navbar from "./components/Navbar.jsx";
 import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import GuidedTour from "./components/GuidedTour.jsx";
+import AuthLoadingScreen from "./components/AuthLoadingScreen.jsx";
+import { useAuth } from "./context/AuthContext.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
 import { useNavVisibility } from "./context/NavVisibilityContext.jsx";
+import Auth from "./pages/Auth.jsx";
 import Home from "./pages/Home.jsx";
 import SurahList from "./pages/SurahList.jsx";
 import SurahReader from "./pages/SurahReader.jsx";
@@ -21,6 +24,7 @@ import MyKitabViewer from "./pages/MyKitabViewer.jsx";
 import Settings from "./pages/Settings.jsx";
 
 export default function App() {
+  const { user, authLoading } = useAuth();
   const { showIntro, stage, advanceToTour, dismissIntro } = useIntro();
   const { lock, unlock } = useNavVisibility();
 
@@ -30,6 +34,13 @@ export default function App() {
     if (showIntro) lock();
     else unlock();
   }, [showIntro, lock, unlock]);
+
+  // Firebase's first onAuthStateChanged callback resolves from local state
+  // (near-instant, no network round-trip) — this loading window is brief,
+  // just long enough to avoid a flash of the login page for a returning,
+  // already-signed-in user.
+  if (authLoading) return <AuthLoadingScreen />;
+  if (!user) return <Auth />;
 
   return (
     <div className="app-shell">

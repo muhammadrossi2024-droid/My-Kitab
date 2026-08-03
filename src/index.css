@@ -1713,6 +1713,212 @@ a {
   letter-spacing: 0.01em;
 }
 
+/* Login/signup — replaces the old passive splash as the very first thing an
+   unauthenticated visitor sees. Built entirely from existing tokens/classes
+   (.card, .btn/.btn-primary, the .search-input field shape, the muted
+   chip-bg error convention) rather than introducing a new visual language. */
+.auth-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  overflow-y: auto;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 20px calc(40px + env(safe-area-inset-bottom));
+  padding-top: calc(48px + env(safe-area-inset-top));
+  animation: splash-fade-in 0.4s ease;
+}
+
+.auth-theme-toggle {
+  position: fixed;
+  top: calc(16px + env(safe-area-inset-top));
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.auth-theme-toggle:hover {
+  filter: brightness(1.05);
+}
+
+.auth-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.auth-headline {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+}
+
+.auth-subhead {
+  margin: 0 0 28px;
+  max-width: 360px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+}
+
+.auth-mode-toggle {
+  margin-bottom: 20px;
+}
+
+.auth-field {
+  margin-bottom: 16px;
+}
+
+.auth-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.auth-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.auth-field-error {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.auth-forgot-link {
+  display: block;
+  width: 100%;
+  margin: -8px 0 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 0.82rem;
+  text-align: right;
+  cursor: pointer;
+}
+
+.auth-form-error {
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--chip-bg);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 12px 16px;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 18px 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.auth-google-btn {
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.95rem;
+}
+
+.auth-google-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-switch-mode {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.auth-reset-confirm {
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.auth-fineprint {
+  margin-top: 24px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .auth-headline {
+    font-size: 1.3rem;
+  }
+
+  .auth-logo {
+    width: 60px;
+    height: 60px;
+  }
+}
+
 .chat-avatar {
   width: 32px;
   height: 32px;

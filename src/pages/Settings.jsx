@@ -1,10 +1,12 @@
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useIntro } from "../context/IntroContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
   const { restartIntro } = useIntro();
+  const { user, logOut } = useAuth();
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
@@ -152,6 +154,18 @@ export default function Settings() {
               In the Name of Allah, The Most-Merciful, the Ever-Merciful. (preview)
             </p>
           )}
+        </div>
+      </div>
+
+      <div className="card">
+        <div className="form-row">
+          <div>
+            <div className="form-row-label">Account</div>
+            <div className="form-row-desc">{user?.email}</div>
+          </div>
+          <button className="btn" onClick={logOut}>
+            Log out
+          </button>
         </div>
       </div>
 
