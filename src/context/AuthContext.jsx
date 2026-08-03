@@ -29,11 +29,31 @@ export function AuthProvider({ children }) {
       setAuthLoading(false);
       return;
     }
+
+    // This first callback normally fires almost instantly — it's a local
+    // IndexedDB check, no network round-trip. But if the browser's IndexedDB
+    // for this origin is ever in a wedged state (seen in the wild: a prior
+    // tab/session left a connection or transaction that never settles),
+    // Firebase's persistence bootstrap can hang indefinitely with no error
+    // at all — which previously left the whole app stuck on the splash
+    // screen forever, since nothing else was driving `authLoading` to
+    // false. This bounds the wait: if the real callback hasn't fired within
+    // 5s, fall through as logged-out (the safe default — it never reveals
+    // an authenticated view it hasn't confirmed) so the app always loads.
+    // If the real callback does eventually fire after that, it still
+    // updates state normally.
+    const fallback = setTimeout(() => setAuthLoading(false), 5000);
+
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      clearTimeout(fallback);
       setUser(firebaseUser);
       setAuthLoading(false);
     });
-    return unsubscribe;
+
+    return () => {
+      clearTimeout(fallback);
+      unsubscribe();
+    };
   }, []);
 
   const signUpWithEmail = async (email, password) => {
