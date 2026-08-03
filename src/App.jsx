@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar.jsx";
 import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import GuidedTour from "./components/GuidedTour.jsx";
-import AuthLoadingScreen from "./components/AuthLoadingScreen.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
 import { useNavVisibility } from "./context/NavVisibilityContext.jsx";
@@ -35,37 +34,48 @@ export default function App() {
     else unlock();
   }, [showIntro, lock, unlock]);
 
-  // Firebase's first onAuthStateChanged callback resolves from local state
-  // (near-instant, no network round-trip) — this loading window is brief,
-  // just long enough to avoid a flash of the login page for a returning,
-  // already-signed-in user.
-  if (authLoading) return <AuthLoadingScreen />;
-  if (!user) return <Auth />;
+  // One persistent splash instance spans both "waiting on Firebase's initial
+  // auth check" and (for an authenticated, first-ever-this-session visit)
+  // the branded splash that follows it. Rendering those as two separate
+  // components in sequence — one for the auth-loading wait, a different one
+  // for the splash — caused a visible double-flash on every refresh: the
+  // first would unmount and the second mount fresh mid-transition, restarting
+  // its fade-in even though the two looked almost identical. Keeping it as
+  // the same element across that transition means React just re-renders it
+  // in place instead of tearing down and rebuilding the DOM node.
+  const showSplash = authLoading || (!!user && showIntro && stage === "splash");
 
   return (
-    <div className="app-shell">
-      <TopBanner />
-      <Navbar />
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/surahs" element={<SurahList />} />
-          <Route path="/surah/:number" element={<SurahReader />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/mutoon" element={<Mutoon />} />
-          <Route path="/mutoon/:bookId" element={<MutoonReader />} />
-          <Route path="/medinah" element={<MedinahBooks />} />
-          <Route path="/medinah/:bookId" element={<MedinahLessons />} />
-          <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
-          <Route path="/athkar" element={<Athkar />} />
-          <Route path="/my-kitab" element={<MyKitab />} />
-          <Route path="/my-kitab/:id" element={<MyKitabViewer />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </main>
+    <>
+      {showSplash && <SplashScreen active={!authLoading} onDone={advanceToTour} />}
 
-      {showIntro && stage === "splash" && <SplashScreen onDone={advanceToTour} />}
-      {showIntro && stage === "tour" && <GuidedTour onDone={dismissIntro} />}
-    </div>
+      {!authLoading && !user && <Auth />}
+
+      {!authLoading && user && (
+        <div className="app-shell">
+          <TopBanner />
+          <Navbar />
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/surahs" element={<SurahList />} />
+              <Route path="/surah/:number" element={<SurahReader />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/mutoon" element={<Mutoon />} />
+              <Route path="/mutoon/:bookId" element={<MutoonReader />} />
+              <Route path="/medinah" element={<MedinahBooks />} />
+              <Route path="/medinah/:bookId" element={<MedinahLessons />} />
+              <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
+              <Route path="/athkar" element={<Athkar />} />
+              <Route path="/my-kitab" element={<MyKitab />} />
+              <Route path="/my-kitab/:id" element={<MyKitabViewer />} />
+              <Route path="/settings" element={<Settings />} />
+            </Routes>
+          </main>
+
+          {showIntro && stage === "tour" && <GuidedTour onDone={dismissIntro} />}
+        </div>
+      )}
+    </>
   );
 }
