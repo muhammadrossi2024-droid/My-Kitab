@@ -7,6 +7,7 @@ import { links } from "./Navbar.jsx";
 // Same copy as before — only the presentation changed (chat bubbles -> a
 // spotlight tour). Keyed by route so it survives `links` being reordered.
 const TAB_BLURBS = {
+  "/": "Your starting point, with a quick link into every section. Tap it any time to jump back here.",
   "/my-kitab": "Your personal library. Upload your own PDFs and search only within them — try adding one and searching a word from it.",
   "/surahs": "The full Qur'an, with Arabic text and English translation. Try opening a surah and tapping a verse to hear it recited.",
   "/mutoon": "Classical texts for the student of knowledge, laid out page by page. Try opening a book and swiping through a lesson.",

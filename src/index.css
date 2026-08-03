@@ -412,6 +412,18 @@ a {
   color: var(--accent);
 }
 
+/* Home is the one nav item with inverted active-state coloring: vibrant
+   (an invitation back to the hub) while elsewhere in the app, muted once
+   you're actually there — the opposite of every other tab. */
+.navbar-link-home {
+  color: var(--accent);
+}
+
+.navbar-link-home.active {
+  background: none;
+  color: var(--text-muted);
+}
+
 .navbar-link-icon {
   width: 22px;
   height: 22px;
