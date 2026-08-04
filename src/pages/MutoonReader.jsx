@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 import ArabicText from "../components/ArabicText.jsx";
+import FlipNoteCard from "../components/FlipNoteCard.jsx";
+import { listNotesBySourceKey } from "../utils/notesDb.js";
 
 // Flattens a matn into the sequence of "pages" a reader swipes through.
 // Each front-matter unit (bismillah / intro / each intro paragraph) and each
@@ -94,6 +96,7 @@ export default function MutoonReader() {
   const [justMarkedPage, setJustMarkedPage] = useState(null);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageAnim, setPageAnim] = useState(null); // "next" | "prev" | null
+  const [notesByRef, setNotesByRef] = useState(new Map());
   const swipeStartRef = useRef(null); // {x, y} | null — only tracked for touch/pen pointers
 
   const pages = useMemo(() => (book ? buildPages(book) : []), [book]);
@@ -112,7 +115,34 @@ export default function MutoonReader() {
     loader()
       .then((mod) => setBook(mod.default))
       .catch((err) => setError(err.message));
+    listNotesBySourceKey("mutoon", bookId).then(setNotesByRef);
   }, [bookId]);
+
+  function handleNoteChange(refKey, note, deletedId) {
+    setNotesByRef((prev) => {
+      const next = new Map(prev);
+      if (deletedId) next.delete(refKey);
+      else next.set(refKey, note);
+      return next;
+    });
+  }
+
+  function pageExcerptFor(page) {
+    if (!page || !book) return "";
+    if (page.type === "intro") {
+      const { unit } = page;
+      if (unit.kind === "bismillah") return book.bismillah || "";
+      if (unit.kind === "intro") return book.intro || "";
+      if (unit.kind === "para") {
+        return isListParagraph(unit.para) ? unit.para.lead || "" : plainText(unit.para);
+      }
+    }
+    if (page.type === "section") {
+      return isListParagraph(page.para) ? page.para.lead || page.section.heading || "" : plainText(page.para);
+    }
+    if (page.type === "closing") return book.closing || "";
+    return "";
+  }
 
   // Jump straight to a page when arriving via a "Resume" link.
   useEffect(() => {
@@ -288,7 +318,20 @@ export default function MutoonReader() {
               }
               id={currentPage?.key}
             >
-              {renderPageContent(currentPage)}
+              {currentPage && (
+                <FlipNoteCard
+                  source="mutoon"
+                  sourceKey={bookId}
+                  refKey={`${bookId}-${currentPage.key}`}
+                  sourceLabel={`${book.title.transliteration} — ${pageHeadingFor(currentPage)}`}
+                  excerpt={pageExcerptFor(currentPage)}
+                  existing={notesByRef.get(`${bookId}-${currentPage.key}`)}
+                  onNoteChange={(note, deletedId) =>
+                    handleNoteChange(`${bookId}-${currentPage.key}`, note, deletedId)
+                  }
+                  front={renderPageContent(currentPage)}
+                />
+              )}
             </div>
           </div>
           <div className="mutoon-pager-controls">

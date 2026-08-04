@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { TextLayer } from "pdfjs-dist";
+import { NotebookPen, X } from "lucide-react";
 import { getPdf } from "../utils/myKitabDb.js";
 import { openPdfDocument } from "../utils/pdfExtract.js";
+import { listNotesBySourceKey } from "../utils/notesDb.js";
+import NoteEditor from "../components/NoteEditor.jsx";
 
 const MIN_ZOOM = 1;
 const MAX_ZOOM = 4;
@@ -54,6 +57,8 @@ export default function MyKitabViewer() {
   const [pageErrors, setPageErrors] = useState(() => new Map());
   const [zoom, setZoom] = useState(1);
   const [pageInput, setPageInput] = useState("");
+  const [notesByRef, setNotesByRef] = useState(new Map());
+  const [notePageOpen, setNotePageOpen] = useState(null); // page number, or null
 
   const canvasRefs = useRef([]);
   const pageWrapRefs = useRef([]);
@@ -93,6 +98,11 @@ export default function MyKitabViewer() {
         return;
       }
       setRecord(rec);
+    });
+    setNotesByRef(new Map());
+    setNotePageOpen(null);
+    listNotesBySourceKey("library", id).then((map) => {
+      if (!cancelled) setNotesByRef(map);
     });
     return () => {
       cancelled = true;
@@ -218,6 +228,25 @@ export default function MyKitabViewer() {
     const el = pageWrapRefs.current[pageNumber - 1];
     if (el) el.scrollIntoView({ block: "start" });
     ensurePageRendered(pageNumber);
+  }
+
+  function noteRefKeyFor(pageNumber) {
+    return `${record.id}-page-${pageNumber}`;
+  }
+
+  function excerptForPage(pageNumber) {
+    const text = record?.pages?.[pageNumber - 1]?.text || "";
+    return text.length > 160 ? `${text.slice(0, 160)}…` : text;
+  }
+
+  function handleNoteChange(pageNumber, note, deletedId) {
+    setNotesByRef((prev) => {
+      const next = new Map(prev);
+      if (deletedId) next.delete(noteRefKeyFor(pageNumber));
+      else next.set(noteRefKeyFor(pageNumber), note);
+      return next;
+    });
+    setNotePageOpen(null);
   }
 
   function handleJumpSubmit(e) {
@@ -399,10 +428,53 @@ export default function MyKitabViewer() {
               {pageErrors.has(n) && (
                 <div className="mykitab-page-error">Page {n} {pageErrors.get(n)}</div>
               )}
+              <button
+                type="button"
+                className={"mykitab-page-note-btn" + (notesByRef.has(noteRefKeyFor(n)) ? " has-note" : "")}
+                onClick={() => setNotePageOpen(n)}
+                aria-label={notesByRef.has(noteRefKeyFor(n)) ? "Edit note for this page" : "Add note for this page"}
+                title={notesByRef.has(noteRefKeyFor(n)) ? "Edit note" : "Add note"}
+              >
+                <NotebookPen size={15} strokeWidth={2} />
+              </button>
             </div>
           ))}
         </div>
       </div>
+
+      {notePageOpen !== null && (
+        <div className="confirm-dialog-backdrop" onClick={() => setNotePageOpen(null)}>
+          <div
+            className="note-popover-modal"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-label={`Note for page ${notePageOpen}`}
+          >
+            <div className="note-popover-header">
+              <span>Page {notePageOpen}</span>
+              <button
+                type="button"
+                className="note-popover-close"
+                onClick={() => setNotePageOpen(null)}
+                aria-label="Close"
+              >
+                <X size={16} strokeWidth={2} />
+              </button>
+            </div>
+            <NoteEditor
+              source="library"
+              sourceKey={record.id}
+              refKey={noteRefKeyFor(notePageOpen)}
+              sourceLabel={`${record.title} — page ${notePageOpen}`}
+              excerpt={excerptForPage(notePageOpen)}
+              existing={notesByRef.get(noteRefKeyFor(notePageOpen))}
+              onSaved={(note) => handleNoteChange(notePageOpen, note, null)}
+              onDeleted={(id) => handleNoteChange(notePageOpen, null, id)}
+              onCancel={() => setNotePageOpen(null)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

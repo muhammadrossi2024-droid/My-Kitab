@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { FileText, Folder } from "lucide-react";
+import { FileText, Folder, Trash2 } from "lucide-react";
 import {
   addAlbum,
   addPdf,
+  deleteAlbum,
   deletePdf,
   listAlbums,
   listPdfs,
   makePdfId,
   setPdfAlbum,
 } from "../utils/myKitabDb.js";
+import { addNoteAlbum, deleteNoteAlbum, listNoteAlbums, listNotes } from "../utils/notesDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
 import SectionHero from "../components/SectionHero.jsx";
@@ -82,6 +84,7 @@ export default function MyKitab() {
   const [newAlbumName, setNewAlbumName] = useState("");
 
   const [deleteTarget, setDeleteTarget] = useState(null); // the pdf record pending confirmation
+  const [deletePdfAlbumTarget, setDeletePdfAlbumTarget] = useState(null);
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
@@ -89,10 +92,13 @@ export default function MyKitab() {
   const debounceRef = useRef(null);
   const requestIdRef = useRef(0);
 
-  const [question, setQuestion] = useState("");
-  const [asking, setAsking] = useState(false);
-  const [answer, setAnswer] = useState(null); // { text, citations } | { notFound: true } | null
-  const [askError, setAskError] = useState(null);
+  const [notes, setNotes] = useState([]);
+  const [noteAlbums, setNoteAlbums] = useState([]);
+  const [activeNoteAlbumId, setActiveNoteAlbumId] = useState(null); // null = "All Notes"
+  const [showNewNoteAlbumForm, setShowNewNoteAlbumForm] = useState(false);
+  const [newNoteAlbumName, setNewNoteAlbumName] = useState("");
+  const [noteTagFilter, setNoteTagFilter] = useState("");
+  const [deleteNoteAlbumTarget, setDeleteNoteAlbumTarget] = useState(null);
 
   async function refreshList() {
     setPdfs(await listPdfs());
@@ -103,9 +109,19 @@ export default function MyKitab() {
     setAlbums(await listAlbums());
   }
 
+  async function refreshNotes() {
+    setNotes(await listNotes());
+  }
+
+  async function refreshNoteAlbums() {
+    setNoteAlbums(await listNoteAlbums());
+  }
+
   useEffect(() => {
     refreshList();
     refreshAlbums();
+    refreshNotes();
+    refreshNoteAlbums();
   }, []);
 
   useEffect(() => {
@@ -196,48 +212,43 @@ export default function MyKitab() {
     await refreshList();
   }
 
-  async function handleAsk(e) {
-    e.preventDefault();
-    const q = question.trim();
-    if (!q || asking) return;
+  async function confirmDeletePdfAlbum() {
+    if (!deletePdfAlbumTarget) return;
+    await deleteAlbum(deletePdfAlbumTarget.id);
+    if (activeAlbumId === deletePdfAlbumTarget.id) setActiveAlbumId(null);
+    setDeletePdfAlbumTarget(null);
+    await refreshAlbums();
+    await refreshList();
+  }
 
-    setAsking(true);
-    setAnswer(null);
-    setAskError(null);
-    try {
-      // Retrieval reuses the same local, PDFs-only search as the excerpt
-      // search below — only what it finds ever reaches the model, so an
-      // empty result short-circuits straight to "not found" with no
-      // network call at all.
-      const passages = await searchMyKitab(q);
-      if (passages.length === 0) {
-        setAnswer({ notFound: true });
-        return;
-      }
-      const res = await fetch("/api/ask-library", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: q,
-          passages: passages.slice(0, 8).map((p) => ({
-            pdfId: p.pdfId,
-            pdfTitle: p.pdfTitle,
-            pageNumber: p.pageNumber,
-            excerpt: p.excerpt,
-          })),
-        }),
-      });
-      if (!res.ok) throw new Error(`The library couldn't be asked right now (${res.status}).`);
-      const data = await res.json();
-      setAnswer(data);
-    } catch (err) {
-      setAskError(err?.message || "Something went wrong asking your library.");
-    } finally {
-      setAsking(false);
-    }
+  async function handleCreateNoteAlbum(e) {
+    e.preventDefault();
+    const name = newNoteAlbumName.trim();
+    if (!name) return;
+    await addNoteAlbum(name);
+    setNewNoteAlbumName("");
+    setShowNewNoteAlbumForm(false);
+    await refreshNoteAlbums();
+  }
+
+  async function confirmDeleteNoteAlbum() {
+    if (!deleteNoteAlbumTarget) return;
+    await deleteNoteAlbum(deleteNoteAlbumTarget.id);
+    if (activeNoteAlbumId === deleteNoteAlbumTarget.id) setActiveNoteAlbumId(null);
+    setDeleteNoteAlbumTarget(null);
+    await refreshNoteAlbums();
+    await refreshNotes();
   }
 
   const visiblePdfs = activeAlbumId ? pdfs.filter((p) => p.albumId === activeAlbumId) : pdfs;
+
+  const visibleNotes = notes
+    .filter((n) => (activeNoteAlbumId ? n.albumId === activeNoteAlbumId : true))
+    .filter((n) => {
+      const q = noteTagFilter.trim().toLowerCase();
+      if (!q) return true;
+      return n.tags.some((t) => t.toLowerCase().includes(q));
+    });
 
   return (
     <div>
@@ -289,13 +300,22 @@ export default function MyKitab() {
               All PDFs
             </button>
             {albums.map((a) => (
-              <button
+              <span
                 key={a.id}
-                className={"mykitab-album-chip" + (activeAlbumId === a.id ? " active" : "")}
-                onClick={() => setActiveAlbumId(a.id)}
+                className={"mykitab-album-chip-wrap" + (activeAlbumId === a.id ? " active" : "")}
               >
-                {a.name}
-              </button>
+                <button className="mykitab-album-chip-label" onClick={() => setActiveAlbumId(a.id)}>
+                  {a.name}
+                </button>
+                <button
+                  className="mykitab-album-chip-delete"
+                  onClick={() => setDeletePdfAlbumTarget(a)}
+                  aria-label={`Delete album ${a.name}`}
+                  title="Delete album"
+                >
+                  <Trash2 size={12} strokeWidth={2} />
+                </button>
+              </span>
             ))}
             <button
               className="mykitab-album-chip-new"
@@ -375,56 +395,102 @@ export default function MyKitab() {
       </div>
 
       <div className="card">
-        <div className="form-row-label">Ask your library</div>
+        <div className="form-row-label">Your notes</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 16 }}>
-          Ask a question in plain English — answers are drawn only from the PDFs you've uploaded,
-          never general knowledge.
+          Notes taken by flipping an ayah in the Quran, a page in Mutoon, or via the note button on
+          any of your uploaded PDFs — all end up here, organized into albums.
         </p>
 
-        <form className="mykitab-ask-form" onSubmit={handleAsk}>
-          <input
-            className="mykitab-ask-input"
-            placeholder="e.g. What does this book say about patience?"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
-            disabled={pdfs.length === 0}
-          />
-          <button className="btn btn-primary" type="submit" disabled={asking || pdfs.length === 0}>
-            {asking ? "Asking…" : "Ask"}
-          </button>
-        </form>
-
-        {pdfs.length === 0 && (
-          <div className="empty-state">Add a PDF above, then ask a question about it here.</div>
-        )}
-
-        {asking && <div className="loading-state">Reading your library…</div>}
-
-        {!asking && askError && <div className="empty-state mykitab-answer-error">{askError}</div>}
-
-        {!asking && !askError && answer && answer.notFound && (
-          <div className="empty-state">
-            Nothing in your uploaded PDFs answers that — try rephrasing, or check that a PDF
-            covering this actually made it into your library.
+        {(noteAlbums.length > 0 || notes.length > 0) && (
+          <div className="mykitab-album-row">
+            <button
+              className={"mykitab-album-chip" + (activeNoteAlbumId === null ? " active" : "")}
+              onClick={() => setActiveNoteAlbumId(null)}
+            >
+              All Notes
+            </button>
+            {noteAlbums.map((a) => (
+              <span
+                key={a.id}
+                className={"mykitab-album-chip-wrap" + (activeNoteAlbumId === a.id ? " active" : "")}
+              >
+                <button
+                  className="mykitab-album-chip-label"
+                  onClick={() => setActiveNoteAlbumId(a.id)}
+                >
+                  {a.name}
+                </button>
+                <button
+                  className="mykitab-album-chip-delete"
+                  onClick={() => setDeleteNoteAlbumTarget(a)}
+                  aria-label={`Delete album ${a.name}`}
+                  title="Delete album"
+                >
+                  <Trash2 size={12} strokeWidth={2} />
+                </button>
+              </span>
+            ))}
+            <button
+              className="mykitab-album-chip-new"
+              onClick={() => setShowNewNoteAlbumForm((v) => !v)}
+            >
+              + New album
+            </button>
           </div>
         )}
 
-        {!asking && !askError && answer && !answer.notFound && (
-          <div className="mykitab-answer">
-            <p className="mykitab-answer-text">{answer.text}</p>
-            {answer.citations && answer.citations.length > 0 && (
-              <div className="mykitab-answer-citations">
-                {answer.citations.map((c, i) => (
-                  <Link
-                    key={i}
-                    to={`/my-kitab/${c.pdfId}?page=${c.pageNumber}`}
-                    className="mykitab-answer-citation"
-                  >
-                    {c.pdfTitle} · page {c.pageNumber} →
-                  </Link>
-                ))}
+        {showNewNoteAlbumForm && (
+          <form className="mykitab-new-album-form" onSubmit={handleCreateNoteAlbum}>
+            <input
+              className="mykitab-new-album-input"
+              placeholder="Album name"
+              value={newNoteAlbumName}
+              onChange={(e) => setNewNoteAlbumName(e.target.value)}
+              autoFocus
+            />
+            <button type="submit" className="btn btn-primary">
+              Create
+            </button>
+          </form>
+        )}
+
+        {notes.length > 0 && (
+          <input
+            className="search-input"
+            style={{ marginTop: 14, marginBottom: 0 }}
+            placeholder="Filter by tag…"
+            value={noteTagFilter}
+            onChange={(e) => setNoteTagFilter(e.target.value)}
+          />
+        )}
+
+        {notes.length === 0 ? (
+          <div className="empty-state" style={{ marginTop: 16 }}>
+            No notes yet — tap the notebook icon on an ayah, a Mutoon page, or a PDF page to add
+            one.
+          </div>
+        ) : visibleNotes.length === 0 ? (
+          <div className="empty-state" style={{ marginTop: 16 }}>
+            No notes match this filter.
+          </div>
+        ) : (
+          <div className="mykitab-note-list">
+            {visibleNotes.map((note) => (
+              <div className="mykitab-note-card" key={note.id}>
+                <div className="mykitab-note-card-source">{note.sourceLabel}</div>
+                {note.excerpt && <p className="mykitab-note-card-excerpt">"{note.excerpt}"</p>}
+                <p className="mykitab-note-card-text">{note.text}</p>
+                {note.tags.length > 0 && (
+                  <div className="mykitab-note-card-tags">
+                    {note.tags.map((tag) => (
+                      <span className="note-tag-chip" key={tag}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
+            ))}
           </div>
         )}
       </div>
@@ -481,6 +547,26 @@ export default function MyKitab() {
           confirmLabel="Delete"
           onCancel={() => setDeleteTarget(null)}
           onConfirm={confirmDelete}
+        />
+      )}
+
+      {deletePdfAlbumTarget && (
+        <ConfirmDialog
+          title="Delete this album?"
+          message={`"${deletePdfAlbumTarget.name}" will be deleted. Its PDFs aren't removed — they just move back to "All PDFs". This cannot be undone.`}
+          confirmLabel="Delete"
+          onCancel={() => setDeletePdfAlbumTarget(null)}
+          onConfirm={confirmDeletePdfAlbum}
+        />
+      )}
+
+      {deleteNoteAlbumTarget && (
+        <ConfirmDialog
+          title="Delete this album?"
+          message={`"${deleteNoteAlbumTarget.name}" will be deleted. Its notes aren't removed — they just move back to "All Notes". This cannot be undone.`}
+          confirmLabel="Delete"
+          onCancel={() => setDeleteNoteAlbumTarget(null)}
+          onConfirm={confirmDeleteNoteAlbum}
         />
       )}
     </div>

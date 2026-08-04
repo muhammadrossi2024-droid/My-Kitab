@@ -1,10 +1,13 @@
+import { useState } from "react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
+import ConfirmDialog from "../components/ConfirmDialog.jsx";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
   const { user, logOut } = useAuth();
+  const [confirmingLogout, setConfirmingLogout] = useState(false);
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
@@ -161,7 +164,7 @@ export default function Settings() {
             <div className="form-row-label">Account</div>
             <div className="form-row-desc">{user?.email}</div>
           </div>
-          <button className="btn" onClick={logOut}>
+          <button className="btn" onClick={() => setConfirmingLogout(true)}>
             Log out
           </button>
         </div>
@@ -172,6 +175,16 @@ export default function Settings() {
           Reset to defaults
         </button>
       </div>
+
+      {confirmingLogout && (
+        <ConfirmDialog
+          title="Log out?"
+          message="Are you sure you want to log out?"
+          confirmLabel="Logout"
+          onCancel={() => setConfirmingLogout(false)}
+          onConfirm={logOut}
+        />
+      )}
     </div>
   );
 }

@@ -1551,6 +1551,101 @@ a {
   color: var(--accent-contrast);
 }
 
+/* Deletable album chips (as opposed to the plain "All PDFs"/"All Notes"
+   .mykitab-album-chip button above, which isn't a real album and has
+   nothing to delete) — a button can't nest another button, so this is a
+   wrapper span around a label button + a small delete button, sharing the
+   same chip look. Reused as-is for both My Kitab's PDF albums and the
+   notes feature's note albums. */
+.mykitab-album-chip-wrap {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.mykitab-album-chip-wrap.active {
+  border-color: var(--accent);
+}
+
+.mykitab-album-chip-label {
+  padding: 6px 4px 6px 14px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mykitab-album-chip-wrap.active .mykitab-album-chip-label {
+  color: var(--accent);
+}
+
+.mykitab-album-chip-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin: 0 4px 0 2px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.mykitab-album-chip-delete:hover {
+  background: var(--chip-bg);
+  color: #c0392b;
+}
+
+.mykitab-note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mykitab-note-card {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.mykitab-note-card-source {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.mykitab-note-card-excerpt {
+  margin: 0 0 8px;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.mykitab-note-card-text {
+  margin: 0 0 10px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.mykitab-note-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
 .mykitab-album-chip-new {
   padding: 6px 14px;
   border-radius: 999px;
@@ -2630,4 +2725,269 @@ a {
   .premium-promo-prices {
     gap: 14px;
   }
+}
+
+/* Flip-card note-taking (Quran ayahs, Mutoon pages) — front face is
+   whatever the reader page was already rendering, untouched; back face is
+   the NoteEditor. Grid with both faces in the same cell (rather than
+   absolute positioning) is what lets the card auto-size to whichever face
+   is taller, front or back, instead of clipping the editor on a short
+   verse. */
+.flip-note-card {
+  position: relative;
+  perspective: 1400px;
+}
+
+.flip-note-trigger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.flip-note-trigger:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.flip-note-trigger.has-note {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.flip-note-inner {
+  display: grid;
+  align-items: start;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.flip-note-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-note-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  min-width: 0;
+}
+
+.flip-note-front {
+  padding-right: 38px;
+}
+
+.flip-note-back {
+  transform: rotateY(180deg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  align-self: start;
+}
+
+.note-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note-editor-excerpt {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.4;
+  max-height: 4.2em;
+  overflow: hidden;
+}
+
+.note-editor-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.note-editor-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.note-tag-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 3px 4px 3px 9px;
+  border-radius: 999px;
+}
+
+.note-tag-chip button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.note-tag-chip button:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.note-editor-tag-input {
+  flex: 1;
+  min-width: 80px;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 0.85rem;
+  padding: 4px 2px;
+  outline: none;
+}
+
+.note-editor-album-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.note-editor-album-select {
+  flex: 1;
+  min-width: 0;
+}
+
+.note-editor-new-album-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.note-editor-new-album-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.note-editor-new-album {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+}
+
+.note-editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* PDF pages are canvas-rendered and virtualized (see MyKitabViewer.jsx) —
+   a true 3D flip per page isn't practical there, so notes get a floating
+   button + modal instead (same NoteEditor form, different entry point). */
+.mykitab-page-note-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mykitab-page-note-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.mykitab-page-note-btn.has-note {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.note-popover-modal {
+  width: min(400px, 100%);
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  padding: 16px;
+}
+
+.note-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.note-popover-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--chip-bg);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.note-popover-close:hover {
+  color: var(--text);
 }

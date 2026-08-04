@@ -4,6 +4,8 @@ import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 import ArabicText from "../components/ArabicText.jsx";
+import FlipNoteCard from "../components/FlipNoteCard.jsx";
+import { listNotesBySourceKey } from "../utils/notesDb.js";
 import { reciters, isFullSurahReciter, surahAudioUrl, supportsWordTiming, getReciter } from "../data/reciters.js";
 import { verseAudioUrl } from "../utils/audio.js";
 import {
@@ -77,6 +79,7 @@ export default function SurahReader() {
   const { markRead, markListened, isRead, isListened, getSurahProgress } = useProgress();
   const [surah, setSurah] = useState(null);
   const [error, setError] = useState(null);
+  const [notesByRef, setNotesByRef] = useState(new Map());
   const [playingVerse, setPlayingVerse] = useState(null);
   const [activeWordRange, setActiveWordRange] = useState(null); // { start, end } | null — end-exclusive
   const [fullSurahPlaying, setFullSurahPlaying] = useState(false);
@@ -111,8 +114,20 @@ export default function SurahReader() {
     verseElsRef.current = new Map();
     stopPlayback();
     fetchSurahJson(surahNumber).then(setSurah).catch((err) => setError(err.message));
+    listNotesBySourceKey("quran", surahNumber).then(setNotesByRef);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surahNumber]);
+
+  // Optimistic local update after a note is saved/deleted from a flip
+  // card — avoids re-querying IndexedDB for the whole surah on every save.
+  function handleNoteChange(refKey, note, deletedId) {
+    setNotesByRef((prev) => {
+      const next = new Map(prev);
+      if (deletedId) next.delete(refKey);
+      else next.set(refKey, note);
+      return next;
+    });
+  }
 
   // Re-check the offline-download badge whenever the surah or the selected
   // reciter changes, since each reciter's audio is cached separately.
@@ -640,6 +655,7 @@ export default function SurahReader() {
           const isThisVersePlaying = fullSurahMode
             ? fullSurahActiveVerse === verse.number
             : playingVerse === verse.number;
+          const refKey = `${surah.number}:${verse.number}`;
           return (
             <div
               className={
@@ -652,66 +668,79 @@ export default function SurahReader() {
               key={verse.number}
               ref={(el) => registerVerseEl(verse.number, el)}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span className="ayah-number-badge">
-                  {surah.number}:{verse.number}
-                  {read && <span className="read-dot read-dot-read" title="Read" />}
-                  {listened && <span className="read-dot read-dot-listened" title="Listened" />}
-                </span>
-                {!fullSurahMode && (
-                  <button
-                    className="verse-play-btn"
-                    onClick={() => toggleVerse(verse.number)}
-                    aria-label={isThisVersePlaying ? "Pause verse" : "Play verse"}
-                    title={isThisVersePlaying ? "Pause" : "Play from here"}
-                  >
-                    {isThisVersePlaying ? "⏸" : "▶"}
-                  </button>
-                )}
-              </div>
-
-              <div className={settings.displayMode === "both" ? "ayah-side-by-side" : undefined}>
-                {settings.displayMode !== "english" && (
-                  <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-                    {words.map((word, i) => (
-                      <span
-                        key={i}
-                        className={
-                          "ayah-word" +
-                          (isThisVersePlaying &&
-                          activeWordRange &&
-                          i >= activeWordRange.start &&
-                          i < activeWordRange.end
-                            ? " ayah-word-active"
-                            : "")
-                        }
-                      >
-                        <ArabicText text={word} />
-                        {i < words.length - 1 ? " " : ""}
+              <FlipNoteCard
+                source="quran"
+                sourceKey={surah.number}
+                refKey={refKey}
+                sourceLabel={`${surah.name.transliteration} ${surah.number}:${verse.number}`}
+                excerpt={verse.translation}
+                existing={notesByRef.get(refKey)}
+                onNoteChange={(note, deletedId) => handleNoteChange(refKey, note, deletedId)}
+                front={
+                  <>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span className="ayah-number-badge">
+                        {surah.number}:{verse.number}
+                        {read && <span className="read-dot read-dot-read" title="Read" />}
+                        {listened && <span className="read-dot read-dot-listened" title="Listened" />}
                       </span>
-                    ))}
-                  </p>
-                )}
-                {settings.displayMode !== "arabic" && (
-                  <p
-                    className="ayah-translation"
-                    style={{ fontSize: settings.translationFontSize }}
-                  >
-                    {verse.translation}
-                  </p>
-                )}
-              </div>
+                      {!fullSurahMode && (
+                        <button
+                          className="verse-play-btn"
+                          onClick={() => toggleVerse(verse.number)}
+                          aria-label={isThisVersePlaying ? "Pause verse" : "Play verse"}
+                          title={isThisVersePlaying ? "Pause" : "Play from here"}
+                        >
+                          {isThisVersePlaying ? "⏸" : "▶"}
+                        </button>
+                      )}
+                    </div>
 
-              <button
-                className={
-                  "btn mark-last-read-btn" +
-                  (justMarkedVerse === verse.number ? " marked" : "")
+                    <div className={settings.displayMode === "both" ? "ayah-side-by-side" : undefined}>
+                      {settings.displayMode !== "english" && (
+                        <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
+                          {words.map((word, i) => (
+                            <span
+                              key={i}
+                              className={
+                                "ayah-word" +
+                                (isThisVersePlaying &&
+                                activeWordRange &&
+                                i >= activeWordRange.start &&
+                                i < activeWordRange.end
+                                  ? " ayah-word-active"
+                                  : "")
+                              }
+                            >
+                              <ArabicText text={word} />
+                              {i < words.length - 1 ? " " : ""}
+                            </span>
+                          ))}
+                        </p>
+                      )}
+                      {settings.displayMode !== "arabic" && (
+                        <p
+                          className="ayah-translation"
+                          style={{ fontSize: settings.translationFontSize }}
+                        >
+                          {verse.translation}
+                        </p>
+                      )}
+                    </div>
+
+                    <button
+                      className={
+                        "btn mark-last-read-btn" +
+                        (justMarkedVerse === verse.number ? " marked" : "")
+                      }
+                      style={{ marginTop: 8, fontSize: "0.8rem", padding: "6px 12px" }}
+                      onClick={() => handleMarkLastRead(verse.number)}
+                    >
+                      {justMarkedVerse === verse.number ? "✓ Marked" : "🔖 Mark as last read"}
+                    </button>
+                  </>
                 }
-                style={{ marginTop: 8, fontSize: "0.8rem", padding: "6px 12px" }}
-                onClick={() => handleMarkLastRead(verse.number)}
-              >
-                {justMarkedVerse === verse.number ? "✓ Marked" : "🔖 Mark as last read"}
-              </button>
+              />
             </div>
           );
         })}
