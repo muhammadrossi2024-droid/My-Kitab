@@ -1,7 +1,6 @@
 import { useIntro } from "../context/IntroContext.jsx";
 import InstallGuide from "../components/InstallGuide.jsx";
 import HomeSectionCards from "../components/HomeSectionCards.jsx";
-import PremiumPromoBox from "../components/PremiumPromoBox.jsx";
 
 export default function Home() {
   const { startTour } = useIntro();
@@ -25,8 +24,6 @@ export default function Home() {
       </div>
 
       <InstallGuide />
-
-      <PremiumPromoBox />
     </div>
   );
 }

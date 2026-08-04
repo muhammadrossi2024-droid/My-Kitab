@@ -12,7 +12,18 @@ import { useTopBannerVisibility } from "../context/TopBannerVisibilityContext.js
 // batch-fetch all their notes once via listNotesBySourceKey, rather than
 // each card querying IndexedDB individually) and passed in as a prop, so
 // this component stays a plain, fast-to-render presentational wrapper.
-export default function FlipNoteCard({ front, source, sourceKey, refKey, sourceLabel, excerpt, existing, onNoteChange }) {
+export default function FlipNoteCard({
+  front,
+  source,
+  sourceKey,
+  refKey,
+  sourceLabel,
+  excerpt,
+  existing,
+  onNoteChange,
+  locked = false,
+  onLockedTap,
+}) {
   const [flipped, setFlipped] = useState(false);
   // Mounted lazily on the first flip, then left mounted (just visually
   // hidden via backface-visibility) so flipping back never unmounts the
@@ -37,6 +48,14 @@ export default function FlipNoteCard({ front, source, sourceKey, refKey, sourceL
     setEverFlipped(true);
   }
 
+  function handleTriggerClick() {
+    if (locked) {
+      onLockedTap?.();
+      return;
+    }
+    toggleFlip();
+  }
+
   function handleSaved(note) {
     onNoteChange(note);
     setFlipped(false);
@@ -52,7 +71,7 @@ export default function FlipNoteCard({ front, source, sourceKey, refKey, sourceL
       <button
         type="button"
         className={"flip-note-trigger" + (existing ? " has-note" : "")}
-        onClick={toggleFlip}
+        onClick={handleTriggerClick}
         aria-label={existing ? "Edit note" : "Add note"}
         title={existing ? "Edit note" : "Add note"}
       >

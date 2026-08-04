@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Sun, Moon } from "lucide-react";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useSettings } from "../context/SettingsContext.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_PASSWORD_LENGTH = 8;
@@ -44,6 +45,7 @@ export default function Auth() {
   const navigate = useNavigate();
   const { signUpWithEmail, logInWithEmail, signInWithGoogle, resetPassword } = useAuth();
   const { settings, updateSettings } = useSettings();
+  const { isPremiumUser, openPremiumOffer } = usePremium();
 
   const [mode, setMode] = useState("login"); // "login" | "signup" | "reset"
   const [email, setEmail] = useState("");
@@ -96,15 +98,19 @@ export default function Auth() {
         return;
       }
 
+      let isNewUser = false;
       if (mode === "signup") {
-        await signUpWithEmail(email.trim(), password);
+        ({ isNewUser } = await signUpWithEmail(email.trim(), password));
       } else {
-        await logInWithEmail(email.trim(), password);
+        ({ isNewUser } = await logInWithEmail(email.trim(), password));
       }
       // Every successful login or signup lands on Home, not wherever the
       // router happened to still be pointed (e.g. a stale route left over
       // from before the session expired).
       navigate("/");
+      // First-ever login/signup only — the full-page Premium screen opens
+      // on top of Home rather than a second, separate onboarding step.
+      if (isNewUser && !isPremiumUser) openPremiumOffer();
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);
@@ -117,8 +123,9 @@ export default function Auth() {
     setFormError(null);
     setSubmitting(true);
     try {
-      await signInWithGoogle();
+      const { isNewUser } = await signInWithGoogle();
       navigate("/");
+      if (isNewUser && !isPremiumUser) openPremiumOffer();
     } catch (err) {
       const msg = mapFirebaseError(err.code);
       if (msg) setFormError(msg);

@@ -21,9 +21,9 @@ import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Athkar from "./pages/Athkar.jsx";
 import MyKitab from "./pages/MyKitab.jsx";
 import MyKitabViewer from "./pages/MyKitabViewer.jsx";
-import PremiumOffer from "./pages/PremiumOffer.jsx";
 import Settings from "./pages/Settings.jsx";
 import PremiumGate from "./components/PremiumGate.jsx";
+import PremiumOfferScreen from "./components/PremiumOfferScreen.jsx";
 
 export default function App() {
   const { user, authLoading } = useAuth();
@@ -61,6 +61,10 @@ export default function App() {
           {/* Sits above the bottom nav via its own fixed positioning — a
               sibling of Navbar, not a change to it. */}
           <AudioMiniPlayer />
+          {/* Full-viewport takeover, shown/hidden entirely via PremiumContext
+              — see PremiumGate, SurahReader's note button, and Auth.jsx for
+              the three trigger points. */}
+          <PremiumOfferScreen />
           <main className="app-main">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -89,7 +93,6 @@ export default function App() {
                   </PremiumGate>
                 }
               />
-              <Route path="/premium" element={<PremiumOffer />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </main>

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
 import { useAudioPlayer } from "../context/AudioPlayerContext.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 import ArabicText from "../components/ArabicText.jsx";
 import FlipNoteCard from "../components/FlipNoteCard.jsx";
@@ -17,6 +18,7 @@ export default function SurahReader() {
   const { settings, updateSettings, setLastRead } = useSettings();
   const { markRead, isRead, isListened, getSurahProgress } = useProgress();
   const audioPlayer = useAudioPlayer();
+  const { isPremiumUser, openPremiumOffer } = usePremium();
   const [surah, setSurah] = useState(null);
   const [error, setError] = useState(null);
   const [notesByRef, setNotesByRef] = useState(new Map());
@@ -214,7 +216,7 @@ export default function SurahReader() {
   const isPlaying = fullSurahMode ? fullSurahPlaying : Boolean(playingVerse);
 
   return (
-    <div>
+    <div className="surah-reader">
       <div className="reader-header">
         <div className="surah-arabic-name" style={{ fontSize: "2rem" }}>
           {surah.name.arabic}
@@ -403,6 +405,8 @@ export default function SurahReader() {
                 excerpt={verse.translation}
                 existing={notesByRef.get(refKey)}
                 onNoteChange={(note, deletedId) => handleNoteChange(refKey, note, deletedId)}
+                locked={!isPremiumUser}
+                onLockedTap={() => openPremiumOffer()}
                 front={
                   <>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

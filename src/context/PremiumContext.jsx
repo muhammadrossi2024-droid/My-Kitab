@@ -7,8 +7,8 @@ const STORAGE_KEY = "mykitab-premium-active";
 // gate), but kept behind one context so swapping this for actual
 // subscription status later (server-verified, tied to the signed-in user,
 // etc.) only means changing what happens inside this provider — every
-// consumer (the promo box's toggle, the section cards' gold outline)
-// already just reads/writes through usePremium() and needs no changes.
+// consumer already just reads/writes through usePremium() and needs no
+// changes.
 export function PremiumProvider({ children }) {
   const [isPremiumUser, setIsPremiumUser] = useState(() => {
     try {
@@ -17,6 +17,15 @@ export function PremiumProvider({ children }) {
       return false;
     }
   });
+
+  // The one shared full-page Premium screen (PremiumOfferScreen.jsx) is
+  // mounted once at the app root and toggled from here, rather than each
+  // trigger point (PremiumGate, the Quran note button, first login)
+  // rendering its own copy. `offer` doubles as both "is it open" and
+  // "what to do if the user declines it" — that differs per trigger (My
+  // Library's gate needs to step back out of the route; the Quran note
+  // button and first-login don't need to navigate anywhere on decline).
+  const [offer, setOffer] = useState(null); // null | { onDecline?: () => void }
 
   useEffect(() => {
     try {
@@ -27,11 +36,24 @@ export function PremiumProvider({ children }) {
     }
   }, [isPremiumUser]);
 
-  return (
-    <PremiumContext.Provider value={{ isPremiumUser, setIsPremiumUser }}>
-      {children}
-    </PremiumContext.Provider>
-  );
+  function openPremiumOffer(config = {}) {
+    setOffer(config);
+  }
+
+  function closePremiumOffer() {
+    setOffer(null);
+  }
+
+  const value = {
+    isPremiumUser,
+    setIsPremiumUser,
+    showPremiumOffer: offer !== null,
+    offerConfig: offer,
+    openPremiumOffer,
+    closePremiumOffer,
+  };
+
+  return <PremiumContext.Provider value={value}>{children}</PremiumContext.Provider>;
 }
 
 export function usePremium() {
