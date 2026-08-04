@@ -251,7 +251,7 @@ export default function MyKitab() {
     });
 
   return (
-    <div>
+    <div className="page-library">
       <SectionHero
         icon={Folder}
         title="My Library"

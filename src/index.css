@@ -44,6 +44,18 @@
   --card-library: #7c3aed;
 }
 
+/* My Kitab is the one page whose own accent (hero icon/title, primary
+   buttons, focus rings, etc.) is scoped to --card-library purple instead
+   of the app-wide green --accent, so the whole screen reads as "Library
+   purple" the same way Quran reads green and Mutoon reads blue. Scoped to
+   this page's own wrapper rather than changing --accent globally, so
+   every other page keeps its normal green. */
+:root[data-theme="light"] .page-library {
+  --accent: #7c3aed;
+  --accent-contrast: #ffffff;
+  --accent-soft: #ece3fb;
+}
+
 :root[data-theme="dark"] {
   --bg: #14120e;
   --bg-elevated: #1e1b15;
@@ -59,6 +71,12 @@
   --card-mutoon: #6ea8fe;
   --card-dhikr: #e3b64f;
   --card-library: #b39ddb;
+}
+
+:root[data-theme="dark"] .page-library {
+  --accent: #b39ddb;
+  --accent-contrast: #1a1025;
+  --accent-soft: #241a30;
 }
 
 * {
@@ -430,6 +448,13 @@ a {
 .navbar-link.active {
   background: var(--chip-bg);
   color: var(--accent);
+}
+
+/* Library is the one tab that doesn't share the app's green accent — it
+   tracks --card-library (purple) so it stays visually tied to the My
+   Kitab section, same violet used for its section hero and item cards. */
+.navbar-link-library.active {
+  color: var(--card-library);
 }
 
 .navbar-link-icon {

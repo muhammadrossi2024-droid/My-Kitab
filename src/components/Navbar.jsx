@@ -28,7 +28,11 @@ export default function Navbar() {
               to={link.to}
               end={isHome}
               data-tour-id={link.to}
-              className={({ isActive }) => "navbar-link" + (isActive ? " active" : "")}
+              className={({ isActive }) =>
+                "navbar-link" +
+                (link.to === "/my-kitab" ? " navbar-link-library" : "") +
+                (isActive ? " active" : "")
+              }
               aria-label={link.label}
               title={link.label}
             >

@@ -380,7 +380,7 @@ export default function MyKitabViewer() {
 
   if (notFound) {
     return (
-      <div>
+      <div className="page-library">
         {header}
         <div className="empty-state">This PDF isn't in your library anymore.</div>
       </div>
@@ -389,7 +389,7 @@ export default function MyKitabViewer() {
 
   if (loadError) {
     return (
-      <div>
+      <div className="page-library">
         {header}
         <div className="empty-state">{loadError}</div>
       </div>
@@ -398,7 +398,7 @@ export default function MyKitabViewer() {
 
   if (!record || !pdfDoc) {
     return (
-      <div>
+      <div className="page-library">
         {header}
         <div className="loading-state">Opening PDF…</div>
       </div>
@@ -406,7 +406,7 @@ export default function MyKitabViewer() {
   }
 
   return (
-    <div>
+    <div className="page-library">
       {header}
       <div
         className="mykitab-viewer-scroll"
