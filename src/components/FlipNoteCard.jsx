@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NotebookPen } from "lucide-react";
 import NoteEditor from "./NoteEditor.jsx";
+import { useTopBannerVisibility } from "../context/TopBannerVisibilityContext.jsx";
 
 // Wraps a piece of reading content (an ayah, a mutoon page) with a 3D flip
 // — front stays exactly what the caller was already rendering, back is a
@@ -18,6 +19,18 @@ export default function FlipNoteCard({ front, source, sourceKey, refKey, sourceL
   // editor mid-rotation — doing that made the back face go blank a beat
   // before the card had actually finished turning, which read as a glitch.
   const [everFlipped, setEverFlipped] = useState(false);
+  const { hide: hideTopBanner, show: showTopBanner } = useTopBannerVisibility();
+
+  // Hides the fixed TopBanner for exactly as long as this card is flipped
+  // open, so the note textarea a mobile browser auto-scrolls to focus
+  // never ends up underneath it. The cleanup path (unflip OR navigating
+  // away/unmounting mid-edit) always balances the hide() call.
+  useEffect(() => {
+    if (!flipped) return;
+    hideTopBanner();
+    return () => showTopBanner();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flipped]);
 
   function toggleFlip() {
     setFlipped((f) => !f);

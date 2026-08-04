@@ -22,11 +22,6 @@ export default function Athkar() {
       />
 
       <div className="reader-header">
-        <div className="surah-arabic-name" style={{ fontSize: "2rem" }}>
-          {athkarData.title.arabic}
-        </div>
-        <h1 style={{ margin: "8px 0 4px" }}>{athkarData.title.english}</h1>
-
         <div className="segmented-control" style={{ margin: "18px auto 0" }}>
           <button
             className={"segmented-control-btn" + (mode === "morning" ? " active" : "")}

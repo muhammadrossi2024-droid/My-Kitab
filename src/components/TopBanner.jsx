@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Settings } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
+import { useTopBannerVisibility } from "../context/TopBannerVisibilityContext.jsx";
 
 // Persistent app identity banner, shown above every page. Solid black in
 // dark mode / solid white in light mode, with the theme-matching transparent
@@ -8,8 +9,16 @@ import { useSettings } from "../context/SettingsContext.jsx";
 //
 // Search and Settings live here (not in the bottom nav) — small, unobtrusive
 // icon buttons pinned to the right edge, always reachable from any page.
+//
+// Temporarily hidden while a Quran/Mutoon note flip-card is open (see
+// TopBannerVisibilityContext) — a focused note textarea can get
+// auto-scrolled into view by the browser without knowing this fixed
+// banner covers the top of the viewport, so hiding it removes the overlap
+// instead of fighting the browser's own scroll behavior. This is a
+// separate context from the bottom nav's own auto-hide, left untouched.
 export default function TopBanner() {
   const { settings } = useSettings();
+  const { hidden } = useTopBannerVisibility();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,7 +35,7 @@ export default function TopBanner() {
   }
 
   return (
-    <header className="top-banner">
+    <header className={"top-banner" + (hidden ? " top-banner-hidden" : "")}>
       <img src={logoSrc} alt="" className="top-banner-logo" />
       <div className="top-banner-text">
         <div className="top-banner-name">My Kitab</div>

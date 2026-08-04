@@ -3,13 +3,15 @@ import { Crown, Check } from "lucide-react";
 import { usePremium } from "../context/PremiumContext.jsx";
 
 // Single luxury promo box shown once, at the very bottom of the Home
-// screen — deliberately black/gold and unrelated to the app's own theme
-// tokens, so it reads as a distinct "special" moment rather than another
-// themed card. The price strikethrough + "FREE" reveal plays once, the
-// first time the box scrolls into view (IntersectionObserver below),
-// never again after that for this mount. The CTA is a real on/off toggle
-// (premium has no paywall yet, so there's nothing to gate) — turning it on
-// is what makes every card on Home pick up a gold outline; see
+// screen — deliberately deep-purple/black and unrelated to the app's own
+// theme tokens, so it reads as a distinct "special" moment rather than
+// another themed card. Purple ties it to My Library, which is the section
+// Premium actually gates (see MyKitab.jsx / PremiumGate). The price
+// strikethrough + "FREE" reveal plays once, the first time the box
+// scrolls into view (IntersectionObserver below), never again after that
+// for this mount. The CTA is a real on/off toggle (premium has no real
+// paywall yet, just this local flag) — turning it on unlocks My Library
+// and is what makes every card on Home pick up a gold outline; see
 // HomeSectionCards.jsx.
 export default function PremiumPromoBox() {
   const boxRef = useRef(null);
@@ -44,7 +46,7 @@ export default function PremiumPromoBox() {
         <Crown className="premium-promo-icon" size={22} strokeWidth={1.75} />
 
         <h2 className="premium-promo-title">
-          Go <span className="premium-promo-title-gold">Premium</span>
+          Go <span className="premium-promo-title-accent">Premium</span>
         </h2>
 
         <div className="premium-promo-divider" />

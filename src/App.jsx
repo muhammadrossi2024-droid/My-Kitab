@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar.jsx";
 import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import GuidedTour from "./components/GuidedTour.jsx";
+import AudioMiniPlayer from "./components/AudioMiniPlayer.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
 import { useNavVisibility } from "./context/NavVisibilityContext.jsx";
@@ -20,7 +21,9 @@ import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Athkar from "./pages/Athkar.jsx";
 import MyKitab from "./pages/MyKitab.jsx";
 import MyKitabViewer from "./pages/MyKitabViewer.jsx";
+import PremiumOffer from "./pages/PremiumOffer.jsx";
 import Settings from "./pages/Settings.jsx";
+import PremiumGate from "./components/PremiumGate.jsx";
 
 export default function App() {
   const { user, authLoading } = useAuth();
@@ -55,6 +58,9 @@ export default function App() {
         <div className="app-shell">
           <TopBanner />
           <Navbar />
+          {/* Sits above the bottom nav via its own fixed positioning — a
+              sibling of Navbar, not a change to it. */}
+          <AudioMiniPlayer />
           <main className="app-main">
             <Routes>
               <Route path="/" element={<Home />} />
@@ -67,8 +73,23 @@ export default function App() {
               <Route path="/medinah/:bookId" element={<MedinahLessons />} />
               <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
               <Route path="/athkar" element={<Athkar />} />
-              <Route path="/my-kitab" element={<MyKitab />} />
-              <Route path="/my-kitab/:id" element={<MyKitabViewer />} />
+              <Route
+                path="/my-kitab"
+                element={
+                  <PremiumGate>
+                    <MyKitab />
+                  </PremiumGate>
+                }
+              />
+              <Route
+                path="/my-kitab/:id"
+                element={
+                  <PremiumGate>
+                    <MyKitabViewer />
+                  </PremiumGate>
+                }
+              />
+              <Route path="/premium" element={<PremiumOffer />} />
               <Route path="/settings" element={<Settings />} />
             </Routes>
           </main>
