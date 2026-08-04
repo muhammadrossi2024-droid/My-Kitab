@@ -2,10 +2,12 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
 import SectionHero from "../components/SectionHero.jsx";
 
 export default function SurahList() {
   const { lastRead } = useSettings();
+  const { isPremiumUser } = usePremium();
   const [surahs, setSurahs] = useState(null);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
@@ -74,7 +76,10 @@ export default function SurahList() {
       <ul className="surah-list">
         {filtered.map((s) => (
           <li key={s.number}>
-            <Link className="surah-list-item" to={`/surah/${s.number}`}>
+            <Link
+              className={"surah-list-item" + (isPremiumUser ? " premium-active" : "")}
+              to={`/surah/${s.number}`}
+            >
               <span className="surah-badge">{s.number}</span>
               <span className="surah-meta">
                 <div className="surah-name-en">{s.transliteration}</div>

@@ -478,8 +478,15 @@ a {
    clicked, and just as smoothly back to the section color when switched
    off. The per-card transition-delay set inline in HomeSectionCards.jsx is
    what turns this into a small cascade across the four cards instead of
-   all flipping at once. */
-.home-section-card.premium-active {
+   all flipping at once.
+
+   Shared with every in-section item card too (surah/mutoon/medinah list
+   items, library PDFs, athkar duas) — same override, same gold, so a
+   surah row and a Home card read as the same "this is premium" signal. */
+.home-section-card.premium-active,
+.surah-list-item.premium-active,
+.mykitab-pdf-item.premium-active,
+.athkar-dua-card.premium-active {
   border-color: #d4af37;
   box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.5) inset, 0 0 18px rgba(212, 175, 55, 0.35);
 }
@@ -573,6 +580,7 @@ a {
 }
 
 .surah-list {
+  --item-color: var(--card-quran);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -581,21 +589,31 @@ a {
   gap: 8px;
 }
 
+/* Same design language as the Home screen's section cards (see
+   .home-section-card): plain background + a section-tinted border, set via
+   --item-color on the containing .surah-list by SurahList/Mutoon/
+   MedinahBooks so this one shared item class reads as "Quran green" in one
+   section and "Mutoon blue" in another, without needing a class per
+   section. .premium-active (added per-item once Premium is on — see
+   PremiumContext) overrides that color to gold, same recipe as the Home
+   cards. */
 .surah-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1.5px solid var(--item-color, var(--border));
+  border-radius: 14px;
   text-decoration: none;
   color: var(--text);
-  background: var(--bg-elevated);
+  background: var(--bg);
+  transition: transform 0.15s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .surah-list-item:hover {
-  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .surah-badge {
@@ -631,6 +649,10 @@ a {
 }
 
 .mutoon-book-list {
+  /* Also picked up by MedinahBooks.jsx, which reuses this same list/item
+     markup for its own book list — grouped under Mutoon's color since it's
+     reached from within the Mutoon section. */
+  --item-color: var(--card-mutoon);
   gap: 10px;
 }
 
@@ -679,6 +701,24 @@ a {
 
 .ayah-block:last-child {
   border-bottom: none;
+}
+
+/* Athkar's own dua wrapper — deliberately not .ayah-block, which
+   SurahReader.jsx and MutoonReader.jsx also use for continuous verse-by-
+   verse reading flow (divider lines, no card treatment) and shouldn't
+   pick up per-item borders as a side effect of this change. Same design
+   language as the Home screen's Thikr card: plain background + its amber
+   border, going gold via .premium-active once Premium is on. */
+.athkar-dua-card {
+  background: var(--bg);
+  border: 1.5px solid var(--card-dhikr);
+  border-radius: 14px;
+  padding: 20px;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.athkar-dua-card + .athkar-dua-card {
+  margin-top: 12px;
 }
 
 .ayah-playing {
@@ -1574,19 +1614,24 @@ a {
   gap: 8px;
 }
 
+/* Same design language as the Home screen's Library card: plain
+   background + its purple border. .premium-active (added per-item once
+   Premium is on) overrides that to gold, same recipe as the Home cards. */
 .mykitab-pdf-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding: 14px 16px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+  border: 1.5px solid var(--card-library);
+  border-radius: 14px;
   background: var(--bg);
+  transition: transform 0.15s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .mykitab-pdf-item:hover {
-  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .mykitab-pdf-info {
