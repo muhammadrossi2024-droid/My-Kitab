@@ -56,6 +56,14 @@
   --accent-soft: #ece3fb;
 }
 
+/* The page's plain content cards ("Your library", "Your notes", "Search
+   your library") otherwise use the neutral --border color like every
+   other page's cards — tinted purple here too so the whole screen reads
+   as one consistent Library-purple surface. */
+.page-library .card {
+  border-color: var(--card-library);
+}
+
 :root[data-theme="dark"] {
   --bg: #14120e;
   --bg-elevated: #1e1b15;
