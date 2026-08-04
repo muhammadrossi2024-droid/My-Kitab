@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import { medinahBooks } from "../data/medinah/index.js";
-import { usePremium } from "../context/PremiumContext.jsx";
 
 export default function MedinahBooks() {
-  const { isPremiumUser } = usePremium();
   return (
     <div>
       <h1>Medinah Books</h1>
@@ -14,12 +12,7 @@ export default function MedinahBooks() {
         {medinahBooks.map((book) => (
           <li key={book.id}>
             {book.available ? (
-              <Link
-                className={
-                  "surah-list-item mutoon-book-item" + (isPremiumUser ? " premium-active" : "")
-                }
-                to={`/medinah/${book.id}`}
-              >
+              <Link className="surah-list-item mutoon-book-item" to={`/medinah/${book.id}`}>
                 <span className="surah-meta">
                   <div className="surah-name-en">{book.titleEnglish}</div>
                 </span>
@@ -27,9 +20,7 @@ export default function MedinahBooks() {
               </Link>
             ) : (
               <div
-                className={
-                  "surah-list-item mutoon-book-item" + (isPremiumUser ? " premium-active" : "")
-                }
+                className="surah-list-item mutoon-book-item"
                 style={{ opacity: 0.55, cursor: "default" }}
               >
                 <span className="surah-meta">

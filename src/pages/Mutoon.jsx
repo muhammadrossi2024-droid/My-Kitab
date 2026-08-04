@@ -2,12 +2,10 @@ import { Link } from "react-router-dom";
 import { Library } from "lucide-react";
 import { mutoonBooks } from "../data/mutoon/index.js";
 import { useSettings } from "../context/SettingsContext.jsx";
-import { usePremium } from "../context/PremiumContext.jsx";
 import SectionHero from "../components/SectionHero.jsx";
 
 export default function Mutoon() {
   const { lastMutoonRead } = useSettings();
-  const { isPremiumUser } = usePremium();
   const lastMutoonBook =
     lastMutoonRead && mutoonBooks.find((b) => b.id === lastMutoonRead.bookId);
 
@@ -32,12 +30,7 @@ export default function Mutoon() {
         {mutoonBooks.map((book) => (
           <li key={book.id}>
             {book.available ? (
-              <Link
-                className={
-                  "surah-list-item mutoon-book-item" + (isPremiumUser ? " premium-active" : "")
-                }
-                to={`/mutoon/${book.id}`}
-              >
+              <Link className="surah-list-item mutoon-book-item" to={`/mutoon/${book.id}`}>
                 <span className="surah-meta">
                   <div className="surah-name-en">{book.titleTransliteration}</div>
                   <div className="surah-name-sub">{book.titleEnglish}</div>
@@ -46,9 +39,7 @@ export default function Mutoon() {
               </Link>
             ) : (
               <div
-                className={
-                  "surah-list-item mutoon-book-item" + (isPremiumUser ? " premium-active" : "")
-                }
+                className="surah-list-item mutoon-book-item"
                 style={{ opacity: 0.55, cursor: "default" }}
               >
                 <span className="surah-meta">

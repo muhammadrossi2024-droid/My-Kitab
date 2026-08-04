@@ -472,25 +472,6 @@ a {
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Premium reveal — border turns gold and gains a soft glow. Both are plain
-   transitions (not @keyframes), so this animates cleanly whichever
-   direction it changes: switching on when the promo box's toggle is
-   clicked, and just as smoothly back to the section color when switched
-   off. The per-card transition-delay set inline in HomeSectionCards.jsx is
-   what turns this into a small cascade across the four cards instead of
-   all flipping at once.
-
-   Shared with every in-section item card too (surah/mutoon/medinah list
-   items, library PDFs, athkar duas) — same override, same gold, so a
-   surah row and a Home card read as the same "this is premium" signal. */
-.home-section-card.premium-active,
-.surah-list-item.premium-active,
-.mykitab-pdf-item.premium-active,
-.athkar-dua-card.premium-active {
-  border-color: #d4af37;
-  box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.5) inset, 0 0 18px rgba(212, 175, 55, 0.35);
-}
-
 .home-section-card-icon-badge {
   width: 34px;
   height: 34px;
@@ -594,9 +575,7 @@ a {
    --item-color on the containing .surah-list by SurahList/Mutoon/
    MedinahBooks so this one shared item class reads as "Quran green" in one
    section and "Mutoon blue" in another, without needing a class per
-   section. .premium-active (added per-item once Premium is on — see
-   PremiumContext) overrides that color to gold, same recipe as the Home
-   cards. */
+   section. */
 .surah-list-item {
   display: flex;
   align-items: center;
@@ -708,7 +687,7 @@ a {
    verse reading flow (divider lines, no card treatment) and shouldn't
    pick up per-item borders as a side effect of this change. Same design
    language as the Home screen's Thikr card: plain background + its amber
-   border, going gold via .premium-active once Premium is on. */
+   border. */
 .athkar-dua-card {
   background: var(--bg);
   border: 1.5px solid var(--card-dhikr);
@@ -1615,8 +1594,7 @@ a {
 }
 
 /* Same design language as the Home screen's Library card: plain
-   background + its purple border. .premium-active (added per-item once
-   Premium is on) overrides that to gold, same recipe as the Home cards. */
+   background + its purple border. */
 .mykitab-pdf-item {
   display: flex;
   align-items: center;

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useSettings } from "../context/SettingsContext.jsx";
-import { usePremium } from "../context/PremiumContext.jsx";
 import athkarData from "../data/athkar/morning-evening.json";
 import SectionHero from "../components/SectionHero.jsx";
 import ArabicText from "../components/ArabicText.jsx";
@@ -8,7 +7,6 @@ import PrayingHandsIcon from "../components/PrayingHandsIcon.jsx";
 
 export default function Athkar() {
   const { settings } = useSettings();
-  const { isPremiumUser } = usePremium();
   const [mode, setMode] = useState("morning"); // "morning" | "evening"
 
   const duas = athkarData.duas.filter(
@@ -48,10 +46,7 @@ export default function Athkar() {
       {duas.map((dua) => {
         const variant = dua.morning && dua.evening ? dua[mode] : dua;
         return (
-          <div
-            className={"athkar-dua-card" + (isPremiumUser ? " premium-active" : "")}
-            key={dua.number}
-          >
+          <div className="athkar-dua-card" key={dua.number}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
               <span className="ayah-number-badge">Dua {dua.number}</span>
               {dua.repetition && (

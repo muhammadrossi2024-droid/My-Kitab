@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { BookOpen, Folder, Library as MutoonIcon } from "lucide-react";
 import PrayingHandsIcon from "./PrayingHandsIcon.jsx";
-import { usePremium } from "../context/PremiumContext.jsx";
 
 const SECTIONS = [
   {
@@ -39,25 +38,18 @@ const SECTIONS = [
 ];
 
 // Home screen's entry point into the app's four main sections. Plain
-// background + a section-tinted border. Once Premium is switched on (see
-// PremiumPromoBox at the bottom of Home), every card's border turns gold
-// instead — the border-color/box-shadow transition on .home-section-card
-// is what makes that read as a reveal rather than an instant swap, and the
-// per-card transition-delay below staggers that reveal into a small
-// left-to-right cascade instead of all four flipping at once.
+// background + a section-tinted border.
 export default function HomeSectionCards() {
-  const { isPremiumUser } = usePremium();
-
   return (
     <div className="home-section-grid">
-      {SECTIONS.map((section, i) => {
+      {SECTIONS.map((section) => {
         const Icon = section.icon;
         return (
           <Link
             key={section.key}
             to={section.to}
-            className={"home-section-card" + (isPremiumUser ? " premium-active" : "")}
-            style={{ "--card-color": section.color, transitionDelay: `${i * 70}ms` }}
+            className="home-section-card"
+            style={{ "--card-color": section.color }}
           >
             <div className="home-section-card-icon-badge">
               <Icon className="home-section-card-icon" strokeWidth={2} />

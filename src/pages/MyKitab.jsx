@@ -12,7 +12,6 @@ import {
 } from "../utils/myKitabDb.js";
 import { extractPdfPages } from "../utils/pdfExtract.js";
 import { searchMyKitab } from "../utils/myKitabSearch.js";
-import { usePremium } from "../context/PremiumContext.jsx";
 import SectionHero from "../components/SectionHero.jsx";
 import ConfirmDialog from "../components/ConfirmDialog.jsx";
 
@@ -71,7 +70,6 @@ function PdfCoverThumb({ blob }) {
 }
 
 export default function MyKitab() {
-  const { isPremiumUser } = usePremium();
   const [pdfs, setPdfs] = useState([]);
   const [loadingList, setLoadingList] = useState(true);
   const [uploadStatus, setUploadStatus] = useState(null); // { current, total } while uploading
@@ -334,10 +332,7 @@ export default function MyKitab() {
         {visiblePdfs.length > 0 && (
           <ul className="mykitab-pdf-list">
             {visiblePdfs.map((pdf) => (
-              <li
-                className={"mykitab-pdf-item" + (isPremiumUser ? " premium-active" : "")}
-                key={pdf.id}
-              >
+              <li className="mykitab-pdf-item" key={pdf.id}>
                 <Link to={`/my-kitab/${pdf.id}`} className="mykitab-pdf-info">
                   <PdfCoverThumb blob={pdf.coverThumb} />
                   <div className="mykitab-pdf-text">
