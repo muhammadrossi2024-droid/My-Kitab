@@ -1,6 +1,7 @@
 import { useIntro } from "../context/IntroContext.jsx";
 import InstallGuide from "../components/InstallGuide.jsx";
 import HomeSectionCards from "../components/HomeSectionCards.jsx";
+import PremiumToggleCard from "../components/PremiumToggleCard.jsx";
 
 export default function Home() {
   const { startTour } = useIntro();
@@ -10,6 +11,8 @@ export default function Home() {
       <h1>Home</h1>
 
       <HomeSectionCards />
+
+      <PremiumToggleCard />
 
       <div className="card">
         <div className="form-row-label form-row-label-lg">Tutorial</div>

@@ -2592,6 +2592,40 @@ a {
   border-radius: 2px;
 }
 
+/* Home's Premium on/off switch (PremiumToggleCard.jsx) — a normal themed
+   .card (unlike the full-page screen below), just with a purple border
+   and icon tying it to My Library/Premium at a glance. */
+.premium-toggle-card {
+  border-color: var(--card-library);
+}
+
+.premium-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.premium-toggle-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--card-library) 16%, transparent);
+  color: var(--card-library);
+}
+
+.premium-toggle-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.premium-toggle-card .switch input:checked + .switch-track {
+  background: var(--card-library);
+}
+
 /* Full-page Premium screen (PremiumOfferScreen.jsx) — the one deliberately
    "off-brand" surface in the app. Fixed deep-purple/black regardless of
    --theme, on purpose: every other page follows the app's light/dark
