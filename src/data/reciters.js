@@ -28,12 +28,27 @@ export const reciters = [
     name: "Haitham Al-Dukhan (full surah only)",
     surahBaseUrl: "https://server16.mp3quran.net/h_dukhain/Rewayat-Hafs-A-n-Assem/",
   },
+  // Premium-only reciters (see PremiumContext) — every source below was
+  // checked against everyayah.com's own recitations.js listing and
+  // verified to actually serve audio (a HEAD request for 001001.mp3
+  // returned 200) before being added here.
+  { id: "basfar", type: "per-verse", name: "Abdullah Basfar", folder: "Abdullah_Basfar_192kbps", premium: true },
+  { id: "hudhaify", type: "per-verse", name: "Ali Al-Hudhaify", folder: "Hudhaify_128kbps", premium: true },
+  { id: "muaiqly", type: "per-verse", name: "Maher Al Muaiqly", folder: "MaherAlMuaiqly128kbps", premium: true },
+  { id: "ayyoub", type: "per-verse", name: "Muhammad Ayyoub", folder: "Muhammad_Ayyoub_128kbps", premium: true },
+  { id: "ajamy", type: "per-verse", name: "Ahmed Al-Ajamy", folder: "ahmed_ibn_ali_al_ajamy_128kbps", premium: true },
+  { id: "dossari", type: "per-verse", name: "Yasser Al-Dossari", folder: "Yasser_Ad-Dussary_128kbps", premium: true },
+  { id: "rifai", type: "per-verse", name: "Hani Ar-Rifai", folder: "Hani_Rifai_192kbps", quranComId: 5, premium: true },
 ];
 
 export const DEFAULT_RECITER_ID = "minshawy";
 
 export function getReciter(reciterId) {
   return reciters.find((r) => r.id === reciterId) || reciters[0];
+}
+
+export function isPremiumReciter(reciterId) {
+  return Boolean(getReciter(reciterId).premium);
 }
 
 export function isFullSurahReciter(reciterId) {

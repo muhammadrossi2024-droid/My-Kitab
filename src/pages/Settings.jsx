@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
-import { reciters, getReciter, supportsWordTiming } from "../data/reciters.js";
+import { getReciter, supportsWordTiming } from "../data/reciters.js";
 import ConfirmDialog from "../components/ConfirmDialog.jsx";
+import ReciterSelect from "../components/ReciterSelect.jsx";
 
 export default function Settings() {
   const { settings, updateSettings, resetSettings } = useSettings();
@@ -69,17 +70,10 @@ export default function Settings() {
             <div className="form-row-label">Reciter</div>
             <div className="form-row-desc">Verse-by-verse recitation audio.</div>
           </div>
-          <select
-            className="select-input"
+          <ReciterSelect
             value={settings.reciter}
-            onChange={(e) => updateSettings({ reciter: e.target.value })}
-          >
-            {reciters.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.name}
-              </option>
-            ))}
-          </select>
+            onChange={(reciterId) => updateSettings({ reciter: reciterId })}
+          />
         </div>
 
         <div className="form-row">

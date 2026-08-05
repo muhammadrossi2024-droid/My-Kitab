@@ -9,7 +9,8 @@ import ArabicText from "../components/ArabicText.jsx";
 import FlipNoteCard from "../components/FlipNoteCard.jsx";
 import { listNotesBySourceKey } from "../utils/notesDb.js";
 import { fetchSurahJson } from "../utils/offline.js";
-import { reciters, supportsWordTiming } from "../data/reciters.js";
+import { supportsWordTiming } from "../data/reciters.js";
+import ReciterSelect from "../components/ReciterSelect.jsx";
 import { surahMeta } from "../data/surahMeta.js";
 import {
   TOTAL_MUSHAF_PAGES,
@@ -338,17 +339,7 @@ export default function MushafPage() {
         </div>
 
         <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <select
-            className="select-input"
-            value={settings.reciter}
-            onChange={(e) => audioPlayer.changeReciter(e.target.value)}
-            aria-label="Reciter"
-            title="Reciter"
-          >
-            {reciters.map((r) => (
-              <option key={r.id} value={r.id}>{r.name}</option>
-            ))}
-          </select>
+          <ReciterSelect value={settings.reciter} onChange={audioPlayer.changeReciter} />
         </div>
         {wordModeUnavailable && (
           <p style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginTop: 10 }}>

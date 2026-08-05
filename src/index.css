@@ -1370,6 +1370,80 @@ a {
   white-space: nowrap;
 }
 
+/* Reciter picker — a custom popover instead of a plain <select> because
+   native <option> elements can't reliably carry a purple Premium pill or
+   border in every browser (see ReciterSelect.jsx). The trigger button is
+   styled to match .select-input so it drops in wherever the old <select>
+   was without changing the surrounding layout. */
+.reciter-select-wrap {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.reciter-select-trigger {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.reciter-select-popover {
+  width: min(360px, calc(100vw - 32px));
+}
+
+.reciter-option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reciter-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.reciter-option:hover {
+  border-color: var(--accent);
+}
+
+.reciter-option.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.reciter-option-premium {
+  border-color: var(--card-library);
+}
+
+.reciter-option-premium.active {
+  border-color: var(--card-library);
+  background: color-mix(in srgb, var(--card-library) 14%, transparent);
+  color: var(--card-library);
+}
+
 @media (max-width: 520px) {
   .form-row {
     flex-wrap: wrap;
@@ -1837,7 +1911,7 @@ a {
   border: 1px solid var(--border);
   background: var(--bg-elevated);
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: 16px; /* also used inside the note editor's "new album" form — keeps mobile browsers from zooming in on focus */
   box-sizing: border-box;
 }
 
@@ -3082,6 +3156,30 @@ a {
   background: color-mix(in srgb, var(--card-library) 16%, transparent);
 }
 
+/* Scroll-view Quran reading page only (.surah-reader) — bigger, higher-
+   contrast Play/Note icons per the visibility pass. Deliberately NOT
+   applied to .mutoon-reader (unchanged there) or MushafPage's Page View
+   (a completely separate component/class, untouched by this rule). */
+.surah-reader .flip-note-trigger {
+  width: 34px;
+  height: 34px;
+  background: color-mix(in srgb, var(--card-library) 10%, var(--bg-elevated));
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.surah-reader .verse-play-btn {
+  width: 34px;
+  height: 34px;
+  font-size: 0.85rem;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, var(--bg-elevated));
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.surah-reader .flip-note-front {
+  padding-right: 44px;
+}
+
 .flip-note-inner {
   display: grid;
   align-items: start;
@@ -3180,7 +3278,12 @@ a {
   background: var(--bg);
   color: var(--text);
   font: inherit;
-  font-size: 0.9rem;
+  /* iOS/Android auto-zoom the whole page on focusing any text input/
+     textarea under 16px — that's what was hiding the nav bar behind an
+     unwanted zoom whenever the note view opened. 16px is the actual fix;
+     the visual size this used to read as is kept via the tag/album inputs
+     around it rather than shrinking this back down. */
+  font-size: 16px;
 }
 
 .note-editor-tags {
@@ -3231,7 +3334,7 @@ a {
   border: none;
   background: none;
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: 16px; /* keeps mobile browsers from zooming in on focus */
   padding: 4px 2px;
   outline: none;
 }

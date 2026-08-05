@@ -21,8 +21,7 @@ const FEATURES = [
   {
     icon: Mic2,
     title: "More Reciters",
-    badge: "Coming Soon",
-    desc: "A wider selection of Quran reciters is on its way for Premium members.",
+    desc: "7 additional reciters — including Maher Al Muaiqly, Ali Al-Hudhaify, and Yasser Al-Dossari — unlocked for Premium members.",
   },
 ];
 

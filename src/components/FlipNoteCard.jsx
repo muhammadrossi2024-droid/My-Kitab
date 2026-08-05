@@ -35,6 +35,10 @@ export default function FlipNoteCard({
   // it and relies on frontClickable instead, and lets CSS lay the card out
   // inline rather than as a block.
   compact = false,
+  // SurahReader's scroll view bumps this up slightly (see its own CSS
+  // scoping) so the note glyph itself grows along with the bigger trigger
+  // circle there — every other caller keeps the original 15px default.
+  triggerIconSize = 15,
 }) {
   const [flipped, setFlipped] = useState(false);
   // Mounted lazily on the first flip, then left mounted (just visually
@@ -88,7 +92,7 @@ export default function FlipNoteCard({
           aria-label={existing ? "Edit note" : "Add note"}
           title={existing ? "Edit note" : "Add note"}
         >
-          <NotebookPen size={15} strokeWidth={2} />
+          <NotebookPen size={triggerIconSize} strokeWidth={2} />
         </button>
       )}
 

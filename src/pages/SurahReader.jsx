@@ -10,7 +10,8 @@ import FlipNoteCard from "../components/FlipNoteCard.jsx";
 import QuranViewToggle from "../components/QuranViewToggle.jsx";
 import { listNotesBySourceKey } from "../utils/notesDb.js";
 import { getVerseWords } from "../utils/quranWords.js";
-import { reciters, supportsWordTiming, getReciter } from "../data/reciters.js";
+import { supportsWordTiming, getReciter } from "../data/reciters.js";
+import ReciterSelect from "../components/ReciterSelect.jsx";
 import { downloadSurah, fetchSurahJson, hasCacheSupport, isSurahDownloaded, removeSurahDownload } from "../utils/offline.js";
 import { pageForAyah } from "../utils/mushaf.js";
 
@@ -384,19 +385,7 @@ export default function SurahReader() {
           <button className="btn btn-primary" onClick={togglePlaySurah}>
             {isPlaying ? "⏸ Pause" : "▶ Play Surah"}
           </button>
-          <select
-            className="select-input"
-            value={settings.reciter}
-            onChange={(e) => handleReciterChange(e.target.value)}
-            aria-label="Reciter"
-            title="Reciter"
-          >
-            {reciters.map((r) => (
-              <option key={r.id} value={r.id}>
-                {r.name}
-              </option>
-            ))}
-          </select>
+          <ReciterSelect value={settings.reciter} onChange={handleReciterChange} />
           {fullSurahMode ? (
             <span
               className="btn"
@@ -498,6 +487,7 @@ export default function SurahReader() {
                 onNoteChange={(note, deletedId) => handleNoteChange(refKey, note, deletedId)}
                 locked={!isPremiumUser}
                 onLockedTap={() => openPremiumOffer()}
+                triggerIconSize={17}
                 front={
                   <>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
