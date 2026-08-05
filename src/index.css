@@ -3059,20 +3059,24 @@ a {
   background: var(--accent-soft);
 }
 
-/* On the Quran page specifically, the note button ties to Premium/My
+/* On the Quran and Mutoon reader pages, the note button ties to Premium/My
    Library instead of the app's green --accent — purple in both idle and
    active states, not just on hover, so it reads as its own thing at a
    glance in either theme (--card-library already carries its own
-   light/dark values with good contrast against --bg-elevated). Mutoon's
-   flip-note trigger is untouched — this only applies inside SurahReader's
-   own "surah-reader" wrapper. */
-.surah-reader .flip-note-trigger {
+   light/dark values with good contrast against --bg-elevated). Scoped to
+   these two readers' own wrappers rather than changing .flip-note-trigger
+   globally, since Mutoon's Verses/Hadith tabs and any future non-Premium
+   use of FlipNoteCard should keep the plain green accent. */
+.surah-reader .flip-note-trigger,
+.mutoon-reader .flip-note-trigger {
   color: var(--card-library);
   border-color: var(--card-library);
 }
 
 .surah-reader .flip-note-trigger:hover,
-.surah-reader .flip-note-trigger.has-note {
+.surah-reader .flip-note-trigger.has-note,
+.mutoon-reader .flip-note-trigger:hover,
+.mutoon-reader .flip-note-trigger.has-note {
   color: var(--card-library);
   border-color: var(--card-library);
   background: color-mix(in srgb, var(--card-library) 16%, transparent);

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 import ArabicText from "../components/ArabicText.jsx";
 import FlipNoteCard from "../components/FlipNoteCard.jsx";
@@ -87,6 +88,7 @@ export default function MutoonReader() {
   const { bookId } = useParams();
   const [searchParams] = useSearchParams();
   const { settings, lastMutoonRead, setLastMutoonRead } = useSettings();
+  const { isPremiumUser, openPremiumOffer } = usePremium();
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
   const initialTab = searchParams.get("tab");
@@ -262,7 +264,7 @@ export default function MutoonReader() {
     lastMutoonRead.pageKey === currentPage.key;
 
   return (
-    <div>
+    <div className="mutoon-reader">
       <div className="reader-header">
         <div className="surah-arabic-name" style={{ fontSize: "2rem" }}>
           {book.title.arabic}
@@ -329,6 +331,8 @@ export default function MutoonReader() {
                   onNoteChange={(note, deletedId) =>
                     handleNoteChange(`${bookId}-${currentPage.key}`, note, deletedId)
                   }
+                  locked={!isPremiumUser}
+                  onLockedTap={() => openPremiumOffer()}
                   front={renderPageContent(currentPage)}
                 />
               )}
