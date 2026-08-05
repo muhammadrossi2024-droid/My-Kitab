@@ -19,6 +19,8 @@ import {
   pageForAyah,
   pageForSurah,
   pageForJuz,
+  loadPageFont,
+  pageFontFamily,
 } from "../utils/mushaf.js";
 
 const BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
@@ -57,6 +59,7 @@ export default function MushafPage() {
   const audioPlayer = useAudioPlayer();
 
   const [pageData, setPageData] = useState(null);
+  const [fontReady, setFontReady] = useState(false);
   const [error, setError] = useState(null);
   const [notesByRef, setNotesByRef] = useState(new Map());
   const [jumpOpen, setJumpOpen] = useState(false);
@@ -77,6 +80,7 @@ export default function MushafPage() {
   useEffect(() => {
     let cancelled = false;
     setPageData(null);
+    setFontReady(false);
     setError(null);
     setPrimaryVerse(null);
     fetchMushafPage(pageNumber)
@@ -84,6 +88,11 @@ export default function MushafPage() {
         if (!cancelled) setPageData(data);
       })
       .catch((err) => !cancelled && setError(err.message));
+    loadPageFont(pageNumber)
+      .then(() => {
+        if (!cancelled) setFontReady(true);
+      })
+      .catch(() => {}); // keep showing the plain-text fallback on failure
     prefetchAdjacentPages(pageNumber);
     return () => {
       cancelled = true;
@@ -429,13 +438,27 @@ export default function MushafPage() {
                                     : "")
                                 }
                               >
-                                <ArabicText text={w.t} />{" "}
+                                {fontReady ? (
+                                  <span className="mushaf-glyph" style={{ fontFamily: pageFontFamily(pageNumber) }}>
+                                    {w.g}
+                                  </span>
+                                ) : (
+                                  <>
+                                    <ArabicText text={w.t} />{" "}
+                                  </>
+                                )}
                               </span>
                             ))}
                             {endWord && (
                               <span className="mushaf-ayah-end-cluster">
                                 <span className="mushaf-ayah-end-roundel">
-                                  <ArabicText text={endWord.t} />
+                                  {fontReady ? (
+                                    <span className="mushaf-glyph" style={{ fontFamily: pageFontFamily(pageNumber) }}>
+                                      {endWord.g}
+                                    </span>
+                                  ) : (
+                                    <ArabicText text={endWord.t} />
+                                  )}
                                 </span>
                                 {!fullSurahMode && (
                                   <button
@@ -468,7 +491,7 @@ export default function MushafPage() {
                           </span>
                         }
                       />
-                      {" "}
+                      {!fontReady && " "}
                     </span>
                   );
                 })}

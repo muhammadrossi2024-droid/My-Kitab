@@ -3785,6 +3785,15 @@ a {
   margin: 0 0 10px;
 }
 
+/* Each .mushaf-line div holds exactly one physical Mushaf line, never
+   wrapped — so `text-align-last`, not `text-align`, is what actually governs
+   its alignment (the single line IS the "last line" as far as CSS is
+   concerned). Real Mushaf pages fill every non-final line edge-to-edge via
+   kashida baked into the QCF glyphs themselves once that page's font has
+   loaded (see MushafPage.jsx's `fontReady`); centering here is deliberately
+   just the fallback look shown before a page's font arrives, and for
+   genuinely short lines (end of a Surah, page 1) where even the real Mushaf
+   doesn't stretch to fill. */
 .mushaf-line {
   direction: rtl;
   text-align: justify;
@@ -3792,6 +3801,10 @@ a {
   font-family: "Scheherazade New", "Traditional Arabic", "Amiri", serif;
   font-size: clamp(1.15rem, 1.05rem + 1vw, 1.7rem);
   line-height: 2.5;
+}
+
+.mushaf-glyph {
+  line-height: 1;
 }
 
 .mushaf-ayah-wrap {
@@ -3841,6 +3854,19 @@ a {
   font-size: 0.62em;
   line-height: 1;
   color: var(--card-library);
+}
+
+/* The real QCF ayah-end glyph already draws its own ornamental rosette
+   around the ayah number — the hand-drawn circle above is only needed for
+   the bare-numeral plain-text fallback shown before that page's font loads. */
+.mushaf-ayah-end-roundel:has(.mushaf-glyph) {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  font-size: 1em;
+  color: inherit;
 }
 
 .mushaf-inline-icon-btn {

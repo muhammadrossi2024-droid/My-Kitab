@@ -1,5 +1,7 @@
 // Builds the data behind Quran Page View (the Premium "Mushaf" reading mode):
-// the standard 604-page, 15-line Hafs Madani Mushaf layout.
+// the standard 604-page, 15-line Hafs Madani Mushaf layout, rendered with the
+// actual King Fahd Quran Complex (KFGQPC) page glyphs — not a reconstructed
+// approximation.
 //
 // Source: the quran.com API (api.quran.com), same provider already used for
 // Arabic text in scrape-quran.js. Fetched by juz (30 requests covering the
@@ -7,13 +9,16 @@
 // page_number/line_number per word, so one pass groups everything into
 // per-page files locally with no extra requests.
 //
-// mushaf=5 is "KFGQPC HAFS" — the standard 15-line/604-page Madani layout
-// rendered with a single ordinary Uthmani font (unlike mushaf id 1/2, whose
-// pixel-perfect look depends on 604 individual per-page glyph fonts). Reusing
-// this project's existing Scheherazade New/Amiri Quran fonts keeps the text
-// selectable/accessible while still matching the real Mushaf's line breaks,
-// page boundaries, and Surah/Juz layout exactly, since those come straight
-// from quran.com's authoritative line/page data.
+// mushaf=2 is "QCF v2" (Quran Complex Font v2) — 604 individual per-page
+// fonts produced by the King Fahd Quran Complex, where each page's glyphs are
+// official digital reproductions of that exact printed Mushaf page (real
+// kashida justification, Surah/ayah ornaments, exact line fill included in
+// the font itself, unlike mushaf=5's ordinary running-text font). Each word
+// carries a `code_v2` glyph codepoint for the authentic visual rendering
+// (see src/utils/mushaf.js's loadPageFont, which loads the matching
+// page-specific font file from https://verses.quran.foundation/fonts/...),
+// plus a `text_qpc_hafs` plain-Unicode fallback used for note excerpts,
+// search, and accessibility, and shown before that page's font has loaded.
 //
 // Usage:
 //   node scripts/scrape-mushaf-pages.js
@@ -57,7 +62,7 @@ async function fetchWithRetry(url, { retries = 3, delayMs = 3000 } = {}) {
 async function fetchJuz(juzNumber) {
   const url =
     `https://api.quran.com/api/v4/verses/by_juz/${juzNumber}` +
-    `?words=true&mushaf=5&word_fields=text_uthmani,line_number,page_number,char_type_name` +
+    `?words=true&mushaf=2&word_fields=code_v2,text_qpc_hafs,line_number,page_number,char_type_name` +
     `&fields=page_number,juz_number&per_page=1000`;
   await politeDelay();
   const res = await fetchWithRetry(url);
@@ -101,7 +106,8 @@ async function main() {
         words.push({
           page: w.page_number,
           line: w.line_number,
-          text: w.text_uthmani.trim().normalize("NFC"),
+          glyph: w.code_v2,
+          text: w.text_qpc_hafs.trim().normalize("NFC"),
           verseKey: verse.verse_key,
           surah: surahNumber,
           ayah: ayahNumber,
@@ -156,7 +162,7 @@ async function main() {
       lastItem = { type: "line", line: w.line, words: [] };
       page.items.push(lastItem);
     }
-    const wordEntry = { t: w.text, v: w.verseKey };
+    const wordEntry = { t: w.text, g: w.glyph, v: w.verseKey };
     if (w.end) wordEntry.end = true;
     if (w.juzStart) wordEntry.juz = w.juzStart;
     lastItem.words.push(wordEntry);

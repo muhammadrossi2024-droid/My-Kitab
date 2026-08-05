@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "scrape": "node scripts/scrape-quran.js",
+    "scrape:mushaf": "node scripts/scrape-mushaf-pages.js",
     "build-index": "node scripts/build-search-index.js"
   },
   "keywords": [],
