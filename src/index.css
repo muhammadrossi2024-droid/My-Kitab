@@ -3807,9 +3807,9 @@ a {
 .mushaf-ayah-end-cluster {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   vertical-align: middle;
-  margin: 0 2px;
+  margin: 0 3px;
 }
 
 .mushaf-ayah-end-roundel {
@@ -3846,6 +3846,39 @@ a {
 
 .mushaf-inline-icon-btn.marked {
   color: var(--accent);
+}
+
+/* The Play/Pause icon gets its own, more prominent treatment — matching
+   the tinted-circle contrast already used for Scroll View's per-ayah play
+   button (.surah-reader .verse-play-btn) — while the bookmark button right
+   next to it keeps the plain small .mushaf-inline-icon-btn look untouched.
+   Sized for this inline justified-line context (smaller than Scroll
+   View's 34px block-card version) rather than copied at 1:1, so it still
+   sits comfortably next to the ayah-end roundel without disrupting the
+   page's line height or wrapping. */
+.mushaf-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--bg-elevated));
+  color: var(--accent);
+  cursor: pointer;
+  vertical-align: middle;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.mushaf-play-btn:hover {
+  background: color-mix(in srgb, var(--accent) 26%, var(--bg-elevated));
+}
+
+.mushaf-play-btn.playing {
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 
 .mushaf-marked-toast {

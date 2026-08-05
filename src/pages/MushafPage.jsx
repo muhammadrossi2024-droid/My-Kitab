@@ -440,7 +440,7 @@ export default function MushafPage() {
                                 {!fullSurahMode && (
                                   <button
                                     type="button"
-                                    className="mushaf-inline-icon-btn"
+                                    className={"mushaf-play-btn" + (playing ? " playing" : "")}
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       toggleAyahPlay(surahNum, ayahNum);
@@ -448,7 +448,7 @@ export default function MushafPage() {
                                     aria-label={playing ? "Pause verse" : "Play from here"}
                                     title={playing ? "Pause" : "Play from here"}
                                   >
-                                    {playing ? <Pause size={11} /> : <Play size={11} />}
+                                    {playing ? <Pause size={15} /> : <Play size={15} />}
                                   </button>
                                 )}
                                 <button
