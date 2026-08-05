@@ -1,7 +1,14 @@
-// Auto-launched once, right after Premium is newly activated (see
-// PremiumContext's justActivatedPremium + App.jsx) — walks a brand-new
-// Premium user through what they just unlocked, live, across four
-// sections. Runs on the generic engine in components/GuidedTour.jsx.
+// Walks through everything Premium unlocks, live, across four sections.
+// Runs on the generic engine in components/GuidedTour.jsx. Two ways in:
+//   - Auto-launched once, right after Premium is newly activated (see
+//     PremiumContext's justActivatedPremium + App.jsx) — a "here's
+//     everything you just got" tour for a brand-new Premium user.
+//   - Manually from Home's "Premium Tour" button, for ANY user — including
+//     non-Premium ones, who see a live preview of every feature (the
+//     Premium-gated pages/interactions bypass their normal lock for as
+//     long as this tour is active — see PremiumGate, QuranViewToggle,
+//     FlipNoteCard, and Athkar.jsx) and get an upgrade prompt at the end
+//     instead of a plain "Done".
 //
 // Deliberately non-destructive: it opens the real note editor / dua form
 // to show the interaction, but never types into or saves anything, so a
@@ -196,7 +203,24 @@ export default async function premiumTourScript(api) {
     if (cancelledRef.current) return;
     setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: false });
     setCard("Write a Dua", "Write your own dua in Arabic…", 7);
-    await waitForNextPress();
+    // This page can insert a "taking too long" sync banner above the field
+    // shortly after it first renders (a slow My Duas load), shifting it down
+    // and leaving the one-shot rect above stale. Doesn't block the user's
+    // own Next press — just self-corrects the ring if they're still here
+    // once that would have settled.
+    let advanced = false;
+    const nextPress = waitForNextPress().then(() => {
+      advanced = true;
+    });
+    (async () => {
+      await sleep(900);
+      if (advanced || cancelledRef.current) return;
+      const r2 = await api.settleAndMeasure(duaArabicField);
+      if (!advanced && !cancelledRef.current) {
+        setDisplay({ kind: "spotlight", rect: r2, shape: "rounded", live: false });
+      }
+    })();
+    await nextPress;
     if (cancelledRef.current) return;
   }
 
@@ -210,12 +234,33 @@ export default async function premiumTourScript(api) {
     if (cancelledRef.current) return;
   }
 
-  // Step 8 — done
+  // Step 8 — done. Navigate off My Duas (a Premium-gated route) before
+  // showing the final card. PremiumGate wraps that route and only stands
+  // down while activeTour === "premium"; the instant this tour dismisses,
+  // its bypass lifts and its cleanup closes whatever Premium offer is open
+  // — which, for a non-Premium user, is the exact upgrade screen this step
+  // is about to open. Leaving the gated route first (while the tour is
+  // still active, so the bypass is still in effect) lets PremiumGate unmount
+  // cleanly with nothing to clean up, instead of racing the ending.
+  const homeNav = await waitForSelector('[data-tour-id="/"]');
+  if (homeNav && !cancelledRef.current) {
+    homeNav.click();
+    await sleep(400);
+  }
+  if (cancelledRef.current) return;
+
+  // Branches on the user's REAL Premium status (not the tour-preview bypass
+  // every earlier step relied on) — a genuine Premium user gets the normal
+  // "you're all set" close; someone previewing the tour without Premium
+  // gets an upgrade prompt using the same shared Premium screen everywhere
+  // else in the app uses, right as the tour ends.
   setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
-  setCard(
-    "You're All Set",
-    "That's everything Premium unlocks. Enjoy exploring My Kitab!",
-    8
-  );
+  if (api.isPremiumUser) {
+    setCard("You're All Set", "That's everything Premium unlocks. Enjoy exploring My Kitab!", 8);
+    api.setFinalAction("done");
+  } else {
+    setCard("Like What You See?", "That's everything Premium unlocks — here's how to get it.", 8);
+    api.setFinalAction("upgrade");
+  }
   setIsFinal(true);
 }

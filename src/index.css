@@ -619,6 +619,23 @@ a {
   letter-spacing: 0.02em;
 }
 
+/* Home's Tutorial card — two tour choices side by side (see Home.jsx). */
+.tour-launch-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.tour-premium-btn {
+  border-color: var(--card-library);
+  color: var(--card-library);
+}
+
+.tour-premium-btn:hover {
+  background: color-mix(in srgb, var(--card-library) 12%, transparent);
+}
+
 .home-continue-block {
   margin-top: 18px;
   padding-top: 16px;

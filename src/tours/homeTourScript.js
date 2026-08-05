@@ -103,15 +103,20 @@ export default async function homeTourScript(api) {
   await tapAndSettle(resumeLink, resumeRect);
   if (cancelledRef.current) return;
 
-  // The reader page has its own effect that smooth-scrolls to the #ayah-N
-  // hash on load — let that finish before taking over with our own
-  // scroll/ring so the two don't fight each other.
+  // The reader page also tries to smooth-scroll to the #ayah-N hash itself
+  // on load, but racing it (waiting for it to finish, guessing a delay,
+  // polling for its scroll to stabilize) all proved unreliable — it can
+  // still be mid-animation, or have been reset by the router's own scroll
+  // restoration, well after any fixed wait. Simplest and deterministic:
+  // do the same thing every other spotlighted step in this file already
+  // does — scrollIntoView it ourselves via settleAndMeasure — instead of
+  // trusting the page to have already landed somewhere useful.
   setDisplay({ kind: "center", rect: null, shape: "circle", live: false });
-  await sleep(1200);
+  await sleep(600);
   if (cancelledRef.current) return;
-  const ayah4Block = document.getElementById("ayah-4");
+  const ayah4Block = await waitForSelector("#ayah-4");
   if (ayah4Block && !cancelledRef.current) {
-    const r = await api.settleAndMeasure(ayah4Block);
+    const r = await api.settleAndMeasure(ayah4Block, { scrollIntoView: true });
     if (cancelledRef.current) return;
     setDisplay({ kind: "spotlight", rect: r, shape: "rounded", live: false });
     setCard("Continue Reading", "And there we are — right back at Ayah 4.", 4);

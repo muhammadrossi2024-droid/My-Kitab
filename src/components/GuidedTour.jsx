@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useNavVisibility } from "../context/NavVisibilityContext.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
 
 // The generic engine behind every guided tour in the app (see
 // src/tours/homeTourScript.js and premiumTourScript.js for the actual step
@@ -29,6 +30,11 @@ const SCROLL_MAX_MS = 2200;
 const CARD_MAX_WIDTH = 360;
 const CARD_MARGIN = 16;
 const CARD_GAP = 24; // gap between the card and its target/screen edge
+// The fixed Skip button sits at top: 150px, right: 16px (see .tour-skip-btn)
+// to clear the top banner's own Search/Settings icons. A card placed below a
+// top-banner target (cardBelow) would otherwise land right on top of it —
+// this floor keeps the card's top edge below that button instead.
+const CARD_TOP_FLOOR_BELOW_BANNER = 150 + 48;
 
 const SCROLL_KEYS = new Set(["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " ", "Spacebar"]);
 
@@ -142,10 +148,11 @@ function animateScrollTo(targetY, cancelRef, onFrame) {
 }
 
 export default function GuidedTour({ script, totalSteps, onDone }) {
-  const { settings } = useSettings();
+  const { settings, updateSettings } = useSettings();
   const logoSrc = settings.theme === "dark" ? "/logo-dark.png" : "/logo-light.png";
   const navigate = useNavigate();
   const { lock: lockNav, unlock: unlockNav, show: showNav } = useNavVisibility();
+  const { isPremiumUser, openPremiumOffer } = usePremium();
 
   // What's on screen right now — driven imperatively by the running script
   // via the `api` below, not derived from a step list, since a tour is a
@@ -155,6 +162,11 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
   const [cardText, setCardText] = useState({ title: "Welcome", text: "", step: null, key: 0 });
   const [tapEffect, setTapEffect] = useState(null);
   const [isFinal, setIsFinal] = useState(false);
+  // What the final card's button does — "done" (existing behavior: go
+  // home) or "upgrade" (the Premium Tour's non-Premium ending: close this
+  // tour and open the real, shared Premium screen instead of just a plain
+  // Done). Set via the script's own `api.setFinalAction`.
+  const [finalAction, setFinalAction] = useState("done");
   // Whether the tour is currently parked at a step boundary, waiting for the
   // user to press Next — the Next button is only clickable while this is true.
   const [waitingForNext, setWaitingForNext] = useState(false);
@@ -257,6 +269,15 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
     // runs, is what makes the second invocation a genuinely fresh start.
     cancelledRef.current = false;
 
+    // Both scripts assume the Quran reader starts in Scroll View (the Free
+    // Tour's Ayah-4/Mark Ayah demo needs its scroll-view-only elements; the
+    // Premium Tour demonstrates switching into Page View itself, so it also
+    // wants to start from Scroll). A user who last left the reader in Page
+    // View would otherwise silently break either script — force Scroll View
+    // for the duration and restore whatever they had on the way out.
+    const priorViewMode = settings.quranViewMode;
+    if (priorViewMode !== "scroll") updateSettings({ quranViewMode: "scroll" });
+
     // The tour drives its own scroll — block the user's wheel/touch/key
     // scroll input for the duration so it can't fight the script or desync
     // the spotlight, without disabling window.scrollTo (a JS call, not an
@@ -275,6 +296,8 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
       setDisplay,
       setCard,
       setIsFinal,
+      setFinalAction,
+      isPremiumUser,
       waitForNextPress,
       waitForSelector: (selector, timeoutMs) => waitForSelector(selector, cancelledRef, timeoutMs),
       waitForNthSelector: (selector, index, timeoutMs) =>
@@ -300,6 +323,7 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
       advanceRef.current?.();
       showNav();
       unlockNav();
+      if (priorViewMode !== "scroll") updateSettings({ quranViewMode: priorViewMode });
       window.removeEventListener("wheel", preventWheelTouch);
       window.removeEventListener("touchmove", preventWheelTouch);
       window.removeEventListener("keydown", preventScrollKeys);
@@ -320,6 +344,15 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
 
   function handleDone() {
     navigate("/");
+    onDone();
+  }
+
+  // The Premium Tour's non-Premium ending: close this tour and open the
+  // real, shared full-page Premium screen on top of Home, rather than a
+  // plain Done — see premiumTourScript.js's final step.
+  function handleUpgrade() {
+    navigate("/");
+    openPremiumOffer();
     onDone();
   }
 
@@ -365,8 +398,9 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
       top = cardBelow ? display.rect.bottom + CARD_GAP : display.rect.top - CARD_GAP - height;
     }
 
+    const topFloor = cardBelow ? Math.max(CARD_MARGIN, CARD_TOP_FLOOR_BELOW_BANNER) : CARD_MARGIN;
     left = clamp(left, CARD_MARGIN, vw - width - CARD_MARGIN);
-    top = clamp(top, CARD_MARGIN, vh - height - CARD_MARGIN);
+    top = clamp(top, topFloor, vh - height - CARD_MARGIN);
 
     setCardPos({ left, top, width });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -439,9 +473,15 @@ export default function GuidedTour({ script, totalSteps, onDone }) {
                 {textShown.step != null ? `${textShown.step} / ${totalSteps}` : ""}
               </span>
               {isFinal ? (
-                <button className="btn btn-primary tour-next-btn" onClick={handleDone}>
-                  Done
-                </button>
+                finalAction === "upgrade" ? (
+                  <button className="btn btn-primary tour-next-btn" onClick={handleUpgrade}>
+                    Unlock Premium
+                  </button>
+                ) : (
+                  <button className="btn btn-primary tour-next-btn" onClick={handleDone}>
+                    Done
+                  </button>
+                )
               ) : (
                 <button
                   className="btn btn-primary tour-next-btn"

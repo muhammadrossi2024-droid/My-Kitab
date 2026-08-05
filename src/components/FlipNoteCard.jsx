@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NotebookPen } from "lucide-react";
 import NoteEditor from "./NoteEditor.jsx";
 import { useTopBannerVisibility } from "../context/TopBannerVisibilityContext.jsx";
+import { useIntro } from "../context/IntroContext.jsx";
 
 // Wraps a piece of reading content (an ayah, a mutoon page) with a 3D flip
 // — front stays exactly what the caller was already rendering, back is a
@@ -47,6 +48,13 @@ export default function FlipNoteCard({
   // before the card had actually finished turning, which read as a glitch.
   const [everFlipped, setEverFlipped] = useState(false);
   const { hide: hideTopBanner, show: showTopBanner } = useTopBannerVisibility();
+  // The Premium Tour (tours/premiumTourScript.js) needs to flip this open
+  // for real — flip animation, real NoteEditor mounted — even for a
+  // non-Premium user previewing the feature, rather than being interrupted
+  // by the lock's normal onLockedTap. Only bypasses while that specific
+  // tour is on screen; ordinary locked behavior applies the instant it ends.
+  const { activeTour } = useIntro();
+  const previewingPremium = activeTour === "premium";
 
   // Hides the fixed TopBanner for exactly as long as this card is flipped
   // open, so the note textarea a mobile browser auto-scrolls to focus
@@ -65,7 +73,7 @@ export default function FlipNoteCard({
   }
 
   function handleTriggerClick() {
-    if (locked) {
+    if (locked && !previewingPremium) {
       onLockedTap?.();
       return;
     }

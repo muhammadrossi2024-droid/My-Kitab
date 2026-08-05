@@ -3,6 +3,7 @@ import { Sunrise, Sunset, Heart, Crown } from "lucide-react";
 import SectionHero from "../components/SectionHero.jsx";
 import PrayingHandsIcon from "../components/PrayingHandsIcon.jsx";
 import { usePremium } from "../context/PremiumContext.jsx";
+import { useIntro } from "../context/IntroContext.jsx";
 
 const SECTIONS = [
   {
@@ -23,6 +24,12 @@ const SECTIONS = [
 
 export default function Athkar() {
   const { isPremiumUser, openPremiumOffer } = usePremium();
+  // The Premium Tour previews this card for real (real navigation into My
+  // Duas) even for a non-Premium user — see PremiumGate for the matching
+  // route-level bypass that makes landing on /athkar/my-duas actually work
+  // while that tour is active.
+  const { activeTour } = useIntro();
+  const showUnlocked = isPremiumUser || activeTour === "premium";
 
   return (
     <div>
@@ -51,7 +58,7 @@ export default function Athkar() {
           );
         })}
 
-        {isPremiumUser ? (
+        {showUnlocked ? (
           <Link
             to="/athkar/my-duas"
             data-tour-id="/athkar/my-duas"

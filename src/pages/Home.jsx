@@ -1,10 +1,11 @@
+import { Crown } from "lucide-react";
 import { useIntro } from "../context/IntroContext.jsx";
 import InstallGuide from "../components/InstallGuide.jsx";
 import HomeSectionCards from "../components/HomeSectionCards.jsx";
 import PremiumToggleCard from "../components/PremiumToggleCard.jsx";
 
 export default function Home() {
-  const { startTour } = useIntro();
+  const { startTour, startPremiumTour } = useIntro();
 
   return (
     <div>
@@ -19,9 +20,13 @@ export default function Home() {
         <p style={{ color: "var(--text-muted)", marginBottom: 0 }}>
           New here? Discover everything this app can do in under a minute — tap to get started!
         </p>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 16 }}>
+        <div className="tour-launch-row">
           <button className="btn btn-primary" onClick={startTour}>
-            Start Tour
+            Take a Tour
+          </button>
+          <button className="btn tour-premium-btn" onClick={startPremiumTour}>
+            <Crown size={14} strokeWidth={2.25} />
+            Premium Tour
           </button>
         </div>
       </div>
