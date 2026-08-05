@@ -16,6 +16,11 @@ const DEFAULT_SETTINGS = {
   // computed value — switching to a reciter without word data doesn't
   // overwrite it, playback just falls back to ayah-level for that reciter.
   followAlong: "word", // "word" | "ayah"
+  // "scroll" is the original ayah-by-ayah reader; "page" is the Premium
+  // Mushaf Page View. Stored globally (not per-surah) so switching modes
+  // once switches it everywhere, and Resume Reading/Continue Reading always
+  // lands on whichever mode the user last used.
+  quranViewMode: "scroll", // "scroll" | "page"
 };
 
 function loadSettings() {

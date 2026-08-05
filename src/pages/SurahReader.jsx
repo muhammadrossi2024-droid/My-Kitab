@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useProgress } from "../context/ProgressContext.jsx";
 import { useAudioPlayer } from "../context/AudioPlayerContext.jsx";
@@ -7,15 +7,18 @@ import { usePremium } from "../context/PremiumContext.jsx";
 import BackToTopButton from "../components/BackToTopButton.jsx";
 import ArabicText from "../components/ArabicText.jsx";
 import FlipNoteCard from "../components/FlipNoteCard.jsx";
+import QuranViewToggle from "../components/QuranViewToggle.jsx";
 import { listNotesBySourceKey } from "../utils/notesDb.js";
 import { getVerseWords } from "../utils/quranWords.js";
 import { reciters, supportsWordTiming, getReciter } from "../data/reciters.js";
 import { downloadSurah, fetchSurahJson, hasCacheSupport, isSurahDownloaded, removeSurahDownload } from "../utils/offline.js";
+import { pageForAyah } from "../utils/mushaf.js";
 
 export default function SurahReader() {
   const { number } = useParams();
   const surahNumber = parseInt(number, 10);
-  const { settings, updateSettings, setLastRead } = useSettings();
+  const navigate = useNavigate();
+  const { settings, updateSettings, setLastRead, lastRead } = useSettings();
   const { markRead, isRead, isListened, getSurahProgress } = useProgress();
   const audioPlayer = useAudioPlayer();
   const { isPremiumUser, openPremiumOffer } = usePremium();
@@ -23,6 +26,10 @@ export default function SurahReader() {
   const [error, setError] = useState(null);
   const [notesByRef, setNotesByRef] = useState(new Map());
   const [downloaded, setDownloaded] = useState(false);
+  const [redirectingToPage, setRedirectingToPage] = useState(
+    settings.quranViewMode === "page" && isPremiumUser
+  );
+  const visibleVerseRef = useRef(null);
   const [downloadState, setDownloadState] = useState(null); // null | {done, total}
   const [ayahPickerOpen, setAyahPickerOpen] = useState(false);
   const [ayahPickerScrolled, setAyahPickerScrolled] = useState(false);
@@ -60,6 +67,69 @@ export default function SurahReader() {
     fetchSurahJson(surahNumber).then(setSurah).catch((err) => setError(err.message));
     listNotesBySourceKey("quran", surahNumber).then(setNotesByRef);
   }, [surahNumber]);
+
+  // If Page View is the user's current reading mode, this route redirects
+  // straight there instead of ever rendering Scroll View — every entry
+  // point into a surah (SurahList, Resume Reading, search results, a raw
+  // /surah/:number link) funnels through here, so the toggle's choice
+  // really does stick everywhere, not just where it was clicked. Skipped
+  // entirely (no extra fetch, no flash) for the common "scroll" case.
+  useEffect(() => {
+    if (settings.quranViewMode !== "page" || !isPremiumUser) {
+      setRedirectingToPage(false);
+      return;
+    }
+    setRedirectingToPage(true);
+    const hash = window.location.hash;
+    const hashAyah = hash.startsWith("#ayah-") ? parseInt(hash.slice(6), 10) : null;
+    const targetAyah = hashAyah || (lastRead?.surah === surahNumber ? lastRead.ayah : 1);
+    let cancelled = false;
+    pageForAyah(surahNumber, targetAyah).then((page) => {
+      if (cancelled) return;
+      if (page) navigate(`/quran/page/${page}`, { replace: true });
+      else setRedirectingToPage(false); // lookup failed — fall back to Scroll View rather than a stuck spinner
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [surahNumber, settings.quranViewMode, isPremiumUser]);
+
+  // Continuously tracks whichever ayah is nearest the top of the viewport
+  // (no IntersectionObserver unobserve here, unlike the mark-as-read one
+  // below — this needs to keep updating for as long as the page is open) so
+  // switching to Page View mid-scroll lands on the same ayah the user was
+  // actually reading, not wherever the surah happens to start.
+  useEffect(() => {
+    if (!surah) return;
+    function updateVisibleVerse() {
+      const refY = window.innerHeight * 0.35;
+      let closest = null;
+      let closestDist = Infinity;
+      for (const [verseNumber, el] of verseElsRef.current) {
+        const rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+        const dist = Math.abs(rect.top - refY);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = verseNumber;
+        }
+      }
+      if (closest != null) visibleVerseRef.current = closest;
+    }
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateVisibleVerse();
+        ticking = false;
+      });
+    }
+    updateVisibleVerse();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [surah]);
 
   // Optimistic local update after a note is saved/deleted from a flip
   // card — avoids re-querying IndexedDB for the whole surah on every save.
@@ -197,6 +267,26 @@ export default function SurahReader() {
     audioPlayer.changeReciter(reciterId);
   }
 
+  // Only ever called with "page" — QuranViewToggle already no-ops clicks on
+  // whichever mode is already active, and this reader only ever renders
+  // as Scroll View, so "scroll" here would mean "switch to the mode I'm
+  // already in."
+  function handleModeSelect(mode) {
+    if (mode !== "page") return;
+    const targetVerse =
+      (isMySurahPlaying && (fullSurahMode ? fullSurahActiveVerse : playingVerse)) ||
+      visibleVerseRef.current ||
+      1;
+    updateSettings({ quranViewMode: "page" });
+    pageForAyah(surahNumber, targetVerse).then((page) => {
+      if (page) navigate(`/quran/page/${page}`);
+    });
+  }
+
+  if (redirectingToPage) {
+    return <div className="loading-state">Loading page…</div>;
+  }
+
   if (error) {
     return (
       <div className="empty-state">
@@ -218,6 +308,7 @@ export default function SurahReader() {
   return (
     <div className="surah-reader">
       <div className="reader-header">
+        <QuranViewToggle mode="scroll" onSelect={handleModeSelect} />
         <div className="surah-arabic-name" style={{ fontSize: "2rem" }}>
           {surah.name.arabic}
         </div>

@@ -23,6 +23,18 @@ export default function FlipNoteCard({
   onNoteChange,
   locked = false,
   onLockedTap,
+  // Page View's ayahs run inline as part of a justified paragraph, with no
+  // room for the usual small pencil trigger button next to each one — this
+  // lets the ayah's own text act as the trigger instead, on top of (not
+  // instead of) that button. Scroll View/Mutoon leave this off and keep
+  // their existing pencil-only trigger untouched.
+  frontClickable = false,
+  // Also Page View only: the ayah-sized card sits inline inside a justified
+  // Mushaf line, so the usual absolute-positioned corner pencil button
+  // (sized/placed for a full-width block) doesn't fit — compact mode hides
+  // it and relies on frontClickable instead, and lets CSS lay the card out
+  // inline rather than as a block.
+  compact = false,
 }) {
   const [flipped, setFlipped] = useState(false);
   // Mounted lazily on the first flip, then left mounted (just visually
@@ -67,19 +79,26 @@ export default function FlipNoteCard({
   }
 
   return (
-    <div className="flip-note-card">
-      <button
-        type="button"
-        className={"flip-note-trigger" + (existing ? " has-note" : "")}
-        onClick={handleTriggerClick}
-        aria-label={existing ? "Edit note" : "Add note"}
-        title={existing ? "Edit note" : "Add note"}
-      >
-        <NotebookPen size={15} strokeWidth={2} />
-      </button>
+    <div className={"flip-note-card" + (compact ? " flip-note-card-compact" : "")}>
+      {!compact && (
+        <button
+          type="button"
+          className={"flip-note-trigger" + (existing ? " has-note" : "")}
+          onClick={handleTriggerClick}
+          aria-label={existing ? "Edit note" : "Add note"}
+          title={existing ? "Edit note" : "Add note"}
+        >
+          <NotebookPen size={15} strokeWidth={2} />
+        </button>
+      )}
 
-      <div className={"flip-note-inner" + (flipped ? " flipped" : "")}>
-        <div className="flip-note-face flip-note-front">{front}</div>
+      <div className={"flip-note-inner" + (flipped ? " flipped" : "") + (existing ? " flip-note-has-note" : "")}>
+        <div
+          className={"flip-note-face flip-note-front" + (frontClickable ? " flip-note-front-clickable" : "")}
+          onClick={frontClickable ? handleTriggerClick : undefined}
+        >
+          {front}
+        </div>
         <div className="flip-note-face flip-note-back">
           {everFlipped && (
             <NoteEditor

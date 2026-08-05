@@ -12,6 +12,7 @@ import Auth from "./pages/Auth.jsx";
 import Home from "./pages/Home.jsx";
 import SurahList from "./pages/SurahList.jsx";
 import SurahReader from "./pages/SurahReader.jsx";
+import MushafPage from "./pages/MushafPage.jsx";
 import Search from "./pages/Search.jsx";
 import Mutoon from "./pages/Mutoon.jsx";
 import MutoonReader from "./pages/MutoonReader.jsx";
@@ -70,6 +71,14 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/surahs" element={<SurahList />} />
               <Route path="/surah/:number" element={<SurahReader />} />
+              <Route
+                path="/quran/page/:pageNumber"
+                element={
+                  <PremiumGate>
+                    <MushafPage />
+                  </PremiumGate>
+                }
+              />
               <Route path="/search" element={<Search />} />
               <Route path="/mutoon" element={<Mutoon />} />
               <Route path="/mutoon/:bookId" element={<MutoonReader />} />
