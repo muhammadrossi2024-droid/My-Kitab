@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
@@ -36,6 +36,13 @@ export default function App() {
   const { showSplash, dismissSplash, activeTour, showTour, startPremiumTour, dismissTour } = useIntro();
   const { justActivatedPremium, clearJustActivatedPremium } = usePremium();
   const { lock, unlock } = useNavVisibility();
+  const location = useLocation();
+  // Quran Page View is a full-screen, position:fixed immersive reader with
+  // its own back button and floating controls (see MushafPage.jsx/
+  // index.css's .mushaf-immersive) — the persistent app chrome would only
+  // sit uselessly underneath it, so it's hidden for exactly this route
+  // rather than touched globally.
+  const immersivePageView = location.pathname.startsWith("/quran/page/");
 
   // The guided tour spotlights the real nav bar, so it must stay on screen
   // (not auto-hidden by scroll) while either the splash or the tour is up.
@@ -74,11 +81,11 @@ export default function App() {
 
       {!authLoading && user && (
         <div className="app-shell">
-          <TopBanner />
-          <Navbar />
+          {!immersivePageView && <TopBanner />}
+          {!immersivePageView && <Navbar />}
           {/* Sits above the bottom nav via its own fixed positioning — a
               sibling of Navbar, not a change to it. */}
-          <AudioMiniPlayer />
+          {!immersivePageView && <AudioMiniPlayer />}
           {/* Full-viewport takeover, shown/hidden entirely via PremiumContext
               — see PremiumGate, SurahReader's note button, and Auth.jsx for
               the three trigger points. */}

@@ -3235,6 +3235,7 @@ a {
 
 .flip-note-card-compact .flip-note-inner {
   display: inline-grid;
+  position: relative;
 }
 
 .flip-note-card-compact .flip-note-has-note .flip-note-front {
@@ -3242,8 +3243,25 @@ a {
   text-underline-offset: 5px;
 }
 
+/* Taken out of the grid's own flow (position: absolute) rather than left
+   as a same-cell grid item like the non-compact version above — a plain
+   grid item's min-width still counts toward CSS Grid's intrinsic track
+   sizing even while its face is turned away and invisible, which,  in a
+   Mushaf line packed edge-to-edge with several of these per line and no
+   room to wrap (see .mushaf-line's white-space: nowrap), forced every
+   ayah to reserve 260px whether or not its note was ever opened — by far
+   the biggest single contributor a densely-annotated page could overflow
+   by. Floating it here instead means only the front face's own (much
+   smaller) width feeds into the line's layout; opening a note now looks
+   like the same floating popover pattern already used for the page/Surah/
+   Juz jump picker and reciter list, rather than a stretched inline block. */
 .flip-note-card-compact .flip-note-back {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 4;
   min-width: 260px;
+  max-width: min(320px, 82vw);
   background: var(--bg-elevated);
   border: 1px solid var(--card-library);
   border-radius: 10px;
@@ -3682,16 +3700,113 @@ a {
   text-decoration: underline;
 }
 
-/* ---- Quran Page View (Premium Mushaf reader) — see MushafPage.jsx and
-   scripts/scrape-mushaf-pages.js ---- */
 
-.mushaf-controls {
+/* ---- Quran Page View (Premium Mushaf reader) — see MushafPage.jsx,
+   MushafPageSlide.jsx, and scripts/scrape-mushaf-pages.js ----
+
+   A full-screen, position:fixed takeover (TopBanner/Navbar/AudioMiniPlayer
+   are hidden by App.jsx while this route is active — see its comment) with
+   its own floating, auto-hiding chrome and a horizontally swipeable,
+   scroll-snap carousel of Mushaf pages. */
+
+.mushaf-immersive {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ---- Floating chrome bar --------------------------------------------- */
+
+.mushaf-chrome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: calc(12px + env(safe-area-inset-top)) 14px 12px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 88%, transparent) 0%, transparent 100%);
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
+  pointer-events: none; /* re-enabled per-row below, so the gradient itself never blocks page taps */
+}
+
+.mushaf-chrome-hidden {
+  transform: translateY(-12px);
+  opacity: 0;
+}
+
+.mushaf-chrome-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 10px;
   flex-wrap: wrap;
+  width: 100%;
+  max-width: 640px;
+  pointer-events: auto;
+}
+
+.mushaf-chrome-row-secondary {
+  gap: 10px;
+}
+
+.mushaf-chrome-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+.mushaf-chrome-back:hover {
+  color: var(--accent);
+}
+
+.mushaf-page-pill {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.mushaf-step-btn {
+  background: color-mix(in srgb, var(--bg-elevated) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.mushaf-word-mode-note {
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin: 0;
+  pointer-events: auto;
 }
 
 .mushaf-jump-wrap {
@@ -3723,22 +3838,88 @@ a {
   min-width: 0;
 }
 
-/* The page "frame" reserves a fixed aspect ratio matching a real Mushaf
-   sheet regardless of how much of it a given page actually fills — the
-   real printed Mushaf's own opening pages (1-2) are famously mostly blank
-   for exactly this reason, so under-filled pages here are correct, not a
-   bug, and keeping the frame's height constant avoids a layout jump when
-   navigating from a full page to a short one. */
+/* ---- Carousel ----------------------------------------------------------
+   Three slides wide (previous/current/next) — see MushafPage.jsx for the
+   "recenter the window" trick that makes this feel like an infinite strip
+   without ever rendering more than three pages at once. */
+
+.mushaf-carousel {
+  flex: 1;
+  display: flex;
+  direction: ltr; /* physical swipe direction stays standard regardless of the RTL page content inside */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-snap-stop: always;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  container-type: size;
+  container-name: mushaf-slide-vp;
+}
+
+.mushaf-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.mushaf-carousel:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.mushaf-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  padding: calc(88px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right))
+    calc(28px + env(safe-area-inset-bottom)) calc(14px + env(safe-area-inset-left));
+}
+
+.mushaf-slide::-webkit-scrollbar {
+  display: none;
+}
+
+/* The page "frame" keeps a fixed Mushaf-page aspect ratio and scales to the
+   largest size that fits its slide without being cropped — the CSS
+   equivalent of object-fit: contain, expressed with container query units
+   so it tracks the *slide's* box (not the raw viewport, which still
+   includes the chrome's padding). Under-filled short pages (page 1, the
+   very last pages of the Quran) are correct, not a bug — real printed
+   Mushaf pages are the same.
+
+   Its own `font-size` is the one value in this whole component tuned
+   against the *outer* carousel container (mirroring the width formula
+   above) — every other size in here (padding, line/header/bismillah type,
+   the page-number footer) is a plain `em` off of that, deliberately never
+   a cqw/cqh of .mushaf-page-frame itself. A container can't query its own
+   size (that's circular), so a child property that tried to use this
+   frame's own cqw would silently resolve against the *carousel* instead —
+   full viewport width, not this card — which is exactly the bug that once
+   made every page's padding balloon to ~65px and wrap 15 lines of text
+   into 3. `em` sidesteps that entirely.
+   MushafPageSlide.jsx's autofit effect can additionally scale
+   --mushaf-fit below 1 (never above) as a last-resort safety net for any
+   single page whose particular line lengths don't fit even this. */
 .mushaf-page-frame {
   position: relative;
-  max-width: 640px;
-  min-height: 640px;
-  margin: 18px auto;
-  padding: 46px 28px 32px;
+  width: min(100%, calc(100cqh * 0.68));
+  aspect-ratio: 0.68;
+  min-height: 0;
+  font-size: calc(var(--mushaf-fit, 1) * min(5cqw, calc(5cqh * 0.68)));
+  margin: 0 auto;
+  padding: 1.55em 1.05em 1.05em;
   border-radius: 4px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 8px 28px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
 }
 
 .mushaf-page-frame::before {
@@ -3751,12 +3932,22 @@ a {
   pointer-events: none;
 }
 
+.mushaf-page-edge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .mushaf-page-number {
   position: absolute;
-  bottom: 14px;
+  bottom: 0.75em;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.78rem;
+  font-size: 0.55em;
   color: var(--text-muted);
   font-family: "Scheherazade New", "Traditional Arabic", serif;
 }
@@ -3765,13 +3956,13 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 4px 0 14px;
-  padding: 8px 12px;
+  margin: 4px 0 0.5em;
+  padding: 0.35em 0.55em;
   border-top: 2px solid var(--card-library);
   border-bottom: 2px solid var(--card-library);
   background: color-mix(in srgb, var(--card-library) 8%, transparent);
   font-family: "Scheherazade New", "Traditional Arabic", serif;
-  font-size: 1.3rem;
+  font-size: 1.12em;
   font-weight: 700;
   color: var(--card-library);
   direction: rtl;
@@ -3781,26 +3972,24 @@ a {
   text-align: center;
   direction: rtl;
   font-family: "Scheherazade New", "Traditional Arabic", serif;
-  font-size: 1.5rem;
-  margin: 0 0 10px;
+  font-size: 1.2em;
+  margin: 0 0 0.35em;
 }
 
-/* Each .mushaf-line div holds exactly one physical Mushaf line, never
-   wrapped — so `text-align-last`, not `text-align`, is what actually governs
-   its alignment (the single line IS the "last line" as far as CSS is
-   concerned). Real Mushaf pages fill every non-final line edge-to-edge via
-   kashida baked into the QCF glyphs themselves once that page's font has
-   loaded (see MushafPage.jsx's `fontReady`); centering here is deliberately
-   just the fallback look shown before a page's font arrives, and for
-   genuinely short lines (end of a Surah, page 1) where even the real Mushaf
-   doesn't stretch to fill. */
+/* Each .mushaf-line div holds exactly one physical Mushaf line, and is
+   never allowed to wrap — a real Mushaf line is typeset (via kashida baked
+   into each page's own QCF glyphs, see MushafPageSlide.jsx's `fontReady`)
+   to fill its width exactly, so wrapping it here would only mean the
+   frame's font-size formula above under-shot for this particular line;
+   the autofit effect is what actually guarantees it never has to. */
 .mushaf-line {
   direction: rtl;
   text-align: justify;
   text-align-last: center;
+  white-space: nowrap;
   font-family: "Scheherazade New", "Traditional Arabic", "Amiri", serif;
-  font-size: clamp(1.15rem, 1.05rem + 1vw, 1.7rem);
-  line-height: 2.5;
+  font-size: 1em;
+  line-height: 2.35;
 }
 
 .mushaf-glyph {
@@ -3820,16 +4009,22 @@ a {
   border-radius: 6px;
 }
 
+/* em-based, not px/rem — every size in this line has to shrink in lockstep
+   with the frame's own font-size (see .mushaf-page-frame's comment) so the
+   autofit effect's "widen font until the line's natural width matches the
+   fixed elements it also needs to make room for" math stays linear. A
+   fixed-px badge would eventually dominate a heavily-shrunk line's width
+   and make it impossible for autofit to ever converge. */
 .mushaf-juz-badge {
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
-  margin: 0 4px;
-  padding: 1px 9px;
+  margin: 0 0.2em;
+  padding: 0.05em 0.45em;
   border-radius: 999px;
   background: var(--card-library);
   color: #ffffff;
-  font-size: 0.6rem;
+  font-size: 0.55em;
   font-weight: 700;
   font-family: "Segoe UI", system-ui, sans-serif;
 }
@@ -3837,9 +4032,9 @@ a {
 .mushaf-ayah-end-cluster {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 0.2em;
   vertical-align: middle;
-  margin: 0 3px;
+  margin: 0 0.15em;
 }
 
 .mushaf-ayah-end-roundel {
@@ -3873,8 +4068,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 18px;
-  height: 18px;
+  width: 0.9em;
+  height: 0.9em;
   border-radius: 50%;
   border: none;
   background: none;
@@ -3903,8 +4098,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 1.5em;
+  height: 1.5em;
   flex-shrink: 0;
   border-radius: 50%;
   border: 1.5px solid var(--accent);
@@ -3924,12 +4119,66 @@ a {
   color: var(--accent-contrast);
 }
 
+/* The lucide <svg> icons inside these two buttons come with a fixed
+   pixel size prop — overridden here so they shrink along with the
+   em-sized button around them instead of poking outside it. */
+.mushaf-play-btn svg,
+.mushaf-inline-icon-btn svg {
+  width: 0.55em;
+  height: 0.55em;
+}
+
+/* ---- Feedback: page-flip badge + marked-as-read toast ------------------ */
+
+.mushaf-page-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  min-width: 64px;
+  padding: 10px 18px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+  color: var(--text);
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  animation: mushaf-badge-fade 0.7s ease both;
+}
+
+@keyframes mushaf-badge-fade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .mushaf-marked-toast {
+  position: absolute;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 6px;
-  margin: 0 auto 16px;
+  margin: 0;
   padding: 8px 16px;
   width: fit-content;
   border-radius: 999px;
@@ -3937,6 +4186,8 @@ a {
   color: var(--accent);
   font-size: 0.82rem;
   font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
 }
 
 .mushaf-page-loading {
@@ -3969,14 +4220,28 @@ a {
   }
 }
 
-@media (max-width: 480px) {
-  .mushaf-page-frame {
-    min-height: 480px;
-    padding: 34px 14px 26px;
+/* Landscape / short viewports (phone rotated, small laptop windows in a
+   split view): height is the tighter constraint, so trim the chrome's
+   footprint and let the page frame's own cqh-based width formula do the
+   rest of the work. */
+@media (max-height: 480px) {
+  .mushaf-slide {
+    padding-top: calc(64px + env(safe-area-inset-top));
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
   }
 
-  .mushaf-line {
-    font-size: clamp(1.05rem, 1rem + 2vw, 1.4rem);
-    line-height: 2.3;
+  .mushaf-chrome-row-secondary .mushaf-step-btn span,
+  .mushaf-chrome-row-secondary .mushaf-step-btn {
+    font-size: 0.8rem;
+  }
+}
+
+/* Wide desktop/tablet windows — the page frame is already capped by its
+   own aspect ratio, so this just keeps the chrome bar from stretching
+   edge-to-edge and looking lost. */
+@media (min-width: 900px) {
+  .mushaf-chrome-row,
+  .mushaf-word-mode-note {
+    max-width: 720px;
   }
 }

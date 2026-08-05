@@ -1,54 +1,26 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Play, Pause, Bookmark, BookOpen } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { useSettings } from "../context/SettingsContext.jsx";
 import { useAudioPlayer } from "../context/AudioPlayerContext.jsx";
 import { usePremium } from "../context/PremiumContext.jsx";
+import { useIntro } from "../context/IntroContext.jsx";
 import QuranViewToggle from "../components/QuranViewToggle.jsx";
-import ArabicText from "../components/ArabicText.jsx";
-import FlipNoteCard from "../components/FlipNoteCard.jsx";
-import { listNotesBySourceKey } from "../utils/notesDb.js";
-import { fetchSurahJson } from "../utils/offline.js";
+import MushafPageSlide from "../components/MushafPageSlide.jsx";
 import { supportsWordTiming } from "../data/reciters.js";
 import ReciterSelect from "../components/ReciterSelect.jsx";
 import { surahMeta } from "../data/surahMeta.js";
 import {
   TOTAL_MUSHAF_PAGES,
   fetchMushafPage,
-  prefetchAdjacentPages,
+  loadPageFont,
   pageForAyah,
   pageForSurah,
   pageForJuz,
-  loadPageFont,
-  pageFontFamily,
 } from "../utils/mushaf.js";
 
-const BISMILLAH = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
-const JUZ_NAMES = [
-  "الأول", "الثاني", "الثالث", "الرابع", "الخامس", "السادس", "السابع", "الثامن", "التاسع", "العاشر",
-  "الحادي عشر", "الثاني عشر", "الثالث عشر", "الرابع عشر", "الخامس عشر", "السادس عشر", "السابع عشر",
-  "الثامن عشر", "التاسع عشر", "العشرون", "الحادي والعشرون", "الثاني والعشرون", "الثالث والعشرون",
-  "الرابع والعشرون", "الخامس والعشرون", "السادس والعشرون", "السابع والعشرون", "الثامن والعشرون",
-  "التاسع والعشرون", "الثلاثون",
-];
-
-function surahByNumber(n) {
-  return surahMeta.find((s) => s.number === n);
-}
-
-// Splits one line's flat word list into runs of consecutive words that
-// belong to the same ayah — each run becomes its own tappable note target,
-// so a long ayah that wraps across several lines still opens the same note
-// from any line it appears on.
-function groupWordsByVerse(words) {
-  const runs = [];
-  for (const w of words) {
-    const last = runs[runs.length - 1];
-    if (last && last.verseKey === w.v) last.words.push(w);
-    else runs.push({ verseKey: w.v, words: [w] });
-  }
-  return runs;
-}
+const CHROME_HIDE_DELAY_MS = 3200;
+const SCROLL_SETTLE_MS = 130;
 
 export default function MushafPage() {
   const { pageNumber: pageNumberParam } = useParams();
@@ -57,126 +29,71 @@ export default function MushafPage() {
   const { settings, updateSettings, setLastRead } = useSettings();
   const { isPremiumUser, openPremiumOffer } = usePremium();
   const audioPlayer = useAudioPlayer();
+  const { activeTour } = useIntro();
 
-  const [pageData, setPageData] = useState(null);
-  const [fontReady, setFontReady] = useState(false);
-  const [error, setError] = useState(null);
-  const [notesByRef, setNotesByRef] = useState(new Map());
+  const [currentPageData, setCurrentPageData] = useState(null);
   const [jumpOpen, setJumpOpen] = useState(false);
   const [jumpPageInput, setJumpPageInput] = useState("");
-  const [primaryVerse, setPrimaryVerse] = useState(null); // {surah, ayah} — last ayah the user interacted with on this page
-  const [justMarkedVerse, setJustMarkedVerse] = useState(null); // "surah:ayah" string, briefly shown after marking last read
+  const [primaryVerse, setPrimaryVerse] = useState(null); // {surah, ayah} — last ayah the user interacted with
+  const [justMarkedVerse, setJustMarkedVerse] = useState(null); // "surah:ayah", briefly shown after marking last read
+  const [chromeVisible, setChromeVisible] = useState(true);
+  const [showPageBadge, setShowPageBadge] = useState(false);
+  const [livePageNumber, setLivePageNumber] = useState(pageNumber);
 
-  const surahJsonCacheRef = useRef(new Map()); // surahNumber -> loaded surah JSON (for audio playback)
-  const touchStartXRef = useRef(null);
+  const surahJsonCacheRef = useRef(new Map()); // surahNumber -> loaded surah JSON (for audio playback), shared by every slide
   const markedTimeoutRef = useRef(null);
-  const followedVerseRef = useRef(null); // last verse we auto-followed playback to, so we don't re-navigate every render
+  const followedVerseRef = useRef(null); // last verse we auto-followed playback to
+  const carouselRef = useRef(null);
+  const settleTimerRef = useRef(null);
+  const hideTimerRef = useRef(null);
+  const pageNumberRef = useRef(pageNumber);
+  const badgeFadeRef = useRef(null);
+
+  useEffect(() => {
+    pageNumberRef.current = pageNumber;
+  }, [pageNumber]);
 
   const reciterSupportsWord = supportsWordTiming(settings.reciter);
   const wordModeUnavailable = settings.followAlong === "word" && !reciterSupportsWord;
 
-  // Load this page's data, and warm the cache for its neighbors so
-  // next/previous almost always resolves instantly (see utils/mushaf.js).
+  // Lightweight fetch of just the current page's data — MushafPage.jsx no
+  // longer renders content itself (MushafPageSlide does), but still needs
+  // this to find the first ayah on the page for the Scroll View handoff.
+  // fetchMushafPage's own in-memory cache means this never costs a second
+  // network round trip beyond what the slide already triggered.
   useEffect(() => {
     let cancelled = false;
-    setPageData(null);
-    setFontReady(false);
-    setError(null);
-    setPrimaryVerse(null);
     fetchMushafPage(pageNumber)
-      .then((data) => {
-        if (!cancelled) setPageData(data);
-      })
-      .catch((err) => !cancelled && setError(err.message));
-    loadPageFont(pageNumber)
-      .then(() => {
-        if (!cancelled) setFontReady(true);
-      })
-      .catch(() => {}); // keep showing the plain-text fallback on failure
-    prefetchAdjacentPages(pageNumber);
+      .then((d) => !cancelled && setCurrentPageData(d))
+      .catch(() => {});
     return () => {
       cancelled = true;
     };
   }, [pageNumber]);
 
-  // Every surah that appears anywhere on this page — usually one, sometimes
-  // two or three where short surahs share a page near the end of the Quran.
-  const surahNumbersOnPage = useMemo(() => {
-    if (!pageData) return [];
-    const set = new Set();
-    for (const item of pageData.items) {
-      if (item.type === "surah-header") set.add(item.surah);
-      if (item.type === "line") for (const w of item.words) set.add(parseInt(w.v.split(":")[0], 10));
-    }
-    return Array.from(set);
-  }, [pageData]);
-
-  // Pre-groups each line's words into per-ayah runs, and — critically —
-  // stamps each real word with its index within the *whole ayah* (not just
-  // within this line). A long ayah wraps across several lines/runs, but
-  // AudioPlayerContext's activeWordRange is a single {start,end} pair over
-  // the ayah's full word count (see utils/quranWords.js), so highlighting
-  // needs one running counter per verseKey spanning every line it appears
-  // on — computed once here rather than restarting at 0 on each line.
-  const pageRuns = useMemo(() => {
-    if (!pageData) return null;
-    const verseWordCounters = new Map();
-    return pageData.items.map((item) => {
-      if (item.type !== "line") return item;
-      const runs = groupWordsByVerse(item.words).map((run) => ({
-        verseKey: run.verseKey,
-        words: run.words.map((w) => {
-          if (w.end) return w;
-          const idx = verseWordCounters.get(run.verseKey) ?? 0;
-          verseWordCounters.set(run.verseKey, idx + 1);
-          return { ...w, wordIndex: idx };
-        }),
-      }));
-      return { ...item, runs };
-    });
-  }, [pageData]);
-
-  // Notes are stored per-surah (same as SurahReader) — merge every surah on
-  // this page into one lookup keyed by "surah:ayah".
+  // The carousel already keeps the previous/next pages mounted (and so
+  // fetching), so this only needs to warm one page further out in each
+  // direction for uninterrupted continued swiping.
   useEffect(() => {
-    if (surahNumbersOnPage.length === 0) return;
-    let cancelled = false;
-    Promise.all(surahNumbersOnPage.map((n) => listNotesBySourceKey("quran", n))).then((maps) => {
-      if (cancelled) return;
-      const merged = new Map();
-      for (const m of maps) for (const [k, v] of m) merged.set(k, v);
-      setNotesByRef(merged);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [surahNumbersOnPage]);
-
-  // Surah JSON (Arabic + verse list) for every surah on this page — needed
-  // to hand off to AudioPlayerContext's playFromVerse/toggleVerse, which
-  // expects the same surah-object shape SurahReader gives it.
-  useEffect(() => {
-    for (const n of surahNumbersOnPage) {
-      if (!surahJsonCacheRef.current.has(n)) {
-        fetchSurahJson(n)
-          .then((surah) => surahJsonCacheRef.current.set(n, surah))
-          .catch(() => {});
-      }
-    }
-  }, [surahNumbersOnPage]);
+    fetchMushafPage(pageNumber + 2).catch(() => {});
+    fetchMushafPage(pageNumber - 2).catch(() => {});
+    loadPageFont(pageNumber + 2).catch(() => {});
+    loadPageFont(pageNumber - 2).catch(() => {});
+  }, [pageNumber]);
 
   useEffect(() => {
     return () => {
       if (markedTimeoutRef.current) clearTimeout(markedTimeoutRef.current);
+      if (settleTimerRef.current) clearTimeout(settleTimerRef.current);
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+      if (badgeFadeRef.current) clearTimeout(badgeFadeRef.current);
     };
   }, []);
 
-  const isMySurahPlaying = (surahNum) => audioPlayer.surahNumber === surahNum;
   const fullSurahMode = audioPlayer.fullSurahMode;
 
-  // Follows recitation across page boundaries the same way SurahReader
-  // scrolls to the playing ayah — here that means navigating to whichever
-  // page the currently-playing ayah lives on, if it isn't this one.
+  // Follows recitation across page boundaries — navigates to whichever page
+  // the currently-playing ayah lives on, if it isn't already this one.
   useEffect(() => {
     const verseNumber = fullSurahMode ? audioPlayer.fullSurahActiveVerse : audioPlayer.playingVerse;
     const surahNum = audioPlayer.surahNumber;
@@ -189,18 +106,132 @@ export default function MushafPage() {
     });
   }, [audioPlayer.playingVerse, audioPlayer.fullSurahActiveVerse, audioPlayer.surahNumber, fullSurahMode, pageNumber, navigate]);
 
+  // --- Chrome (floating controls) auto-hide -------------------------------
+
+  function bumpChrome() {
+    setChromeVisible(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    if (activeTour) return; // never auto-hide mid guided-tour — it needs the real controls on screen
+    hideTimerRef.current = setTimeout(() => setChromeVisible(false), CHROME_HIDE_DELAY_MS);
+  }
+
+  useEffect(() => {
+    bumpChrome();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const chromeShown = chromeVisible || jumpOpen || !!activeTour;
+
+  // --- Carousel: keep the window centered on the current page ------------
+
+  useLayoutEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+    el.scrollLeft = el.clientWidth;
+  }, [pageNumber]);
+
+  useEffect(() => {
+    function onResize() {
+      const el = carouselRef.current;
+      if (!el) return;
+      el.scrollLeft = el.clientWidth;
+    }
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  function runSettle() {
+    const el = carouselRef.current;
+    if (!el) return;
+    const slideWidth = el.clientWidth || 1;
+    const index = Math.min(2, Math.max(0, Math.round(el.scrollLeft / slideWidth)));
+    const cur = pageNumberRef.current;
+    const raw = index === 0 ? cur - 1 : index === 2 ? cur + 1 : cur;
+    const clamped = Math.min(TOTAL_MUSHAF_PAGES, Math.max(1, raw));
+    if (index !== 1 && clamped !== cur) {
+      navigate(`/quran/page/${clamped}`);
+    } else if (Math.round(el.scrollLeft) !== slideWidth) {
+      el.scrollTo({ left: slideWidth, behavior: "smooth" }); // spring back — hit the start/end of the Mushaf
+    }
+    if (badgeFadeRef.current) clearTimeout(badgeFadeRef.current);
+    badgeFadeRef.current = setTimeout(() => setShowPageBadge(false), 550);
+  }
+
+  // 'scrollend' fires the instant native momentum/snap settles (most
+  // browsers as of 2026) — the timeout in handleScroll below is only a
+  // fallback for engines that don't support it yet.
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el || !("onscrollend" in window)) return;
+    function handleScrollEnd() {
+      if (settleTimerRef.current) {
+        clearTimeout(settleTimerRef.current);
+        settleTimerRef.current = null;
+      }
+      runSettle();
+    }
+    el.addEventListener("scrollend", handleScrollEnd);
+    return () => el.removeEventListener("scrollend", handleScrollEnd);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleScroll() {
+    bumpChrome();
+    const el = carouselRef.current;
+    if (el) {
+      const slideWidth = el.clientWidth || 1;
+      const liveIndex = Math.min(2, Math.max(0, Math.round(el.scrollLeft / slideWidth)));
+      const cur = pageNumberRef.current;
+      const live = liveIndex === 0 ? cur - 1 : liveIndex === 2 ? cur + 1 : cur;
+      setLivePageNumber(Math.min(TOTAL_MUSHAF_PAGES, Math.max(1, live)));
+    }
+    setShowPageBadge(true);
+    if (settleTimerRef.current) clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = setTimeout(runSettle, SCROLL_SETTLE_MS);
+  }
+
+  function scrollToIndex(index) {
+    const el = carouselRef.current;
+    if (!el) return;
+    const target = index * el.clientWidth;
+    const startLeft = el.scrollLeft;
+    el.scrollTo({ left: target, behavior: "smooth" });
+    // Belt-and-suspenders: a handful of engines/embedding contexts quietly
+    // no-op an animated scrollTo (seen under some automated/CDP-driven
+    // browsers, and plausible under aggressive reduced-motion handling) —
+    // if it genuinely hasn't budged shortly after, jump there directly
+    // rather than leaving Previous/Next looking unresponsive. A forced
+    // scrollLeft jump like that also isn't guaranteed to fire a native
+    // 'scroll' event in every engine, so finish the navigation explicitly
+    // here too instead of waiting on handleScroll/runSettle to notice it.
+    setTimeout(() => {
+      if (Math.abs(el.scrollLeft - startLeft) < 2 && Math.abs(el.scrollLeft - target) > 2) {
+        el.scrollLeft = target;
+        setShowPageBadge(true);
+        runSettle();
+      }
+    }, 220);
+  }
+
+  function stepPage(delta) {
+    scrollToIndex(1 + delta);
+  }
+
+  function handleCarouselKeyDown(e) {
+    if (e.key === "ArrowRight" && pageNumber < TOTAL_MUSHAF_PAGES) {
+      e.preventDefault();
+      stepPage(1);
+    } else if (e.key === "ArrowLeft" && pageNumber > 1) {
+      e.preventDefault();
+      stepPage(-1);
+    }
+  }
+
+  // --- Navigation / jump-to ------------------------------------------------
+
   function goToPage(n) {
     const clamped = Math.min(TOTAL_MUSHAF_PAGES, Math.max(1, n));
     navigate(`/quran/page/${clamped}`);
-  }
-
-  function handleNoteChange(refKey, note, deletedId) {
-    setNotesByRef((prev) => {
-      const next = new Map(prev);
-      if (deletedId) next.delete(refKey);
-      else next.set(refKey, note);
-      return next;
-    });
   }
 
   function handleModeSelect(mode) {
@@ -214,29 +245,14 @@ export default function MushafPage() {
   }
 
   function firstVerseOnPage() {
-    if (!pageData) return null;
-    for (const item of pageData.items) {
+    if (!currentPageData) return null;
+    for (const item of currentPageData.items) {
       if (item.type === "line" && item.words.length > 0) {
         const [surah, ayah] = item.words[0].v.split(":").map(Number);
         return { surah, ayah };
       }
     }
     return null;
-  }
-
-  function handleMarkLastRead(surahNum, ayahNum) {
-    setPrimaryVerse({ surah: surahNum, ayah: ayahNum });
-    setLastRead(surahNum, ayahNum);
-    setJustMarkedVerse(`${surahNum}:${ayahNum}`);
-    if (markedTimeoutRef.current) clearTimeout(markedTimeoutRef.current);
-    markedTimeoutRef.current = setTimeout(() => setJustMarkedVerse(null), 2000);
-  }
-
-  function toggleAyahPlay(surahNum, ayahNum) {
-    const surah = surahJsonCacheRef.current.get(surahNum);
-    if (!surah) return;
-    setPrimaryVerse({ surah: surahNum, ayah: ayahNum });
-    audioPlayer.toggleVerse(surah, ayahNum);
   }
 
   function submitJumpToPage(e) {
@@ -247,39 +263,48 @@ export default function MushafPage() {
     setJumpPageInput("");
   }
 
-  function handleTouchStart(e) {
-    touchStartXRef.current = e.touches[0].clientX;
+  // --- Ayah interactions ----------------------------------------------------
+
+  function handleAyahTap(surahNum, ayahNum) {
+    setPrimaryVerse({ surah: surahNum, ayah: ayahNum });
   }
 
-  function handleTouchEnd(e) {
-    if (touchStartXRef.current == null) return;
-    const delta = e.changedTouches[0].clientX - touchStartXRef.current;
-    touchStartXRef.current = null;
-    if (Math.abs(delta) < 60) return;
-    // Right-to-left reading: swiping left (finger moving toward the start
-    // of the next page, same direction the script itself flows) advances;
-    // swiping right goes back — the same motion as turning pages in the
-    // physical Mushaf.
-    if (delta < 0) goToPage(pageNumber + 1);
-    else goToPage(pageNumber - 1);
+  function handleTogglePlay(surahNum, ayahNum) {
+    const surah = surahJsonCacheRef.current.get(surahNum);
+    if (!surah) return;
+    setPrimaryVerse({ surah: surahNum, ayah: ayahNum });
+    audioPlayer.toggleVerse(surah, ayahNum);
   }
 
-  if (error) {
-    return <div className="empty-state">Couldn't load this Mushaf page. {error}</div>;
+  function handleMarkLastRead(surahNum, ayahNum) {
+    setPrimaryVerse({ surah: surahNum, ayah: ayahNum });
+    setLastRead(surahNum, ayahNum);
+    setJustMarkedVerse(`${surahNum}:${ayahNum}`);
+    if (markedTimeoutRef.current) clearTimeout(markedTimeoutRef.current);
+    markedTimeoutRef.current = setTimeout(() => setJustMarkedVerse(null), 2000);
   }
+
+  const slideProps = {
+    audioPlayer,
+    isPremiumUser,
+    openPremiumOffer,
+    surahJsonCacheRef,
+    justMarkedVerse,
+    onMarkLastRead: handleMarkLastRead,
+    onTogglePlay: handleTogglePlay,
+    onAyahTap: handleAyahTap,
+  };
 
   return (
-    <div className="mushaf-reader">
-      <div className="reader-header">
-        <QuranViewToggle mode="page" onSelect={handleModeSelect} />
-
-        <div className="mushaf-controls">
-          <button className="btn" onClick={() => goToPage(pageNumber - 1)} disabled={pageNumber <= 1} aria-label="Previous page">
-            <ChevronLeft size={16} /> Previous
+    <div className="mushaf-immersive" onPointerDown={bumpChrome}>
+      <div className={"mushaf-chrome" + (chromeShown ? "" : " mushaf-chrome-hidden")}>
+        <div className="mushaf-chrome-row">
+          <button className="mushaf-chrome-back" onClick={() => navigate(-1)} aria-label="Back">
+            <ArrowLeft size={18} strokeWidth={2.25} />
           </button>
-
+          <QuranViewToggle mode="page" onSelect={handleModeSelect} />
           <span className="mushaf-jump-wrap">
-            <button className="ayah-picker-trigger" onClick={() => setJumpOpen((v) => !v)}>
+            <button className="ayah-picker-trigger mushaf-page-pill" onClick={() => setJumpOpen((v) => !v)}>
               Page {pageNumber} ▾
             </button>
             {jumpOpen && (
@@ -341,165 +366,52 @@ export default function MushafPage() {
               </>
             )}
           </span>
+        </div>
 
-          <button className="btn" onClick={() => goToPage(pageNumber + 1)} disabled={pageNumber >= TOTAL_MUSHAF_PAGES} aria-label="Next page">
+        <div className="mushaf-chrome-row mushaf-chrome-row-secondary">
+          <button
+            className="btn mushaf-step-btn"
+            onClick={() => stepPage(-1)}
+            disabled={pageNumber <= 1}
+            aria-label="Previous page"
+          >
+            <ChevronLeft size={16} /> Previous
+          </button>
+          <ReciterSelect value={settings.reciter} onChange={audioPlayer.changeReciter} />
+          <button
+            className="btn mushaf-step-btn"
+            onClick={() => stepPage(1)}
+            disabled={pageNumber >= TOTAL_MUSHAF_PAGES}
+            aria-label="Next page"
+          >
             Next <ChevronRight size={16} />
           </button>
         </div>
-
-        <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 12, flexWrap: "wrap", alignItems: "center" }}>
-          <ReciterSelect value={settings.reciter} onChange={audioPlayer.changeReciter} />
-        </div>
         {wordModeUnavailable && (
-          <p style={{ color: "var(--text-muted)", fontSize: "0.8rem", marginTop: 10 }}>
+          <p className="mushaf-word-mode-note">
             This reciter doesn't have word-level timing data — showing ayah-by-ayah tracking instead.
           </p>
         )}
       </div>
 
-      {!pageData ? (
-        <div className="mushaf-page-frame mushaf-page-loading" aria-busy="true">
-          <div className="mushaf-skeleton-line" style={{ width: "40%", margin: "0 auto 22px" }} />
-          {Array.from({ length: 9 }, (_, i) => (
-            <div key={i} className="mushaf-skeleton-line" style={{ width: `${70 + ((i * 7) % 25)}%` }} />
-          ))}
-        </div>
-      ) : (
-        <div
-          className="mushaf-page-frame"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          <div className="mushaf-page-number">{pageNumber}</div>
-          {pageRuns.map((item, idx) => {
-            if (item.type === "surah-header") {
-              const meta = surahByNumber(item.surah);
-              return (
-                <div className="mushaf-surah-header" key={idx}>
-                  <span>سورة {meta?.arabic}</span>
-                </div>
-              );
-            }
-            if (item.type === "bismillah") {
-              return (
-                <div className="mushaf-bismillah" key={idx}>
-                  <ArabicText text={BISMILLAH} />
-                </div>
-              );
-            }
-            const runs = item.runs;
-            return (
-              <div className="mushaf-line" key={idx}>
-                {runs.map((run, runIdx) => {
-                  const [surahNum, ayahNum] = run.verseKey.split(":").map(Number);
-                  const refKey = run.verseKey;
-                  const playing = isMySurahPlaying(surahNum) &&
-                    (fullSurahMode ? audioPlayer.fullSurahActiveVerse === ayahNum : audioPlayer.playingVerse === ayahNum);
-                  const activeWordRange = playing ? audioPlayer.activeWordRange : null;
-                  const juzStartWord = run.words.find((w) => w.juz);
-                  const textWords = run.words.filter((w) => !w.end);
-                  const endWord = run.words.find((w) => w.end);
-                  const meta = surahByNumber(surahNum);
+      <div
+        className="mushaf-carousel"
+        ref={carouselRef}
+        onScroll={handleScroll}
+        onKeyDown={handleCarouselKeyDown}
+        tabIndex={0}
+        role="group"
+        aria-label={`Mushaf page ${pageNumber} of ${TOTAL_MUSHAF_PAGES}`}
+      >
+        {[pageNumber - 1, pageNumber, pageNumber + 1].map((pn) => (
+          <div className="mushaf-slide" key={pn}>
+            <MushafPageSlide pageNumber={pn} {...slideProps} />
+          </div>
+        ))}
+      </div>
 
-                  return (
-                    <span className="mushaf-ayah-wrap" key={runIdx}>
-                      {juzStartWord && (
-                        <span className="mushaf-juz-badge">
-                          الجزء {JUZ_NAMES[juzStartWord.juz - 1] || juzStartWord.juz}
-                        </span>
-                      )}
-                      <FlipNoteCard
-                        compact
-                        frontClickable
-                        source="quran"
-                        sourceKey={surahNum}
-                        refKey={refKey}
-                        sourceLabel={`${meta?.transliteration || surahNum} ${refKey}`}
-                        excerpt={textWords.map((w) => w.t).join(" ")}
-                        existing={notesByRef.get(refKey)}
-                        onNoteChange={(note, deletedId) => handleNoteChange(refKey, note, deletedId)}
-                        locked={!isPremiumUser}
-                        onLockedTap={() => openPremiumOffer()}
-                        front={
-                          <span
-                            className={"mushaf-words" + (playing ? " mushaf-ayah-playing" : "")}
-                            onClick={() => setPrimaryVerse({ surah: surahNum, ayah: ayahNum })}
-                          >
-                            {textWords.map((w, i) => (
-                              <span
-                                key={i}
-                                className={
-                                  "ayah-word" +
-                                  (playing &&
-                                  activeWordRange &&
-                                  w.wordIndex >= activeWordRange.start &&
-                                  w.wordIndex < activeWordRange.end
-                                    ? " ayah-word-active"
-                                    : "")
-                                }
-                              >
-                                {fontReady ? (
-                                  <span className="mushaf-glyph" style={{ fontFamily: pageFontFamily(pageNumber) }}>
-                                    {w.g}
-                                  </span>
-                                ) : (
-                                  <>
-                                    <ArabicText text={w.t} />{" "}
-                                  </>
-                                )}
-                              </span>
-                            ))}
-                            {endWord && (
-                              <span className="mushaf-ayah-end-cluster">
-                                <span className="mushaf-ayah-end-roundel">
-                                  {fontReady ? (
-                                    <span className="mushaf-glyph" style={{ fontFamily: pageFontFamily(pageNumber) }}>
-                                      {endWord.g}
-                                    </span>
-                                  ) : (
-                                    <ArabicText text={endWord.t} />
-                                  )}
-                                </span>
-                                {!fullSurahMode && (
-                                  <button
-                                    type="button"
-                                    className={"mushaf-play-btn" + (playing ? " playing" : "")}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toggleAyahPlay(surahNum, ayahNum);
-                                    }}
-                                    aria-label={playing ? "Pause verse" : "Play from here"}
-                                    title={playing ? "Pause" : "Play from here"}
-                                  >
-                                    {playing ? <Pause size={15} /> : <Play size={15} />}
-                                  </button>
-                                )}
-                                <button
-                                  type="button"
-                                  className={"mushaf-inline-icon-btn" + (justMarkedVerse === refKey ? " marked" : "")}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleMarkLastRead(surahNum, ayahNum);
-                                  }}
-                                  aria-label="Mark as last read"
-                                  title="Mark as last read"
-                                >
-                                  <Bookmark size={11} />
-                                </button>
-                              </span>
-                            )}
-                          </span>
-                        }
-                      />
-                      {!fontReady && " "}
-                    </span>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-      )}
+      {showPageBadge && <div className="mushaf-page-badge">{livePageNumber}</div>}
+
       {justMarkedVerse && (
         <p className="mushaf-marked-toast">
           <BookOpen size={14} /> Marked {justMarkedVerse} as last read
