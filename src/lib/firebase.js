@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,6 +20,7 @@ const firebaseConfig = {
 // than letting the whole app crash.
 let auth = null;
 let googleProvider = null;
+let db = null;
 try {
   const app = initializeApp(firebaseConfig);
   auth = getAuth(app);
@@ -32,8 +34,14 @@ try {
     // contexts (e.g. some private-browsing modes) — auth still works for the
     // current tab, it just won't survive a restart there.
   });
+  // Firestore backs data that genuinely needs to follow the account across
+  // devices (currently just custom duas — see utils/customDuasDb.js).
+  // Everything else in the app (notes, uploaded PDFs) is deliberately
+  // per-browser IndexedDB instead, so this is the one place Firestore is
+  // actually needed.
+  db = getFirestore(app);
 } catch (err) {
   console.error("Firebase failed to initialize — check VITE_FIREBASE_* env vars.", err);
 }
 
-export { auth, googleProvider };
+export { auth, googleProvider, db };

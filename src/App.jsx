@@ -20,6 +20,8 @@ import MedinahBooks from "./pages/MedinahBooks.jsx";
 import MedinahLessons from "./pages/MedinahLessons.jsx";
 import MedinahLesson from "./pages/MedinahLesson.jsx";
 import Athkar from "./pages/Athkar.jsx";
+import AthkarList from "./pages/AthkarList.jsx";
+import MyDuas from "./pages/MyDuas.jsx";
 import MyKitab from "./pages/MyKitab.jsx";
 import MyKitabViewer from "./pages/MyKitabViewer.jsx";
 import Settings from "./pages/Settings.jsx";
@@ -86,6 +88,15 @@ export default function App() {
               <Route path="/medinah/:bookId" element={<MedinahLessons />} />
               <Route path="/medinah/:bookId/:lessonNumber" element={<MedinahLesson />} />
               <Route path="/athkar" element={<Athkar />} />
+              <Route
+                path="/athkar/my-duas"
+                element={
+                  <PremiumGate>
+                    <MyDuas />
+                  </PremiumGate>
+                }
+              />
+              <Route path="/athkar/:mode" element={<AthkarList />} />
               <Route
                 path="/my-kitab"
                 element={

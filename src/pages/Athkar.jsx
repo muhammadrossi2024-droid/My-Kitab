@@ -1,17 +1,28 @@
-import { useState } from "react";
-import { useSettings } from "../context/SettingsContext.jsx";
-import athkarData from "../data/athkar/morning-evening.json";
+import { Link } from "react-router-dom";
+import { Sunrise, Sunset, Heart, Crown } from "lucide-react";
 import SectionHero from "../components/SectionHero.jsx";
-import ArabicText from "../components/ArabicText.jsx";
 import PrayingHandsIcon from "../components/PrayingHandsIcon.jsx";
+import { usePremium } from "../context/PremiumContext.jsx";
+
+const SECTIONS = [
+  {
+    key: "morning",
+    to: "/athkar/morning",
+    title: "Morning Athkar",
+    desc: "The full morning collection of supplications.",
+    icon: Sunrise,
+  },
+  {
+    key: "evening",
+    to: "/athkar/evening",
+    title: "Evening Athkar",
+    desc: "The full evening collection of supplications.",
+    icon: Sunset,
+  },
+];
 
 export default function Athkar() {
-  const { settings } = useSettings();
-  const [mode, setMode] = useState("morning"); // "morning" | "evening"
-
-  const duas = athkarData.duas.filter(
-    (d) => d.timing === "both" || d.timing === mode
-  );
+  const { isPremiumUser, openPremiumOffer } = usePremium();
 
   return (
     <div>
@@ -21,60 +32,56 @@ export default function Athkar() {
         description="Authentic morning and evening supplications, complete with English translation and source references."
       />
 
-      <div className="reader-header">
-        <div className="segmented-control" style={{ margin: "18px auto 0" }}>
-          <button
-            className={"segmented-control-btn" + (mode === "morning" ? " active" : "")}
-            onClick={() => setMode("morning")}
-          >
-            Morning
-          </button>
-          <button
-            className={"segmented-control-btn" + (mode === "evening" ? " active" : "")}
-            onClick={() => setMode("evening")}
-          >
-            Evening
-          </button>
-        </div>
-      </div>
+      <div className="home-section-grid">
+        {SECTIONS.map((section) => {
+          const Icon = section.icon;
+          return (
+            <Link
+              key={section.key}
+              to={section.to}
+              className="home-section-card"
+              style={{ "--card-color": "var(--card-dhikr)" }}
+            >
+              <div className="home-section-card-icon-badge">
+                <Icon className="home-section-card-icon" strokeWidth={2} />
+              </div>
+              <div className="home-section-card-title">{section.title}</div>
+              <p className="home-section-card-desc">{section.desc}</p>
+            </Link>
+          );
+        })}
 
-      {duas.map((dua) => {
-        const variant = dua.morning && dua.evening ? dua[mode] : dua;
-        return (
-          <div className="athkar-dua-card" key={dua.number}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-              <span className="ayah-number-badge">Dua {dua.number}</span>
-              {dua.repetition && (
-                <span className="ayah-number-badge athkar-repetition-badge">
-                  {dua.repetition}
-                </span>
-              )}
+        {isPremiumUser ? (
+          <Link
+            to="/athkar/my-duas"
+            className="home-section-card"
+            style={{ "--card-color": "var(--card-library)" }}
+          >
+            <div className="home-section-card-icon-badge">
+              <Heart className="home-section-card-icon" strokeWidth={2} />
             </div>
-            <p className="ayah-arabic" style={{ fontSize: settings.arabicFontSize }}>
-              <ArabicText text={variant.arabic} />
-            </p>
-            <p className="athkar-transliteration">{variant.transliteration}</p>
-            <p className="ayah-translation" style={{ fontSize: settings.translationFontSize }}>
-              {variant.translation}
-            </p>
-            {dua.virtue && <p className="athkar-virtue">{dua.virtue}</p>}
-            <p className="hadith-source">{dua.reference}</p>
-          </div>
-        );
-      })}
-
-      <p className="athkar-credit">
-        Compiled with reference to <em>Authentic Morning and Evening Supplications and Remembrances for Every Muslim</em>{" "}
-        by Abu Khadeejah ʿAbdul-Wāhid Alam, published by Salafi Publications —{" "}
-        <a href="https://www.salafibookstore.com" target="_blank" rel="noopener noreferrer">
-          salafibookstore.com
-        </a>{" "}
-        /{" "}
-        <a href="https://www.salafipubs.com" target="_blank" rel="noopener noreferrer">
-          salafipubs.com
-        </a>
-        .
-      </p>
+            <div className="home-section-card-title">My Duas</div>
+            <p className="home-section-card-desc">Your own custom duas, saved to your account.</p>
+          </Link>
+        ) : (
+          <button
+            type="button"
+            className="home-section-card home-section-card-locked"
+            style={{ "--card-color": "var(--card-library)" }}
+            onClick={() => openPremiumOffer()}
+          >
+            <div className="home-section-card-icon-badge">
+              <Heart className="home-section-card-icon" strokeWidth={2} />
+            </div>
+            <div className="home-section-card-title">My Duas</div>
+            <p className="home-section-card-desc">Write and save your own custom duas.</p>
+            <span className="premium-pill">
+              <Crown size={11} strokeWidth={2.5} />
+              Premium
+            </span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }

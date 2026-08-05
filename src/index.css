@@ -542,6 +542,83 @@ a {
   color: var(--text-muted);
 }
 
+/* A Premium-gated section card is a <button> (it opens the Premium screen
+   rather than navigating), so it needs the usual button resets to look
+   identical to the <a>-based cards around it. */
+.home-section-card-locked {
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---- My Duas (Premium custom duas — see MyDuas.jsx) ---- */
+
+.custom-dua-form {
+  border-color: var(--card-library);
+}
+
+.custom-dua-field-label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.custom-dua-field-label:first-of-type {
+  margin-top: 10px;
+}
+
+.custom-dua-arabic-input {
+  width: 100%;
+  min-height: 72px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Scheherazade New", "Traditional Arabic", "Amiri", serif;
+  font-size: 1.4rem;
+  line-height: 1.9;
+  resize: vertical;
+}
+
+.custom-dua-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.custom-dua-card {
+  position: relative;
+  border-color: var(--card-library);
+}
+
+.custom-dua-card-actions {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  display: flex;
+  gap: 4px;
+}
+
+.premium-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  align-self: flex-start;
+  margin-top: 2px;
+  padding: 2px 7px 2px 6px;
+  border-radius: 999px;
+  background: var(--card-library);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 .home-continue-block {
   margin-top: 18px;
   padding-top: 16px;
