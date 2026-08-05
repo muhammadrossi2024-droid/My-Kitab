@@ -258,7 +258,7 @@ export default function MyKitab() {
         description="Your personal collection of Islamic knowledge — upload PDFs and keep them organized and searchable."
       />
 
-      <div className="card">
+      <div className="card mykitab-library-card">
         <div className="form-row-label">Your library</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 16 }}>
           Upload your own PDFs to keep them here, on this device, at their original quality.
@@ -276,7 +276,7 @@ export default function MyKitab() {
           }}
         />
         <button
-          className="btn btn-primary"
+          className="btn btn-primary mykitab-add-pdf-btn"
           onClick={() => fileInputRef.current?.click()}
           disabled={!!uploadStatus}
         >
@@ -394,7 +394,7 @@ export default function MyKitab() {
         )}
       </div>
 
-      <div className="card">
+      <div className="card mykitab-notes-card">
         <div className="form-row-label">Your notes</div>
         <p style={{ color: "var(--text-muted)", marginBottom: 16 }}>
           Notes taken by flipping an ayah in the Quran, a page in Mutoon, or via the note button on

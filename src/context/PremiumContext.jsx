@@ -10,13 +10,32 @@ const STORAGE_KEY = "mykitab-premium-active";
 // consumer already just reads/writes through usePremium() and needs no
 // changes.
 export function PremiumProvider({ children }) {
-  const [isPremiumUser, setIsPremiumUser] = useState(() => {
+  const [isPremiumUser, setIsPremiumUserRaw] = useState(() => {
     try {
       return localStorage.getItem(STORAGE_KEY) === "true";
     } catch {
       return false;
     }
   });
+
+  // Deliberately NOT persisted — this only needs to be true for the instant
+  // it takes App.jsx to notice it and launch the Premium tour, then it's
+  // cleared again. That's what makes "just activated" a real edge (fires
+  // once per actual activation) rather than "isPremiumUser is currently
+  // true" (which would replay the tour on every reload/login instead).
+  const [justActivatedPremium, setJustActivatedPremium] = useState(false);
+
+  // Same external signature every caller already uses (PremiumOfferScreen's
+  // Claim CTA, PremiumToggleCard's dev switch) — turning Premium on through
+  // either one now also flags the activation for the tour.
+  function setIsPremiumUser(value) {
+    setIsPremiumUserRaw(value);
+    if (value) setJustActivatedPremium(true);
+  }
+
+  function clearJustActivatedPremium() {
+    setJustActivatedPremium(false);
+  }
 
   // The one shared full-page Premium screen (PremiumOfferScreen.jsx) is
   // mounted once at the app root and toggled from here, rather than each
@@ -47,6 +66,8 @@ export function PremiumProvider({ children }) {
   const value = {
     isPremiumUser,
     setIsPremiumUser,
+    justActivatedPremium,
+    clearJustActivatedPremium,
     showPremiumOffer: offer !== null,
     offerConfig: offer,
     openPremiumOffer,

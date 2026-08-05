@@ -54,6 +54,7 @@ export default function Athkar() {
         {isPremiumUser ? (
           <Link
             to="/athkar/my-duas"
+            data-tour-id="/athkar/my-duas"
             className="home-section-card"
             style={{ "--card-color": "var(--card-library)" }}
           >

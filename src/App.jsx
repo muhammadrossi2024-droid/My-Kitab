@@ -4,9 +4,12 @@ import Navbar from "./components/Navbar.jsx";
 import TopBanner from "./components/TopBanner.jsx";
 import SplashScreen from "./components/SplashScreen.jsx";
 import GuidedTour from "./components/GuidedTour.jsx";
+import homeTourScript, { HOME_TOUR_TOTAL_STEPS } from "./tours/homeTourScript.js";
+import premiumTourScript, { PREMIUM_TOUR_TOTAL_STEPS } from "./tours/premiumTourScript.js";
 import AudioMiniPlayer from "./components/AudioMiniPlayer.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 import { useIntro } from "./context/IntroContext.jsx";
+import { usePremium } from "./context/PremiumContext.jsx";
 import { useNavVisibility } from "./context/NavVisibilityContext.jsx";
 import Auth from "./pages/Auth.jsx";
 import Home from "./pages/Home.jsx";
@@ -30,7 +33,8 @@ import PremiumOfferScreen from "./components/PremiumOfferScreen.jsx";
 
 export default function App() {
   const { user, authLoading } = useAuth();
-  const { showSplash, dismissSplash, showTour, dismissTour } = useIntro();
+  const { showSplash, dismissSplash, activeTour, showTour, startPremiumTour, dismissTour } = useIntro();
+  const { justActivatedPremium, clearJustActivatedPremium } = usePremium();
   const { lock, unlock } = useNavVisibility();
 
   // The guided tour spotlights the real nav bar, so it must stay on screen
@@ -39,6 +43,17 @@ export default function App() {
     if (showSplash || showTour) lock();
     else unlock();
   }, [showSplash, showTour, lock, unlock]);
+
+  // Launches the Premium tour the instant Premium is actually switched on
+  // (Claim CTA or the dev toggle) — never on an ordinary reload/login where
+  // it was already on, since that never sets this flag in the first place.
+  // See PremiumContext's justActivatedPremium for why this is a one-shot
+  // edge rather than a plain "isPremiumUser is true" check.
+  useEffect(() => {
+    if (!justActivatedPremium) return;
+    startPremiumTour();
+    clearJustActivatedPremium();
+  }, [justActivatedPremium, startPremiumTour, clearJustActivatedPremium]);
 
   // One persistent splash instance spans both "waiting on Firebase's initial
   // auth check" and (for an authenticated, first-ever-this-session visit)
@@ -117,7 +132,12 @@ export default function App() {
             </Routes>
           </main>
 
-          {showTour && <GuidedTour onDone={dismissTour} />}
+          {activeTour === "home" && (
+            <GuidedTour script={homeTourScript} totalSteps={HOME_TOUR_TOTAL_STEPS} onDone={dismissTour} />
+          )}
+          {activeTour === "premium" && (
+            <GuidedTour script={premiumTourScript} totalSteps={PREMIUM_TOUR_TOTAL_STEPS} onDone={dismissTour} />
+          )}
         </div>
       )}
     </>
